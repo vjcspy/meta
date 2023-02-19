@@ -8,13 +8,13 @@ This turborepo uses [pnpm](https://pnpm.io) as a package manager.
 
 ### Apps and Packages
 
-***apps***: show case apps, only available in `main` branch
+***apps*** show case apps, only available in `main` branch
 
 - `apps/web`: [Next.js](https://nextjs.org/) app
 
 
 
-***shared***: include shared package **used throughout the monorepo**
+***shared*** include shared package **used throughout the monorepo**
 
 - `shared/ui`: a stub React component library shared by `web` applications
 - `shared/eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
@@ -22,7 +22,7 @@ This turborepo uses [pnpm](https://pnpm.io) as a package manager.
 
 
 
-***folders used ONLY in project branch***
+***projects***
 
 - `projects/PROJECT_NAME/*`: folder used in the project branch
 
@@ -82,4 +82,4 @@ pnpm dlx turbo link
 
 - Think about writing once use forever. For example we're using `tsconfig` and `eslint` , etc.. for all module
 
-- Looking for a way to use ES6 modules without having to bundle them (ie without build scripts in `package.json`). For example `transpilePackages` configuration in nextjs application. See [Internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
+- Looking for the way to use ES6 modules without having to bundle them (ie without build scripts in `package.json`). For example `transpilePackages` configuration in nextjs application. See [Internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
