@@ -13,7 +13,8 @@
     "react": "^18",
     "react-dom": "^18",
     "ui": "workspace:*",
-    "web-base": "workspace:*"
+    "@web/base": "workspace:*",
+    "chitility": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

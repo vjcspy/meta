@@ -8,10 +8,10 @@
     "lint": "eslint --ext ts,tsx ."
   },
   "devDependencies": {
+    "react": "^18",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint-config-server": "workspace:*",
-    "react": "^18",
+    "eslint-config-nextjs": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.2"
   }

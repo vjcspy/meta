@@ -1,5 +1,5 @@
 {
-  "name": "@web/base",
+  "name": "@web/apollo",
   "version": "0.0.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -10,15 +10,16 @@
     "lint": "eslint --ext ts,tsx ."
   },
   "devDependencies": {
-    "eslint-config-nextjs": "workspace:*",
-    "tsconfig": "workspace:*",
-    "react": "^18",
     "@types/react": "^18",
-    "@types/react-dom": "^18.0.6"
+    "@types/react-dom": "^18.0.6",
+    "eslint-config-nextjs": "workspace:*",
+    "react": "^18",
+    "tsconfig": "workspace:*"
   },
   "dependencies": {
-    "console-log-colors": "^0.3.5",
-    "winston": "^3.8.2",
-    "chitility": "workspace:*"
+    "@apollo/client": "^3.7.8",
+    "chitility": "workspace:*",
+    "@web/base": "workspace:*",
+    "graphql": "^16.6.0"
   }
 }

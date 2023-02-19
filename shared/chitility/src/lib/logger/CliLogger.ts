@@ -1,23 +1,17 @@
-import { webConsoleFormat } from 'chitility/dist/lib/logger/format/web';
-import type { LoggerConfig } from 'chitility/dist/lib/logger/Logger';
-import { Logger } from 'chitility/dist/lib/logger/Logger';
-import BrowserConsole, {
-  BrowserLevel,
-} from 'chitility/dist/lib/logger/transport/BrowserTransport';
 import type { LeveledLogMethod } from 'winston';
 import winston from 'winston';
 
-export type WebLoggerConfig = LoggerConfig;
+import { webConsoleFormat } from './format/web';
+import type { LoggerConfig } from './Logger';
+import { Logger } from './Logger';
 
-/**
- * Logger for SSR mode
- * */
-export class WebLogger extends Logger {
-  constructor(config: WebLoggerConfig | string) {
+export type CliLoggerConfig = LoggerConfig;
+export class CliLogger extends Logger {
+  constructor(config: CliLoggerConfig | string) {
     if (typeof config === 'string') {
       // eslint-disable-next-line no-param-reassign
       config = {
-        type: 'web',
+        type: 'cli',
         context: config,
       };
     }
@@ -26,14 +20,14 @@ export class WebLogger extends Logger {
       config.level = 'debug';
     }
     super(config);
+    super(config);
   }
-
   createWinston() {
     return winston.createLogger({
-      levels: BrowserLevel,
+      levels: winston.config.cli.levels,
       level: this.level,
       transports: [
-        new BrowserConsole({
+        new winston.transports.Console({
           format: winston.format.combine(
             winston.format.ms(),
             winston.format.colorize({
@@ -79,11 +73,7 @@ export class WebLogger extends Logger {
     });
   }
 
-  render: LeveledLogMethod = (message: any, ...args: any[]) => {
-    this.getInstance().defaultMeta = {
-      ...this.getInstance().defaultMeta,
-      logRender: true,
-    };
+  debug: LeveledLogMethod = (message: any, ...args: any[]) => {
     return this.getInstance().debug(message, ...args);
   };
 }

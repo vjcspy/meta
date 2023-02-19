@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ["ui", "chitility"],
+  transpilePackages: ['ui', 'chitility'],
   webpack: (
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
@@ -12,7 +12,7 @@ module.exports = {
       config.resolve.fallback.fs = false;
 
       // Config ignore resolve module này trên client
-      config.resolve.alias["i18next-fs-backend"] = false;
+      config.resolve.alias['i18next-fs-backend'] = false;
     }
 
     // Important: return the modified config

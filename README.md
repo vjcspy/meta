@@ -1,4 +1,4 @@
-# MK
+# Meta
 
 This is a typescript monorepo 
 
@@ -76,6 +76,7 @@ pnpm dlx turbo link
 ### Package naming
 
 - If a package created inside a `project` branch then it should be named starting with `@PROJECT_NAME/PACKAGE_TYPE-PACKAGE_NAME`
+- Package in share folder, if use global(for both server and client) will not start with `@domain` ex `chitility`, `tsconfig`, else if it should start suck as `@web`
 
 ## Notes
 
