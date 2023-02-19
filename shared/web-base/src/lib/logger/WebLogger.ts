@@ -1,13 +1,17 @@
+import { webConsoleFormat } from 'chitility/dist/lib/logger/format/web';
+import type { LoggerConfig } from 'chitility/dist/lib/logger/Logger';
+import { Logger } from 'chitility/dist/lib/logger/Logger';
+import BrowserConsole, {
+  BrowserLevel,
+} from 'chitility/dist/lib/logger/transport/BrowserTransport';
 import type { LeveledLogMethod } from 'winston';
 import winston from 'winston';
 
-import { webConsoleFormat } from './format/web';
-import type { LoggerConfig } from './Logger';
-import { Logger } from './Logger';
-import BrowserConsole, { BrowserLevel } from './transport/BrowserTransport';
-
 export type WebLoggerConfig = LoggerConfig;
 
+/**
+ * Logger for SSR mode
+ * */
 export class WebLogger extends Logger {
   constructor(config: WebLoggerConfig | string) {
     if (typeof config === 'string') {

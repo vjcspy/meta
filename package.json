@@ -12,28 +12,29 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "watch": "turbo run watch --parallel"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "latest",
+    "chokidar-cli": "^3.0.0",
     "eslint": "latest",
-    "prettier": "latest",
-    "turbo": "latest",
     "eslint-config-next": "latest",
-    "eslint-plugin-react": "latest",
     "eslint-config-prettier": "latest",
     "eslint-config-turbo": "latest",
     "eslint-plugin-import": "latest",
     "eslint-plugin-jest": "latest",
     "eslint-plugin-jest-formatting": "latest",
     "eslint-plugin-prettier": "latest",
+    "eslint-plugin-react": "latest",
     "eslint-plugin-simple-import-sort": "latest",
     "eslint-plugin-unused-imports": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
+    "prettier": "latest",
+    "turbo": "latest",
     "typescript": "^4.9.5"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "packageManager": "pnpm@7.27.1"
 }

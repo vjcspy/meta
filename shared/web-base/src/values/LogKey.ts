@@ -1,0 +1,1 @@
+export const LOG_CONTEXT_KEY = 'LOG_CONTEXT_KEY';

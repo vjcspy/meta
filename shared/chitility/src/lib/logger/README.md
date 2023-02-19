@@ -1,5 +1,0 @@
-[TOC]
-
-# Logger
-
-## Splunk Logger
