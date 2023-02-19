@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { WebLogger } from "web-base/src/lib/logger/WebLogger";
 import { useDebugRender } from "web-base/src/hook/useDebugRender";
-
 export const SSR: NextPage<{
   header?: any;
 }> = (props) => {
