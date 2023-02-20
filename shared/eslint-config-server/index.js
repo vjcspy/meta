@@ -15,7 +15,7 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       plugins: ['@typescript-eslint', 'unused-imports', 'simple-import-sort'],
-      extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
+      extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
       parserOptions: {
         project: './tsconfig.json',
       },
