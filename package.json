@@ -11,6 +11,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:main": "turbo run dev --filter=@main/apps-storefront",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "watch": "turbo run watch --parallel"
@@ -29,9 +30,18 @@
     "eslint-plugin-react": "latest",
     "eslint-plugin-simple-import-sort": "latest",
     "eslint-plugin-unused-imports": "latest",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-jest-dom": "^4.0.3",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-tailwindcss": "^3.8.3",
+    "eslint-plugin-testing-library": "^5.10.2",
     "prettier": "latest",
     "turbo": "latest",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "@types/node": "^18"
   },
   "engines": {
     "node": ">=14.0.0"

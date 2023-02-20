@@ -1,6 +1,7 @@
-import { NextPage } from 'next';
 import { useDebugRender } from '@web/base/src/hook/useDebugRender';
 import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
+import type { NextPage } from 'next';
+
 export const SSR: NextPage<{
   header?: any;
 }> = (props) => {
@@ -9,7 +10,7 @@ export const SSR: NextPage<{
 };
 
 SSR.getInitialProps = (context) => {
-  const logger = new CliLogger(SSR!.getInitialProps!.name);
+  const logger = new CliLogger('SSR.getInitialProps');
   logger.info('processing with context header', context?.req?.headers);
 
   return { header: context?.req?.headers };

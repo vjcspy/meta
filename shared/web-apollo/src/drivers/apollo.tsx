@@ -20,11 +20,10 @@ export const withApollo = (
 ) => {
   const {
     apollo: { apiBase, initApolloClient },
-    // @ts-ignore
     ssr = false,
   } = adapterProps;
 
-  const WithApollo: any = (props) => {
+  const WithApollo: any = (props: any) => {
     useDebugRender('WithApollo');
     const { apollo, ...pageProps } = props;
 

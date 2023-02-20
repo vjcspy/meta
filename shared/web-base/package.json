@@ -7,14 +7,14 @@
     "dist"
   ],
   "scripts": {
-    "lint": "eslint --ext ts,tsx ."
+    "lint": "eslint --fix --ext ts,tsx ."
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
-    "react": "^18",
     "@types/react": "^18",
-    "@types/react-dom": "^18.0.6"
+    "@types/react-dom": "^18",
+    "@types/lodash": "latest"
   },
   "dependencies": {
     "console-log-colors": "^0.3.5",

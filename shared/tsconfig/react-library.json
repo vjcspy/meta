@@ -6,6 +6,7 @@
     "jsx": "react-jsx",
     "lib": ["ES2022","DOM"],
     "module": "ESNext",
-    "target": "es6"
+    "target": "ES2022",
+    "strict": true
   }
 }

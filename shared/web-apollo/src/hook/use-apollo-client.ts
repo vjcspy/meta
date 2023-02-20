@@ -1,5 +1,5 @@
 import type { ApolloClient } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { InitApolloClientOptions } from '../types/driver';
 
@@ -10,7 +10,7 @@ import type { InitApolloClientOptions } from '../types/driver';
  * @param options
  */
 export const useApolloClient = (
-  initApolloClient,
+  initApolloClient: any,
   options: InitApolloClientOptions & { client: any }
 ) => {
   /*
@@ -25,16 +25,16 @@ export const useApolloClient = (
     !(client as any)?.persistor
   );
 
-  useEffect(() => {
+  const initializePersistent = useCallback(async () => {
     if ((client as any)?.persistor) {
       const persistor = (client as any)?.persistor;
-      // eslint-disable-next-line no-inner-declarations
-      async function initialize() {
-        await persistor.restore();
-        setInitPersistent(true);
-      }
-      initialize();
+      await persistor.restore();
+      setInitPersistent(true);
     }
+  }, []);
+
+  useEffect(() => {
+    initializePersistent();
   }, []);
 
   return { client, initPersistent };
