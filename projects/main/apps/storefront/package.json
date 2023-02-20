@@ -13,6 +13,7 @@
     "react": "^18",
     "react-dom": "^18",
     "ui": "workspace:*",
+    "@main/ui-testbed": "workspace:*",
     "@web/base": "workspace:*",
     "chitility": "workspace:*"
   },

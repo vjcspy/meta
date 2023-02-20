@@ -1,0 +1,17 @@
+mutation addSimpleProductsToCart($input: AddSimpleProductsToCartInput) {
+    addSimpleProductsToCart(
+        input: $input
+    ) {
+        cart {
+            id
+            items {
+                id
+                product {
+                    sku
+                    stock_status
+                }
+                quantity
+            }
+        }
+    }
+}

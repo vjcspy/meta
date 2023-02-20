@@ -1,0 +1,57 @@
+query productDetailByUrlKey($urlKey: String) {
+    products(filter: { url_key: { eq: $urlKey } }) {
+        items {
+            ...ProductDetails
+            related_products{
+                name
+                sku
+                url_key
+                price_range{
+                    minimum_price{
+                        discount{
+                            amount_off
+                            percent_off
+                        }
+                        final_price{
+                            currency
+                            value
+                        }
+                    }
+                }
+                small_image{
+                    url
+                    label
+                }
+                media_gallery{
+                    url
+                }
+            }
+            crosssell_products{
+                name
+                sku
+                url_key
+                price_range{
+                    minimum_price{
+                        discount{
+                            amount_off
+                            percent_off
+                        }
+                        final_price{
+                            currency
+                            value
+                        }
+                    }
+                }
+                small_image{
+                    url
+                    label
+                }
+                media_gallery{
+                    url
+                }
+            }
+            rating_summary
+            review_count
+        }
+    }
+}

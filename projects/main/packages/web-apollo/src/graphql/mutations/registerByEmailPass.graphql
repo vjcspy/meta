@@ -1,0 +1,18 @@
+mutation registerByEmailPass($firstname: String!,$lastname: String!,$email:String!,$password:String!,$isSubscribed : Boolean = false){
+    createCustomer(
+        input: {
+            firstname: $firstname
+            lastname: $lastname
+            email: $email
+            password: $password
+            is_subscribed: $isSubscribed
+        }
+    ) {
+        customer {
+            firstname
+            lastname
+            email
+            is_subscribed
+        }
+    }
+}

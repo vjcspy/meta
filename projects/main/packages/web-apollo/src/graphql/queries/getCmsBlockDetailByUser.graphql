@@ -1,0 +1,9 @@
+query getCmsBlockDetailByUser($identifier: String!,$userId: String!) {
+    cmsBlockByUser(identifier: $identifier, userId: $userId) {
+        user_id
+        content
+        identifier
+        title
+        __typename
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@main/packages-web-apollo",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint-config-nextjs": "workspace:*",
+    "react": "^18",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "chitility": "workspace:*",
+    "@web/base": "workspace:*",
+    "@web/apollo": "workspace:*",
+    "@apollo/client": "^3.7.8",
+    "graphql": "^16.6.0"
+  }
+}

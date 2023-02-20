@@ -1,0 +1,146 @@
+# Once graphql-ce/1027 is resolved other queries can use this fragment.
+# Until then, changes to this fragment must be mirrored in
+# getProductDetail.graphql.
+fragment ProductListingItem on ProductInterface {
+    __typename
+    description {
+        html
+    }
+    id
+    media_gallery_entries {
+        id
+        label
+        position
+        disabled
+        file
+    }
+    media_gallery{
+        url
+        label
+    }
+    meta_title
+    meta_keyword
+    meta_description
+    name
+    price {
+        regularPrice {
+            amount {
+                currency
+                value
+            }
+        }
+    }
+    price_range{
+        maximum_price{
+            discount{
+                amount_off
+                percent_off
+            }
+            final_price{
+                currency
+                value
+            }
+            fixed_product_taxes{
+                amount{
+                    currency
+                    value
+                }
+                label
+            }
+            regular_price{
+                currency
+                value
+            }
+        }
+        minimum_price{
+            discount{
+                amount_off
+                percent_off
+            }
+            final_price{
+                currency
+                value
+            }
+            fixed_product_taxes{
+                amount{
+                    currency
+                    value
+                }
+                label
+            }
+            regular_price{
+                currency
+                value
+            }
+        }
+    }
+    price_tiers{
+        discount{
+            amount_off
+            percent_off
+        }
+        quantity
+        final_price{
+            currency
+            value
+        }
+    }
+    sku
+    small_image {
+        url
+    }
+    url_rewrites{
+        url
+        parameters{
+            name
+            value
+        }
+    }
+    ... on ConfigurableProduct {
+        configurable_options {
+            attribute_code
+            attribute_id
+            id
+            label
+            values {
+                default_label
+                label
+                store_label
+                use_default_value
+                value_index
+                swatch_data {
+                    ... on ImageSwatchData {
+                        thumbnail
+                    }
+                    value
+                }
+            }
+        }
+        variants {
+            attributes {
+                code
+                value_index
+            }
+            product {
+                id
+                media_gallery_entries {
+                    id
+                    disabled
+                    file
+                    label
+                    position
+                }
+                sku
+                stock_status
+                price {
+                    regularPrice {
+                        amount {
+                            currency
+                            value
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

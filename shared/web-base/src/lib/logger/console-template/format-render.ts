@@ -2,9 +2,9 @@ import { Registry } from 'chitility/dist/util/registry';
 import { color } from 'console-log-colors';
 
 import { LOG_CONTEXT_KEY } from '../../../values/LogKey';
-import { logContext } from './logContext';
+import { formatContent } from './format-content';
 
-export const logRender = (context: string) => {
+export const formatRender = (context: string) => {
   if (typeof Registry.getInstance().registry(LOG_CONTEXT_KEY) === 'undefined') {
     Registry.getInstance().register(LOG_CONTEXT_KEY, {
       [context]: 1,
@@ -17,7 +17,7 @@ export const logRender = (context: string) => {
       ++_r[context];
     }
   }
-  return `${color.cyan.italic('Render')} ${logContext(context)} +${
+  return `${color.cyan.italic('Render')} ${formatContent(context)} +${
     Registry.getInstance().registry(LOG_CONTEXT_KEY)[context]
   }`;
 };

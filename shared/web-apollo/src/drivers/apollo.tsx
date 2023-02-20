@@ -27,7 +27,7 @@ export const withApollo = (
     useDebugRender('WithApollo');
     const { apollo, ...pageProps } = props;
 
-    const { client, initPersistent } = useApolloClient({
+    const { client, initPersistent } = useApolloClient(initApolloClient, {
       ...apollo,
       apiBase,
     });

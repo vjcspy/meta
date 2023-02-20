@@ -18,8 +18,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.8",
-    "chitility": "workspace:*",
     "@web/base": "workspace:*",
-    "graphql": "^16.6.0"
+    "chitility": "workspace:*",
+    "graphql": "^16.6.0",
+    "graphql-request": "^5.1.0"
   }
 }

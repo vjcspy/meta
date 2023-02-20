@@ -1,0 +1,49 @@
+mutation setShippingAddress(
+    $cartId: String!
+    $firstname: String!
+    $lastname: String!
+    $street: [String]!
+    $telephone: String!
+    $province: String!
+    $district: String!
+    $ward: String!,
+    $saveInAddressBook: Boolean!
+    $customerNotes: String!
+) {
+    setShippingAddressesOnCart(
+        input: {
+            cart_id: $cartId
+            shipping_addresses: [
+                {
+                    address: {
+                        firstname: $firstname
+                        lastname: $lastname
+                        street: $street
+                        city: $district
+                        region: $province
+                        postcode: "000000"
+                        iz_address_province: $province
+                        iz_address_district: $district
+                        iz_address_ward: $ward
+                        telephone: $telephone
+                        country_code: "vn"
+                        save_in_address_book: $saveInAddressBook
+                    }
+                    customer_notes: $customerNotes
+                }
+            ]
+        }
+    ) {
+        cart {
+            id
+            shipping_addresses {
+                available_shipping_methods {
+                    carrier_code
+                    carrier_title
+                    method_code
+                    method_title
+                }
+            }
+        }
+    }
+}

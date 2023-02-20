@@ -1,0 +1,16 @@
+query getCmsPagesByUser($userId: String!){
+    cmsPagesByUser(userId: $userId){
+        content
+        content_heading
+        gallery_images
+        identifier
+        meta_description
+        meta_keywords
+        meta_title
+        page_layout
+        page_type
+        title
+        url_key
+        user_id
+    }
+}

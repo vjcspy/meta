@@ -1,0 +1,14 @@
+query getWishlistDetail {
+  customer {
+    wishlists {
+      id
+      name
+      items_count
+      items_v2 {
+        items {
+          ...WishlistItem
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+query getCategoryForListing($categoryId: Int!){
+    category(id: $categoryId) {
+        id
+        description
+        name
+        meta_title
+        meta_keywords
+        meta_description
+        image
+    }
+}

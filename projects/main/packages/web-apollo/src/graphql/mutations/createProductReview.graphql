@@ -1,0 +1,14 @@
+mutation createProductReview($nickname: String!,$summary : String!, $text: String!,$sku:String!, $ratingId: String!, $ratingValue: String!){
+    createProductReview(input: {
+        nickname: $nickname,
+        ratings:{
+            id: $ratingId,
+            value_id: $ratingValue
+        }
+        sku: $sku,
+        summary: $summary,
+        text: $text
+    }){
+        __typename
+    }
+}

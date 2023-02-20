@@ -1,4 +1,4 @@
-import { TestBed } from "@main/ui-testbed";
+import { TestBed } from '@main/ui-testbed';
 
 export default function Web() {
   return (

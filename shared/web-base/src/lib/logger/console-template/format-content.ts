@@ -1,4 +1,4 @@
 import { color } from 'console-log-colors';
-export const logContext = (context: string) => {
+export const formatContent = (context: string) => {
   return color.yellow(`[${context}]`);
 };

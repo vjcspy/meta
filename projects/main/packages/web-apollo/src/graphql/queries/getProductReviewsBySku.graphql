@@ -1,0 +1,27 @@
+query getProductReviewsBySku($sku: String, $pageSize: Int = 5, $currentPage: Int = 1) {
+    products(filter: { sku: { eq: $sku } }) {
+        items {
+            __typename
+            rating_summary
+            review_count
+            reviews(currentPage: $currentPage,pageSize: $pageSize){
+                items{
+                    average_rating
+                    created_at
+                    nickname
+                    ratings_breakdown{
+                        name
+                        value
+                    }
+                    summary
+                    text
+                }
+                page_info{
+                    current_page
+                    page_size
+                    total_pages
+                }
+            }
+        }
+    }
+}

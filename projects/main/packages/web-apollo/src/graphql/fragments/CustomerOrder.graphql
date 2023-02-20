@@ -1,0 +1,85 @@
+fragment CustomerOrder on CustomerOrder{
+    id
+    number
+    order_date
+    billing_address {
+        firstname
+        middlename
+        lastname
+        street
+        city
+        postcode
+        telephone
+        country_code
+        iz_address_province
+        iz_address_district
+        iz_address_ward
+    }
+    shipping_address {
+        firstname
+        middlename
+        lastname
+        street
+        city
+        postcode
+        telephone
+        country_code
+        iz_address_province
+        iz_address_district
+        iz_address_ward
+    }
+    shipping_method
+    payment_methods {
+        name
+        type
+        additional_data {
+            name
+            value
+        }
+    }
+    total {
+        grand_total {
+            value
+            currency
+        }
+        total_shipping {
+            currency
+            value
+        }
+        total_tax {
+            currency
+            value
+        }
+        subtotal {
+            currency
+            value
+        }
+        discounts{
+            amount{
+                currency
+                value
+            }
+            label
+        }
+    }
+    status
+    status_code
+    carrier
+    items {
+        id
+
+        image
+        product_name
+        product_sku
+        quantity_ordered
+        product_sale_price {
+            currency
+            value
+        }
+        quantity_shipped
+        selected_options {
+            label
+            value
+        }
+    }
+}
