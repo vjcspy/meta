@@ -1,0 +1,5 @@
+#mutation generateCustomerTokenByUsername($username: String!,$password: String!){
+#    generateCustomerTokenByUsername(username: $username, password: $password){
+#        token
+#    }
+#}

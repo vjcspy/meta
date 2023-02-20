@@ -1,0 +1,30 @@
+fragment CategoryTreeItem on CategoryTree{
+    id
+    name
+    url_key
+    url_path
+    url_suffix
+    children_count
+    path
+    image
+    children{
+        id
+        name
+        url_key
+        url_path
+        url_suffix
+        children_count
+        path
+        image
+        children{
+            id
+            name
+            url_key
+            url_path
+            url_suffix
+            children_count
+            path
+            image
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@main/packages-web-apollo-schema-mgt",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx .",
+    "codegen": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --config codegen.yml"
+  },
+  "devDependencies": {
+    "eslint-config-nextjs": "workspace:*",
+    "tsconfig": "workspace:*",
+    "@graphql-codegen/add": "latest",
+    "@graphql-codegen/cli": "latest",
+    "@graphql-codegen/fragment-matcher": "latest",
+    "@graphql-codegen/introspection": "latest",
+    "@graphql-codegen/schema-ast": "latest",
+    "@graphql-codegen/time": "latest",
+    "@graphql-codegen/typescript": "latest",
+    "@graphql-codegen/typescript-document-nodes": "latest",
+    "@graphql-codegen/typescript-graphql-files-modules": "latest",
+    "@graphql-codegen/typescript-operations": "latest",
+    "@graphql-codegen/typescript-react-apollo": "latest",
+    "@apollo/client": "latest",
+    "graphql": "latest"
+  }
+}

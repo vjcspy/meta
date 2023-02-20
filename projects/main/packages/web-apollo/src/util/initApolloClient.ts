@@ -1,14 +1,12 @@
-import { ApolloClient } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { isSSR } from '@web/base/src/util/isSSR';
 import { formatImportant } from '@web/base/src/lib/logger/console-template/format-important';
 import { Registry } from 'chitility/dist/util/registry';
 import { DefaultLink } from './default-links';
-import { WEB_APOLLO_KEY } from '@web/apollo/src/values';
-import {
-  preInstantiatedCache,
-  preInstantiatedCacheFactory,
-} from './apollo-persistent';
+import { magentoCacheKeyFromType } from './magentoCacheKeyFromType';
+import result from '@main/packages-web-apollo-schema-mgt/src/graphql/generated/_generated-fragment-types';
 import { InitApolloClientOptions } from '@web/apollo/src/types/driver';
+import { WEB_APOLLO_KEY } from '@web/apollo/src/values';
 
 // const USE_CACHE_PERSISTENT = false;
 
@@ -47,7 +45,10 @@ export const initApolloClient = (
   apolloClient = new ApolloClient({
     ssrMode: isSSR(),
     // @ts-ignore
-    cache: isSSR() ? preInstantiatedCacheFactory() : preInstantiatedCache,
+    cache: new InMemoryCache({
+      dataIdFromObject: magentoCacheKeyFromType,
+      possibleTypes: result.possibleTypes,
+    }),
     // @ts-ignore
     link: DefaultLink(
       Registry.getInstance().registry(WEB_APOLLO_KEY.GRAPHQL_DEFAULT_URL_KEY),

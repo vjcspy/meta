@@ -1,0 +1,26 @@
+query getCategoryDetailForListing($category_id: Int!) {
+    category(id: $category_id) {
+        breadcrumbs {
+            category_id
+            # We may not need level if `breadcrumbs` is sorted.
+            category_level
+            category_name
+            category_url_path
+        }
+        id
+        name
+        description
+        url_path
+        url_key
+        url_suffix
+        meta_title
+        meta_keywords
+        meta_description
+        children{
+            id
+            name
+            url_path
+            url_key
+        }
+    }
+}

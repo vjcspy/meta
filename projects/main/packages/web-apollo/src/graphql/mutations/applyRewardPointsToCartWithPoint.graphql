@@ -1,7 +1,0 @@
-mutation applyRewardPointsToCartWithPoint($cartId: ID!, $rewardAmountApply: Float!) {
-    applyRewardPointsToCartWithPoint(cartId: $cartId, rewardAmountApply: $rewardAmountApply) {
-        cart {
-            ...CartDetails
-        }
-    }
-}

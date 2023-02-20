@@ -1,15 +1,13 @@
 module.exports = {
-  extends: ["next", "turbo", "plugin:prettier/recommended"],
-  rules: {
-    "@next/next/no-html-link-for-pages": "off",
-    "react/jsx-key": "off",
-    "react-hooks/exhaustive-deps": "off",
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        endOfLine: 'auto',
-      },
-    ],
+  extends: ["next/core-web-vitals", "prettier"],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
+  parserOptions: {
+    babelOptions: {
+      presets: [require.resolve("next/babel")],
+    },
   },
 };

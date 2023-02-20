@@ -1,6 +1,0 @@
-query getProductAdditionInfomation($sku: String!) {
-    productAdditonInformation(sku:$sku) {
-        id
-        data
-    }
-}

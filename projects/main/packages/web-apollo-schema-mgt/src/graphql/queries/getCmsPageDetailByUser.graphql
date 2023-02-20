@@ -1,0 +1,12 @@
+#query getCmsPageDetailByUser($urlKey: String!,$userId: String!) {
+#    cmsPageByUser(urlKey: $urlKey, userId: $userId) {
+#        url_key
+#        content
+#        content_heading
+#        title
+#        page_layout
+#        meta_title
+#        meta_keywords
+#        meta_description
+#    }
+#}
