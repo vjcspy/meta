@@ -9,7 +9,7 @@
     "codegen": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --config codegen.yml"
   },
   "devDependencies": {
-    "eslint-config-nextjs": "workspace:*",
+    "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
     "@graphql-codegen/add": "latest",
     "@graphql-codegen/cli": "latest",

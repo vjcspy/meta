@@ -1,11 +1,12 @@
-import { ApolloClient, ApolloProvider } from '@apollo/client';
+import type { ApolloClient } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
+import { useDebugRender } from '@web/base/src/hook/useDebugRender';
+import { isSSR } from '@web/base/src/util/isSSR';
+import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import React from 'react';
 
 import { useApolloClient } from '../hook/use-apollo-client';
-import { isSSR } from '@web/base/src/util/isSSR';
-import { WithApolloOptions } from '../types/driver';
-import { useDebugRender } from '@web/base/src/hook/useDebugRender';
-import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
+import type { WithApolloOptions } from '../types/driver';
 
 /**
  *

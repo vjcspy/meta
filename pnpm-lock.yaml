@@ -107,7 +107,7 @@ importers:
       '@web/apollo': workspace:*
       '@web/base': workspace:*
       chitility: workspace:*
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       graphql: latest
       react: ^18
       tsconfig: workspace:*
@@ -121,7 +121,7 @@ importers:
     devDependencies:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      eslint-config-nextjs: link:../../../../shared/eslint-config-nextjs
+      eslint-config-server: link:../../../../shared/eslint-config-server
       react: 18.2.0
       tsconfig: link:../../../../shared/tsconfig
 
@@ -139,7 +139,7 @@ importers:
       '@graphql-codegen/typescript-graphql-files-modules': latest
       '@graphql-codegen/typescript-operations': latest
       '@graphql-codegen/typescript-react-apollo': latest
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       graphql: latest
       tsconfig: workspace:*
     devDependencies:
@@ -155,7 +155,7 @@ importers:
       '@graphql-codegen/typescript-graphql-files-modules': 2.2.1_graphql@16.6.0
       '@graphql-codegen/typescript-operations': 3.0.0_graphql@16.6.0
       '@graphql-codegen/typescript-react-apollo': 3.3.7_sy4knu3obj4ys7pjcqbyfxmqle
-      eslint-config-nextjs: link:../../../../shared/eslint-config-nextjs
+      eslint-config-server: link:../../../../shared/eslint-config-server
       graphql: 16.6.0
       tsconfig: link:../../../../shared/tsconfig
 
@@ -163,13 +163,13 @@ importers:
     specifiers:
       '@types/react': ^18
       '@types/react-dom': ^18
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       react: ^18
       tsconfig: workspace:*
     devDependencies:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      eslint-config-nextjs: link:../../../../shared/eslint-config-nextjs
+      eslint-config-server: link:../../../../shared/eslint-config-server
       react: 18.2.0
       tsconfig: link:../../../../shared/tsconfig
 
@@ -209,14 +209,14 @@ importers:
     specifiers:
       '@types/react': ^18
       '@types/react-dom': ^18
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       react: ^18
       tsconfig: workspace:*
       typescript: ^4.5.2
     devDependencies:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      eslint-config-nextjs: link:../eslint-config-nextjs
+      eslint-config-server: link:../eslint-config-server
       react: 18.2.0
       tsconfig: link:../tsconfig
       typescript: 4.9.5
@@ -226,14 +226,14 @@ importers:
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
       eslint: ^7.32.0
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       react: ^18.2.0
       tsconfig: workspace:*
     devDependencies:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       eslint: 7.32.0
-      eslint-config-nextjs: link:../eslint-config-nextjs
+      eslint-config-server: link:../eslint-config-server
       react: 18.2.0
       tsconfig: link:../tsconfig
 
@@ -244,7 +244,7 @@ importers:
       '@types/react-dom': ^18.0.6
       '@web/base': workspace:*
       chitility: workspace:*
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       graphql: ^16.6.0
       graphql-request: ^5.1.0
       react: ^18
@@ -258,7 +258,7 @@ importers:
     devDependencies:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      eslint-config-nextjs: link:../eslint-config-nextjs
+      eslint-config-server: link:../eslint-config-server
       react: 18.2.0
       tsconfig: link:../tsconfig
 
@@ -268,7 +268,7 @@ importers:
       '@types/react-dom': ^18.0.6
       chitility: workspace:*
       console-log-colors: ^0.3.5
-      eslint-config-nextjs: workspace:*
+      eslint-config-server: workspace:*
       react: ^18
       tsconfig: workspace:*
       winston: ^3.8.2
@@ -279,7 +279,7 @@ importers:
     devDependencies:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      eslint-config-nextjs: link:../eslint-config-nextjs
+      eslint-config-server: link:../eslint-config-server
       react: 18.2.0
       tsconfig: link:../tsconfig
 

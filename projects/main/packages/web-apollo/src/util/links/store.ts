@@ -9,7 +9,7 @@ export const StoreLink = (getStoreCode: () => Promise<string>) =>
         ...headers,
       },
     };
-    if (!!storeCode) {
+    if (storeCode) {
       originHeaders.headers['Store'] = storeCode;
     }
 

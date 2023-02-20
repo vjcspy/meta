@@ -1,4 +1,4 @@
-import { WatchQueryFetchPolicy } from '@apollo/client';
+import type { WatchQueryFetchPolicy } from '@apollo/client';
 import { NamespacedLocalStorage } from '@web/base/src/lib/persistent/NamespacedLocalStorage';
 import { isSSR } from '@web/base/src/util/isSSR';
 

@@ -1,23 +1,23 @@
 /* tslint:disable */
-import { DefinitionNode } from 'graphql';
+import type { HttpOptions, UriFunction as _UriFunction } from '@apollo/client';
 import {
   ApolloLink,
   createSignalIfSupported,
   fallbackHttpConfig,
   fromError,
-  HttpOptions,
   Observable,
   parseAndCheckHttpResponse,
   selectHttpOptionsAndBody,
   selectURI,
   serializeFetchParameter,
-  UriFunction as _UriFunction,
 } from '@apollo/client';
+import type { DefinitionNode } from 'graphql';
 
 // For backwards compatibility.
 // export import FetchOptions = HttpLinkPersisted.Options;
 // export import UriFunction = HttpLinkPersisted.UriFunction;
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace HttpLinkPersisted {
   //TODO Would much rather be able to export directly
   export type UriFunction = _UriFunction;

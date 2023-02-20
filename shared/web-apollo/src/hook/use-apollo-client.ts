@@ -1,6 +1,7 @@
-import { ApolloClient } from '@apollo/client';
+import type { ApolloClient } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { InitApolloClientOptions } from '../types/driver';
+
+import type { InitApolloClientOptions } from '../types/driver';
 
 /**
  *
@@ -27,6 +28,7 @@ export const useApolloClient = (
   useEffect(() => {
     if ((client as any)?.persistor) {
       const persistor = (client as any)?.persistor;
+      // eslint-disable-next-line no-inner-declarations
       async function initialize() {
         await persistor.restore();
         setInitPersistent(true);

@@ -10,7 +10,7 @@
     "lint": "eslint --ext ts,tsx ."
   },
   "devDependencies": {
-    "eslint-config-nextjs": "workspace:*",
+    "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
     "react": "^18",
     "@types/react": "^18",
