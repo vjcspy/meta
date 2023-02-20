@@ -1,6 +1,7 @@
 import type { ApolloClient } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { useDebugRender } from '@web/base/src/hook/useDebugRender';
+import { formatImportant } from '@web/base/src/lib/logger/console-template/format-important';
 import { isSSR } from '@web/base/src/util/isSSR';
 import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import React from 'react';
@@ -85,7 +86,7 @@ export const withApollo = (
             const { getDataFromTree } = await import(
               '@apollo/client/react/ssr'
             );
-            logger.debug('>>> Apollo getDataFromTree');
+            logger.info(formatImportant('Apollo getDataFromTree'));
             await getDataFromTree(
               <ctx.AppTree
                 pageProps={{
@@ -97,7 +98,9 @@ export const withApollo = (
 
             // Extract query data from the Apollo store
             initialData = client.cache.extract();
-            logger.debug('>>> WithApollo: initialize data process done ! <<<');
+            logger.info(
+              formatImportant('WithApollo: initialize data process done !')
+            );
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:

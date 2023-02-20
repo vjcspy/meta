@@ -40,7 +40,7 @@ export const initApolloClient = (
   }
 
   const { apiBase, ...apollo } = apolloOptions;
-  console.log(formatImportant('>>> init apollo client'));
+  console.log(formatImportant('init apollo client'));
   apolloClient = new ApolloClient({
     ssrMode: isSSR(),
     // @ts-ignore
