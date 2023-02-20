@@ -11,4 +11,6 @@ export class WEB_APOLLO_KEY {
    * @type {string}
    */
   static GRAPHQL_DEFAULT_URL_KEY = 'GRAPHQL_DEFAULT_URL_KEY';
+
+  static GRAPHQL_USE_LINK_PERSISTED = 'GRAPHQL_USE_LINK_PERSISTED';
 }

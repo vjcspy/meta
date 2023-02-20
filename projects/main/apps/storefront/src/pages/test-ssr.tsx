@@ -16,7 +16,7 @@ const TestSsr: NextPage = () => {
 export default withAdapter(
   TestSsr,
   {
-    apollo: { apiBase: '', initApolloClient },
+    apollo: { apiBase: 'https://mgt24.test.lc/graphql', initApolloClient },
   },
   [withApollo]
 );

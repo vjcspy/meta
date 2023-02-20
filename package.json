@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
-    "dev:main": "turbo run dev --filter=@main/apps-storefront",
+    "dev": "turbo run dev --filter=@main/apps-storefront",
+    "dev:apps": "turbo run dev --filter=web",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "watch": "turbo run watch --parallel"
