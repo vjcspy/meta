@@ -1,14 +1,9 @@
+import Foo from '@modules/testbed/components/Foo';
 import { withDefaultAdapter } from '@modules/util/withDefaultAdapter';
 import type { NextPage } from 'next';
 
-import TestProductDetail from '../modules/testbed/components/TestProductDetail';
-
 const TestSsr: NextPage = () => {
-  return (
-    <>
-      <TestProductDetail />
-    </>
-  );
+  return <Foo />;
 };
 
 export default withDefaultAdapter(TestSsr);
