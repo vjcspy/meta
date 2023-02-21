@@ -2,7 +2,7 @@ import { useDebugRender } from '@web/base/src/hook/useDebugRender';
 import dynamic from 'next/dynamic';
 
 const DynamicTestProductDetail = dynamic(
-  () => import('@modules/testbed/components/TestProductDetail'),
+  () => import('@main/ui-testbed/src/components/TestProductDetail'),
   {
     loading: () => <>Loading...</>,
   }

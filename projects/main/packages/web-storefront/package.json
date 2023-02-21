@@ -1,5 +1,5 @@
 {
-  "name": "@main/ui-testbed",
+  "name": "@main/packages-web-storefront",
   "version": "0.0.0",
   "main": "src/index.tsx",
   "types": "src/index.tsx",
@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@web/base": "workspace:*",
-    "@main/packages-web-apollo-schema-mgt": "workspace:*"
+    "@web/apollo": "workspace:*",
+    "chitility": "workspace:*",
+    "@main/packages-web-apollo": "workspace:*"
   }
 }

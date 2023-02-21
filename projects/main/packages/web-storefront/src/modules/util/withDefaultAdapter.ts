@@ -1,12 +1,12 @@
-import { ADAPTERS } from '@etc/config';
 import { initApolloClient } from '@main/packages-web-apollo/src/util/initApolloClient';
-import { getGraphQlUrl } from '@modules/util/url';
 import { withAdapter } from '@web/base/src/lib/adapter/withAdapters';
-import type { NextPage } from 'next';
 
-export const withDefaultAdapter = (page: NextPage<any>) => {
+import { ADAPTERS } from '../../etc/config';
+import { getGraphQlUrl } from './url';
+
+export const withDefaultAdapter = (NextPage: any) => {
   return withAdapter(
-    page,
+    NextPage,
     {
       ssr: true,
       apollo: { apiBase: getGraphQlUrl(), initApolloClient },

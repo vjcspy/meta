@@ -99,7 +99,6 @@ export const withApollo = (
             console.info(
               format.important('WithApollo: initialize data process done !')
             );
-            console.debug(initialData);
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:

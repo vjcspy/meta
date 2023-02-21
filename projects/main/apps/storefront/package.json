@@ -15,15 +15,11 @@
     "immutable": "latest",
     "lodash": "latest",
     "ui": "workspace:*",
-    "@main/ui-testbed": "workspace:*",
+    "@main/packages-web-storefront": "workspace:*",
     "@web/base": "workspace:*",
-    "@web/apollo": "workspace:*",
-    "chitility": "workspace:*",
-    "@main/packages-web-apollo": "workspace:*",
-    "@main/packages-web-apollo-schema-mgt": "workspace:*"
+    "@main/ui-testbed": "workspace:*"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
     "eslint-config-nextjs": "workspace:*",
     "tsconfig": "workspace:*",
     "@types/react": "^18",

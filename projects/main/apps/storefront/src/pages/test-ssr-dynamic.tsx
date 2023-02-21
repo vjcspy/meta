@@ -1,9 +1,9 @@
+import Foo from '@components/Foo';
 import { withDefaultAdapter } from '@main/packages-web-storefront/src/modules/util/withDefaultAdapter';
-import TestBed from '@main/ui-testbed/src/components/TestBed';
 import type { NextPage } from 'next';
 
 const TestSsrDynamic: NextPage = () => {
-  return <TestBed />;
+  return <Foo />;
 };
 
 export default withDefaultAdapter(TestSsrDynamic);
