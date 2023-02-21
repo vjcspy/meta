@@ -7,14 +7,19 @@ export const serverlessSimpleConfiguration: (config: {
 }) => AWS = (config) => {
   const { service, profile, region = 'us-east-1' } = config;
   return {
+    useDotenv: true,
     service,
     frameworkVersion: '3',
-    plugins: ['serverless-esbuild', 'serverless-offline'],
+    plugins: [
+      'serverless-dotenv-plugin',
+      'serverless-esbuild',
+      'serverless-offline',
+    ],
     provider: {
       name: 'aws',
       runtime: 'nodejs18.x',
       region,
-      stage: 'prod',
+      stage: 'production',
       profile,
       memorySize: 128,
       timeout: 10,
@@ -30,7 +35,6 @@ export const serverlessSimpleConfiguration: (config: {
       environment: {
         AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
         NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-        NODE_ENV: 'production',
       },
     },
     functions: {

@@ -2,10 +2,10 @@ import { Registry } from 'chitility/dist/util/registry';
 import { color } from 'console-log-colors';
 
 import { LOG_CONTEXT_KEY } from '../../../values/LogKey';
-import { formatContent } from './format-content';
+import { formatContext } from './format-content';
 
 export const formatUnmount = (context: string) => {
-  const unmountMessage = `${color.red.italic('Unmount')} ${formatContent(
+  const unmountMessage = `${color.red.italic('Unmount')} ${formatContext(
     context
   )}`;
   const unmountCb = () => {

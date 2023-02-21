@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import result from '@main/packages-web-apollo-schema-mgt/src/graphql/generated/_generated-fragment-types';
 import type { InitApolloClientOptions } from '@web/apollo/src/types/driver';
-import { formatImportant } from '@web/base/src/lib/logger/console-template/format-important';
+import { format } from '@web/base';
 import { isSSR } from '@web/base/src/util/isSSR';
 
 import { DefaultLink } from './default-links';
@@ -40,7 +40,7 @@ export const initApolloClient = (
   }
 
   const { apiBase, ...apollo } = apolloOptions;
-  console.log(formatImportant('init apollo client'));
+  console.log(format.important('init apollo client'));
   apolloClient = new ApolloClient({
     ssrMode: isSSR(),
     // @ts-ignore

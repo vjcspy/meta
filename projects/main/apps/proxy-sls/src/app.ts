@@ -1,4 +1,5 @@
 import { getInfoController } from '@controllers/getInfo';
+import { baseProxy } from '@middlewares/base-proxy.middleware';
 import { bedkingdomStgProxy } from '@middlewares/bedkingdom-stg-proxy.middleware';
 import { errorHandler } from '@middlewares/handle-error';
 import compression from 'compression';
@@ -11,6 +12,7 @@ const app: Express = express();
 /* ____________________MIDDLEWARES____________________ */
 app.use(compression()); // compresses requests
 app.use('*', cors());
+app.use('*', baseProxy);
 app.use('*', bedkingdomStgProxy);
 app.use(errorHandler);
 

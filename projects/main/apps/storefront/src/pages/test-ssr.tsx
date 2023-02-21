@@ -1,6 +1,4 @@
-import { initApolloClient } from '@main/packages-web-apollo/src/util/initApolloClient';
-import { withApollo } from '@web/apollo';
-import { withAdapter } from '@web/base/src/lib/adapter/withAdapters';
+import { withDefaultAdapter } from '@modules/util/withDefaultAdapter';
 import type { NextPage } from 'next';
 
 import TestProductDetail from '../modules/testbed/components/TestProductDetail';
@@ -13,10 +11,4 @@ const TestSsr: NextPage = () => {
   );
 };
 
-export default withAdapter(
-  TestSsr,
-  {
-    apollo: { apiBase: 'https://mgt24.test.lc/graphql', initApolloClient },
-  },
-  [withApollo]
-);
+export default withDefaultAdapter(TestSsr);

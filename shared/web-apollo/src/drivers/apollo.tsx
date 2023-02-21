@@ -1,9 +1,8 @@
 import type { ApolloClient } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
+import { format } from '@web/base';
 import { useDebugRender } from '@web/base/src/hook/useDebugRender';
-import { formatImportant } from '@web/base/src/lib/logger/console-template/format-important';
 import { isSSR } from '@web/base/src/util/isSSR';
-import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import React from 'react';
 
 import { useApolloClient } from '../hook/use-apollo-client';
@@ -49,7 +48,6 @@ export const withApollo = (
 
   if (ssr || PageComponent.getInitialProps) {
     WithApollo.getInitialProps = async (ctx: any) => {
-      const logger = new CliLogger('WithApollo.getInitialProps');
       // @ts-ignore
       let client: ApolloClient<any> = ctx?.apolloClient;
       if (!client) {
@@ -71,11 +69,11 @@ export const withApollo = (
 
       // Only on the server:
       if (isSSR()) {
-        logger.info('ssr: Apollo');
+        console.info('ssr: Apollo');
         // When redirecting, the response is finished.
         // No point in continuing to render
         if (ctx.res && ctx.res.writableEnded) {
-          logger.warn('writableEnded');
+          console.warn('writableEnded');
           return pageProps;
         }
 
@@ -86,7 +84,7 @@ export const withApollo = (
             const { getDataFromTree } = await import(
               '@apollo/client/react/ssr'
             );
-            logger.info(formatImportant('Apollo getDataFromTree'));
+            console.info(format.important('Apollo getDataFromTree'));
             await getDataFromTree(
               <ctx.AppTree
                 pageProps={{
@@ -98,14 +96,14 @@ export const withApollo = (
 
             // Extract query data from the Apollo store
             initialData = client.cache.extract();
-            logger.info(
-              formatImportant('WithApollo: initialize data process done !')
+            console.info(
+              format.important('WithApollo: initialize data process done !')
             );
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:
             // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
-            logger.error(
+            console.error(
               'WithApollo: Error while running `getDataFromTree`',
               error
             );

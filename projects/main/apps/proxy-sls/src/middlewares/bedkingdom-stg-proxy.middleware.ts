@@ -1,8 +1,10 @@
 /* eslint-disable no-param-reassign */
+import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import type { Request } from 'express';
 import type { Options } from 'http-proxy-middleware';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
+const logger = new CliLogger('bedkingdom-staging-proxy');
 const originalOptions: Options = {
   // TODO: need to resolve target by setting or domain name
   target: 'https://backend.bedkingdom.co.uk.cfstack.com',
@@ -16,8 +18,8 @@ const originalOptions: Options = {
   },
   secure: false,
   onProxyReq: (_proxyReq, req: Request) => {
-    console.log(
-      `[Global Functional Middleware]: Proxying ${req.method} request originally made to '${req.originalUrl}'...`,
+    logger.info(
+      `[Global Functional Middleware]: Proxying ${req.method} request originally made to '${req.originalUrl}'...`
     );
   },
   router: {
@@ -41,5 +43,5 @@ const originalOptions: Options = {
 
 export const bedkingdomStgProxy = createProxyMiddleware(
   ['/proxy/bedkingdom-stg/**'],
-  originalOptions,
+  originalOptions
 );

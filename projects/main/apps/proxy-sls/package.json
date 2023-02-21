@@ -5,10 +5,10 @@
   "types": "src/index.tsx",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development sls offline start --stage offline",
+    "dev": "NODE_ENV=development sls offline start --stage offline --reloadHandler",
     "tail-log": "sls logs -f app -t",
-    "deploy:prod": "NODE_ENV=production sls deploy --stage prod --verbose --aws-s3-accelerate",
-    "remove:prod": "NODE_ENV=production sls remove --stage prod",
+    "deploy:prod": "NODE_ENV=production sls deploy --stage production --verbose --aws-s3-accelerate",
+    "remove:prod": "NODE_ENV=production sls remove --stage production",
     "clean": "rimraf dist .webpack .serverless",
     "lint": "eslint --ext ts,tsx ."
   },
@@ -39,6 +39,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6",
-    "serverless-http": "^3.1.1"
+    "serverless-http": "^3.1.1",
+    "chitility": "workspace:*"
   }
 }

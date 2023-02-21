@@ -1,25 +1,26 @@
 /* eslint-disable no-param-reassign */
+import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import type { Request } from 'express';
 import type { Options } from 'http-proxy-middleware';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import * as process from 'process';
+
+const logger = new CliLogger('base-proxy');
 
 const originalOptions: Options = {
   // TODO: need to resolve target by setting or domain name
-  target: '',
+  target: process.env.BASE_PROXY_URL,
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
   pathRewrite: {
     // '^/api/old-path': '/api/new-path', // rewrite path
-    // '^/api/rest': '/rest', // remove base path
     '^/proxy/base': '', // remove base path
     '^/proxy/base/graphql': 'graphql', // remove base path
-    '^/dev/proxy/base/graphql': 'graphql', // remove base path
-    '^/production/proxy/base/graphql': 'graphql', // remove base path
-    '^/staging/proxy/base/graphql': 'graphql', // remove base path
+    '^/cdn/proxy/base/graphql': 'graphql', // remove base path
   },
   secure: false,
   onProxyReq: (_proxyReq, req: Request) => {
-    console.log(
+    logger.info(
       `[Global Functional Middleware]: Proxying ${req.method} request originally made to '${req.originalUrl}'...`
     );
   },

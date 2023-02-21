@@ -20,7 +20,6 @@ export class CliLogger extends Logger {
       config.level = 'debug';
     }
     super(config);
-    super(config);
   }
   createWinston() {
     return winston.createLogger({
