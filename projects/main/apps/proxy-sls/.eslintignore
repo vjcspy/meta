@@ -1,0 +1,13 @@
+node_modules
+!.*
+dist
+build
+.next
+
+# Serverless
+coverage
+amplify
+.serverless
+_warmup
+test
+.build

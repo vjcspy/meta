@@ -1,0 +1,19 @@
+{
+  "extends": "tsconfig/node.json",
+  "include": ["src/**/*.ts", "serverless.ts"],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@controllers/*": ["src/controllers/*"],
+      "@middlewares/*": ["src/middlewares/*"]
+    }
+  }
+}
