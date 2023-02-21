@@ -1,0 +1,25 @@
+fragment ProductReview on ProductInterface {
+    rating_summary
+    review_count
+    reviews{
+        items{
+            average_rating
+            created_at
+            nickname
+            product{
+                name
+            }
+            ratings_breakdown{
+                name
+                value
+            }
+            summary
+            text
+        }
+        page_info{
+            current_page
+            page_size
+            total_pages
+        }
+    }
+}

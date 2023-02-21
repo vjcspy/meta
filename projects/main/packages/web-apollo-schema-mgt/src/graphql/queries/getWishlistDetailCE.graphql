@@ -1,0 +1,13 @@
+query getWishlistDetailCE {
+  customer {
+    wishlists {
+      id
+      items_count
+      items_v2 {
+        items {
+          ...WishlistItem
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@main/apps-storefront",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^13",
+    "react": "^18",
+    "react-dom": "^18",
+    "immutable": "latest",
+    "lodash": "latest",
+    "ui": "workspace:*",
+    "@main/ui-testbed": "workspace:*",
+    "@web/base": "workspace:*",
+    "@web/apollo": "workspace:*",
+    "chitility": "workspace:*",
+    "@main/packages-web-apollo": "workspace:*",
+    "@main/packages-web-apollo-schema-mgt": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "eslint-config-nextjs": "workspace:*",
+    "tsconfig": "workspace:*",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/lodash": "latest"
+  }
+}

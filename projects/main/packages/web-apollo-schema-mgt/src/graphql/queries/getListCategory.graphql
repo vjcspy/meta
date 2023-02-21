@@ -1,0 +1,9 @@
+query getListCategory($ids: FilterEqualTypeInput!){
+    categoryList(filters: {
+        ids: $ids
+    }){
+        id
+        uid
+        url_path
+    }
+}

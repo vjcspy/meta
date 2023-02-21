@@ -1,0 +1,169 @@
+# Once graphql-ce/1027 is resolved other queries can use this fragment.
+# Until then, changes to this fragment must be mirrored in
+# getProductDetail.graphql.
+fragment ProductDetails on ProductInterface {
+    __typename
+    id
+    name
+    sku
+    url_key
+    stock_status
+    description{
+        html
+        ... on ComplexTextValue{
+            html
+        }
+    }
+    price_range {
+        maximum_price {
+            final_price {
+                currency
+                value
+            }
+            regular_price {
+                currency
+                value
+            }
+            discount {
+                amount_off
+                percent_off
+            }
+        }
+        minimum_price {
+            final_price {
+                currency
+                value
+            }
+            discount {
+                amount_off
+                percent_off
+            }
+            regular_price {
+                currency
+                value
+            }
+        }
+    }
+    media_gallery {
+        disabled
+        label
+        position
+        url
+        __typename
+    }
+    image{
+        url
+    }
+    small_image{
+        url
+    }
+    price_tiers {
+        discount {
+            amount_off
+            percent_off
+        }
+        final_price {
+            currency
+            value
+        }
+        quantity
+    }
+    ... on ConfigurableProduct {
+        configurable_options {
+            attribute_code
+            attribute_id
+            attribute_id_v2
+            id
+            label
+            values {
+                default_label
+                label
+                store_label
+                use_default_value
+                value_index
+                swatch_data {
+                    ... on ImageSwatchData {
+                        value
+                        thumbnail
+                    }
+                    value
+                }
+            }
+        }
+        variants {
+            attributes {
+                code
+                value_index
+                label
+            }
+            product {
+                id
+                price_tiers {
+                    discount {
+                        amount_off
+                        percent_off
+                    }
+                    final_price {
+                        currency
+                        value
+                    }
+                    quantity
+                }
+                special_price
+                price_range {
+                    maximum_price {
+                        regular_price {
+                            currency
+                            value
+                        }
+                        discount {
+                            amount_off
+                            percent_off
+                        }
+                        final_price {
+                            currency
+                            value
+                        }
+                        fixed_product_taxes {
+                            amount {
+                                currency
+                                value
+                            }
+                            label
+                        }
+                    }
+                    minimum_price {
+                        regular_price {
+                            currency
+                            value
+                        }
+                        discount {
+                            amount_off
+                            percent_off
+                        }
+                        final_price {
+                            currency
+                            value
+                        }
+                        fixed_product_taxes {
+                            amount {
+                                currency
+                                value
+                            }
+                            label
+                        }
+                    }
+                }
+                media_gallery {
+                    disabled
+                    label
+                    position
+                    url
+                    __typename
+                }
+                sku
+                stock_status
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+mutation setShippingMethodOnCart($cartId: String!, $carierCode: String!, $methodCode:String!){
+    setShippingMethodsOnCart(input: {
+        cart_id: $cartId
+        shipping_methods: [
+            {
+                carrier_code: $carierCode
+                method_code: $methodCode
+            }
+        ]
+    }) {
+        cart {
+            shipping_addresses {
+                selected_shipping_method {
+                    carrier_code
+                    method_code
+                    carrier_title
+                    method_title
+                }
+            }
+        }
+    }
+}

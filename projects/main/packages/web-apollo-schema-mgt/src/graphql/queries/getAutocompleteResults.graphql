@@ -1,0 +1,73 @@
+query getAutocompleteResults($inputText: String!,$pageSize: Int = 20) {
+    # Limit results to first five.
+    products(search: $inputText, currentPage: 1, pageSize: $pageSize,sort: {
+        relevance: DESC,
+    }) {
+        aggregations {
+            label
+            count
+            attribute_code
+            options {
+                label
+                value
+                count
+            }
+        }
+        items {
+            id
+            name
+            sku
+            small_image {
+                url
+            }
+            url_rewrites{
+                url
+            }
+            url_path
+            canonical_url
+            url_key
+            price {
+                regularPrice {
+                    amount {
+                        value
+                        currency
+                    }
+                }
+            }
+            price_range {
+                maximum_price {
+                    final_price {
+                        currency
+                        value
+                    }
+                    regular_price {
+                        currency
+                        value
+                    }
+                    discount {
+                        amount_off
+                        percent_off
+                    }
+                }
+                minimum_price {
+                    final_price {
+                        currency
+                        value
+                    }
+                    discount {
+                        amount_off
+                        percent_off
+                    }
+                    regular_price {
+                        currency
+                        value
+                    }
+                }
+            }
+        }
+        page_info {
+            total_pages
+        }
+        total_count
+    }
+}
