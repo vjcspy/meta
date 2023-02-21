@@ -11,17 +11,17 @@ import type { WithApolloOptions } from '../types/driver';
 /**
  *
  * @param PageComponent
- * @param adapterProps
+ * @param adapterOptions
  * @returns {React.ReactElement<any, any> | null}
  */
 export const withApollo = (
   PageComponent: any,
-  adapterProps: WithApolloOptions
+  adapterOptions: WithApolloOptions
 ) => {
   const {
     apollo: { apiBase, initApolloClient },
     ssr = false,
-  } = adapterProps;
+  } = adapterOptions;
 
   const WithApollo: any = (props: any) => {
     useDebugRender('WithApollo');

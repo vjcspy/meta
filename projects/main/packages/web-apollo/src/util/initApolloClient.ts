@@ -40,7 +40,6 @@ export const initApolloClient = (
   }
 
   const { apiBase, ...apollo } = apolloOptions;
-  console.log(format.important('init apollo client'));
   apolloClient = new ApolloClient({
     ssrMode: isSSR(),
     // @ts-ignore
@@ -61,6 +60,7 @@ export const initApolloClient = (
 
   if (apollo?.initialData) {
     apolloClient.cache.restore(apollo.initialData);
+    console.info(format.important('Apollo cache was restored'));
   }
   apolloClient.apiBase = apiBase;
 
