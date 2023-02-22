@@ -68,6 +68,7 @@ importers:
       '@types/jest': 29.2.4
       '@types/node': 18.11.18
       '@types/supertest': ^2.0.11
+      '@web/base': workspace:*
       eslint-config-server: workspace:*
       jest: 29.3.1
       reflect-metadata: ^0.1.13
@@ -81,6 +82,7 @@ importers:
       '@nestjs/common': 9.3.9_mnr6j2del53muneqly5h4y27ai
       '@nestjs/core': 9.3.9_q6agyr4hwia55oswpsa7zjxcpm
       '@nestjs/platform-express': 9.3.9_77foi4w27ghy47yutmnzv7krjy
+      '@web/base': link:../../shared/web-base
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
     devDependencies:

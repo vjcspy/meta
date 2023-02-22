@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "NodeJS",
-  "extends": "./base.json",
+  "display": "NestJS",
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -20,8 +19,5 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  },
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
   }
 }
