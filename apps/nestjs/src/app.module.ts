@@ -10,5 +10,7 @@ import { AppService } from './app.service';
   providers: [AppService],
 })
 export class AppModule implements OnModuleInit {
-  onModuleInit(): any {}
+  onModuleInit(): any {
+    // TODO
+  }
 }
