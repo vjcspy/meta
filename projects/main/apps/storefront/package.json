@@ -14,7 +14,6 @@
     "react-dom": "^18",
     "immutable": "latest",
     "lodash": "latest",
-    "ui": "workspace:*",
     "@main/packages-web-storefront": "workspace:*",
     "@web/base": "workspace:*",
     "@main/ui-testbed": "workspace:*"
