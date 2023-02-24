@@ -9,14 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^13",
+    "next": "^12",
     "react": "^18",
     "react-dom": "^18",
     "immutable": "latest",
     "lodash": "latest",
     "@main/packages-web-storefront": "workspace:*",
+    "@main/packages-web-apollo": "workspace:*",
+    "@main/packages-web-apollo-schema-mgt": "workspace:*",
     "@web/base": "workspace:*",
-    "@main/ui-testbed": "workspace:*"
+    "@main/ui-testbed": "workspace:*",
+    "nextjs-config": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-nextjs": "workspace:*",

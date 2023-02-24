@@ -1,4 +1,4 @@
-import { useDebugRender } from '@web/base/src/hook/useDebugRender';
+import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 import dynamic from 'next/dynamic';
 
 const DynamicBar = dynamic(() => import('@components/Bar'), {

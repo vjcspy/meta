@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import result from '@main/packages-web-apollo-schema-mgt/src/graphql/generated/_generated-fragment-types';
 import type { InitApolloClientOptions } from '@web/apollo/src/types/driver';
 import { format } from '@web/base';
-import { isSSR } from '@web/base/src/util/isSSR';
+import { isSSR } from '@web/base/dist/util/isSSR';
 
 import { DefaultLink } from './default-links';
 import { magentoCacheKeyFromType } from './magentoCacheKeyFromType';

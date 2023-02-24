@@ -13,7 +13,6 @@ const withPWA = require("next-pwa")({
 module.exports = {
   config: (config) => {
     const { transpilePackages, isPWA = false } = config;
-    console.log("=>>>>>>>>>>>>", transpilePackages);
     const withTM = tm(transpilePackages);
     const plugins = [withTM, ...(isPWA ? [withPWA] : [])];
     return plugins.reduce((acc, next) => next(acc), {

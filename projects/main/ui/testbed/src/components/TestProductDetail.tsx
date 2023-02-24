@@ -1,5 +1,5 @@
 import { useProductDetailBySkuQuery } from '@main/packages-web-apollo-schema-mgt/src/graphql/generated/_generated-hooks';
-import { useDebugRender } from '@web/base/src/hook/useDebugRender';
+import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 
 export default function TestProductDetail() {
   useDebugRender('TestProductDetail');

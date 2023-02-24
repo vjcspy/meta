@@ -1,4 +1,4 @@
-import { useDebugRender } from '@web/base/src/hook/useDebugRender';
+import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 
 import TestProductDetail from './TestProductDetail';
 
