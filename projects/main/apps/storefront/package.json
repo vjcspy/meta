@@ -25,7 +25,6 @@
     "eslint-config-nextjs": "workspace:*",
     "tsconfig": "workspace:*",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@types/lodash": "latest"
+    "@types/react-dom": "^18"
   }
 }

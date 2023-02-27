@@ -16,8 +16,7 @@
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@types/lodash": "latest"
+    "@types/react-dom": "^18"
   },
   "dependencies": {
     "console-log-colors": "^0.3.5",

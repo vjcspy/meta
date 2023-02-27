@@ -1,4 +1,4 @@
-import { withDefaultAdapter } from '@main/packages-web-storefront/src/modules/util/withDefaultAdapter';
+import { withDefaultAdapter } from '@main/packages-web-storefront/src/util/withDefaultAdapter';
 import TestBed from '@main/ui-testbed/src/components/TestBed';
 import type { NextPage } from 'next';
 

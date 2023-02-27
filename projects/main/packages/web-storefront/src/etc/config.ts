@@ -1,3 +1,5 @@
 import { withApollo } from '@web/apollo';
 
-export const ADAPTERS = [withApollo];
+import { withDomain } from '../modules/domain/drivers/domain';
+
+export const ADAPTERS = [withDomain, withApollo];
