@@ -1,20 +1,22 @@
 {
   "name": "@web/base",
   "version": "0.0.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
     "lint": "eslint --fix --ext ts,tsx ."
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@types/lodash": "latest"
+    "@types/react-dom": "^18"
   },
   "dependencies": {
     "console-log-colors": "^0.3.5",

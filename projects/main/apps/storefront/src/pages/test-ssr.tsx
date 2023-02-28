@@ -1,9 +1,9 @@
-import Foo from '@modules/testbed/components/Foo';
-import { withDefaultAdapter } from '@modules/util/withDefaultAdapter';
+import { withDefaultAdapter } from '@main/packages-web-storefront/src';
+import TestBed from '@main/ui-testbed/src/components/TestBed';
 import type { NextPage } from 'next';
 
-const TestSsr: NextPage = () => {
-  return <Foo />;
+const TestSsrDynamic: NextPage = () => {
+  return <TestBed />;
 };
 
-export default withDefaultAdapter(TestSsr);
+export default withDefaultAdapter(TestSsrDynamic);

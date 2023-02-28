@@ -81,5 +81,4 @@ pnpm dlx turbo link
 ## Notes
 
 - Think about writing once use forever. For example we're using `tsconfig` and `eslint` , etc.. for all module
-
-- Looking for the way to use ES6 modules without having to bundle them (ie without build scripts in `package.json`). For example `transpilePackages` configuration in nextjs application. See [Internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages)
+- Looking for the way to use ES6 modules without having to bundle them (ie without build scripts in `package.json`). For example `transpilePackages` configuration in nextjs application. See [Internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages). But only apply in on **project packages** folder (We need to publish npm if needed in shared fodler)

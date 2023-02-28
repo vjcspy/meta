@@ -17,7 +17,6 @@
   "devDependencies": {
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
-    "@types/lodash": "latest",
     "@serverless/typescript": "latest",
     "rimraf": "~3.0.2"
   },

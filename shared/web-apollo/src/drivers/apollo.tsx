@@ -1,8 +1,8 @@
 import type { ApolloClient } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { format } from '@web/base';
-import { useDebugRender } from '@web/base/src/hook/useDebugRender';
-import { isSSR } from '@web/base/src/util/isSSR';
+import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
+import { isSSR } from '@web/base/dist/util/isSSR';
 import React from 'react';
 
 import { useApolloClient } from '../hook/use-apollo-client';
@@ -99,7 +99,6 @@ export const withApollo = (
             console.info(
               format.important('WithApollo: initialize data process done !')
             );
-            console.debug(initialData);
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:

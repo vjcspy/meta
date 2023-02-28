@@ -5,8 +5,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@etc/*": ["src/etc/*"],
-      "@modules/*": ["src/modules/*"],
+      "@components/*": ["src/components/*"],
     }
   }
 }

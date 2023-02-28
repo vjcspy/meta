@@ -28,9 +28,9 @@ export class HOCManager {
   }
 
   // eslint-disable-next-line unused-imports/no-unused-vars
-  // configHOCs(uiHOCs: UiHOC[]) {
-  //   // TODO: implement if needed
-  // }
+  configHOCs(uiHOCs: UiHOC[]) {
+    // TODO: implement if needed
+  }
 
   /**
    * @param hoc
