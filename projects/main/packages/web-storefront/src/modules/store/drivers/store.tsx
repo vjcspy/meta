@@ -1,5 +1,6 @@
 import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 import { wrapSSRFn } from '@web/base/dist/util/wrapSSRFn';
+import { isDevelopment } from 'chitility/dist/util/environment';
 import React, { useEffect, useState } from 'react';
 
 import { StoreContextProvider } from '../context/store';
@@ -57,9 +58,11 @@ export const withStore = (
     webUiAdapterOptions?.ssr
   );
 
-  const displayName =
-    PageComponent.displayName || PageComponent.name || 'PageComponent';
-  WithStore.displayName = `withStore(${displayName})`;
+  if (isDevelopment()) {
+    const displayName =
+      PageComponent.displayName || PageComponent.name || 'PageComponent';
+    WithStore.displayName = `withStore(${displayName})`;
+  }
 
   return WithStore;
 };

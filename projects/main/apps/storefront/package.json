@@ -18,6 +18,7 @@
     "@main/packages-web-apollo": "workspace:*",
     "@main/packages-web-apollo-schema-mgt": "workspace:*",
     "@web/base": "workspace:*",
+    "chitility": "workspace:*",
     "@main/ui-testbed": "workspace:*",
     "nextjs-config": "workspace:*"
   },

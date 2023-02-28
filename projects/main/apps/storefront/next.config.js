@@ -8,6 +8,9 @@ const config = nextconfig(12, {
     '@main/packages-web-apollo-schema-mgt',
     '@main/ui-testbed',
   ],
+  publicRuntimeConfig: {
+    nextVersion: 12,
+  },
 });
 
 module.exports = config;

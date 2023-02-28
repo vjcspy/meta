@@ -3,6 +3,7 @@ import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 import { absoluteUrl } from '@web/base/dist/util/absoluteUrl';
 import { isSSR } from '@web/base/dist/util/isSSR';
 import { wrapSSRFn } from '@web/base/dist/util/wrapSSRFn';
+import { isDevelopment } from 'chitility/dist/util/environment';
 import { Registry } from 'chitility/dist/util/registry';
 import * as React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -56,10 +57,6 @@ export function withDomain(PageComponent: any, webUiAdapterOptions?: any): any {
     );
   });
 
-  // const displayName =
-  //   PageComponent.displayName || PageComponent.name || 'PageComponent';
-  // WithDomain.displayName = `withDomain(${displayName})`;
-
   const getDomainDataSSrFn = async (ctx: any) => {
     if (!isSSR()) return {};
 
@@ -82,6 +79,12 @@ export function withDomain(PageComponent: any, webUiAdapterOptions?: any): any {
     undefined,
     webUiAdapterOptions?.ssr
   );
+
+  if (isDevelopment()) {
+    const displayName =
+      PageComponent.displayName || PageComponent.name || 'PageComponent';
+    WithDomain.displayName = `withDomain(${displayName})`;
+  }
 
   return WithDomain;
 }

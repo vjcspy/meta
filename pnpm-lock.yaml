@@ -194,6 +194,7 @@ importers:
       '@types/react': ^18
       '@types/react-dom': ^18
       '@web/base': workspace:*
+      chitility: workspace:*
       eslint-config-nextjs: workspace:*
       immutable: latest
       lodash: latest
@@ -208,6 +209,7 @@ importers:
       '@main/packages-web-storefront': link:../../packages/web-storefront
       '@main/ui-testbed': link:../../ui/testbed
       '@web/base': link:../../../../shared/web-base
+      chitility: link:../../../../shared/chitility
       immutable: 4.2.4
       lodash: 4.17.21
       next: 12.3.4_biqbaboplfbrettd7655fr4n2y

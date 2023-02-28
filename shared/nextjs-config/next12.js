@@ -12,7 +12,7 @@ const withPWA = require("next-pwa")({
 });
 module.exports = {
   config: (config) => {
-    const { transpilePackages, isPWA = false } = config;
+    const { transpilePackages, isPWA = false, publicRuntimeConfig = {} } = config;
     const withTM = tm(transpilePackages);
     const plugins = [withTM, ...(isPWA ? [withPWA] : [])];
     return plugins.reduce((acc, next) => next(acc), {
@@ -50,7 +50,8 @@ module.exports = {
           config.resolve.alias["i18next-fs-backend"] = false;
         }
         return config;
-      }
+      },
+      publicRuntimeConfig
     });
   }
 
