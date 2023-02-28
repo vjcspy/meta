@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { StoreContextProvider } from '../context/store';
 import { WEB_STORE_KEY } from '../etc/key';
 import webStoreExtensionValue from '../etc/web-store-extension-value';
+import { useAddStoreCodeToUrl } from '../hook/useAddStoreCodeToUrl';
+import { useResolveUrlWithStore } from '../hook/useResolveUrlWithStore';
 import { StorePersistent } from '../util/store-persistent';
 
 export const withStore = (

@@ -151,7 +151,7 @@ export class DomainManager {
 
       if (INCLUDE_STORE_CODE_IN_URL && currentStore) {
         // là homepage:
-        resolveUrl = '';
+        resolveUrl = 'index';
         urlHasStoreCode = true;
       } else {
         currentStore = defaultStore;
