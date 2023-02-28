@@ -1,10 +1,7 @@
-import { TestBed } from '@main/ui-testbed';
-
-export default function Web() {
+export default function Storefront() {
   return (
     <div>
-      <h1>Web</h1>
-      <TestBed />
+      <h1>Storefront</h1>
     </div>
   );
 }

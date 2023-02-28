@@ -19,7 +19,7 @@ export class BrowserPersistence {
     this.storage = new NamespacedLocalStorage(localStorage, key);
   }
 
-  async getItem(name: string) {
+  getItem(name: string) {
     const now = Date.now();
     const item = this.storage.getItem(name);
     if (!item) {
@@ -33,7 +33,7 @@ export class BrowserPersistence {
     return JSON.parse(value);
   }
 
-  async setItem(name: string, value: any, ttl?: number) {
+  setItem(name: string, value: any, ttl?: number) {
     const timeStored = Date.now();
     this.storage.setItem(
       name,
@@ -44,8 +44,11 @@ export class BrowserPersistence {
       })
     );
   }
+  saveItem(name: string, value: any, ttl?: number) {
+    return this.setItem(name, value, ttl);
+  }
 
-  async removeItem(name: string) {
+  removeItem(name: string) {
     this.storage.removeItem(name);
   }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "@main/packages-web-storefront",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@web/base": "workspace:*",
+    "@web/apollo": "workspace:*",
+    "chitility": "workspace:*",
+    "@main/packages-web-apollo": "workspace:*"
+  }
+}

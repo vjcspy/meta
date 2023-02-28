@@ -1,6 +1,6 @@
 import type { WatchQueryFetchPolicy } from '@apollo/client';
-import { NamespacedLocalStorage } from '@web/base/src/lib/persistent/NamespacedLocalStorage';
-import { isSSR } from '@web/base/src/util/isSSR';
+import { NamespacedLocalStorage } from '@web/base/dist/lib/persistent/NamespacedLocalStorage';
+import { isSSR } from '@web/base/dist/util/isSSR';
 
 export class FetchPolicyResolve {
   static CACHE_AND_NETWORK: WatchQueryFetchPolicy = 'cache-and-network';

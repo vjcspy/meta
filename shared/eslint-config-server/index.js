@@ -1,4 +1,8 @@
 module.exports = {
+  env: {
+    node: true,
+    jest: true,
+  },
   // Configuration for JavaScript files
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   rules: {
@@ -7,6 +11,7 @@ module.exports = {
       {
         singleQuote: true,
         endOfLine: 'auto',
+        "trailingComma": "all"
       },
     ],
   },
