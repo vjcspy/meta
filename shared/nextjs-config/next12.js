@@ -10,6 +10,7 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true
 });
+
 module.exports = {
   config: (config) => {
     const { transpilePackages, isPWA = false, publicRuntimeConfig = {} } = config;
