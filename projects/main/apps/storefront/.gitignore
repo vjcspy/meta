@@ -1,3 +1,4 @@
 .env.local
 .next
 .turbo
+_cache

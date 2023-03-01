@@ -7,7 +7,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 const logger = new CliLogger('bedkingdom-proxy');
 const originalOptions: Options = {
   // TODO: need to resolve target by setting or domain name
-  target: 'https://admin.magedemo.co.uk',
+  target: 'https://www.bedkingdom.co.uk',
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
   pathRewrite: {
