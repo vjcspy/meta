@@ -4,12 +4,20 @@ import { HOCManager } from './hoc';
 
 export class UiManager {
   static config(uiData: {
-    extensionConfigs: ExtensionConfig[];
+    extensionConfigs: Array<(() => ExtensionConfig[]) | ExtensionConfig[]>;
     uiHOCs?: UiHOC[];
   }) {
     if (uiData?.uiHOCs) {
       HOCManager.getInstance().configHOCs(uiData.uiHOCs);
     }
-    ExtensionManager.getInstance().config(uiData.extensionConfigs);
+    for (const config of uiData.extensionConfigs) {
+      if (typeof config === 'function') {
+        ExtensionManager.getInstance().config(config());
+      } else {
+        ExtensionManager.getInstance().config(config);
+      }
+    }
   }
+
+  static delegateDynamicLoader: any;
 }

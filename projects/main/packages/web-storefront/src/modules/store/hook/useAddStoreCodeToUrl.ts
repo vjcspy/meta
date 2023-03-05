@@ -1,7 +1,6 @@
+import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import isEmpty from 'lodash/isEmpty';
 import { useEffect } from 'react';
-
-import { RouterSingleton } from '../../router/util/router-singleton';
 
 export const useAddStoreCodeToUrl = (
   resolvedUrlData?: {

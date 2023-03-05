@@ -16,9 +16,10 @@ import { DomainManager } from '../util/DomainManager';
 export function withDomain(PageComponent: any, webUiAdapterOptions?: any): any {
   const WithDomain = React.memo((props: any) => {
     useDebugRender('WithDomain');
-    const [domainData, setDomainData] = useState<any>(
-      props.domainData ?? undefined
-    );
+    if (webUiAdapterOptions?.ssr === true && !props?.domainData) {
+      throw new Error('Domain data must be initialized in ssr mode');
+    }
+    const [domainData, setDomainData] = useState<any>(props?.domainData);
 
     const _resolveDomainDataInCsr = useCallback(async () => {
       if (!domainData) {
@@ -49,11 +50,9 @@ export function withDomain(PageComponent: any, webUiAdapterOptions?: any): any {
     );
 
     return (
-      domainData && (
-        <DomainContextProvider value={domainContextValue}>
-          <PageComponent {...props} />
-        </DomainContextProvider>
-      )
+      <DomainContextProvider value={domainContextValue}>
+        <PageComponent {...props} />
+      </DomainContextProvider>
     );
   });
 

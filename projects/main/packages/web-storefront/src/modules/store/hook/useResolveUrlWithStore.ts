@@ -1,8 +1,8 @@
+import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { useMemo } from 'react';
 
 import { useDomainContext } from '../../domain/context/domain';
 import { DomainManager } from '../../domain/util/DomainManager';
-import { RouterSingleton } from '../../router/util/router-singleton';
 
 /**
  * Lấy ra đúng pathname kể cả nó đã bao gồm store code

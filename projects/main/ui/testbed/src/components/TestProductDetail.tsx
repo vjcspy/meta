@@ -1,5 +1,6 @@
-import { useProductDetailBySkuQuery } from '@main/packages-web-apollo-schema-mgt/src/graphql/generated/_generated-hooks';
+import { useProductDetailBySkuQuery } from '@main/packages-web-apollo-schema-mgt';
 import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
+import { pick } from 'lodash';
 
 export default function TestProductDetail() {
   useDebugRender('TestProductDetail');
@@ -14,7 +15,10 @@ export default function TestProductDetail() {
     <div>
       <pre>
         {JSON.stringify(
-          data?.products?.items?.find(() => true),
+          pick(
+            data?.products?.items?.find(() => true),
+            ['name', 'sku']
+          ),
           undefined,
           4
         )}

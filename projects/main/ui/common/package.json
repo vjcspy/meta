@@ -1,0 +1,20 @@
+{
+  "name": "@main/ui-common",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "chitility": "workspace:*",
+    "@web/base": "workspace:*",
+    "@main/packages-web-apollo-schema-mgt": "workspace:*",
+    "@web/ui-extension": "workspace:*"
+  }
+}

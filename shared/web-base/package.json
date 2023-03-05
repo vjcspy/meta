@@ -14,9 +14,7 @@
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",
-    "tsconfig": "workspace:*",
-    "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "tsconfig": "workspace:*"
   },
   "dependencies": {
     "console-log-colors": "^0.3.5",

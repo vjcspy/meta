@@ -1,7 +1,7 @@
 import { HttpLink } from '@apollo/client';
-import { WEB_APOLLO_KEY } from '@web/apollo/src/values';
 import { Registry } from 'chitility/dist/util/registry';
 
+import { WEB_APOLLO_KEY } from '../../values';
 import { HttpLinkPersisted } from './httpLinkPersisted';
 
 export const ApiLink = (uri: string) => {

@@ -4,28 +4,25 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3001",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "next": "^12",
-    "react": "^18",
-    "react-dom": "^18",
-    "immutable": "latest",
-    "lodash": "latest",
+    "react": "^17",
+    "react-dom": "^17",
     "@main/packages-web-storefront": "workspace:*",
     "@main/packages-web-apollo": "workspace:*",
-    "@main/packages-web-apollo-schema-mgt": "workspace:*",
     "@web/base": "workspace:*",
+    "@web/ui-extension": "workspace:*",
     "chitility": "workspace:*",
     "@main/ui-testbed": "workspace:*",
+    "@main/ui-common": "workspace:*",
     "nextjs-config": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-nextjs": "workspace:*",
-    "tsconfig": "workspace:*",
-    "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "tsconfig": "workspace:*"
   }
 }

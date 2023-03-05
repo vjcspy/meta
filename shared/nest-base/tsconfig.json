@@ -1,0 +1,9 @@
+{
+  "extends": "tsconfig/nestjs-module.json",
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["./src"]
+}

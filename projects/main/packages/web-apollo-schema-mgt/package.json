@@ -1,11 +1,17 @@
 {
   "name": "@main/packages-web-apollo-schema-mgt",
   "version": "0.0.0",
-  "main": "src/index.tsx",
-  "types": "src/index.tsx",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext ts,tsx .",
+    "describe": "npm-scripts-info",
+    "build:graphql": "yarn run codegen && yarn run build",
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
     "codegen": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --config codegen.yml"
   },
   "devDependencies": {

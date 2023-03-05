@@ -1,24 +1,25 @@
 {
   "name": "@main/packages-web-apollo",
   "version": "0.0.0",
-  "main": "src/index.tsx",
-  "types": "src/index.tsx",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext ts,tsx ."
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "lint": "eslint --fix --ext ts,tsx ."
   },
   "devDependencies": {
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*"
   },
   "dependencies": {
     "chitility": "workspace:*",
     "@web/base": "workspace:*",
-    "@web/apollo": "workspace:*",
     "@main/packages-web-apollo-schema-mgt": "workspace:*",
     "@apollo/client": "latest",
-    "graphql": "latest"
+    "graphql": "latest",
+    "graphql-request": "latest"
   }
 }

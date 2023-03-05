@@ -18,8 +18,6 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "eslint-config-nextjs": "workspace:*",
-    "tsconfig": "workspace:*",
-    "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "tsconfig": "workspace:*"
   }
 }

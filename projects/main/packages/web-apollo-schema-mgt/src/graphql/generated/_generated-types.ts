@@ -671,6 +671,8 @@ export type BundleOrderItem = OrderItemInterface & {
 /** Defines basic features of a bundle product and contains multiple BundleItems. */
 export type BundleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'BundleProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -680,6 +682,12 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
@@ -699,6 +707,16 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   dynamic_sku?: Maybe<Scalars['Boolean']>;
   /** Indicates whether the bundle product has a dynamically calculated weight. */
   dynamic_weight?: Maybe<Scalars['Boolean']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -717,6 +735,8 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -732,6 +752,8 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -742,6 +764,10 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -755,6 +781,8 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   price_view?: Maybe<PriceViewEnum>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -767,12 +795,18 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** Indicates whether to ship bundle items together or individually. */
   ship_bundle_items?: Maybe<ShipBundleItemsEnum>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -788,6 +822,14 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -1417,6 +1459,23 @@ export enum CheckoutUserInputErrorCodes {
   Undefined = 'UNDEFINED'
 }
 
+/** EntityUrl is an output object containing the `id`, `relative_url`, and `type` attributes */
+export type ChiakiPage = {
+  __typename?: 'ChiakiPage';
+  additional_data?: Maybe<Scalars['String']>;
+  config_data?: Maybe<Scalars['String']>;
+  /** The ID assigned to the object associated with the specified url. This could be a product ID, category ID, or page ID. */
+  id?: Maybe<Scalars['Int']>;
+  metadata?: Maybe<Scalars['String']>;
+  page_type?: Maybe<UrlRewriteEntityTypeEnum>;
+  /** 301 or 302 HTTP code for url permanent or temporary redirect or 0 for the 200 no redirect */
+  redirectCode?: Maybe<Scalars['Int']>;
+  /** The internal relative URL. If the specified  url is a redirect, the query returns the redirected URL, not the original. */
+  relative_url?: Maybe<Scalars['String']>;
+  /** One of PRODUCT, CATEGORY, CMS_PAGE, or CHIAKI_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
+};
+
 /** Contains details about a specific CMS block. */
 export type CmsBlock = {
   __typename?: 'CmsBlock';
@@ -1563,6 +1622,8 @@ export type ConfigurableOptionAvailableForSelection = {
 /** Defines basic features of a configurable product and its simple product variants. */
 export type ConfigurableProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'ConfigurableProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -1572,6 +1633,12 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** An array of options for the configurable product. */
@@ -1589,6 +1656,16 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -1605,6 +1682,8 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -1620,6 +1699,8 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -1630,6 +1711,10 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -1641,6 +1726,8 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -1653,10 +1740,16 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -1672,6 +1765,14 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -4692,6 +4793,8 @@ export type DownloadableOrderItem = OrderItemInterface & {
 /** Defines a product that the shopper downloads. */
 export type DownloadableProduct = CustomizableProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'DownloadableProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -4701,6 +4804,12 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
@@ -4718,6 +4827,16 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   downloadable_product_links?: Maybe<Array<Maybe<DownloadableProductLinks>>>;
   /** An array containing information about samples of this downloadable product. */
   downloadable_product_samples?: Maybe<Array<Maybe<DownloadableProductSamples>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -4738,6 +4857,8 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -4753,6 +4874,8 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -4763,6 +4886,10 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -4774,6 +4901,8 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -4786,10 +4915,16 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -4805,6 +4940,14 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -5345,6 +5488,8 @@ export type GiftCardOrderItem = OrderItemInterface & {
 /** Defines properties of a gift card. */
 export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'GiftCardProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /** Indicates whether the customer can provide a message to accompany the gift card. */
   allow_message?: Maybe<Scalars['Boolean']>;
   /** Indicates whether shoppers have the ability to set the value of the gift card. */
@@ -5359,6 +5504,12 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
   /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -5371,6 +5522,16 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** An array of customizable gift card options. */
   gift_card_options: Array<Maybe<CustomizableOptionInterface>>;
   /** Indicates whether a gift message is available. */
@@ -5397,6 +5558,8 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -5414,6 +5577,8 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -5428,6 +5593,10 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -5439,6 +5608,8 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -5451,10 +5622,16 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -5470,6 +5647,14 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -5910,6 +6095,8 @@ export type GiftWrappingImage = {
 /** Defines a grouped product, which consists of simple standalone products that are presented as a group. */
 export type GroupedProduct = PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'GroupedProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -5919,6 +6106,12 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
@@ -5932,6 +6125,16 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -5950,6 +6153,8 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -5965,6 +6170,8 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -5973,6 +6180,10 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   only_x_left_in_stock?: Maybe<Scalars['Float']>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -5984,6 +6195,8 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -5996,10 +6209,16 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -6015,6 +6234,14 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -7577,20 +7804,64 @@ export type ProductAttribute = {
 
 /** Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for. */
 export type ProductAttributeFilterInput = {
+  /** Attribute label: Activity */
+  activity?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Category Gear */
+  category_gear?: InputMaybe<FilterEqualTypeInput>;
   /** Deprecated: use `category_uid` to filter product by category ID. */
   category_id?: InputMaybe<FilterEqualTypeInput>;
   /** Filter product by the unique ID for a `CategoryInterface` object. */
   category_uid?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Climate */
+  climate?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Collar */
+  collar?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Color */
+  color?: InputMaybe<FilterEqualTypeInput>;
   /** Attribute label: Description */
   description?: InputMaybe<FilterMatchTypeInput>;
+  /** Attribute label: Eco Collection */
+  eco_collection?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Erin Recommends */
+  erin_recommends?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Features */
+  features_bags?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Format */
+  format?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Gender */
+  gender?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Material */
+  material?: InputMaybe<FilterEqualTypeInput>;
   /** Attribute label: Product Name */
   name?: InputMaybe<FilterMatchTypeInput>;
+  /** Attribute label: New */
+  new?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Pattern */
+  pattern?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Performance Fabric */
+  performance_fabric?: InputMaybe<FilterEqualTypeInput>;
   /** Attribute label: Price */
   price?: InputMaybe<FilterRangeTypeInput>;
+  /** Attribute label: Purpose */
+  purpose?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Sale */
+  sale?: InputMaybe<FilterEqualTypeInput>;
   /** Attribute label: Short Description */
   short_description?: InputMaybe<FilterMatchTypeInput>;
+  /** Attribute label: Size */
+  size?: InputMaybe<FilterEqualTypeInput>;
   /** Attribute label: SKU */
   sku?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Sleeve */
+  sleeve?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Strap/Handle */
+  strap_bags?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Style Bags */
+  style_bags?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Style Bottom */
+  style_bottom?: InputMaybe<FilterEqualTypeInput>;
+  /** Attribute label: Style General */
+  style_general?: InputMaybe<FilterEqualTypeInput>;
   /** The part of the URL that identifies the product */
   url_key?: InputMaybe<FilterEqualTypeInput>;
 };
@@ -7718,6 +7989,8 @@ export type ProductInfoInput = {
 
 /** Contains fields that are common to all types of products. */
 export type ProductInterface = {
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -7727,6 +8000,12 @@ export type ProductInterface = {
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
@@ -7740,6 +8019,16 @@ export type ProductInterface = {
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -7756,6 +8045,8 @@ export type ProductInterface = {
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -7771,6 +8062,8 @@ export type ProductInterface = {
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -7779,6 +8072,10 @@ export type ProductInterface = {
   only_x_left_in_stock?: Maybe<Scalars['Float']>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -7790,6 +8087,8 @@ export type ProductInterface = {
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** An array of related products. */
@@ -7798,10 +8097,16 @@ export type ProductInterface = {
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -7817,6 +8122,14 @@ export type ProductInterface = {
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -8200,6 +8513,8 @@ export type Query = {
   categoryList?: Maybe<Array<Maybe<CategoryTree>>>;
   /** Return Terms and Conditions configuration information. */
   checkoutAgreements?: Maybe<Array<Maybe<CheckoutAgreement>>>;
+  /** The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists */
+  chiakiPageResolver?: Maybe<ChiakiPage>;
   /** Return information about CMS blocks. */
   cmsBlocks?: Maybe<CmsBlocks>;
   /** Return details about a CMS page. */
@@ -8291,6 +8606,12 @@ export type QueryCategoryArgs = {
 
 export type QueryCategoryListArgs = {
   filters?: InputMaybe<CategoryFilterInput>;
+};
+
+
+export type QueryChiakiPageResolverArgs = {
+  url: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -9359,6 +9680,8 @@ export type SimpleCartItem = CartItemInterface & {
 /** Defines a simple product, which is tangible and is usually sold in single units or in fixed quantities. */
 export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'SimpleProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -9368,6 +9691,12 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
@@ -9381,6 +9710,16 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -9397,6 +9736,8 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -9412,6 +9753,8 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -9422,6 +9765,10 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -9433,6 +9780,8 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -9445,10 +9794,16 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -9464,6 +9819,14 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -10028,6 +10391,8 @@ export enum UrlRewriteEntityTypeEnum {
   /** @deprecated  */
   Category = 'CATEGORY',
   /** @deprecated  */
+  ChiakiPage = 'CHIAKI_PAGE',
+  /** @deprecated  */
   CmsPage = 'CMS_PAGE',
   /** @deprecated  */
   Product = 'PRODUCT'
@@ -10071,6 +10436,8 @@ export type VirtualCartItem = CartItemInterface & {
 /** Defines a virtual product, which is a non-tangible product that does not require shipping and is not kept in inventory. */
 export type VirtualProduct = CustomizableProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'VirtualProduct';
+  /** @deprecated Use the `custom_attributes` field instead. */
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -10080,6 +10447,12 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  category_gear?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  climate?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  collar?: Maybe<Scalars['String']>;
   /** @deprecated Use the `custom_attributes` field instead. */
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
@@ -10093,6 +10466,16 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  eco_collection?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  erin_recommends?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  features_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  format?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -10109,6 +10492,8 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
    * @deprecated Use the `custom_attributes` field instead.
    */
   manufacturer?: Maybe<Scalars['Int']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  material?: Maybe<Scalars['String']>;
   /** An array of media gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -10124,6 +10509,8 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  new?: Maybe<Scalars['Int']>;
   /** The beginning date for new product listings, and determines if the product is featured as a new product. */
   new_from_date?: Maybe<Scalars['String']>;
   /** The end date for new product listings. */
@@ -10134,6 +10521,10 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  pattern?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * Indicates the price of an item.
    * @deprecated Use `price_range` for product price information.
@@ -10145,6 +10536,8 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   price_tiers?: Maybe<Array<Maybe<TierPrice>>>;
   /** An array of `ProductLinks` objects. */
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  purpose?: Maybe<Scalars['Int']>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
   /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect. */
@@ -10157,10 +10550,16 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -10176,6 +10575,14 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   staged: Scalars['Boolean'];
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  strap_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bags?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_bottom?: Maybe<Scalars['String']>;
+  /** @deprecated Use the `custom_attributes` field instead. */
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image. */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -11210,6 +11617,14 @@ export type ProductSearchQueryVariables = Exact<{
 
 
 export type ProductSearchQuery = { __typename?: 'Query', products?: { __typename?: 'Products', total_count?: number | null, items?: Array<{ __typename?: 'BundleProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | { __typename?: 'ConfigurableProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | { __typename?: 'DownloadableProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | { __typename?: 'GiftCardProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | { __typename?: 'GroupedProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | { __typename?: 'SimpleProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | { __typename?: 'VirtualProduct', id?: number | null, name?: string | null, url_key?: string | null, url_suffix?: string | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', value?: number | null, currency?: CurrencyEnum | null } | null } | null } | null } | null> | null, page_info?: { __typename?: 'SearchResultPageInfo', total_pages?: number | null } | null } | null };
+
+export type ResolveChiakiPageQueryVariables = Exact<{
+  urlKey: Scalars['String'];
+  userId: Scalars['String'];
+}>;
+
+
+export type ResolveChiakiPageQuery = { __typename?: 'Query', chiakiPageResolver?: { __typename?: 'ChiakiPage', id?: number | null, redirectCode?: number | null, relative_url?: string | null, config_data?: string | null, additional_data?: string | null, type?: UrlRewriteEntityTypeEnum | null, metadata?: string | null } | null };
 
 export type SetGuestEmailOnCartMutationVariables = Exact<{
   cartId: Scalars['String'];

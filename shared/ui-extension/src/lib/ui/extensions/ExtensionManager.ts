@@ -28,9 +28,6 @@ export class ExtensionManager {
 
   static getInstance(): ExtensionManager {
     if (typeof ExtensionManager.INSTANCE === 'undefined') {
-      console.info(
-        '______________________________________ Create ExtensionManager ______________________________________'
-      );
       ExtensionManager.INSTANCE = new ExtensionManager();
     }
 

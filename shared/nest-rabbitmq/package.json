@@ -1,0 +1,27 @@
+{
+  "name": "@nest/rabbitmq",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint --fix --ext ts,tsx ."
+  },
+  "dependencies": {
+    "@nest/base": "workspace:*",
+    "amqp-connection-manager": "^4.1.10",
+    "amqplib": "latest"
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*",
+    "@types/amqplib": "latest"
+  }
+}

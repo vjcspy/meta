@@ -298,12 +298,16 @@ interface PhysicalProductInterface {
 
 "Contains fields that are common to all types of products."
 interface ProductInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -313,6 +317,11 @@ interface ProductInterface {
     crosssell_products: [ProductInterface]
     "Detailed information about the product. The value can include simple HTML tags."
     description: ComplexTextValue
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -323,6 +332,7 @@ interface ProductInterface {
     is_returnable: String
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -335,6 +345,7 @@ interface ProductInterface {
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -343,6 +354,8 @@ interface ProductInterface {
     only_x_left_in_stock: Float
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -351,6 +364,7 @@ interface ProductInterface {
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "An array of related products."
@@ -364,10 +378,13 @@ interface ProductInterface {
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -380,6 +397,10 @@ interface ProductInterface {
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -884,12 +905,16 @@ type BundleOrderItem implements OrderItemInterface {
 
 "Defines basic features of a bundle product and contains multiple BundleItems."
 type BundleProduct implements CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -905,6 +930,11 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     dynamic_sku: Boolean
     "Indicates whether the bundle product has a dynamically calculated weight."
     dynamic_weight: Boolean
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -917,6 +947,7 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     items: [BundleItem]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -929,6 +960,7 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -939,6 +971,8 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     options: [CustomizableOptionInterface]
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -949,6 +983,7 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     price_view: PriceViewEnum
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -966,12 +1001,15 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether to ship bundle items together or individually."
     ship_bundle_items: ShipBundleItemsEnum
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -984,6 +1022,10 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -1316,6 +1358,22 @@ type CheckoutUserInputError {
     path: [String]!
 }
 
+"EntityUrl is an output object containing the `id`, `relative_url`, and `type` attributes"
+type ChiakiPage {
+    additional_data: String
+    config_data: String
+    "The ID assigned to the object associated with the specified url. This could be a product ID, category ID, or page ID."
+    id: Int
+    metadata: String
+    page_type: UrlRewriteEntityTypeEnum
+    "301 or 302 HTTP code for url permanent or temporary redirect or 0 for the 200 no redirect"
+    redirectCode: Int
+    "The internal relative URL. If the specified  url is a redirect, the query returns the redirected URL, not the original."
+    relative_url: String
+    "One of PRODUCT, CATEGORY, CMS_PAGE, or CHIAKI_PAGE."
+    type: UrlRewriteEntityTypeEnum
+}
+
 "Contains details about a specific CMS block."
 type CmsBlock {
     "The content of the CMS block in raw HTML."
@@ -1449,12 +1507,16 @@ type ConfigurableOptionAvailableForSelection {
 
 "Defines basic features of a configurable product and its simple product variants."
 type ConfigurableProduct implements CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of options for the configurable product."
     configurable_options: [ConfigurableProductOptions]
@@ -1468,6 +1530,11 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     crosssell_products: [ProductInterface]
     "Detailed information about the product. The value can include simple HTML tags."
     description: ComplexTextValue
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -1478,6 +1545,7 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     is_returnable: String
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -1490,6 +1558,7 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -1500,6 +1569,8 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     options: [CustomizableOptionInterface]
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -1508,6 +1579,7 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -1525,10 +1597,13 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -1541,6 +1616,10 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -2521,12 +2600,16 @@ type DownloadableOrderItem implements OrderItemInterface {
 
 "Defines a product that the shopper downloads."
 type DownloadableProduct implements CustomizableProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -2540,6 +2623,11 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     downloadable_product_links: [DownloadableProductLinks]
     "An array containing information about samples of this downloadable product."
     downloadable_product_samples: [DownloadableProductSamples]
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -2554,6 +2642,7 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     links_title: String
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -2566,6 +2655,7 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -2576,6 +2666,8 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     options: [CustomizableOptionInterface]
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -2584,6 +2676,7 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -2601,10 +2694,13 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -2617,6 +2713,10 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -2922,6 +3022,7 @@ type GiftCardOrderItem implements OrderItemInterface {
 
 "Defines properties of a gift card."
 type GiftCardProduct implements CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether the customer can provide a message to accompany the gift card."
     allow_message: Boolean
     "Indicates whether shoppers have the ability to set the value of the gift card."
@@ -2932,6 +3033,9 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -2941,6 +3045,11 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     crosssell_products: [ProductInterface]
     "Detailed information about the product. The value can include simple HTML tags."
     description: ComplexTextValue
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of customizable gift card options."
     gift_card_options: [CustomizableOptionInterface]!
     "Indicates whether a gift message is available."
@@ -2961,6 +3070,7 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     lifetime: Int
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -2975,6 +3085,7 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -2989,6 +3100,8 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     options: [CustomizableOptionInterface]
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -2997,6 +3110,7 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -3014,10 +3128,13 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -3030,6 +3147,10 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -3286,12 +3407,16 @@ type GiftWrappingImage {
 
 "Defines a grouped product, which consists of simple standalone products that are presented as a group."
 type GroupedProduct implements PhysicalProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -3301,6 +3426,11 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     crosssell_products: [ProductInterface]
     "Detailed information about the product. The value can include simple HTML tags."
     description: ComplexTextValue
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -3313,6 +3443,7 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     items: [GroupedProductItem]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -3325,6 +3456,7 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -3333,6 +3465,8 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     only_x_left_in_stock: Float
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -3341,6 +3475,7 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -3358,10 +3493,13 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -3374,6 +3512,10 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -4545,6 +4687,8 @@ type Query {
     ): [CategoryTree]
     "Return Terms and Conditions configuration information."
     checkoutAgreements: [CheckoutAgreement]
+    "The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists"
+    chiakiPageResolver(url: String!, userId: String!): ChiakiPage
     "Return information about CMS blocks."
     cmsBlocks(
         "An array of CMS block IDs."
@@ -5276,12 +5420,16 @@ type SimpleCartItem implements CartItemInterface {
 
 "Defines a simple product, which is tangible and is usually sold in single units or in fixed quantities."
 type SimpleProduct implements CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -5291,6 +5439,11 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     crosssell_products: [ProductInterface]
     "Detailed information about the product. The value can include simple HTML tags."
     description: ComplexTextValue
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -5301,6 +5454,7 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     is_returnable: String
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -5313,6 +5467,7 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -5323,6 +5478,8 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     options: [CustomizableOptionInterface]
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -5331,6 +5488,7 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -5348,10 +5506,13 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -5364,6 +5525,10 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -5794,12 +5959,16 @@ type VirtualCartItem implements CartItemInterface {
 
 "Defines a virtual product, which is a non-tangible product that does not require shipping and is not kept in inventory."
 type VirtualProduct implements CustomizableProductInterface & ProductInterface & RoutableInterface {
+    activity: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The attribute set assigned to the product."
     attribute_set_id: Int @deprecated(reason: "The field should not be used on the storefront.")
     "The relative canonical URL. This value is returned only if the system setting 'Use Canonical Link Meta Tag For Products' is enabled."
     canonical_url: String
     "The categories assigned to a product."
     categories: [CategoryInterface]
+    category_gear: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    climate: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    collar: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     color: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The product's country of origin."
     country_of_manufacture: String
@@ -5809,6 +5978,11 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     crosssell_products: [ProductInterface]
     "Detailed information about the product. The value can include simple HTML tags."
     description: ComplexTextValue
+    eco_collection: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    erin_recommends: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    features_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    format: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    gender: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates whether a gift message is available."
     gift_message_available: String
     "The ID number assigned to the product."
@@ -5819,6 +5993,7 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     is_returnable: String
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
+    material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "An array of media gallery objects."
     media_gallery: [MediaGalleryInterface]
     "An array of MediaGalleryEntry objects."
@@ -5831,6 +6006,7 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     meta_title: String
     "The product name. Customers use this name to identify the product."
     name: String
+    new: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The beginning date for new product listings, and determines if the product is featured as a new product."
     new_from_date: String
     "The end date for new product listings."
@@ -5841,6 +6017,8 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     options: [CustomizableOptionInterface]
     "If the product has multiple options, determines where they appear on the product page."
     options_container: String
+    pattern: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    performance_fabric: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "Indicates the price of an item."
     price: ProductPrices @deprecated(reason: "Use `price_range` for product price information.")
     "The range of prices for the product"
@@ -5849,6 +6027,7 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     price_tiers: [TierPrice]
     "An array of `ProductLinks` objects."
     product_links: [ProductLinksInterface]
+    purpose: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The average of all the ratings given to the product."
     rating_summary: Float!
     "Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect."
@@ -5866,10 +6045,13 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
         "The maximum number of results to return at once. The default is 20."
         pageSize: Int = 20
     ): ProductReviews!
+    sale: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A short description of the product. Its use depends on the theme."
     short_description: ComplexTextValue
+    size: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     "A number or code assigned to a product to identify the product, options, price, and manufacturer."
     sku: String
+    sleeve: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The relative path to the small image, which is used on catalog pages."
     small_image: ProductImage
     "The beginning date that a product has a special price."
@@ -5882,6 +6064,10 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     staged: Boolean!
     "Stock status of the product"
     stock_status: ProductStockStatus
+    strap_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bags: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_bottom: String @deprecated(reason: "Use the `custom_attributes` field instead.")
+    style_general: String @deprecated(reason: "Use the `custom_attributes` field instead.")
     "The file name of a swatch image."
     swatch_image: String
     "The relative path to the product's thumbnail image."
@@ -6905,6 +7091,7 @@ enum SubscriptionStatusesEnum {
 "This enumeration defines the entity type."
 enum UrlRewriteEntityTypeEnum {
     CATEGORY
+    CHIAKI_PAGE
     CMS_PAGE
     PRODUCT
 }
@@ -7763,20 +7950,64 @@ input PlaceOrderInput {
 
 "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for."
 input ProductAttributeFilterInput {
+    "Attribute label: Activity"
+    activity: FilterEqualTypeInput
+    "Attribute label: Category Gear"
+    category_gear: FilterEqualTypeInput
     "Deprecated: use `category_uid` to filter product by category ID."
     category_id: FilterEqualTypeInput
     "Filter product by the unique ID for a `CategoryInterface` object."
     category_uid: FilterEqualTypeInput
+    "Attribute label: Climate"
+    climate: FilterEqualTypeInput
+    "Attribute label: Collar"
+    collar: FilterEqualTypeInput
+    "Attribute label: Color"
+    color: FilterEqualTypeInput
     "Attribute label: Description"
     description: FilterMatchTypeInput
+    "Attribute label: Eco Collection"
+    eco_collection: FilterEqualTypeInput
+    "Attribute label: Erin Recommends"
+    erin_recommends: FilterEqualTypeInput
+    "Attribute label: Features"
+    features_bags: FilterEqualTypeInput
+    "Attribute label: Format"
+    format: FilterEqualTypeInput
+    "Attribute label: Gender"
+    gender: FilterEqualTypeInput
+    "Attribute label: Material"
+    material: FilterEqualTypeInput
     "Attribute label: Product Name"
     name: FilterMatchTypeInput
+    "Attribute label: New"
+    new: FilterEqualTypeInput
+    "Attribute label: Pattern"
+    pattern: FilterEqualTypeInput
+    "Attribute label: Performance Fabric"
+    performance_fabric: FilterEqualTypeInput
     "Attribute label: Price"
     price: FilterRangeTypeInput
+    "Attribute label: Purpose"
+    purpose: FilterEqualTypeInput
+    "Attribute label: Sale"
+    sale: FilterEqualTypeInput
     "Attribute label: Short Description"
     short_description: FilterMatchTypeInput
+    "Attribute label: Size"
+    size: FilterEqualTypeInput
     "Attribute label: SKU"
     sku: FilterEqualTypeInput
+    "Attribute label: Sleeve"
+    sleeve: FilterEqualTypeInput
+    "Attribute label: Strap/Handle"
+    strap_bags: FilterEqualTypeInput
+    "Attribute label: Style Bags"
+    style_bags: FilterEqualTypeInput
+    "Attribute label: Style Bottom"
+    style_bottom: FilterEqualTypeInput
+    "Attribute label: Style General"
+    style_general: FilterEqualTypeInput
     "The part of the URL that identifies the product"
     url_key: FilterEqualTypeInput
 }

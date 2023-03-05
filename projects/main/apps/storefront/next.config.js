@@ -7,9 +7,8 @@ const nextconfig = require('nextjs-config');
 const config = nextconfig(12, {
   transpilePackages: [
     '@main/packages-web-storefront',
-    '@main/packages-web-apollo',
-    '@main/packages-web-apollo-schema-mgt',
     '@main/ui-testbed',
+    '@main/ui-common',
   ],
   publicRuntimeConfig: {
     nextVersion: 12,

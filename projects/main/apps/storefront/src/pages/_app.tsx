@@ -1,3 +1,5 @@
+import '@etc/ui/ui-injecter';
+
 import {
   bootstrap,
   injectNextjsRouter,
@@ -9,7 +11,6 @@ import getConfig from 'next/config';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 import { useMemo } from 'react';
-
 bootstrap();
 
 const { publicRuntimeConfig } = getConfig();

@@ -1,5 +1,5 @@
 {
-  "name": "ui-extension",
+  "name": "@web/ui-extension",
   "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,12 +11,7 @@
     "lint": "eslint --fix --ext ts,tsx ."
   },
   "devDependencies": {
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*"
-  },
-  "dependencies": {
-    "immutable": "^4.2.4"
   }
 }

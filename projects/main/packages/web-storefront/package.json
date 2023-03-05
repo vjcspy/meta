@@ -8,15 +8,16 @@
     "lint": "eslint --ext ts,tsx ."
   },
   "devDependencies": {
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*"
   },
   "dependencies": {
     "@web/base": "workspace:*",
-    "@web/apollo": "workspace:*",
+    "@web/ui-extension": "workspace:*",
     "chitility": "workspace:*",
-    "@main/packages-web-apollo": "workspace:*"
+    "@main/packages-web-apollo": "workspace:*",
+    "@main/packages-web-apollo-schema-mgt": "workspace:*",
+    "@main/packages-web-redux": "workspace:*",
+    "@main/ui-common": "workspace:*"
   }
 }
