@@ -1,2 +1,2 @@
-# project/main packages web-apollo
-- Apollo `util` used in main magento `storefront` app
+# project/main packages web-storefront
+ Logic behind Storefront NextJS Application

@@ -1,6 +1,6 @@
 module.exports = {
   config: (config) => {
-    const { transpilePackages, isPWA = false, publicRuntimeConfig = {} } = config;
+    const { transpilePackages, isPWA = false, publicRuntimeConfig = {},...rest } = config;
     return {
       reactStrictMode: true,
       transpilePackages,
@@ -21,7 +21,8 @@ module.exports = {
         // Important: return the modified config
         return config;
       },
-      publicRuntimeConfig
+      publicRuntimeConfig,
+      ...rest
     };
   }
 };

@@ -1,0 +1,29 @@
+/*******************************************
+***          Chiaki: Sass          ***
+*******************************************/
+
+//Mixins utilities
+@import './utilities/merge_utilities';
+@import './utilities/breakpoints';
+
+//Vendor default
+@import 'vendors/bootstrap';
+
+//Layout default
+@import './themes/home-page';
+@import './themes/header';
+@import './themes/footer';
+@import './themes/theme';
+@import './themes/product-detail';
+@import './themes/product-listing';
+@import './themes/checkout';
+@import './themes/navigation';
+@import './themes/other-page';
+//Componnent default
+@import './components/buttons';
+@import './components/carousel';
+@import './components/loading';
+
+//Base default
+@import 'base/typo';
+@import 'base/global';

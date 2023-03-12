@@ -4,6 +4,13 @@ query getNavigatorAttributeFilterData($code: String!){
     ) {
         items {
             attribute_code
+            swatches {
+                option_id
+                store_id
+                swatch_id
+                type
+                value
+            }
             attribute_options {
                 label
                 value

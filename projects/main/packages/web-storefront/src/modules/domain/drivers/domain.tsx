@@ -16,7 +16,7 @@ import { DomainManager } from '../util/DomainManager';
 export function withDomain(PageComponent: any, webUiAdapterOptions?: any): any {
   const WithDomain = React.memo((props: any) => {
     useDebugRender('WithDomain');
-    if (webUiAdapterOptions?.ssr === true && !props?.domainData) {
+    if (isSSR() && webUiAdapterOptions?.ssr === true && !props?.domainData) {
       throw new Error('Domain data must be initialized in ssr mode');
     }
     const [domainData, setDomainData] = useState<any>(props?.domainData);

@@ -1,0 +1,22 @@
+query getCategoryListingData($search : String!,$filters: [CatalogCategoryListingFilter],$pageSize: Int!, $currentPage: Int!,$sort: ProductAttributeSortInput ){
+    catalogCategoryListingData(search: $search, filters: $filters, pageSize: $pageSize, currentPage: $currentPage, sort: $sort){
+        aggregations{
+            attribute_code,
+            label,
+            options{
+                count
+                label
+                value
+            }
+        }
+        page_info{
+            current_page
+            page_size
+            total_pages
+        }
+        items{
+            ...ProductListingItem
+        }
+        total_count
+    }
+}

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@web/base": "workspace:*",
-    "@main/packages-web-apollo-schema-mgt": "workspace:*"
+    "@main/packages-web-apollo-schema-mgt": "workspace:*",
+    "@web/ui-extension": "workspace:*"
   }
 }

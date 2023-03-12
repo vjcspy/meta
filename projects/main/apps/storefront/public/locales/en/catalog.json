@@ -1,0 +1,21 @@
+{
+  "related_product": "HOW ABOUT THESE?",
+  "cross_sales_product": "OTHERS ALSO BOUGHT",
+  "add_to_cart": "Add To Cart",
+  "buy_now": "Buy now",
+  "out_of_stock": "Out of stock",
+  "reviews": "reviews",
+  "filter_by": "Filter By",
+  "star": "star",
+  "write_your_review": "Write your review",
+  "summary": "Summary",
+  "content": "Content",
+  "review_header": "Reviews",
+  "more_filters": "More Filters",
+  "less_filters": "Less Filters",
+  "is_required": "This is a required field.",
+  "please_select_rating": "Please choose one of each rating above.",
+  "nickname": "Name",
+  "create_review_error": "An error occurred, please try again.",
+  "create_review_success": "Added merit review."
+}

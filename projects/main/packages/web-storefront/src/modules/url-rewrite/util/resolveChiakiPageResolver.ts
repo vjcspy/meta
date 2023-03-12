@@ -1,6 +1,8 @@
 import { format } from '@web/base';
+import { isSSR } from '@web/base/dist/util/isSSR';
 import { DataObject } from 'chitility/dist/lib/extension/data-object';
 import { ExtensionPoint } from 'chitility/dist/lib/extension/extension-point';
+import { isDevelopment } from 'chitility/dist/util/environment';
 import { Registry } from 'chitility/dist/util/registry';
 
 export const resolveChiakiPageResolver = (
@@ -35,11 +37,22 @@ export const resolveChiakiPageResolver = (
       try {
         configData = JSON.parse(configData);
       } catch (e) {
-        console.error('could not parse chiakiPageResolver config data');
+        console.error(
+          format.context('resolveChiakiPageResolver'),
+          'Could not parse config data for pathname: ',
+          requestedPathname
+        );
         configData = undefined;
       }
     }
-    console.info(format.important('Found chiaki page config'));
+
+    if (isDevelopment() && isSSR()) {
+      console.debug(
+        format.context('resolveChiakiPageResolver'),
+        'Found chiaki page config for pathname: ',
+        requestedPathname
+      );
+    }
     return {
       type: resolveUrlRes.data.chiakiPageResolver.type,
       id: resolveUrlRes.data.chiakiPageResolver.id,
@@ -51,7 +64,11 @@ export const resolveChiakiPageResolver = (
       requestedPathname,
     };
   } else {
-    console.info(format.important('Could not resolve router, will render 404'));
+    console.info(
+      format.important('Could not resolve router, will render 404'),
+      'resolveUrlRes',
+      resolveUrlRes
+    );
     return {
       type: 'STATIC_PAGE',
       id: '404',

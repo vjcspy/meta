@@ -1,0 +1,85 @@
+:root {
+  // Colors
+  --color-red-one:          #FC636B;
+  --color-red-two:          #dc3545;
+  --color-red-three:        #E8170A;
+  --color-gray-five:        #DCDCDC;
+  --color-black:            #333333;
+
+  --color-gray-one:         #E5E5E5;
+  --color-gray-two:         #B2B2B2;
+  --color-gray-three:       #696969;
+  --color-gray-four:        #DFD9CF;
+  --color-gray-six:         #4F4F4F;
+  --color-gray-sevent:      #e9ecef;
+  --color-yellow-one:       #F0B64F;
+  --color-green-forest:     #228B22;
+
+  --color-equa-white:       #fff;
+  --color-equa-gray:        #eee;
+  --color-equa-lead:        #ddd;
+  --color-equa-slate:       #ccc;
+  --color-equa-anchor:      #bbb;
+  --color-equa-crow:        #aaa;
+  --color-equa-nine:        #999;
+  --color-equa-eight:       #888;
+  --color-equa-seven:       #777;
+  --color-equa-six:         #666;
+  --color-equa-five:        #555;
+  --color-equa-four:        #444;
+  --color-equa-three:       #333;
+  --color-equa-two:         #222;
+  --color-equa-one:         #111;
+  --color-equa-zero:        #000;
+  --color-red:              #D92728;
+}
+
+
+//Fonts
+$font-firasan:            'Fira Sans', sans-serif;
+$font-arial:            "Arial", sans-serif;
+//
+$font-weight-thin:        100;
+$font-weight-extra-light: 200;
+$font-weight-light:       300;
+$font-weight-regular:     400;
+$font-weight-nomal:       500;
+$font-weight-semibold:    600;
+$font-weight-bold:        700;
+$font-weight-extrabold:   800;
+
+//$font-icon-spos:          'spos';
+$font-icon-awesome:       'FontAwesome';
+
+// Font Size:
+$font-size-08: 0.5rem;
+$font-size-10: 0.625rem;
+$font-size-11: 0.6875rem;
+$font-size-12: 0.75rem;
+$font-size-13: 0.8125rem;
+$font-size-14: 0.875rem;
+$font-size-15: 0.9375rem;
+$font-size-16: 1rem;
+$font-size-18: 1.125rem;
+$font-size-20: 1.25rem;
+$font-size-22: 1.357rem;
+$font-size-24: 1.5rem;
+$font-size-26: 1.625rem;
+$font-size-28: 1.75rem;
+$font-size-30: 1.875rem;
+$font-size-32: 2rem;
+$font-size-38: 2.375rem;
+$font-size-40: 2.5rem;
+$font-size-42: 2.625rem;
+$font-size-46: 2.875rem;
+$font-size-56: 3.5rem;
+$font-size-58: 3.625rem;
+$font-size-60: 3.75rem;
+
+$bg-main:       #181E3B;
+$main-color:    #2f333a;
+$main-color2:   #e30016;
+$blue-color:    #313139;
+$body-text:     #181E3B;
+$text-gray:     #909090;
+$main-border-color: #F0F0F0F0;

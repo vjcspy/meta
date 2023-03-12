@@ -1,8 +1,10 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
 import { useResolveChiakiPageQuery } from '@main/packages-web-apollo-schema-mgt';
 import { format } from '@web/base';
+import { isSSR } from '@web/base/dist/util/isSSR';
 import { DataObject } from 'chitility/dist/lib/extension/data-object';
 import { ExtensionPoint } from 'chitility/dist/lib/extension/extension-point';
+import { isDevelopment } from 'chitility/dist/util/environment';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 import replace from 'lodash/replace';
@@ -19,12 +21,33 @@ export const resolveStaticLayout = (pathname?: string) => {
     extConfig: undefined,
   });
 
-  return ExtensionPoint.extend('resolveStaticLayout', objectLayout).getData(
-    'extConfig'
-  );
+  const dataFromExtensionPoint = ExtensionPoint.extend(
+    'resolveStaticLayout',
+    objectLayout
+  ).getData('extConfig');
+
+  if (isDevelopment() && isSSR() && dataFromExtensionPoint) {
+    if (isDevelopment() && isSSR()) {
+      console.debug(
+        format.context('resolveStaticLayout'),
+        'Found static layout for pathname:',
+        pathname
+      );
+    }
+  }
+
+  return dataFromExtensionPoint;
 };
 
 export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
+  // if (isDevelopment() && isSSR()) {
+  //   console.debug(
+  //     format.context('useResolveUnknownRouter'),
+  //     'Resolving pathname:',
+  //     urlKey
+  //   );
+  // }
+
   const domainContextValue = useDomainContext();
 
   const { data, refetch } = useResolveChiakiPageQuery({
@@ -39,7 +62,7 @@ export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
   const [resolvedUrlData, setResolvedUrlData] = useState<any>(
     fromServer ??
       resolveStaticLayout(urlKey) ??
-      (data
+      (data?.chiakiPageResolver
         ? resolveChiakiPageResolver({ data }, urlKey)
         : {
             isResolved: false,

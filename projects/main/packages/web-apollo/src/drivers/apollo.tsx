@@ -33,6 +33,9 @@ export const withApollo = (
     });
 
     if (!initPersistent) {
+      if (ssr) {
+        throw new Error('SSR was be broken');
+      }
       // return <UiExtension uiId="LOADING_INDICATOR" global={true} />;
       return <>Loading...</>;
     }
@@ -48,28 +51,31 @@ export const withApollo = (
 
   if (ssr || PageComponent.getInitialProps) {
     WithApollo.getInitialProps = async (ctx: any) => {
-      // @ts-ignore
-      let client: ApolloClient<any> = ctx?.apolloClient;
-      if (!client) {
-        // Lưu client ở context là một cách rất hay, nó đảm bảo client không bị cache giữa các request
-        ctx.apolloClient = client = initApolloClient({ apiBase });
-
-        // will make sure we send the prop as `null` to the browser.
-        // @ts-ignore
-        client.toJSON = () => null;
-      }
-
-      // Run wrapped getInitialProps methods
-      let pageProps = {};
-
-      if (PageComponent.getInitialProps) {
-        pageProps = await PageComponent.getInitialProps(ctx);
-      }
       let initialData: any;
+      let pageProps = {};
+      let client: ApolloClient<any> = ctx?.apolloClient;
 
       // Only on the server:
       if (isSSR()) {
         console.info(format.processSSR('Apollo'));
+
+        if (!client) {
+          // Lưu client ở context là một cách rất hay, nó đảm bảo client không bị cache giữa các request
+          client = initApolloClient({ apiBase });
+
+          // will make sure we send the prop as `null` to the browser.
+          // @ts-ignore
+          client.toJSON = () => null;
+          ctx.apolloClient = client;
+        }
+
+        if (PageComponent.getInitialProps) {
+          console.log(
+            format.important('Apollo run wrapped getInitialProps methods')
+          );
+          pageProps = await PageComponent.getInitialProps(ctx);
+        }
+
         // When redirecting, the response is finished.
         // No point in continuing to render
         if (ctx.res && ctx.res.writableEnded) {
@@ -84,7 +90,11 @@ export const withApollo = (
             const { getDataFromTree } = await import(
               '@apollo/client/react/ssr'
             );
-            console.info(format.important('Apollo getDataFromTree'));
+            console.info(
+              format.important(
+                'WithApollo: Render application and getDataFromTree'
+              )
+            );
             await getDataFromTree(
               <ctx.AppTree
                 pageProps={{
@@ -97,7 +107,7 @@ export const withApollo = (
             // Extract query data from the Apollo store
             initialData = client.cache.extract();
             console.info(
-              format.important('WithApollo: initialize data process done !')
+              format.important('WithApollo: Initialize data process done !')
             );
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.

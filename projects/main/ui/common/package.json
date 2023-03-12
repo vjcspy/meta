@@ -15,6 +15,7 @@
     "chitility": "workspace:*",
     "@web/base": "workspace:*",
     "@main/packages-web-apollo-schema-mgt": "workspace:*",
+    "@main/packages-web-i18n": "workspace:*",
     "@web/ui-extension": "workspace:*"
   }
 }

@@ -80,6 +80,9 @@
       "LayerFilterItem",
       "SwatchLayerFilterItem"
     ],
+    "ListingImageInterface": [
+      "ProductImageResize"
+    ],
     "MediaGalleryInterface": [
       "ProductImage",
       "ProductVideo"

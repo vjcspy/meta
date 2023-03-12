@@ -1,0 +1,19 @@
+import { useSelector } from '@main/packages-web-redux';
+
+import {
+  selectAggregations,
+  selectIsUpdatingProducts,
+  selectProducts,
+} from '../../store/products';
+
+export const useProductsState = () => {
+  const products = useSelector(selectProducts);
+  const aggregations = useSelector(selectAggregations);
+  const isUpdatingProducts = useSelector(selectIsUpdatingProducts);
+  return {
+    productsState: products,
+    products,
+    aggregations,
+    isUpdatingProducts,
+  };
+};

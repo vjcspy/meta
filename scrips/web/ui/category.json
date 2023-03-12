@@ -1,0 +1,51 @@
+{
+  "uiId": "DEFAULT_ROOT",
+  "extensionDataConfigs": [
+    {
+      "forHookId": "header",
+      "extensionDataConfigs": [
+        {
+          "uiId": "HEADER"
+        }
+      ]
+    },
+    {
+      "forHookId": "main",
+      "extensionDataConfigs": [
+        {
+          "uiId": "PRODUCTS",
+          "extensionDataConfigs": [
+            {
+              "forHookId": "products",
+              "extensionDataConfigs": [
+                {
+                  "uiId": "PRODUCTS_BREADCRUMBS"
+                },
+                {
+                  "uiId": "PRODUCTS_CATEGORY_INFO"
+                },
+                {
+                  "uiId": "PRODUCTS_AGGREGATIONS"
+                },
+                {
+                  "uiId": "PRODUCTS_FILTERS"
+                },
+                {
+                  "uiId": "PRODUCT_LISTING"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forHookId": "footer",
+      "extensionDataConfigs": [
+        {
+          "uiId": "FOOTER"
+        }
+      ]
+    }
+  ]
+}

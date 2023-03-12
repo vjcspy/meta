@@ -33,7 +33,7 @@ module.exports = {
         "plugin:prettier/recommended"
       ],
       "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": ['./tsconfig.json','./tsconfig.server.json']
       },
       "rules": {
         "prettier/prettier": [

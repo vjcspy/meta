@@ -53,6 +53,7 @@ interface CartItemInterface {
 
 "Contains the full set of attributes that can be returned in a category search."
 interface CategoryInterface {
+    app_background_image: String
     automatic_sorting: String
     available_sort_by: [String]
     "An array of breadcrumb items."
@@ -82,8 +83,10 @@ interface CategoryInterface {
     meta_description: String
     meta_keywords: String
     meta_title: String
+    mobile_banner_image: String
     "The display name of the category."
     name: String
+    name_on_app: String
     "The full category path."
     path: String
     "The category path within the store."
@@ -101,6 +104,7 @@ interface CategoryInterface {
         "The attributes to sort on, and whether to return the results in ascending or descending order."
         sort: ProductAttributeSortInput
     ): CategoryProducts
+    show_as_bestseller: Int
     "Indicates whether the category is staged for a future campaign."
     staged: Boolean!
     "The unique ID for a `CategoryInterface` object."
@@ -239,6 +243,18 @@ interface LayerFilterItemInterface {
 }
 
 "Contains basic information about a product image or video."
+interface ListingImageInterface {
+    "Whether the image is hidden from view."
+    disabled: Boolean
+    "The label of the product image or video."
+    label: String
+    "The media item's position after it has been sorted."
+    position: Int
+    "The URL of the product image or video."
+    url: String
+}
+
+"Contains basic information about a product image or video."
 interface MediaGalleryInterface {
     "Indicates whether the image is hidden from view."
     disabled: Boolean
@@ -330,6 +346,8 @@ interface ProductInterface {
     image: ProductImage
     "Indicates whether the product can be returned."
     is_returnable: String
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -668,6 +686,8 @@ type Attribute {
     input_type: String
     "Details about the storefront properties configured for the attribute."
     storefront_properties: StorefrontProperties
+    "Swatch attribute data"
+    swatches: [CatalogCategoryLayerFilterSwatch]
 }
 
 "Defines an attribute option."
@@ -707,6 +727,16 @@ type AvailableShippingMethod {
     price_excl_tax: Money!
     "The cost of shipping using this shipping method, including tax."
     price_incl_tax: Money!
+}
+
+"The best seller products object returned in the best seller query."
+type BestSellerProducts {
+    "An array of products best seller."
+    items: [ProductInterface]
+    "An object that includes the page_info and currentPage values specified in the query."
+    page_info: SearchResultPageInfo
+    "The number of products in the category that are marked as visible. By default, in complex products, parent products are visible, but their child products are not."
+    total_count: Int
 }
 
 "Contains details about the billing address."
@@ -945,6 +975,8 @@ type BundleProduct implements CustomizableProductInterface & PhysicalProductInte
     is_returnable: String
     "An array containing information about individual bundle items."
     items: [BundleItem]
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -1238,6 +1270,32 @@ type CartUserInputError {
     message: String!
 }
 
+"Filter data"
+type CatalogCategoryLayerFilter {
+    fe_model: String
+    item_count: Int
+    name: String
+    options: [CatalogCategoryLayerFilterOption]
+    swatches: [CatalogCategoryLayerFilterSwatch]
+    type: String
+}
+
+"Filter Item data"
+type CatalogCategoryLayerFilterOption {
+    count: Int
+    label: String
+    value: String
+}
+
+"Filter Item data"
+type CatalogCategoryLayerFilterSwatch {
+    option_id: Int
+    store_id: Int
+    swatch_id: Int
+    type: Int
+    value: String
+}
+
 "Contains details about the products assigned to a category."
 type CategoryProducts {
     "An array of products that are assigned to the category."
@@ -1260,6 +1318,7 @@ type CategoryResult {
 
 "Contains the hierarchy of categories."
 type CategoryTree implements CategoryInterface & RoutableInterface {
+    app_background_image: String
     automatic_sorting: String
     available_sort_by: [String]
     "An array of breadcrumb items."
@@ -1291,8 +1350,10 @@ type CategoryTree implements CategoryInterface & RoutableInterface {
     meta_description: String
     meta_keywords: String
     meta_title: String
+    mobile_banner_image: String
     "The display name of the category."
     name: String
+    name_on_app: String
     "The full category path."
     path: String
     "The category path within the store."
@@ -1314,6 +1375,7 @@ type CategoryTree implements CategoryInterface & RoutableInterface {
     redirect_code: Int!
     "The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original."
     relative_url: String
+    show_as_bestseller: Int
     "Indicates whether the category is staged for a future campaign."
     staged: Boolean!
     "One of PRODUCT, CATEGORY, or CMS_PAGE."
@@ -1356,6 +1418,14 @@ type CheckoutUserInputError {
     message: String!
     "The path to the input field that caused an error. See the GraphQL specification about path errors for details: http://spec.graphql.org/draft/#sec-Errors"
     path: [String]!
+}
+
+"Configuration for chiaki project"
+type ChiakiConfig {
+    key: String!
+    store_id: String
+    user_id: String!
+    value: String!
 }
 
 "EntityUrl is an output object containing the `id`, `relative_url`, and `type` attributes"
@@ -1543,6 +1613,8 @@ type ConfigurableProduct implements CustomizableProductInterface & PhysicalProdu
     image: ProductImage
     "Indicates whether the product can be returned."
     is_returnable: String
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -2640,6 +2712,8 @@ type DownloadableProduct implements CustomizableProductInterface & ProductInterf
     links_purchased_separately: Int
     "The heading above the list of downloadable products."
     links_title: String
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -3068,6 +3142,8 @@ type GiftCardProduct implements CustomizableProductInterface & PhysicalProductIn
     is_returnable: String
     "The number of days after purchase until the gift card expires. A null value means there is no limit."
     lifetime: Int
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -3441,6 +3517,8 @@ type GroupedProduct implements PhysicalProductInterface & ProductInterface & Rou
     is_returnable: String
     "An array containing grouped product items."
     items: [GroupedProductItem]
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -4072,6 +4150,7 @@ type Mutation {
     ): Boolean
     "Revoke the customer token."
     revokeCustomerToken: RevokeCustomerTokenOutput
+    saveChiakiConfig(input: ChiakiInput): ChiakiConfig
     "Send a message on behalf of a customer to the specified email addresses."
     sendEmailToFriend(
         "An input object that defines sender, recipients, and product."
@@ -4461,6 +4540,12 @@ type PriceRange {
     minimum_price: ProductPrice!
 }
 
+"Use in product detail page"
+type ProductAdditionInformation {
+    data: String
+    id: Int
+}
+
 "Contains a product attribute code and value."
 type ProductAttribute {
     "The unique identifier for a product attribute code."
@@ -4480,6 +4565,18 @@ type ProductDiscount {
 "Contains product image information, including the image URL and label."
 type ProductImage implements MediaGalleryInterface {
     "Indicates whether the image is hidden from view."
+    disabled: Boolean
+    "The label of the product image or video."
+    label: String
+    "The media item's position after it has been sorted."
+    position: Int
+    "The URL of the product image or video."
+    url: String
+}
+
+"Product image information. Contains the image URL and label."
+type ProductImageResize implements ListingImageInterface {
+    "Whether the image is hidden from view."
     disabled: Boolean
     "The label of the product image or video."
     label: String
@@ -4661,11 +4758,44 @@ type Query {
         "Filter store views by the current store group."
         useCurrentGroup: Boolean
     ): [StoreConfig]
+    "Returns an array of best seller product."
+    bestSellerProduct(
+        "Specifies which page of results to return. The default value is 1."
+        currentPage: Int = 1,
+        "Specifies the maximum number of results to return at once. This attribute is optional."
+        pageSize: Int = 20
+    ): BestSellerProducts
+    "Returns an array of best seller product."
+    bestSellerProductInCategory(
+        "Category ID"
+        category_id: Int!,
+        "Specifies which page of results to return. The default value is 1."
+        currentPage: Int = 1,
+        "Specifies the maximum number of results to return at once. This attribute is optional."
+        pageSize: Int = 20
+    ): BestSellerProducts
     "Return information about the specified shopping cart."
     cart(
         "The unique ID of the cart to query."
         cart_id: String!
     ): Cart
+    "Get available filter list from specific category"
+    catalogCategoryLayerFilters(
+        "Category ID"
+        category_id: Int!
+    ): [CatalogCategoryLayerFilter]
+    "Custom gralql for get catalog category listing data"
+    catalogCategoryListingData(
+        "Specifies which page of results to return. The default value is 1."
+        currentPage: Int = 1,
+        filters: [CatalogCategoryListingFilter],
+        "Specifies the maximum number of results to return at once. This attribute is optional."
+        pageSize: Int = 20,
+        "Performs a full-text search using the specified key words."
+        search: String,
+        "Specifies which attributes to sort on, and whether to return the results in ascending or descending order."
+        sort: ProductAttributeSortInput
+    ): Products
     "Return a list of categories that match the specified filter."
     categories(
         "Specifies which page of results to return. The default value is 1."
@@ -4687,6 +4817,12 @@ type Query {
     ): [CategoryTree]
     "Return Terms and Conditions configuration information."
     checkoutAgreements: [CheckoutAgreement]
+    chiakiConfig(
+        key: String,
+        "Store ID"
+        store_id: String,
+        user_id: String!
+    ): [ChiakiConfig]
     "The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists"
     chiakiPageResolver(url: String!, userId: String!): ChiakiPage
     "Return information about CMS blocks."
@@ -4796,6 +4932,7 @@ type Query {
         "Specifies which attribute to sort on, and whether to return the results in ascending or descending order."
         sort: PickupLocationSortInput
     ): PickupLocations
+    productAdditonInformation(sku: String!): ProductAdditionInformation
     "Return the active ratings attributes and the values each rating can have."
     productReviewRatingsMetadata: ProductReviewRatingsMetadata!
     "Search for products that match the criteria specified in the `search` and `filter` attributes."
@@ -5452,6 +5589,8 @@ type SimpleProduct implements CustomizableProductInterface & PhysicalProductInte
     image: ProductImage
     "Indicates whether the product can be returned."
     is_returnable: String
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -5991,6 +6130,8 @@ type VirtualProduct implements CustomizableProductInterface & ProductInterface &
     image: ProductImage
     "Indicates whether the product can be returned."
     is_returnable: String
+    "An array of Media Gallery Image objects."
+    listing_images: [ListingImageInterface]
     "A number representing the product's manufacturer."
     manufacturer: Int @deprecated(reason: "Use the `custom_attributes` field instead.")
     material: String @deprecated(reason: "Use the `custom_attributes` field instead.")
@@ -7368,6 +7509,12 @@ input CartItemUpdateInput {
     quantity: Float
 }
 
+"Catalog Listing filter"
+input CatalogCategoryListingFilter {
+    code: String!
+    data: FilterEqualTypeInput!
+}
+
 "Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for."
 input CategoryFilterInput {
     "Filter by the unique category ID for a `CategoryInterface` object."
@@ -7384,6 +7531,13 @@ input CategoryFilterInput {
     url_key: FilterEqualTypeInput
     "Filter by the URL path for the category."
     url_path: FilterEqualTypeInput
+}
+
+input ChiakiInput {
+    key: String
+    store_id: String
+    user_id: String
+    value: String
 }
 
 input ConfigurableProductCartItemInput {

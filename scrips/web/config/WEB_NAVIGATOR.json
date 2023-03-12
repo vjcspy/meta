@@ -1,0 +1,510 @@
+{
+  "selections": [
+    {
+      "type": "popup",
+      "name": "Men",
+      "action": {
+        "type": false
+      },
+      "selections": [
+        {
+          "name": "Tops",
+          "action": {
+            "type": "catalog_category_view",
+            "data": [
+              {
+                "code": "category_id",
+                "data": {
+                  "eq": "13"
+                }
+              }
+            ]
+          },
+          "selections": [
+            {
+              "name": "Jackets",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "15"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Hoodies & Sweatshirts",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "16"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Tees",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "17"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Link Social",
+              "action": {
+                "type": "link",
+                "data": {
+                  "url": "https://google.com.vn"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Bottoms",
+          "action": {
+            "type": "catalog_category_view",
+            "data": [
+              {
+                "code": "category_id",
+                "data": {
+                  "eq": "14"
+                }
+              }
+            ]
+          },
+          "selections": [
+            {
+              "name": "Pants",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "19"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Shorts",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "20"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pick Size",
+          "action": {
+            "type": false
+          },
+          "selections": [
+            {
+              "name": "Chọn size",
+              "action": {
+                "type": "attribute_filter",
+                "data": {
+                  "code": "size",
+                  "filters": [
+                    {
+                      "code": "category_id",
+                      "data": {
+                        "eq": "13"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Màu bạn thích",
+          "action": {
+            "type": false
+          },
+          "selections": [
+            {
+              "name": "Chọn màu",
+              "action": {
+                "type": "attribute_filter",
+                "data": {
+                  "code": "color",
+                  "filters": [
+                    {
+                      "code": "category_id",
+                      "data": {
+                        "eq": "13"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "popup",
+      "name": "Women",
+      "action": {
+        "type": false
+      },
+      "selections": [
+        {
+          "name": "Áo",
+          "action": {
+            "type": "catalog_category_view",
+            "data": [
+              {
+                "code": "category_id",
+                "data": {
+                  "eq": "22"
+                }
+              }
+            ]
+          },
+          "selections": [
+            {
+              "name": "Áo Khoác",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "24"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Hoodies & Sweatshirts",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "25"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Tees",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "26"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Bras & Tanks",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "27"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Link FB",
+              "action": {
+                "type": "link",
+                "data": {
+                  "url": "https://dantri.vn"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Bottoms",
+          "action": {
+            "type": "catalog_category_view",
+            "data": [
+              {
+                "code": "category_id",
+                "data": {
+                  "eq": "23"
+                }
+              }
+            ]
+          },
+          "selections": [
+            {
+              "name": "Pants",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "28"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Shorts",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "29"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pick Your Size",
+          "action": {
+            "type": false
+          },
+          "selections": [
+            {
+              "name": "Chọn size",
+              "action": {
+                "type": "attribute_filter",
+                "data": {
+                  "code": "size",
+                  "filters": [
+                    {
+                      "code": "category_id",
+                      "data": {
+                        "eq": "22"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Color",
+          "action": {
+            "type": false
+          },
+          "selections": [
+            {
+              "name": "Chọn màu",
+              "action": {
+                "type": "attribute_filter",
+                "data": {
+                  "code": "color",
+                  "filters": [
+                    {
+                      "code": "category_id",
+                      "data": {
+                        "eq": "22"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "popup",
+      "name": "Accessory",
+      "action": {
+        "type": false
+      },
+      "selections": [
+        {
+          "name": "Bags",
+          "action": {
+            "type": "catalog_category_view",
+            "data": [
+              {
+                "code": "category_id",
+                "data": {
+                  "eq": "4"
+                }
+              }
+            ]
+          },
+          "selections": [
+            {
+              "name": "Fitness Equipment",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "5"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Hoodies",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "15"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Watches",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "6"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "popup",
+      "name": "Collections",
+      "action": {
+        "type": false
+      },
+      "selections": [
+        {
+          "name": "Yoga",
+          "action": {
+            "type": "catalog_category_view",
+            "data": [
+              {
+                "code": "category_id",
+                "data": {
+                  "eq": "8"
+                }
+              }
+            ]
+          },
+          "selections": [
+            {
+              "name": "Erin",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "35"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Fabrics",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "36"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": "Friendly",
+              "action": {
+                "type": "catalog_category_view",
+                "data": [
+                  {
+                    "code": "category_id",
+                    "data": {
+                      "eq": "37"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sales",
+      "action": {
+        "type": "link",
+        "data": {
+          "url": "men/bottoms-men.html"
+        }
+      }
+    },
+    {
+      "name": "Gift",
+      "action": {
+        "type": "link",
+        "data": {
+          "url": "gear/bags.html"
+        }
+      }
+    }
+  ]
+}

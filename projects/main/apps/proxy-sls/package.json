@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development sls offline start --stage offline --reloadHandler",
+    "start": "NODE_ENV=development sls offline start --stage offline --reloadHandler",
     "tail-log": "sls logs -f app -t",
     "deploy:prod": "NODE_ENV=production sls deploy --stage production --verbose --aws-s3-accelerate",
     "remove:prod": "NODE_ENV=production sls remove --stage production",
@@ -30,7 +31,6 @@
     "serverless-esbuild": "latest",
     "serverless-offline": "^12.0.3",
     "sls-config": "workspace:*",
-    "ts-node": "^10.9.1",
     "tsconfig": "workspace:*",
     "typescript": "~4.9.0"
   },

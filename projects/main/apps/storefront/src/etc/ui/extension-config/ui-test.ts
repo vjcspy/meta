@@ -35,4 +35,10 @@ export const UI_TEST_EXT_CFG: ExtensionConfig[] = [
     uiId: 'STATIC_FOO_OR_BAR',
     component: StaticFooOrBar,
   },
+  {
+    uiId: 'TEST_SIMPLE_SLIDER',
+    component: dynamic(() => import('@components/TestSimpleSlider'), {
+      ssr: false,
+    }),
+  },
 ];

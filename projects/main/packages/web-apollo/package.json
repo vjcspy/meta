@@ -8,6 +8,7 @@
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf -rf ./dist",
     "compile": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
     "lint": "eslint --fix --ext ts,tsx ."
   },
   "devDependencies": {

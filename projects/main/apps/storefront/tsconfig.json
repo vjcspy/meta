@@ -1,12 +1,27 @@
 {
   "extends": "tsconfig/nextjs.json",
-  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "_cache",
+    ".turbo",
+    ".next"
+  ],
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@etc/*": ["src/etc/*"],
-    }
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@etc/*": [
+        "src/etc/*"
+      ]
+    },
+    "incremental": true
   }
 }

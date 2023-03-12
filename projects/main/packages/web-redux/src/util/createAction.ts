@@ -14,7 +14,7 @@ export function createAction<P, T extends string = string>(
 }
 
 export function generateAction<
-  ActionPayload = Record<any, any>,
+  ActionPayload = any,
   AfterPayload = { data: any },
   ErrorPayload = { error: any },
   T extends string = string

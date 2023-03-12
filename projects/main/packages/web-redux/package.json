@@ -15,11 +15,12 @@
     "tsconfig": "workspace:*"
   },
   "dependencies": {
-    "chitility": "workspace:*",
     "@web/base": "workspace:*",
-    "@reduxjs/toolkit": "latest",
-    "react-redux": "latest",
-    "redux-observable": "latest",
-    "redux": "latest"
+    "chitility": "workspace:*",
+    "@reduxjs/toolkit": "^1.9.3",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-observable": "^2.0.0",
+    "reselect": "^4.1.7"
   }
 }

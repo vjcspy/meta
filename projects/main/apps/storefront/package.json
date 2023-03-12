@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3001",
-    "build": "NODE_ENV=production next build",
-    "start": "next start",
+    "dev": "nodemon",
+    "build": "NODE_ENV=production next build && tsc -p tsconfig.server.json",
+    "clean": "rimraf -rf ./dist",
+    "next:dev": "next dev --port 3001",
+    "start": "NODE_ENV=production node dist/index.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,11 +16,13 @@
     "react-dom": "^17",
     "@main/packages-web-storefront": "workspace:*",
     "@main/packages-web-apollo": "workspace:*",
+    "@main/packages-web-server": "workspace:*",
     "@web/base": "workspace:*",
     "@web/ui-extension": "workspace:*",
     "chitility": "workspace:*",
     "@main/ui-testbed": "workspace:*",
     "@main/ui-common": "workspace:*",
+    "@main/ui-storefront": "workspace:*",
     "nextjs-config": "workspace:*"
   },
   "devDependencies": {

@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'GMV DIN Pro';
+  src: url("/static/fonts/GMV_DIN_Pro.ttf");
+}
+@font-face {
+  font-family: 'GMV DIN Pro';
+  src: url("/static/fonts/GMV_DIN_Pro-Medium.ttf");
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'GMV DIN Pro';
+  src: url("/static/fonts/GMV_DIN_Pro-Bold.ttf");
+  font-weight: 700;
+}
+body {
+  font-family: 'GMV DIN Pro';
+  font-size: 13px;
+  line-height: 20px;
+  margin: 0;
+  color: $body-text;
+}
+h1,h2,h3,h4,h5{
+  font-weight: 600;
+}
+.ui-block-head{
+
+}

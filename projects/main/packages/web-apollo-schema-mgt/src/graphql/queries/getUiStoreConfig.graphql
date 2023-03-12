@@ -1,8 +1,8 @@
-#query getChiakiConfig($userId: String!, $storeId: String, $key: String) {
-#    chiakiConfig(user_id: $userId, store_id: $storeId, key: $key){
-#        user_id
-#        store_id
-#        key
-#        value
-#    }
-#}
+query getChiakiConfig($userId: String!, $storeId: String, $key: String) {
+    chiakiConfig(user_id: $userId, store_id: $storeId, key: $key){
+        user_id
+        store_id
+        key
+        value
+    }
+}

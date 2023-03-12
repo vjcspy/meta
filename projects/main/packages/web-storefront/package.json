@@ -18,6 +18,7 @@
     "@main/packages-web-apollo": "workspace:*",
     "@main/packages-web-apollo-schema-mgt": "workspace:*",
     "@main/packages-web-redux": "workspace:*",
+    "@main/packages-web-i18n": "workspace:*",
     "@main/ui-common": "workspace:*"
   }
 }

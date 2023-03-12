@@ -1,0 +1,26 @@
+{
+  "name": "@main/ui-storefront",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@main/packages-web-apollo-schema-mgt": "workspace:*",
+    "@main/packages-web-i18n": "workspace:*",
+    "@main/packages-web-storefront": "workspace:*",
+    "@web/base": "workspace:*",
+    "@web/ui-extension": "workspace:*",
+    "chitility": "workspace:*",
+    "clsx": "^1.2.1",
+    "react-feather": "^2.0.10",
+    "react-slick": "^0.29.0",
+    "swiper": "^9.1.0"
+  }
+}

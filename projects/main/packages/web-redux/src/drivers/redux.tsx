@@ -19,6 +19,7 @@ const store = configureStore({
     : false,
 });
 storeManager.runEpic();
+storeManager.setStore(store);
 // @ts-ignore
 store.storeManager = storeManager;
 export const withRedux = (Page: any, webUiAdapterOptions) => {

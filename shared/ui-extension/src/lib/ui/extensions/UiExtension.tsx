@@ -32,7 +32,9 @@ export const UiExtension = React.memo<{
     [props?.extensionDataConfig, uiId]
   );
 
+  Component.displayName = `UiExtension: ${uiId}`;
+
   return <Component {...props} />;
 });
 
-UiExtension.displayName = 'UiExtension';
+UiExtension.displayName = 'UiExtensionWrapper';

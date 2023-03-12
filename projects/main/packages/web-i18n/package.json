@@ -1,0 +1,26 @@
+{
+  "name": "@main/packages-web-i18n",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "lint": "eslint --fix --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@web/base": "workspace:*",
+    "chitility": "workspace:*",
+    "encoding": "^0.1.13",
+    "i18next": "latest",
+    "i18next-fs-backend": "latest",
+    "i18next-http-backend": "latest",
+    "react-i18next": "latest"
+  }
+}

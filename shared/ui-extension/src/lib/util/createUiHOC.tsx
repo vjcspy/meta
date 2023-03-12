@@ -66,7 +66,7 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
   hookFn: (props: any) => Pick<TProps, TInjectedKeys>,
   displayName: string
-): (component: any) => any {
+) {
   return function hoc(Component: React.ComponentType<TProps>) {
     const UiHOC = (props1: Omit<TProps, TInjectedKeys>) => {
       const hookData = hookFn({ ...props1 });
@@ -76,14 +76,12 @@ export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
         [hookData, props1]
       );
 
-      // @ts-ignore
-      return <Component {...(newProps as TProps)} />;
+      return <Component {...(newProps as any)} />;
     };
 
-    if (process?.env?.NODE_ENV !== 'production') {
-      const oriDisplayName = Component.displayName || Component.name || '';
-      UiHOC.displayName = `${displayName}(${oriDisplayName})`;
-    }
+    const oriDisplayName = Component.displayName || Component.name || '';
+    UiHOC.displayName = `${displayName}(${oriDisplayName})`;
+
     return UiHOC;
   };
 }
@@ -105,8 +103,8 @@ export function combineHOC<Fns extends HOCType<any, any>[]>(
 
 export function combineHOC(...objs: [...any]) {
   return (Component: React.ComponentType<any>) => {
-    const _withHocs = objs.reverse().reduce((result, reduce) => {
-      return reduce(result);
+    const _withHocs = objs.reverse().reduce((ComponentWithHoc, hoc) => {
+      return hoc(ComponentWithHoc);
     }, Component);
 
     _withHocs.OriginComponent = Component;

@@ -1,2 +1,4 @@
 .esbuild
 .env.local
+.serverless
+dist

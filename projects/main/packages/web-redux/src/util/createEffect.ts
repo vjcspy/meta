@@ -6,13 +6,13 @@ import { filter } from 'rxjs/operators';
 
 export const createEffect = (
   effect: (
-    action: Action<{ type: string }>,
+    action$: Observable<Action<string>>,
     stateObservable: StateObservable<any>
   ) => Observable<{ type: string } | Observable<never>>
 ) => {
   return (
-    action: Action<{ type: string }>,
+    action$: Observable<Action<string>>,
     stateObservable: StateObservable<any>
   ): Observable<{ type: string }> =>
-    effect(action, stateObservable).pipe(filter((a) => a !== EMPTY)) as any;
+    effect(action$, stateObservable).pipe(filter((a) => a !== EMPTY)) as any;
 };

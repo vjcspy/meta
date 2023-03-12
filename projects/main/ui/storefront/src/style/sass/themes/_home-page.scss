@@ -1,0 +1,134 @@
+//Home Page
+.gl-content {
+  max-width: 1730px;
+  margin: 0 auto;
+}
+.gl-productNews {
+  .gl-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 25px;
+    >h4 {
+      margin: 0;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 22px;
+    }
+    >span {
+      font-size: 16px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .gt-content {
+    display: flex;
+    margin: 0 -15px;
+    flex-wrap: wrap;
+    .gl-items {
+      padding: 0 15px;
+      flex: 0 0 20%;
+      max-width: 20%;
+    }
+  }
+}
+.gl-homeBanners{
+  padding: 30px 0;
+  .gl-items__img{
+    display: flex;
+    .img-first{
+      margin-right: 30px;
+    }
+  }
+}
+.gl-stores{
+  //max-width: 1650px;
+  margin: 30px;
+
+  .gl-stores__heading {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .gl-stores__inners {
+    display: flex;
+    overflow-x: scroll;
+    padding-bottom: 20px;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .gl-stores__items {
+      padding: 0 15px;
+      min-width: 320px;
+      max-width: 320px;
+      h4 {
+        font-size: 16px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+//About US
+.about-page{
+  max-width: 1320px;
+  margin: 30px auto;
+  .about-banner2{
+    margin: 40px 0;
+    .last{
+      img:nth-child(2),
+      img:nth-child(1){
+        margin-bottom: 47px;
+      }
+    }
+  }
+  .about-banner3{
+    text-align: center;
+    margin-bottom: 40px;
+    .row{
+      margin: 0;
+      >div{
+        padding: 0;
+      }
+    }
+    h2{
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+  .gl-product{
+    margin: 20px 0 40px;
+    .gl-stores__heading{
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      padding-left: 20px;
+    }
+  }
+}
+
+.swiper{
+  height: 100%;
+}

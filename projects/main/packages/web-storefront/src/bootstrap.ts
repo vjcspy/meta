@@ -5,6 +5,7 @@ import * as process from 'process';
 import { WEB_DOMAIN_KEY } from './modules/domain/etc/WebDomainKey';
 
 let isInit = false;
+
 export function bootstrap(): void {
   if (isInit) {
     return;

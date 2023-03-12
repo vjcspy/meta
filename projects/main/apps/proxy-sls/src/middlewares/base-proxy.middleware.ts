@@ -41,6 +41,7 @@ const originalOptions: Options = {
     }
     // delete proxyRes.headers['x-removed']; // remove header from response
   },
+  logLevel: 'error',
 };
 
 export const baseProxy = createProxyMiddleware(

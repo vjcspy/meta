@@ -357,6 +357,8 @@ export type Attribute = {
   input_type?: Maybe<Scalars['String']>;
   /** Details about the storefront properties configured for the attribute. */
   storefront_properties?: Maybe<StorefrontProperties>;
+  /** Swatch attribute data */
+  swatches?: Maybe<Array<Maybe<CatalogCategoryLayerFilterSwatch>>>;
 };
 
 /** Defines the attribute characteristics to search for the `attribute_code` and `entity_type` to search. */
@@ -418,6 +420,17 @@ export enum BatchMutationStatus {
   /** @deprecated  */
   Success = 'SUCCESS'
 }
+
+/** The best seller products object returned in the best seller query. */
+export type BestSellerProducts = {
+  __typename?: 'BestSellerProducts';
+  /** An array of products best seller. */
+  items?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** An object that includes the page_info and currentPage values specified in the query. */
+  page_info?: Maybe<SearchResultPageInfo>;
+  /** The number of products in the category that are marked as visible. By default, in complex products, parent products are visible, but their child products are not. */
+  total_count?: Maybe<Scalars['Int']>;
+};
 
 /** Defines the billing address. */
 export type BillingAddressInput = {
@@ -733,6 +746,8 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   is_returnable?: Maybe<Scalars['String']>;
   /** An array containing information about individual bundle items. */
   items?: Maybe<Array<Maybe<BundleItem>>>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -1208,6 +1223,41 @@ export enum CartUserInputErrorType {
   Undefined = 'UNDEFINED'
 }
 
+/** Filter data */
+export type CatalogCategoryLayerFilter = {
+  __typename?: 'CatalogCategoryLayerFilter';
+  fe_model?: Maybe<Scalars['String']>;
+  item_count?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Maybe<CatalogCategoryLayerFilterOption>>>;
+  swatches?: Maybe<Array<Maybe<CatalogCategoryLayerFilterSwatch>>>;
+  type?: Maybe<Scalars['String']>;
+};
+
+/** Filter Item data */
+export type CatalogCategoryLayerFilterOption = {
+  __typename?: 'CatalogCategoryLayerFilterOption';
+  count?: Maybe<Scalars['Int']>;
+  label?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** Filter Item data */
+export type CatalogCategoryLayerFilterSwatch = {
+  __typename?: 'CatalogCategoryLayerFilterSwatch';
+  option_id?: Maybe<Scalars['Int']>;
+  store_id?: Maybe<Scalars['Int']>;
+  swatch_id?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** Catalog Listing filter */
+export type CatalogCategoryListingFilter = {
+  code: Scalars['String'];
+  data: FilterEqualTypeInput;
+};
+
 /** Defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for. */
 export type CategoryFilterInput = {
   /** Filter by the unique category ID for a `CategoryInterface` object. */
@@ -1228,6 +1278,7 @@ export type CategoryFilterInput = {
 
 /** Contains the full set of attributes that can be returned in a category search. */
 export type CategoryInterface = {
+  app_background_image?: Maybe<Scalars['String']>;
   automatic_sorting?: Maybe<Scalars['String']>;
   available_sort_by?: Maybe<Array<Maybe<Scalars['String']>>>;
   /** An array of breadcrumb items. */
@@ -1263,8 +1314,10 @@ export type CategoryInterface = {
   meta_description?: Maybe<Scalars['String']>;
   meta_keywords?: Maybe<Scalars['String']>;
   meta_title?: Maybe<Scalars['String']>;
+  mobile_banner_image?: Maybe<Scalars['String']>;
   /** The display name of the category. */
   name?: Maybe<Scalars['String']>;
+  name_on_app?: Maybe<Scalars['String']>;
   /** The full category path. */
   path?: Maybe<Scalars['String']>;
   /** The category path within the store. */
@@ -1275,6 +1328,7 @@ export type CategoryInterface = {
   product_count?: Maybe<Scalars['Int']>;
   /** The list of products assigned to the category. */
   products?: Maybe<CategoryProducts>;
+  show_as_bestseller?: Maybe<Scalars['Int']>;
   /** Indicates whether the category is staged for a future campaign. */
   staged: Scalars['Boolean'];
   /** The unique ID for a `CategoryInterface` object. */
@@ -1325,6 +1379,7 @@ export type CategoryResult = {
 /** Contains the hierarchy of categories. */
 export type CategoryTree = CategoryInterface & RoutableInterface & {
   __typename?: 'CategoryTree';
+  app_background_image?: Maybe<Scalars['String']>;
   automatic_sorting?: Maybe<Scalars['String']>;
   available_sort_by?: Maybe<Array<Maybe<Scalars['String']>>>;
   /** An array of breadcrumb items. */
@@ -1362,8 +1417,10 @@ export type CategoryTree = CategoryInterface & RoutableInterface & {
   meta_description?: Maybe<Scalars['String']>;
   meta_keywords?: Maybe<Scalars['String']>;
   meta_title?: Maybe<Scalars['String']>;
+  mobile_banner_image?: Maybe<Scalars['String']>;
   /** The display name of the category. */
   name?: Maybe<Scalars['String']>;
+  name_on_app?: Maybe<Scalars['String']>;
   /** The full category path. */
   path?: Maybe<Scalars['String']>;
   /** The category path within the store. */
@@ -1378,6 +1435,7 @@ export type CategoryTree = CategoryInterface & RoutableInterface & {
   redirect_code: Scalars['Int'];
   /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original. */
   relative_url?: Maybe<Scalars['String']>;
+  show_as_bestseller?: Maybe<Scalars['Int']>;
   /** Indicates whether the category is staged for a future campaign. */
   staged: Scalars['Boolean'];
   /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
@@ -1461,6 +1519,22 @@ export enum CheckoutUserInputErrorCodes {
   /** @deprecated  */
   Undefined = 'UNDEFINED'
 }
+
+/** Configuration for chiaki project */
+export type ChiakiConfig = {
+  __typename?: 'ChiakiConfig';
+  key: Scalars['String'];
+  store_id?: Maybe<Scalars['String']>;
+  user_id: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type ChiakiInput = {
+  key?: InputMaybe<Scalars['String']>;
+  store_id?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
 
 /** EntityUrl is an output object containing the `id`, `relative_url`, and `type` attributes */
 export type ChiakiPage = {
@@ -1680,6 +1754,8 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   image?: Maybe<ProductImage>;
   /** Indicates whether the product can be returned. */
   is_returnable?: Maybe<Scalars['String']>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -4855,6 +4931,8 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   links_purchased_separately?: Maybe<Scalars['Int']>;
   /** The heading above the list of downloadable products. */
   links_title?: Maybe<Scalars['String']>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -5556,6 +5634,8 @@ export type GiftCardProduct = CustomizableProductInterface & PhysicalProductInte
   is_returnable?: Maybe<Scalars['String']>;
   /** The number of days after purchase until the gift card expires. A null value means there is no limit. */
   lifetime?: Maybe<Scalars['Int']>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -6151,6 +6231,8 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   is_returnable?: Maybe<Scalars['String']>;
   /** An array containing grouped product items. */
   items?: Maybe<Array<Maybe<GroupedProductItem>>>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -6558,6 +6640,18 @@ export type LayerFilterItemInterface = {
   value_string?: Maybe<Scalars['String']>;
 };
 
+/** Contains basic information about a product image or video. */
+export type ListingImageInterface = {
+  /** Whether the image is hidden from view. */
+  disabled?: Maybe<Scalars['Boolean']>;
+  /** The label of the product image or video. */
+  label?: Maybe<Scalars['String']>;
+  /** The media item's position after it has been sorted. */
+  position?: Maybe<Scalars['Int']>;
+  /** The URL of the product image or video. */
+  url?: Maybe<Scalars['String']>;
+};
+
 /** Defines characteristics about images and videos associated with a specific product. */
 export type MediaGalleryEntry = {
   __typename?: 'MediaGalleryEntry';
@@ -6749,6 +6843,7 @@ export type Mutation = {
   resetPassword?: Maybe<Scalars['Boolean']>;
   /** Revoke the customer token. */
   revokeCustomerToken?: Maybe<RevokeCustomerTokenOutput>;
+  saveChiakiConfig?: Maybe<ChiakiConfig>;
   /** Send a message on behalf of a customer to the specified email addresses. */
   sendEmailToFriend?: Maybe<SendEmailToFriendOutput>;
   /** Set the billing address on a specific cart. */
@@ -7094,6 +7189,11 @@ export type MutationResetPasswordArgs = {
   email: Scalars['String'];
   newPassword: Scalars['String'];
   resetPasswordToken: Scalars['String'];
+};
+
+
+export type MutationSaveChiakiConfigArgs = {
+  input?: InputMaybe<ChiakiInput>;
 };
 
 
@@ -7796,6 +7896,13 @@ export enum PriceViewEnum {
   PriceRange = 'PRICE_RANGE'
 }
 
+/** Use in product detail page */
+export type ProductAdditionInformation = {
+  __typename?: 'ProductAdditionInformation';
+  data?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+};
+
 /** Contains a product attribute code and value. */
 export type ProductAttribute = {
   __typename?: 'ProductAttribute';
@@ -7984,6 +8091,19 @@ export type ProductImage = MediaGalleryInterface & {
   url?: Maybe<Scalars['String']>;
 };
 
+/** Product image information. Contains the image URL and label. */
+export type ProductImageResize = ListingImageInterface & {
+  __typename?: 'ProductImageResize';
+  /** Whether the image is hidden from view. */
+  disabled?: Maybe<Scalars['Boolean']>;
+  /** The label of the product image or video. */
+  label?: Maybe<Scalars['String']>;
+  /** The media item's position after it has been sorted. */
+  position?: Maybe<Scalars['Int']>;
+  /** The URL of the product image or video. */
+  url?: Maybe<Scalars['String']>;
+};
+
 /** Product Information used for Pickup Locations search. */
 export type ProductInfoInput = {
   /** Product SKU. */
@@ -8043,6 +8163,8 @@ export type ProductInterface = {
   image?: Maybe<ProductImage>;
   /** Indicates whether the product can be returned. */
   is_returnable?: Maybe<Scalars['String']>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -8503,8 +8625,16 @@ export type Query = {
   __typename?: 'Query';
   /** Get a list of available store views and their config information. */
   availableStores?: Maybe<Array<Maybe<StoreConfig>>>;
+  /** Returns an array of best seller product. */
+  bestSellerProduct?: Maybe<BestSellerProducts>;
+  /** Returns an array of best seller product. */
+  bestSellerProductInCategory?: Maybe<BestSellerProducts>;
   /** Return information about the specified shopping cart. */
   cart?: Maybe<Cart>;
+  /** Get available filter list from specific category */
+  catalogCategoryLayerFilters?: Maybe<Array<Maybe<CatalogCategoryLayerFilter>>>;
+  /** Custom gralql for get catalog category listing data */
+  catalogCategoryListingData?: Maybe<Products>;
   /** Return a list of categories that match the specified filter. */
   categories?: Maybe<CategoryResult>;
   /**
@@ -8516,6 +8646,7 @@ export type Query = {
   categoryList?: Maybe<Array<Maybe<CategoryTree>>>;
   /** Return Terms and Conditions configuration information. */
   checkoutAgreements?: Maybe<Array<Maybe<CheckoutAgreement>>>;
+  chiakiConfig?: Maybe<Array<Maybe<ChiakiConfig>>>;
   /** The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists */
   chiakiPageResolver?: Maybe<ChiakiPage>;
   /** Return information about CMS blocks. */
@@ -8564,6 +8695,7 @@ export type Query = {
   isEmailAvailable?: Maybe<IsEmailAvailableOutput>;
   /** The pickup locations query searches for locations that match the search request requirements. */
   pickupLocations?: Maybe<PickupLocations>;
+  productAdditonInformation?: Maybe<ProductAdditionInformation>;
   /** Return the active ratings attributes and the values each rating can have. */
   productReviewRatingsMetadata: ProductReviewRatingsMetadata;
   /** Search for products that match the criteria specified in the `search` and `filter` attributes. */
@@ -8590,8 +8722,35 @@ export type QueryAvailableStoresArgs = {
 };
 
 
+export type QueryBestSellerProductArgs = {
+  currentPage?: InputMaybe<Scalars['Int']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryBestSellerProductInCategoryArgs = {
+  category_id: Scalars['Int'];
+  currentPage?: InputMaybe<Scalars['Int']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryCartArgs = {
   cart_id: Scalars['String'];
+};
+
+
+export type QueryCatalogCategoryLayerFiltersArgs = {
+  category_id: Scalars['Int'];
+};
+
+
+export type QueryCatalogCategoryListingDataArgs = {
+  currentPage?: InputMaybe<Scalars['Int']>;
+  filters?: InputMaybe<Array<InputMaybe<CatalogCategoryListingFilter>>>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  search?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<ProductAttributeSortInput>;
 };
 
 
@@ -8609,6 +8768,13 @@ export type QueryCategoryArgs = {
 
 export type QueryCategoryListArgs = {
   filters?: InputMaybe<CategoryFilterInput>;
+};
+
+
+export type QueryChiakiConfigArgs = {
+  key?: InputMaybe<Scalars['String']>;
+  store_id?: InputMaybe<Scalars['String']>;
+  user_id: Scalars['String'];
 };
 
 
@@ -8700,6 +8866,11 @@ export type QueryPickupLocationsArgs = {
   pageSize?: InputMaybe<Scalars['Int']>;
   productsInfo?: InputMaybe<Array<InputMaybe<ProductInfoInput>>>;
   sort?: InputMaybe<PickupLocationSortInput>;
+};
+
+
+export type QueryProductAdditonInformationArgs = {
+  sku: Scalars['String'];
 };
 
 
@@ -9734,6 +9905,8 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   image?: Maybe<ProductImage>;
   /** Indicates whether the product can be returned. */
   is_returnable?: Maybe<Scalars['String']>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -10490,6 +10663,8 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   image?: Maybe<ProductImage>;
   /** Indicates whether the product can be returned. */
   is_returnable?: Maybe<Scalars['String']>;
+  /** An array of Media Gallery Image objects. */
+  listing_images?: Maybe<Array<Maybe<ListingImageInterface>>>;
   /**
    * A number representing the product's manufacturer.
    * @deprecated Use the `custom_attributes` field instead.
@@ -13734,6 +13909,68 @@ export function useGetCategoryListForHomeLazyQuery(baseOptions?: Apollo.LazyQuer
 export type GetCategoryListForHomeQueryHookResult = ReturnType<typeof useGetCategoryListForHomeQuery>;
 export type GetCategoryListForHomeLazyQueryHookResult = ReturnType<typeof useGetCategoryListForHomeLazyQuery>;
 export type GetCategoryListForHomeQueryResult = Apollo.QueryResult<GetCategoryListForHomeQuery, GetCategoryListForHomeQueryVariables>;
+export const GetCategoryListingDataDocument = gql`
+    query getCategoryListingData($search: String!, $filters: [CatalogCategoryListingFilter], $pageSize: Int!, $currentPage: Int!, $sort: ProductAttributeSortInput) {
+  catalogCategoryListingData(
+    search: $search
+    filters: $filters
+    pageSize: $pageSize
+    currentPage: $currentPage
+    sort: $sort
+  ) {
+    aggregations {
+      attribute_code
+      label
+      options {
+        count
+        label
+        value
+      }
+    }
+    page_info {
+      current_page
+      page_size
+      total_pages
+    }
+    items {
+      ...ProductListingItem
+    }
+    total_count
+  }
+}
+    ${ProductListingItemFragmentDoc}`;
+
+/**
+ * __useGetCategoryListingDataQuery__
+ *
+ * To run a query within a React component, call `useGetCategoryListingDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoryListingDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoryListingDataQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      filters: // value for 'filters'
+ *      pageSize: // value for 'pageSize'
+ *      currentPage: // value for 'currentPage'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useGetCategoryListingDataQuery(baseOptions: Apollo.QueryHookOptions<GetCategoryListingDataQuery, GetCategoryListingDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoryListingDataQuery, GetCategoryListingDataQueryVariables>(GetCategoryListingDataDocument, options);
+      }
+export function useGetCategoryListingDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoryListingDataQuery, GetCategoryListingDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoryListingDataQuery, GetCategoryListingDataQueryVariables>(GetCategoryListingDataDocument, options);
+        }
+export type GetCategoryListingDataQueryHookResult = ReturnType<typeof useGetCategoryListingDataQuery>;
+export type GetCategoryListingDataLazyQueryHookResult = ReturnType<typeof useGetCategoryListingDataLazyQuery>;
+export type GetCategoryListingDataQueryResult = Apollo.QueryResult<GetCategoryListingDataQuery, GetCategoryListingDataQueryVariables>;
 export const GetCategoryNameDocument = gql`
     query getCategoryName($id: Int!) {
   category(id: $id) {
@@ -14117,6 +14354,13 @@ export const GetNavigatorAttributeFilterDataDocument = gql`
   ) {
     items {
       attribute_code
+      swatches {
+        option_id
+        store_id
+        swatch_id
+        type
+        value
+      }
       attribute_options {
         label
         value
@@ -14724,6 +14968,46 @@ export function useStoreConfigDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type StoreConfigDataQueryHookResult = ReturnType<typeof useStoreConfigDataQuery>;
 export type StoreConfigDataLazyQueryHookResult = ReturnType<typeof useStoreConfigDataLazyQuery>;
 export type StoreConfigDataQueryResult = Apollo.QueryResult<StoreConfigDataQuery, StoreConfigDataQueryVariables>;
+export const GetChiakiConfigDocument = gql`
+    query getChiakiConfig($userId: String!, $storeId: String, $key: String) {
+  chiakiConfig(user_id: $userId, store_id: $storeId, key: $key) {
+    user_id
+    store_id
+    key
+    value
+  }
+}
+    `;
+
+/**
+ * __useGetChiakiConfigQuery__
+ *
+ * To run a query within a React component, call `useGetChiakiConfigQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChiakiConfigQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChiakiConfigQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      storeId: // value for 'storeId'
+ *      key: // value for 'key'
+ *   },
+ * });
+ */
+export function useGetChiakiConfigQuery(baseOptions: Apollo.QueryHookOptions<GetChiakiConfigQuery, GetChiakiConfigQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChiakiConfigQuery, GetChiakiConfigQueryVariables>(GetChiakiConfigDocument, options);
+      }
+export function useGetChiakiConfigLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChiakiConfigQuery, GetChiakiConfigQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChiakiConfigQuery, GetChiakiConfigQueryVariables>(GetChiakiConfigDocument, options);
+        }
+export type GetChiakiConfigQueryHookResult = ReturnType<typeof useGetChiakiConfigQuery>;
+export type GetChiakiConfigLazyQueryHookResult = ReturnType<typeof useGetChiakiConfigLazyQuery>;
+export type GetChiakiConfigQueryResult = Apollo.QueryResult<GetChiakiConfigQuery, GetChiakiConfigQueryVariables>;
 export const UiStoreConfigDataDocument = gql`
     query uiStoreConfigData {
   storeConfig {
@@ -15612,6 +15896,17 @@ export type GetCategoryListForHomeQueryVariables = Exact<{
 
 export type GetCategoryListForHomeQuery = { __typename?: 'Query', categoryList?: Array<{ __typename?: 'CategoryTree', uid: string, id?: number | null, name?: string | null, products?: { __typename?: 'CategoryProducts', items?: Array<{ __typename?: 'BundleProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | { __typename?: 'ConfigurableProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | { __typename?: 'DownloadableProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | { __typename?: 'GiftCardProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | { __typename?: 'GroupedProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | { __typename?: 'SimpleProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | { __typename?: 'VirtualProduct', id?: number | null, name?: string | null, sku?: string | null, url_key?: string | null, stock_status?: ProductStockStatus | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null } | null, minimum_price: { __typename?: 'ProductPrice', final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, image?: { __typename?: 'ProductImage', url?: string | null } | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null } | null> | null } | null } | null> | null };
 
+export type GetCategoryListingDataQueryVariables = Exact<{
+  search: Scalars['String'];
+  filters?: InputMaybe<Array<InputMaybe<CatalogCategoryListingFilter>> | InputMaybe<CatalogCategoryListingFilter>>;
+  pageSize: Scalars['Int'];
+  currentPage: Scalars['Int'];
+  sort?: InputMaybe<ProductAttributeSortInput>;
+}>;
+
+
+export type GetCategoryListingDataQuery = { __typename?: 'Query', catalogCategoryListingData?: { __typename?: 'Products', total_count?: number | null, aggregations?: Array<{ __typename?: 'Aggregation', attribute_code: string, label?: string | null, options?: Array<{ __typename?: 'AggregationOption', count?: number | null, label?: string | null, value: string } | null> | null } | null> | null, page_info?: { __typename?: 'SearchResultPageInfo', current_page?: number | null, page_size?: number | null, total_pages?: number | null } | null, items?: Array<{ __typename: 'BundleProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | { __typename: 'ConfigurableProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, configurable_options?: Array<{ __typename?: 'ConfigurableProductOptions', attribute_code?: string | null, attribute_id?: string | null, id?: number | null, label?: string | null, values?: Array<{ __typename?: 'ConfigurableProductOptionsValues', default_label?: string | null, label?: string | null, store_label?: string | null, use_default_value?: boolean | null, value_index?: number | null, swatch_data?: { __typename?: 'ColorSwatchData', value?: string | null } | { __typename?: 'ImageSwatchData', thumbnail?: string | null, value?: string | null } | { __typename?: 'TextSwatchData', value?: string | null } | null } | null> | null } | null> | null, variants?: Array<{ __typename?: 'ConfigurableVariant', attributes?: Array<{ __typename?: 'ConfigurableAttributeOption', code?: string | null, value_index?: number | null } | null> | null, product?: { __typename?: 'SimpleProduct', id?: number | null, sku?: string | null, stock_status?: ProductStockStatus | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, disabled?: boolean | null, file?: string | null, label?: string | null, position?: number | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null } | null } | null> | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | { __typename: 'DownloadableProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | { __typename: 'GiftCardProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | { __typename: 'GroupedProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | { __typename: 'SimpleProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | { __typename: 'VirtualProduct', id?: number | null, meta_title?: string | null, meta_keyword?: string | null, meta_description?: string | null, name?: string | null, sku?: string | null, description?: { __typename?: 'ComplexTextValue', html: string } | null, media_gallery_entries?: Array<{ __typename?: 'MediaGalleryEntry', id?: number | null, label?: string | null, position?: number | null, disabled?: boolean | null, file?: string | null } | null> | null, media_gallery?: Array<{ __typename?: 'ProductImage', url?: string | null, label?: string | null } | { __typename?: 'ProductVideo', url?: string | null, label?: string | null } | null> | null, price?: { __typename?: 'ProductPrices', regularPrice?: { __typename?: 'Price', amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null } | null, price_range: { __typename?: 'PriceRange', maximum_price?: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } | null, minimum_price: { __typename?: 'ProductPrice', discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null }, fixed_product_taxes?: Array<{ __typename?: 'FixedProductTax', label?: string | null, amount?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, regular_price: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } } }, price_tiers?: Array<{ __typename?: 'TierPrice', quantity?: number | null, discount?: { __typename?: 'ProductDiscount', amount_off?: number | null, percent_off?: number | null } | null, final_price?: { __typename?: 'Money', currency?: CurrencyEnum | null, value?: number | null } | null } | null> | null, small_image?: { __typename?: 'ProductImage', url?: string | null } | null, url_rewrites?: Array<{ __typename?: 'UrlRewrite', url?: string | null, parameters?: Array<{ __typename?: 'HttpQueryParameter', name?: string | null, value?: string | null } | null> | null } | null> | null } | null> | null } | null };
+
 export type GetCategoryNameQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -15680,7 +15975,7 @@ export type GetNavigatorAttributeFilterDataQueryVariables = Exact<{
 }>;
 
 
-export type GetNavigatorAttributeFilterDataQuery = { __typename?: 'Query', customAttributeMetadata?: { __typename?: 'CustomAttributeMetadata', items?: Array<{ __typename?: 'Attribute', attribute_code?: string | null, attribute_type?: string | null, input_type?: string | null, entity_type?: string | null, attribute_options?: Array<{ __typename?: 'AttributeOption', label?: string | null, value?: string | null } | null> | null } | null> | null } | null };
+export type GetNavigatorAttributeFilterDataQuery = { __typename?: 'Query', customAttributeMetadata?: { __typename?: 'CustomAttributeMetadata', items?: Array<{ __typename?: 'Attribute', attribute_code?: string | null, attribute_type?: string | null, input_type?: string | null, entity_type?: string | null, swatches?: Array<{ __typename?: 'CatalogCategoryLayerFilterSwatch', option_id?: number | null, store_id?: number | null, swatch_id?: number | null, type?: number | null, value?: string | null } | null> | null, attribute_options?: Array<{ __typename?: 'AttributeOption', label?: string | null, value?: string | null } | null> | null } | null> | null } | null };
 
 export type ProductDetailQueryVariables = Exact<{
   urlKey?: InputMaybe<Scalars['String']>;
@@ -15743,6 +16038,15 @@ export type StoreConfigDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type StoreConfigDataQuery = { __typename?: 'Query', storeConfig?: { __typename?: 'StoreConfig', id?: number | null, copyright?: string | null } | null };
+
+export type GetChiakiConfigQueryVariables = Exact<{
+  userId: Scalars['String'];
+  storeId?: InputMaybe<Scalars['String']>;
+  key?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetChiakiConfigQuery = { __typename?: 'Query', chiakiConfig?: Array<{ __typename?: 'ChiakiConfig', user_id: string, store_id?: string | null, key: string, value: string } | null> | null };
 
 export type UiStoreConfigDataQueryVariables = Exact<{ [key: string]: never; }>;
 

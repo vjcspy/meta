@@ -4,7 +4,9 @@ import { createStoreManager } from '../util/createStoreManager';
 
 export const storeManager = createStoreManager(
   {
-    empty: createReducer({}, () => {}),
+    empty: createReducer({}, () => {
+      // EMPTY
+    }),
   },
   []
 );

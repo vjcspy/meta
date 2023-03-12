@@ -17,7 +17,7 @@ let keysToRemove: string[] = [];
 
 // check existed appName when addEpic
 const epicAppName: string[] = [];
-
+let _storeRefer: any;
 export function createStoreManager(
   initialReducers: ReducersMapObject<any, any>,
   rootEffects: any[] = [],
@@ -44,6 +44,9 @@ export function createStoreManager(
   rootMiddleware = [...rootMiddleware, effectMiddleware, ...middlewares];
 
   return {
+    setStore: (store) => {
+      _storeRefer = store;
+    },
     middleware: () => rootMiddleware,
     getReducerMap: () => reducers,
 
@@ -88,6 +91,7 @@ export function createStoreManager(
 
       // Generate a new combined reducer
       combinedReducer = combineReducers(reducers);
+      _storeRefer?.replaceReducer(combinedReducer);
     },
 
     mergeReducers: (objectReducer: any) => {
@@ -102,6 +106,7 @@ export function createStoreManager(
         // Generate a new combined reducer
         combinedReducer = combineReducers(reducers);
       });
+      _storeRefer?.replaceReducer(combinedReducer);
     },
 
     // Removes a reducer with the specified key
@@ -118,6 +123,7 @@ export function createStoreManager(
 
       // Generate a new combined reducer
       combinedReducer = combineReducers(reducers);
+      _storeRefer?.replaceReducer(combinedReducer);
     },
   };
 }
