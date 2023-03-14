@@ -1,5 +1,5 @@
 const BACKEND_ENV = {
-  endpoint: process.env.END_POINT ?? "https://mgt24.test.lc/rest/V1/chiaki/dispatch",
+  endpoint: process.env.END_POINT ?? "https://pcms.ggg.systems/rest/V1/chiaki/dispatch",
   user_id: "default",
   store_id: "default"
 };

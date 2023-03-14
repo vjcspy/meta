@@ -3,10 +3,20 @@ import { ApolloProvider } from '@apollo/client';
 import { format } from '@web/base';
 import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 import { isSSR } from '@web/base/dist/util/isSSR';
+import { Registry } from 'chitility';
 import React from 'react';
 
 import { useApolloClient } from '../hook/use-apollo-client';
 import type { WithApolloOptions } from '../types/driver';
+import { WEB_APOLLO_KEY } from '../values';
+
+/*
+ * Work with Apollo persisten link
+ * */
+Registry.getInstance().register(
+  WEB_APOLLO_KEY.GRAPHQL_USE_LINK_PERSISTED,
+  true
+);
 
 /**
  *
