@@ -41,7 +41,7 @@ const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
               }}
               displayPlaceholder={true}
               src={productImg}
-              // width="250"
+              width="250"
               height="310"
             />
           </div>
