@@ -3,9 +3,9 @@
 # getProductDetail.graphql.
 fragment ProductListingItem on ProductInterface {
     __typename
-    description {
-        html
-    }
+#    description {
+#        html
+#    }
     id
     media_gallery_entries {
         id
@@ -18,9 +18,9 @@ fragment ProductListingItem on ProductInterface {
         url
         label
     }
-    meta_title
-    meta_keyword
-    meta_description
+#    meta_title
+#    meta_keyword
+#    meta_description
     name
     price {
         regularPrice {
@@ -74,17 +74,17 @@ fragment ProductListingItem on ProductInterface {
             }
         }
     }
-    price_tiers{
-        discount{
-            amount_off
-            percent_off
-        }
-        quantity
-        final_price{
-            currency
-            value
-        }
-    }
+#    price_tiers{
+#        discount{
+#            amount_off
+#            percent_off
+#        }
+#        quantity
+#        final_price{
+#            currency
+#            value
+#        }
+#    }
     sku
     small_image {
         url
@@ -96,51 +96,51 @@ fragment ProductListingItem on ProductInterface {
             value
         }
     }
-    ... on ConfigurableProduct {
-        configurable_options {
-            attribute_code
-            attribute_id
-            id
-            label
-            values {
-                default_label
-                label
-                store_label
-                use_default_value
-                value_index
-                swatch_data {
-                    ... on ImageSwatchData {
-                        thumbnail
-                    }
-                    value
-                }
-            }
-        }
-        variants {
-            attributes {
-                code
-                value_index
-            }
-            product {
-                id
-                media_gallery_entries {
-                    id
-                    disabled
-                    file
-                    label
-                    position
-                }
-                sku
-                stock_status
-                price {
-                    regularPrice {
-                        amount {
-                            currency
-                            value
-                        }
-                    }
-                }
-            }
-        }
-    }
+#    ... on ConfigurableProduct {
+#        configurable_options {
+#            attribute_code
+#            attribute_id
+#            id
+#            label
+#            values {
+#                default_label
+#                label
+#                store_label
+#                use_default_value
+#                value_index
+#                swatch_data {
+#                    ... on ImageSwatchData {
+#                        thumbnail
+#                    }
+#                    value
+#                }
+#            }
+#        }
+#        variants {
+#            attributes {
+#                code
+#                value_index
+#            }
+#            product {
+#                id
+#                media_gallery_entries {
+#                    id
+#                    disabled
+#                    file
+#                    label
+#                    position
+#                }
+#                sku
+#                stock_status
+#                price {
+#                    regularPrice {
+#                        amount {
+#                            currency
+#                            value
+#                        }
+#                    }
+#                }
+#            }
+#        }
+#    }
 }

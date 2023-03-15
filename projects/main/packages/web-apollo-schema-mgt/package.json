@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint --ext ts,tsx .",
     "describe": "npm-scripts-info",
-    "build:graphql": "yarn run codegen && yarn run build",
+    "build:graphql": "pnpm run codegen && pnpm run build",
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf -rf ./dist",
     "compile": "tsc -p tsconfig.json",

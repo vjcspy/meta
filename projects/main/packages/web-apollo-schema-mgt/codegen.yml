@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://mgt24.test.lc/graphql"
+schema: "https://pcms.ggg.systems/graphql"
 documents: "src/graphql/**/*.graphql"
 generates:
   src/graphql/generated/_generated-fragment-types.ts:

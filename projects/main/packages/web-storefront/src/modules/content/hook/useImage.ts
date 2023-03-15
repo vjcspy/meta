@@ -41,7 +41,7 @@ export const useImage = (props: {
     if (width) {
       return width;
     } else if (height && ratio) {
-      return height * ratio;
+      return Math.ceil(height * ratio);
     } else {
       return undefined;
     }
@@ -51,7 +51,7 @@ export const useImage = (props: {
     if (height) {
       return height;
     } else if (resourceWidth && ratio) {
-      return resourceWidth / ratio;
+      return Math.ceil(resourceWidth / ratio);
     } else {
       return undefined;
     }

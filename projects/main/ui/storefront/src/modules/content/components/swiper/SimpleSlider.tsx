@@ -34,7 +34,7 @@ export default function SimpleSlider(props: {
       {props?.images.map((src, index) => (
         <SwiperSlide key={index}>
           <UiExtension
-            uiId="DEFAULT_IMAGE"
+            uiId="IMAGE"
             src={src}
             width={width}
             ratio={props.ratio}

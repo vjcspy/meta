@@ -13,12 +13,11 @@ const UrlRewrite: React.FC = React.memo(() => {
     !urlRewriteContextValue.urlRewriteData?.isResolved
   ) {
     return (
-      // <UiExtension
-      //   uiId="LOADING_INDICATOR"
-      //   global={true}
-      //   defaultMessage={true}
-      // />
-      <>Loading ...</>
+      <UiExtension
+        uiId="LOADING_INDICATOR"
+        global={true}
+        defaultMessage={true}
+      />
     );
   } else if (
     urlRewriteContextValue.urlRewriteData?.type &&
