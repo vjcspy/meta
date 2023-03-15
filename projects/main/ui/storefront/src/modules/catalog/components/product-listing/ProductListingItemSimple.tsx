@@ -27,7 +27,9 @@ const ProductListingItemSimple = combineHOC(withProductRewriteUrl)(
       // }
     }, []);
 
-    const [productImg, setProductImg] = useState(props.product.small_image.url);
+    const [productImg, _setProductImg] = useState(
+      props.product.small_image.url
+    );
 
     const SimplePrice = useMemo(() => {
       if (props.product?.price_range?.minimum_price?.discount?.amount_off > 0) {

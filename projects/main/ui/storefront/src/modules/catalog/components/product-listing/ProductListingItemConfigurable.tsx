@@ -27,7 +27,9 @@ const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
       // }
     }, []);
 
-    const [productImg, setProductImg] = useState(props.product.small_image.url);
+    const [productImg, _setProductImg] = useState(
+      props.product.small_image.url
+    );
 
     return (
       <>
