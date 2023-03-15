@@ -27,8 +27,8 @@ export default function SimpleSlider(props: {
       autoplay={{ delay: 5000 }}
       // navigation
       pagination={{ clickable: true }}
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
+      // onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log('slide change')}
       effect="fade"
     >
       {props?.images.map((src, index) => (

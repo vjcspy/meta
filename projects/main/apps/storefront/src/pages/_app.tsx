@@ -36,7 +36,10 @@ export default function StorefrontApp({ Component, pageProps }: AppProps) {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
-          <meta name="description"  content="Storefront Demo site Storefront Demo site" />
+          <meta
+            name="description"
+            content="Storefront Demo site Storefront Demo site"
+          />
           <link
             rel="shortcut icon"
             type="image/png"
