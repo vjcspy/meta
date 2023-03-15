@@ -92,7 +92,7 @@ export default combineHOC(
               className="wrapper___more"
               onClick={() => setIsMoreFilter(!isMoreFilter)}
             >
-              <a className="collapse-controller">
+              <a  href="#" className="collapse-controller">
                 <span className="gl-label gl-label--l">
                   {isMoreFilter ? t('less_filters') : t('more_filters')}
                 </span>

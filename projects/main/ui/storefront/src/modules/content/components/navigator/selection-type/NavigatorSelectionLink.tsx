@@ -26,7 +26,7 @@ export default combineHOC(withNavigatorSelectionAction)(
     return (
       <div className="navigator-link mt-4">
         <UiExtension uiId="DEFAULT_LINK" hrefData={hrefData}>
-          <a>{t(props.name.toLocaleLowerCase()).toLocaleUpperCase()}</a>
+          <a href="#">{t(props.name.toLocaleLowerCase()).toLocaleUpperCase()}</a>
         </UiExtension>
       </div>
     );

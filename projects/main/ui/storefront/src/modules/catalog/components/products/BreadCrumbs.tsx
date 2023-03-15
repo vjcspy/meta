@@ -46,7 +46,7 @@ export default combineHOC(
       </div>
       <ul className="ui-breadcrumb_list">
         <li className="ui-breadcrumb_item">
-          <a onClick={() => props.actions.go('')}>{t('home')}</a>
+          <a href="#" onClick={() => props.actions.go('')}>{t('home')}</a>
         </li>
         {Array.isArray(props.category.breadcrumbs) &&
           props.category.breadcrumbs.map((b: any) => {
@@ -56,7 +56,7 @@ export default combineHOC(
             }
             return (
               <li key={b['category_id']} className="ui-breadcrumb_item">
-                <a onClick={() => props.actions.go(path)}>
+                <a href="#" onClick={() => props.actions.go(path)}>
                   {b['category_name']}
                 </a>
               </li>

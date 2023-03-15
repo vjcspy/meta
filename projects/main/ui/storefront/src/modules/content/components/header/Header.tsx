@@ -39,7 +39,7 @@ const Header = (props: any) => {
                 changeLanguageHandler(i18n.language == 'vi' ? 'en' : 'vi')
               }
             >
-              <a>
+              <a href="#">
                 {t('change_language') + ' '}
                 <strong>
                   {i18n.language == 'vi' ? 'English' : 'Tiếng Việt'}
@@ -47,20 +47,20 @@ const Header = (props: any) => {
               </a>
             </li>
             <li onClick={() => go('my-wishlist')}>
-              <a>{t('wishlist')}</a>
+              <a href="#">{t('wishlist')}</a>
             </li>
             <li onClick={() => go('return-and-exchange')}>
-              <a>{t('exchange_return')}</a>
+              <a href="#">{t('exchange_return')}</a>
             </li>
             <li onClick={() => go('customer-services')}>
-              <a>{t('customer_service')}</a>
+              <a href="#">{t('customer_service')}</a>
             </li>
             <li onClick={() => go('my-orders')}>
-              <a>{t('order_information')}</a>
+              <a href="#">{t('order_information')}</a>
             </li>
             {props.state?.accountState?.customer && (
               <li>
-                <a onClick={() => go('my-account')}>
+                <a href="#" onClick={() => go('my-account')}>
                   {t('welcome')}
                   {', '}
                   <strong>
@@ -74,7 +74,7 @@ const Header = (props: any) => {
             )}
             {!props.state?.accountState?.customer && (
               <li>
-                <a onClick={() => go('account-login')}>{t('login')}</a>
+                <a href="#" onClick={() => go('account-login')}>{t('login')}</a>
               </li>
             )}
           </ul>
