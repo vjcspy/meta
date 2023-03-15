@@ -26,11 +26,10 @@ export default function StorefrontApp({ Component, pageProps }: AppProps) {
     injectNextjsRouter(router, Router);
   }, [router]);
 
-  if (publicRuntimeConfig?.nextVersion == 12 && isDevelopment()) {
+  const AppPage = useMemo(() => {
     return (
-      <React.StrictMode>
+      <>
         <Head>
-          <title>Storefront Demo site</title>
           <meta charSet="utf-8" />
           <meta
             name="viewport"
@@ -46,15 +45,16 @@ export default function StorefrontApp({ Component, pageProps }: AppProps) {
             sizes="32x32"
             href="/icons8_fav_32×32.png"
           />
-          <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          />
+          <title>Storefront Demo site</title>
         </Head>
         <Component {...pageProps} />
-      </React.StrictMode>
+      </>
     );
+  }, [pageProps]);
+
+  if (publicRuntimeConfig?.nextVersion == 12 && isDevelopment()) {
+    return <React.StrictMode>{AppPage}</React.StrictMode>;
   } else {
-    return <Component {...pageProps} />;
+    return <>{AppPage}</>;
   }
 }
