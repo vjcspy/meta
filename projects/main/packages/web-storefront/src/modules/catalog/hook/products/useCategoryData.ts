@@ -3,7 +3,7 @@ import { useDispatch } from '@main/packages-web-redux';
 import { useEffect, useMemo } from 'react';
 
 import { useUrlRewriteContext } from '../../../url-rewrite/context/url-rewrite';
-import { productsGotCategoryData } from '../../store/products';
+import { productsGotCategoryData } from '../../store/products/products.actions';
 
 // Just incase the data is unsorted, lets sort it.
 const sortCrumbs = (a: any, b: any) =>

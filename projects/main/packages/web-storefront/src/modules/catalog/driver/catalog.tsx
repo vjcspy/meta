@@ -4,8 +4,9 @@ import { wrapSSRFn } from '@web/base/dist/util/wrapSSRFn';
 import { isDevelopment } from 'chitility/dist/util/environment';
 import React from 'react';
 
-import { productsReducer } from '../store/products';
 import { WEB_CATALOG_PRODUCTS_EFFECTS } from '../store/products/products.effects';
+import { productsReducer } from '../store/products/products.reducer';
+
 storeManager.mergeReducers({
   products: productsReducer,
 });

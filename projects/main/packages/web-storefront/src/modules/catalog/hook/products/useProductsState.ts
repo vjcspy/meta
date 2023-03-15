@@ -4,7 +4,7 @@ import {
   selectAggregations,
   selectIsUpdatingProducts,
   selectProducts,
-} from '../../store/products';
+} from '../../store/products/products.selectors';
 
 export const useProductsState = () => {
   const products = useSelector(selectProducts);

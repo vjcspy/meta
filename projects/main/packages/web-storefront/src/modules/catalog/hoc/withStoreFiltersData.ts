@@ -3,7 +3,7 @@ import { useSelector } from '@main/packages-web-redux';
 import { createUiHOC } from '@web/ui-extension';
 import { useMemo } from 'react';
 
-import { selectFilters } from '../store/products';
+import { selectFilters } from '../store/products/products.selectors';
 
 export const withStoreFiltersData = createUiHOC(() => {
   const storeFilters = useSelector(selectFilters);

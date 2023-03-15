@@ -7,7 +7,7 @@ import {
   productsRemoveFilter,
   removeSearchString,
   setSearchString,
-} from '../store/products';
+} from '../store/products/products.actions';
 
 export const useFilterActions = () => {
   const dispatch = useDispatch();

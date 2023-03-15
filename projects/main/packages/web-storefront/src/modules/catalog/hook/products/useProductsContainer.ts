@@ -5,11 +5,11 @@ import {
 import { useDispatch, useSelector } from '@main/packages-web-redux';
 import { useEffect } from 'react';
 
+import { productsGotData } from '../../store/products/products.actions';
 import {
-  productsGotData,
   selectIsUpdatingProducts,
   selectPageFilterInfo,
-} from '../../store/products';
+} from '../../store/products/products.selectors';
 import { useResolveProductFilterFromUrl } from './useResolveProductFilterFromUrl';
 
 export const useProductsContainer = () => {

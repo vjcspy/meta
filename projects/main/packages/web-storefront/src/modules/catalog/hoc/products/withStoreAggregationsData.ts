@@ -3,7 +3,7 @@ import { createUiHOC } from '@web/ui-extension';
 import filter from 'lodash/filter';
 import { useMemo } from 'react';
 
-import { selectAggregations } from '../../store/products';
+import { selectAggregations } from '../../store/products/products.selectors';
 
 export const withStoreAggregationsData = createUiHOC(() => {
   const allAggregations = useSelector(selectAggregations);

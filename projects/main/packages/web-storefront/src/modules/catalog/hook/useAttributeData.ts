@@ -4,7 +4,8 @@ import first from 'lodash/first';
 import size from 'lodash/size';
 import { useEffect } from 'react';
 
-import { productsGotAttribute, selectAttribute } from '../store/products';
+import { productsGotAttribute } from '../store/products/products.actions';
+import { selectAttribute } from '../store/products/products.selectors';
 
 /**
  * Retrieve attribute data

@@ -4,7 +4,7 @@ import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { useEffect, useMemo } from 'react';
 
 import { useUrlRewriteContext } from '../../../url-rewrite/context/url-rewrite';
-import { productsResolvedFiltersData } from '../../store/products';
+import { productsResolvedFiltersData } from '../../store/products/products.actions';
 import { queryToFilters } from '../../util/queryToFilters';
 import { useResolveProductsFilters } from './useResolveProductsFilters';
 

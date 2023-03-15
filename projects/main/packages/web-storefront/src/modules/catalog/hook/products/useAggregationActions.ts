@@ -1,7 +1,7 @@
 import { useDispatch } from '@main/packages-web-redux';
 import { useCallback } from 'react';
 
-import { productsToggleAggregationItem } from '../../store/products';
+import { productsToggleAggregationItem } from '../../store/products/products.actions';
 
 export const useAggregationActions = () => {
   const dispatch = useDispatch();

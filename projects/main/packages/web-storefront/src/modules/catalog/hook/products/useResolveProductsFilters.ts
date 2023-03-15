@@ -1,6 +1,6 @@
 import { useSelector } from '@main/packages-web-redux';
 
-import { selectFilters } from '../../store/products';
+import { selectFilters } from '../../store/products/products.selectors';
 
 /**
  * Retrieve current filters in category listing page

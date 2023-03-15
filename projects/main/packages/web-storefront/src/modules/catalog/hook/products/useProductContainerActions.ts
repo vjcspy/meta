@@ -1,7 +1,7 @@
 import { useDispatch } from '@main/packages-web-redux';
 import { useCallback } from 'react';
 
-import { setPageFilterInfo } from '../../store/products';
+import { setPageFilterInfo } from '../../store/products/products.actions';
 
 export const useProductContainerActions = () => {
   const dispatch = useDispatch();
