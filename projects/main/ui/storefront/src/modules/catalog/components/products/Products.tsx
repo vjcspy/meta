@@ -19,11 +19,16 @@ export default combineHOC(
     return (
       <div className="gl-grid">
         <UiExtension uiId="LOADING_INDICATOR" global={false}>
-          {/*<div>Đang nạp dữ liệu sản phẩm ...</div>*/}
+          <div>Đang nạp dữ liệu sản phẩm ...</div>
         </UiExtension>
       </div>
     );
   } else {
-    return <div className="container">{ProductsStack}</div>;
+    return (
+      <div className="container">
+        {ProductsStack}
+        <UiExtension uiId="PRODUCT_LISTING" syncProducts={props.products} />
+      </div>
+    );
   }
 });

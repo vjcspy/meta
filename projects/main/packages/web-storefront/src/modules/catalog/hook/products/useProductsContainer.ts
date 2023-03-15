@@ -35,7 +35,6 @@ export const useProductsContainer = () => {
 
   useEffect(() => {
     if (productsQuery.error) {
-      console.log('Could not load `products` data 123');
       dispatch(
         productsGotData({
           products: [],

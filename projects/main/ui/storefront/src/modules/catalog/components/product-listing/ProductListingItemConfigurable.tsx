@@ -22,9 +22,10 @@ const settings = {
 const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
   (props) => {
     const goProductDetail = useCallback(() => {
-      if (typeof props.actions.goProductRewriteUrl === 'function') {
-        props.actions.goProductRewriteUrl();
-      }
+      alert('Chưa có tính năng này ở bản xem trước');
+      // if (typeof props.actions.goProductRewriteUrl === 'function') {
+      //   props.actions.goProductRewriteUrl();
+      // }
     }, []);
 
     const [productImg, setProductImg] = useState(props.product.small_image.url);

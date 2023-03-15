@@ -4,17 +4,10 @@ import React, { useMemo } from 'react';
 
 const ProductListing = combineHOC(withProductsState)(
   React.memo((props) => {
-    if (props?.isUpdatingProducts) {
-      return (
-        <div style={{ height: '500px' }}>
-          <UiExtension uiId="LOADING_INDICATOR" global={false} />
-        </div>
-      );
-    }
     if (
       props?.isUpdatingProducts === false &&
-      props?.products &&
-      props?.products?.length === 0
+      props?.syncProducts &&
+      props?.syncProducts?.length === 0
     ) {
       return (
         <div className="gl-grid__item">Không tìm thấy sản phẩm phù hợp</div>
@@ -22,9 +15,12 @@ const ProductListing = combineHOC(withProductsState)(
     }
 
     const ProductListing = useMemo(() => {
+      if (!props?.syncProducts) {
+        return null;
+      }
       return (
         <div className="gl-grid">
-          {props.products?.map((product) => {
+          {props?.syncProducts?.map((product: any) => {
             return (
               <div key={product.id} className="gl-grid__item">
                 <UiExtension uiId="PRODUCT_LISTING_ITEM" product={product} />
@@ -34,10 +30,6 @@ const ProductListing = combineHOC(withProductsState)(
         </div>
       );
     }, [props.products]);
-
-    if (!props?.products) {
-      return null;
-    }
 
     return <>{ProductListing}</>;
   })
