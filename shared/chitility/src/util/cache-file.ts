@@ -1,3 +1,5 @@
+import { CliLogger } from '../lib/logger/CliLogger';
+
 let path: any;
 let fs: any;
 
@@ -7,6 +9,7 @@ if (typeof window === 'undefined') {
 }
 
 const CACHE_PATH: string = process.env.CACH_FILE_PATH ?? '_cache/chitility';
+const logger = new CliLogger('CacheFile');
 
 export class CacheFile {
   private static _CACHE_DATA: any = {};
@@ -31,7 +34,7 @@ export class CacheFile {
         valueString
       );
     } catch (e) {
-      console.error('Could not save data to cache for ' + key);
+      logger.error('Could not save data to cache for ' + key);
       console.error(e);
     }
   }
@@ -42,7 +45,7 @@ export class CacheFile {
     }
 
     if (CacheFile._CACHE_DATA.hasOwnProperty(key)) {
-      console.info('found cache for key ' + key);
+      logger.info('Found cache for key ' + key);
       return CacheFile._CACHE_DATA[key];
     }
 
@@ -51,7 +54,7 @@ export class CacheFile {
         CacheFile._getFilePathByKey(key, userId)
       );
       if (stringValue) {
-        console.info('found cache file for key ' + key);
+        logger.info('Found cache file for key ' + key);
         const data = JSON.parse(stringValue);
         if (typeof data === 'object') {
           CacheFile._CACHE_DATA[key] = data;
@@ -62,7 +65,7 @@ export class CacheFile {
         return undefined;
       }
     } catch (e) {
-      console.error('Could not get cache for ' + key);
+      logger.error('Could not get cache for ' + key);
       console.error(e);
     }
 
@@ -80,7 +83,7 @@ export class CacheFile {
       CacheFile.ensureDirectoryExistence(filePath);
       fs.writeFileSync(filePath, value);
     } catch (e) {
-      console.error('Could not save data to cache file');
+      logger.error('Could not save data to cache file');
       console.error(e);
     }
   }

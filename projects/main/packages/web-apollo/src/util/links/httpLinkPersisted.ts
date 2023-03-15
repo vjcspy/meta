@@ -11,6 +11,7 @@ import {
   selectURI,
   serializeFetchParameter,
 } from '@apollo/client';
+import { isDevelopment } from 'chitility/dist/util/environment';
 import type { DefinitionNode } from 'graphql';
 
 // For backwards compatibility.
@@ -188,20 +189,22 @@ function fetchQuery(
   fetcher(chosenURI, options)
     .then((response: any) => {
       operation.setContext({ response });
-      console.info(
-        'operator response',
-        operation.operationName,
-        'chosenURI',
-        chosenURI,
-        'variable',
-        body.variables,
-        'status',
-        response.status,
-        '+time',
-        Math.round(performance.now() - _start)
-        // 'result',
-        // result
-      );
+      if (isDevelopment()) {
+        console.info(
+          'operator response',
+          operation.operationName,
+          'chosenURI',
+          chosenURI,
+          'variable',
+          body.variables,
+          'status',
+          response.status,
+          '+time',
+          Math.round(performance.now() - _start)
+          // 'result',
+          // result
+        );
+      }
       return response;
     })
     .then(parseAndCheckHttpResponse(operation))
@@ -220,15 +223,17 @@ function fetchQuery(
           registerCount[operation.operationName] > 1
         )
       ) {
-        console.info('query not registered', chosenURI, err.result);
-        return fetchPersistentQuery(
-          fetcher,
-          observer,
-          chosenURI,
-          body,
-          operation,
-          options
-        );
+        if (isDevelopment()) {
+          console.info('query not registered', chosenURI, err.result);
+          return fetchPersistentQuery(
+            fetcher,
+            observer,
+            chosenURI,
+            body,
+            operation,
+            options
+          );
+        }
       }
 
       // fetch was cancelled, so it's already been cleaned up in to unsubscribe
@@ -298,12 +303,16 @@ function fetchPersistentQuery(
   })
     .then((response) => {
       if (response.status === 201) {
-        console.log(`registered ${operation.operationName}, re-fetch query`);
+        if (isDevelopment()) {
+          console.log(`registered ${operation.operationName}, re-fetch query`);
+        }
         fetchQuery(fetcher, observer, chosenURI, body, operation, options);
       }
     })
     .catch((err: any) => {
-      console.log('register query error', err);
+      if (isDevelopment()) {
+        console.log('register query error', err);
+      }
       if (err.result && err.result.errors && err.result.data) {
         observer.next(err.result);
       }

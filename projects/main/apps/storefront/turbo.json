@@ -1,9 +1,16 @@
 {
-  "extends": ["//"],
+  "extends": [
+    "//"
+  ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
     }
   }
 }

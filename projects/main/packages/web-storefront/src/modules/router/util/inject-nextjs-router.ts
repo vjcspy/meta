@@ -18,7 +18,9 @@ export function injectNextjsRouter(nextRouter: any, nextRouterSingleton?: any) {
       if (isSSR()) {
         nextRouterSingleton.push(url, undefined, { shallow: true });
       } else {
-        nextRouter.push(url, undefined, { shallow: true });
+        nextRouter.push(url, undefined, { shallow: true }).then(() => {
+          //EMPTY
+        });
       }
     },
     getPathname: () => {

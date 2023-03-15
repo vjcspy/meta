@@ -10,7 +10,7 @@ const publicPath = path.join(__dirname, '..', 'public') ?? '';
 createServer(app, {
   port,
   publicPath,
-  useNextRoutingForPath: ['__nextjs', 'test', '__rr', '_next'],
+  useNextRoutingForPath: ['__nextjs', 'test', '_next'],
   dev,
 })
   .then(() => {

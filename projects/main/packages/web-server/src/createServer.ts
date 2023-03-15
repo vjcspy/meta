@@ -1,4 +1,7 @@
-import { format } from '@web/base';
+import chalk from 'chalk';
+import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
+import { CacheFile } from 'chitility/dist/util/cache-file';
+import * as console from 'console';
 import type { Express, Request, Response } from 'express';
 import express from 'express';
 import type { ParsedUrlQuery } from 'querystring';
@@ -7,6 +10,7 @@ import { parse } from 'url';
 
 import { errorHandler } from './middlewares/handle-error';
 
+const logger = new CliLogger('Express Server');
 let app: any;
 export const createServer = async (
   nextApp: {
@@ -17,7 +21,8 @@ export const createServer = async (
     port: string | number;
     publicPath: string;
     useNextRoutingForPath?: string[];
-    dev?: boolean;
+    dev: boolean;
+    rewritePrefix?: string;
   }
 ) => {
   app = nextApp;
@@ -33,7 +38,11 @@ export const createServer = async (
   });
 
   server.use(serveStatic(config.publicPath));
-  const { useNextRoutingForPath = ['__nextjs', 'test'] } = config;
+  const {
+    useNextRoutingForPath = ['__nextjs', 'test'],
+    dev,
+    rewritePrefix = '__rr',
+  } = config;
 
   server.get('*', async (req, res, next) => {
     const parsedUrl = parse(req.url, true);
@@ -43,14 +52,10 @@ export const createServer = async (
      * NextJS Core URL
      * */
     if (pathname && useNextRoutingForPath.some((v) => pathname.includes(v))) {
-      // console.log(
-      //   '\n',
-      //   '_______________________ NextJS Core URL Handler _______________________'
-      // );
-      // console.log('pathname', pathname);
-      // console.log(
-      //   '_________________________________________________________________',
-      //   '\n'
+      // logger.info(
+      //   `Forward to ${chalk.blue('Next Core')} for pathname ${chalk.blue(
+      //     pathname
+      //   )}`
       // );
       return nextRequestHandler(req, res);
     }
@@ -61,17 +66,9 @@ export const createServer = async (
     const re = /(?:\.([^.]+))?$/;
     const ext = pathname ? re.exec(pathname)?.[1] : undefined;
     if (!ext || ext === 'html') {
-      console.log(
-        format.context('Express Server'),
-        'Start NextJS RenderHTML: ',
-        pathname
-      );
-      await renderHTML(req, res, pathname, query);
-      console.log(
-        format.context('Express Server'),
-        'End NextJS RenderHTML: ',
-        pathname
-      );
+      logger.info(`Start NextJS RenderHTML: ${pathname}`);
+      await renderHTML(req, res, pathname, query, { dev, rewritePrefix });
+      logger.info(`End NextJS RenderHTML: ${pathname}`);
       return;
     } else {
       next(req);
@@ -104,47 +101,73 @@ export const createServer = async (
   });
 
   server.listen(config.port, () => {
-    console.log(
-      format.context('Express Server'),
-      `> Ready on http://localhost:${config.port}`
+    logger.info(
+      `> Ready on http://localhost:${config.port} in ${
+        dev ? chalk.blue('development') : chalk.blue('production')
+      } mode`
     );
   });
 
   return server;
 };
 
+const resolvePathnameToRender = (originPath: string, rewritePrefix: string) => {
+  if (originPath.indexOf(rewritePrefix) > -1) {
+    return originPath;
+  } else {
+    rewritePrefix =
+      rewritePrefix.charAt(0) === '/' ? rewritePrefix : `/${rewritePrefix}`;
+    originPath = originPath.charAt(0) === '/' ? originPath : `/${originPath}`;
+    return `${rewritePrefix}${originPath}`;
+  }
+};
+
 async function renderHTML(
   req: Request,
   res: Response,
   pathname: string | null,
-  query?: ParsedUrlQuery
+  query: ParsedUrlQuery,
+  config: {
+    dev: boolean;
+    rewritePrefix: string;
+  }
 ) {
+  const { dev = true, rewritePrefix } = config;
   try {
     // make sure path not start with /
-    const pathNameWithoutPrefix =
-      typeof pathname === 'string' && pathname.charAt(0) === '/'
-        ? pathname.substring(1)
-        : pathname;
+    const pathnameToRender = resolvePathnameToRender(
+      pathname ?? req.path,
+      rewritePrefix
+    );
+
+    const CACHE_KEY = `FULL_PAGE_CACHE_${pathnameToRender}`;
+    if (!dev) {
+      const cachedPage = await CacheFile.get(CACHE_KEY);
+      if (cachedPage?.html) {
+        logger.info(`Cache HIT for path ${pathnameToRender}`);
+        res.setHeader('x-cache', 'HIT');
+        res.send(cachedPage.html);
+
+        return;
+      }
+    }
 
     //console.log(`key ${key} not found, rendering`);
     // If not let's render the page into HTML
-    const html = await app.renderToHTML(
-      req,
-      res,
-      `/__rr/${pathNameWithoutPrefix}`,
-      query
-    );
+    const html = await app.renderToHTML(req, res, pathnameToRender, query);
 
     // Something is wrong with the request, let's skip the cache
     if (res.statusCode !== 200) {
       res.send(html);
       return;
     }
-
+    if (!dev) {
+      await CacheFile.save(CACHE_KEY, { html });
+    }
     res.setHeader('x-cache', 'MISS');
     res.send(html).end();
   } catch (err) {
-    console.error(format.context('Express Server'), 'NextJS renderHTML error');
+    logger.error('NextJS renderHTML error');
     console.error(err);
     // res.status(500);
     // .json({ message: 'Error in invocation of NextJS renderHTML' });
