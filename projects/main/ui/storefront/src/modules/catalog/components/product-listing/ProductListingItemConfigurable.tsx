@@ -3,22 +3,21 @@ import { combineHOC, UiExtension } from '@web/ui-extension';
 import clsx from 'clsx';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
-import Slider from 'react-slick';
-const settings = {
-  className: 'item_wrapper glass-product-card__image-wrapper',
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 7,
-  slidesToScroll: 1,
-  adaptiveHeight: true,
-  swipeToSlide: true,
-  afterChange: function (index: any) {
-    console.log(
-      `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
-    );
-  },
-};
+// const settings = {
+//   className: 'item_wrapper glass-product-card__image-wrapper',
+//   dots: false,
+//   infinite: true,
+//   speed: 500,
+//   slidesToShow: 7,
+//   slidesToScroll: 1,
+//   adaptiveHeight: true,
+//   swipeToSlide: true,
+//   afterChange: function (index: any) {
+//     console.log(
+//       `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
+//     );
+//   },
+// };
 const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
   (props) => {
     const goProductDetail = useCallback(() => {
@@ -35,7 +34,7 @@ const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
         <div className="gl-product__image">
           <div onClick={() => goProductDetail()}>
             <UiExtension
-              uiId="IMAGE"
+              uiId="DEFAULT_IMAGE"
               classes={{
                 image: 'product-img',
               }}
@@ -74,30 +73,30 @@ const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
             </svg>
           </span>
           {/* product thumb custom them slider em nhe*/}
-          <div className="gl-product-card__carousel">
-            <div className="gl-slider___thumb">
-              <Slider {...settings}>
-                {props?.product?.media_gallery?.map((gl: any) => {
-                  return (
-                    <div
-                      className="item_wrapper glass-product-card__image-wrapper"
-                      key={gl['url']}
-                      onMouseOver={() => setProductImg(gl['url'])}
-                      onClick={() => goProductDetail()}
-                    >
-                      <a>
-                        <img
-                          src={gl['url']}
-                          alt=""
-                          className="img_with_fallback"
-                        />
-                      </a>
-                    </div>
-                  );
-                })}
-              </Slider>
-            </div>
-          </div>
+          {/*<div className="gl-product-card__carousel">*/}
+          {/*  <div className="gl-slider___thumb">*/}
+          {/*    <Slider {...settings}>*/}
+          {/*      {props?.product?.media_gallery?.map((gl: any) => {*/}
+          {/*        return (*/}
+          {/*          <div*/}
+          {/*            className="item_wrapper glass-product-card__image-wrapper"*/}
+          {/*            key={gl['url']}*/}
+          {/*            onMouseOver={() => setProductImg(gl['url'])}*/}
+          {/*            onClick={() => goProductDetail()}*/}
+          {/*          >*/}
+          {/*            <a>*/}
+          {/*              <img*/}
+          {/*                src={gl['url']}*/}
+          {/*                alt=""*/}
+          {/*                className="img_with_fallback"*/}
+          {/*              />*/}
+          {/*            </a>*/}
+          {/*          </div>*/}
+          {/*        );*/}
+          {/*      })}*/}
+          {/*    </Slider>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
           {/* end product thumb custom them slider em nhe*/}
         </div>
 
