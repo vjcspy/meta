@@ -1,4 +1,3 @@
-import { format } from '@web/base';
 import { CacheFile } from 'chitility/dist/util/cache-file';
 import { proxyRequest } from 'chitility/dist/util/proxy-request';
 import { Registry } from 'chitility/dist/util/registry';
@@ -220,7 +219,7 @@ export class DomainManager {
         },
       });
 
-      console.log(format.context('getWebsitesDataFromPCMS'), data);
+      // console.log(format.context('getWebsitesDataFromPCMS'), data);
 
       if (data && data.hasOwnProperty('rows')) {
         await CacheFile.save(CACHE_KEY, data['rows']);
