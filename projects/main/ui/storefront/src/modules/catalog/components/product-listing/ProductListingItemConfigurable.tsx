@@ -1,6 +1,5 @@
 import { withProductRewriteUrl } from '@main/packages-web-storefront/src/modules/catalog/hoc/withProductRewriteUrl';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import clsx from 'clsx';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 // const settings = {
@@ -46,34 +45,34 @@ const ProductListingItemConfigurable = combineHOC(withProductRewriteUrl)(
               height="310"
             />
           </div>
-          <span
-            className={clsx(
-              'item__wishlist',
-              !!props.state?.productInWishlist && 'active',
-              !!props.state?.accountState?.loadingState?.loadingWishlist &&
-                'loading-wishlist'
-            )}
-          >
-            <svg
-              className="gl-icon"
-              data-auto-id="wishlist-icon"
-              data-di-res-id="90a00d12-b2dc3b95"
-              data-di-rand="1603796195908"
-            >
-              <use href="#wishlist-inactive">
-                <svg id="wishlist-inactive" viewBox="0 0 20 24">
-                  <title>wishlist-inactive</title>
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeMiterlimit="10"
-                    strokeWidth="2"
-                    d="M7.38 6H4.42L2 10l8 8 8-8-2.41-4h-2.98L10 9 7.38 6z"
-                  />
-                </svg>
-              </use>
-            </svg>
-          </span>
+          {/*<span*/}
+          {/*  className={clsx(*/}
+          {/*    'item__wishlist',*/}
+          {/*    !!props.state?.productInWishlist && 'active',*/}
+          {/*    !!props.state?.accountState?.loadingState?.loadingWishlist &&*/}
+          {/*      'loading-wishlist'*/}
+          {/*  )}*/}
+          {/*>*/}
+          {/*  <svg*/}
+          {/*    className="gl-icon"*/}
+          {/*    data-auto-id="wishlist-icon"*/}
+          {/*    data-di-res-id="90a00d12-b2dc3b95"*/}
+          {/*    data-di-rand="1603796195908"*/}
+          {/*  >*/}
+          {/*    <use href="#wishlist-inactive">*/}
+          {/*      <svg id="wishlist-inactive" viewBox="0 0 20 24">*/}
+          {/*        <title>wishlist-inactive</title>*/}
+          {/*        <path*/}
+          {/*          fill="none"*/}
+          {/*          stroke="currentColor"*/}
+          {/*          strokeMiterlimit="10"*/}
+          {/*          strokeWidth="2"*/}
+          {/*          d="M7.38 6H4.42L2 10l8 8 8-8-2.41-4h-2.98L10 9 7.38 6z"*/}
+          {/*        />*/}
+          {/*      </svg>*/}
+          {/*    </use>*/}
+          {/*  </svg>*/}
+          {/*</span>*/}
           {/* product thumb custom them slider em nhe*/}
           {/*<div className="gl-product-card__carousel">*/}
           {/*  <div className="gl-slider___thumb">*/}
