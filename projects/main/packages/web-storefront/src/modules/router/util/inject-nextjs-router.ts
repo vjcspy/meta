@@ -19,10 +19,13 @@ export function injectNextjsRouter(nextRouter: any, nextRouterSingleton?: any) {
         nextRouterSingleton.push(url, undefined, { shallow: true });
       } else {
         // console.log('url', url);
-        window.location.href = url && url.charAt(0) === '/' ? url : `/${url}`;
-        // nextRouter.push(url, undefined, { shallow: true }).then(() => {
-        //   //EMPTY
-        // });
+        if (typeof url === 'string') {
+          window.location.href = url && url.charAt(0) === '/' ? url : `/${url}`;
+        } else {
+          nextRouter.push(url, undefined, { shallow: true }).then(() => {
+            //EMPTY
+          });
+        }
       }
     },
     getPathname: () => {
