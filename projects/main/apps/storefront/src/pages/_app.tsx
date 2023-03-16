@@ -5,6 +5,7 @@ import {
   bootstrap,
   injectNextjsRouter,
 } from '@main/packages-web-storefront/src';
+import { useIsMobile } from '@web/base/dist/hook/isMobile';
 import { resetLogRender } from '@web/base/dist/lib/logger/resetLogRender';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -22,6 +23,12 @@ export default function StorefrontApp({ Component, pageProps }: AppProps) {
   useMemo(() => {
     injectNextjsRouter(router, Router);
   }, [router]);
+
+  const { isMobile } = useIsMobile();
+
+  if (isMobile === true) {
+    return <>bản xem trước chỉ dành cho desktop</>;
+  }
 
   return (
     <>
