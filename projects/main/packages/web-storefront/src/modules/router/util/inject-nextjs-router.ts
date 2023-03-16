@@ -18,9 +18,11 @@ export function injectNextjsRouter(nextRouter: any, nextRouterSingleton?: any) {
       if (isSSR()) {
         nextRouterSingleton.push(url, undefined, { shallow: true });
       } else {
-        nextRouter.push(url, undefined, { shallow: true }).then(() => {
-          //EMPTY
-        });
+        // console.log('url', url);
+        window.location.href = url && url.charAt(0) === '/' ? url : `/${url}`;
+        // nextRouter.push(url, undefined, { shallow: true }).then(() => {
+        //   //EMPTY
+        // });
       }
     },
     getPathname: () => {
