@@ -112,7 +112,7 @@ export const createServer = async (
 };
 
 const resolvePathnameToRender = (originPath: string, rewritePrefix: string) => {
-  if (originPath.indexOf(rewritePrefix) > -1) {
+  if (!rewritePrefix || originPath.indexOf(rewritePrefix) > -1) {
     return originPath;
   } else {
     rewritePrefix =
