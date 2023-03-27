@@ -1,4 +1,4 @@
-import { useGetFilterInputsQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useGetFilterInputsQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useEffect } from 'react';
 
 export const useNavigatorFilterContainer = () => {

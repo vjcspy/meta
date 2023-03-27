@@ -1,4 +1,4 @@
-import { useGetListCategoryLazyQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useGetListCategoryLazyQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useDispatch } from '@main/packages-web-redux';
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { createUiHOC } from '@web/ui-extension';

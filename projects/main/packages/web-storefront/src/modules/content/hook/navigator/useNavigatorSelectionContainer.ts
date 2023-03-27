@@ -1,4 +1,4 @@
-import { useGetNavigatorAttributeFilterDataLazyQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useGetNavigatorAttributeFilterDataLazyQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useEffect, useMemo } from 'react';
 
 export const useNavigatorSelectionContainer = (selection: any) => {

@@ -1,8 +1,8 @@
 import type {
   Attribute,
   CatalogCategoryListingFilter,
-} from '@main/packages-web-apollo-schema-mgt';
-import { SortEnum } from '@main/packages-web-apollo-schema-mgt';
+} from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
+import { SortEnum } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 
 export interface PageFilterInfo {
   sort: {

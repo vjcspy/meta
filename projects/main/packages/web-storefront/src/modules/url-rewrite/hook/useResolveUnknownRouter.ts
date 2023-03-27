@@ -1,5 +1,5 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
-import { useResolveChiakiPageQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useResolveChiakiPageQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { format } from '@web/base';
 import { isSSR } from '@web/base/dist/util/isSSR';
 import { DataObject } from 'chitility/dist/lib/extension/data-object';

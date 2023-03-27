@@ -1,7 +1,7 @@
 import {
   useGetChiakiConfigQuery,
   useGetListCategoryLazyQuery,
-} from '@main/packages-web-apollo-schema-mgt';
+} from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { json } from '@web/base/dist/util/json';
 import { Registry } from 'chitility';
 import debounce from 'lodash/debounce';

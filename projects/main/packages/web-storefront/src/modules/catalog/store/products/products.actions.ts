@@ -1,4 +1,4 @@
-import type { SearchResultPageInfo } from '@main/packages-web-apollo-schema-mgt';
+import type { SearchResultPageInfo } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { createAction } from '@main/packages-web-redux/dist/util/createAction';
 
 const prefix = 'PRODUCTS';

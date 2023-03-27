@@ -1,4 +1,4 @@
-import { useGetCategoryDetailForListingQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useGetCategoryDetailForListingQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useDispatch } from '@main/packages-web-redux';
 import { useEffect, useMemo } from 'react';
 

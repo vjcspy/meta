@@ -1,4 +1,4 @@
-import { useGetNavigatorAttributeFilterDataLazyQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useGetNavigatorAttributeFilterDataLazyQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useDispatch, useSelector } from '@main/packages-web-redux';
 import first from 'lodash/first';
 import size from 'lodash/size';

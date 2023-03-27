@@ -1,7 +1,7 @@
 import {
   SortEnum,
   useGetCategoryListingDataQuery,
-} from '@main/packages-web-apollo-schema-mgt';
+} from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useDispatch, useSelector } from '@main/packages-web-redux';
 import { useEffect } from 'react';
 

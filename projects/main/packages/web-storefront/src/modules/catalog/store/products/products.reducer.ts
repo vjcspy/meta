@@ -1,7 +1,7 @@
 import type {
   Attribute,
   CatalogCategoryListingFilter,
-} from '@main/packages-web-apollo-schema-mgt';
+} from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { createReducer } from '@main/packages-web-redux';
 import filter from 'lodash/filter';
 import indexOf from 'lodash/indexOf';

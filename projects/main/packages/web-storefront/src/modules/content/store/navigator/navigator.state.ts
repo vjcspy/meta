@@ -1,4 +1,4 @@
-import type { FilterEqualTypeInput } from '@main/packages-web-apollo-schema-mgt';
+import type { FilterEqualTypeInput } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 
 export interface NavFilter {
   code: string;

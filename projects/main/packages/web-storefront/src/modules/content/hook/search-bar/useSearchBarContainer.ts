@@ -1,4 +1,4 @@
-import { useGetAutocompleteResultsLazyQuery } from '@main/packages-web-apollo-schema-mgt';
+import { useGetAutocompleteResultsLazyQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { useTranslation } from '@main/packages-web-i18n';
 import debounce from 'lodash/debounce';
 import { useCallback, useMemo } from 'react';
