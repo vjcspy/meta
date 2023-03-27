@@ -47,6 +47,7 @@ module.exports = {
         "react/require-default-props": "off", // Allow non-defined react props as undefined
         "react/jsx-props-no-spreading": "off", // _app.tsx uses spread operator and also, react-hook-form
         "react-hooks/exhaustive-deps": "off", // Incorrectly report needed dependency with Next.js router
+        "react/display-name": "off",
         "@next/next/no-img-element": "off", // We're currently not using next/image because it isn't supported with SSG mode
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
         "@typescript-eslint/consistent-type-imports": "error", // Ensure `import type` is used when it's necessary
@@ -60,6 +61,7 @@ module.exports = {
           { "argsIgnorePattern": "^_" }
         ],
         "@typescript-eslint/no-explicit-any": "off", // Cho phep su dung any
+        "no-prototype-builtins": "off",
       }
     },
     // Configuration for testing
