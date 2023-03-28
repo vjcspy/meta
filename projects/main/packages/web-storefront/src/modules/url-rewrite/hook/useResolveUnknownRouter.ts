@@ -1,7 +1,7 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
-import { useResolveChiakiPageQuery } from '@main/packages-web-apollo-schema-mgt/dist/graphql/generated/_generated-hooks';
 import { format } from '@web/base';
 import { isSSR } from '@web/base/dist/util/isSSR';
+import { Registry } from 'chitility';
 import { DataObject } from 'chitility/dist/lib/extension/data-object';
 import { ExtensionPoint } from 'chitility/dist/lib/extension/extension-point';
 import { isDevelopment } from 'chitility/dist/util/environment';
@@ -10,6 +10,7 @@ import isEmpty from 'lodash/isEmpty';
 import replace from 'lodash/replace';
 import { useEffect, useRef, useState } from 'react';
 
+import { WEB_STOREFRONT_KEY } from '../../../etc/key';
 import { useDomainContext } from '../../domain/context/domain';
 import { resolveChiakiPageResolver } from '../util/resolveChiakiPageResolver';
 
@@ -50,7 +51,20 @@ export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
 
   const domainContextValue = useDomainContext();
 
-  const { data, refetch } = useResolveChiakiPageQuery({
+  // const { data, refetch } = useResolveChiakiPageQuery({
+  //   fetchPolicy: FetchPolicyResolve.DEFAULT,
+  //   nextFetchPolicy: FetchPolicyResolve.DEFAULT,
+  //   variables: {
+  //     // @ts-ignore
+  //     urlKey,
+  //     userId: domainContextValue.domainData.shopOwnerId,
+  //   },
+  // });
+
+  // Khong duoc su dung apollo vi cac project khac su dung apollo rieng, gay conflict
+  const { data, refetch } = Registry.getInstance().registry(
+    WEB_STOREFRONT_KEY.URL_REWRITE_RESOLVE_QUERY
+  )({
     fetchPolicy: FetchPolicyResolve.DEFAULT,
     nextFetchPolicy: FetchPolicyResolve.DEFAULT,
     variables: {
@@ -59,6 +73,7 @@ export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
       userId: domainContextValue.domainData.shopOwnerId,
     },
   });
+
   const [resolvedUrlData, setResolvedUrlData] = useState<any>(
     fromServer ??
       resolveStaticLayout(urlKey) ??
