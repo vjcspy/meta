@@ -14,7 +14,7 @@ import first from 'lodash/first';
 import isArray from 'lodash/isArray';
 import size from 'lodash/size';
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedKingdomCustomerOrderDetail = () => {
   const orderDetail = useSelector(selectOrderDetail);

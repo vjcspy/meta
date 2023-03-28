@@ -1,6 +1,6 @@
 import { bedSetAmLabelProduct } from '@extensions/bed-kingdom/store/products/product.actions';
 import { bedAmProductStateFactory } from '@extensions/bed-kingdom/store/products/product.state';
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from '@main/packages-web-redux';
 
 export const bedAmLabelReducer = createReducer(
   bedAmProductStateFactory(),

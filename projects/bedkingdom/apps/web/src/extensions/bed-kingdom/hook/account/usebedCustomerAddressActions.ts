@@ -19,7 +19,7 @@ import {
 } from '@vjcspy/r/build/modules/account/store/customer-address/actions';
 import { selectIsUpdatingAddress } from '@vjcspy/r/build/modules/checkout/store/cart/cart.selector';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedCustomerAddressActions = () => {
   const [isDeletedAddress, setIsDeletedAddress] = useState(false);

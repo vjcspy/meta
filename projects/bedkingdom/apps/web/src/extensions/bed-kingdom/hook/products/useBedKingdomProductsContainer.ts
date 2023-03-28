@@ -23,7 +23,7 @@ import { filtersToProductAttributeFilterInput } from '@vjcspy/r/build/modules/ca
 import R_CATALOG from '@vjcspy/r/build/modules/catalog/values/extendable/R_CATALOG';
 import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedKingdomProductsContainer = (
   productsQueryHook: (

@@ -5,7 +5,7 @@ import {
   addWishListErrorAction,
 } from '@vjcspy/r/build/modules/account/store/wishlisht/wishlist.actions';
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@main/packages-web-redux';
 
 export const useBedCustomerWishlistActions = () => {
   const dispatch = useDispatch();

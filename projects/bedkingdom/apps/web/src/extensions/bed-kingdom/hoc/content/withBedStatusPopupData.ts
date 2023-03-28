@@ -2,7 +2,7 @@ import { setIsOpenPopup } from '@extensions/bed-kingdom/store/content/content.co
 import { selectIsPopupOpening } from '@extensions/bed-kingdom/store/content/content.content.selector';
 import { createUiHOC } from '@web/ui-extension';
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const withBedStatusPopupData = createUiHOC(() => {
   const dispatch = useDispatch();

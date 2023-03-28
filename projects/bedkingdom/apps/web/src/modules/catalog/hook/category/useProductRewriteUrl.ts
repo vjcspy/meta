@@ -1,6 +1,6 @@
-import { retrieveProductRewriteUrl } from '@vjcspy/r/build/modules/catalog/util/retrieveProductRewriteUrl';
+import { useRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hook/userRouterWithStoreActions';
 import { useUrlRewriteContext } from '@main/packages-web-storefront/src/modules/url-rewrite/context/url-rewrite';
-import { useRouterWithStoreActions } from '@vjcspy/web-store/build/hook/router/userRouterWithStoreActions';
+import { retrieveProductRewriteUrl } from '@vjcspy/r/build/modules/catalog/util/retrieveProductRewriteUrl';
 import { useCallback, useMemo } from 'react';
 
 export const useProductRewriteUrl = (props: { product: any }) => {

@@ -15,7 +15,7 @@ import {
   requestPasswordResetFailAction,
 } from '@vjcspy/r/build/modules/account/store/customer_reset_password/actions';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@main/packages-web-redux';
 
 export const useBedAccountDefaultActions = () => {
   const dispatch = useDispatch();

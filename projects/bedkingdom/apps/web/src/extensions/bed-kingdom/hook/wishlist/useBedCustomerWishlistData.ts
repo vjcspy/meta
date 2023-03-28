@@ -12,7 +12,7 @@ import {
   selectWishlistPaging,
 } from '@vjcspy/r/build/modules/account/store/wishlisht/wishlist.selector';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedCustomerWishlistData = () => {
   const wishlists = useSelector(selectCustomerWishlist);

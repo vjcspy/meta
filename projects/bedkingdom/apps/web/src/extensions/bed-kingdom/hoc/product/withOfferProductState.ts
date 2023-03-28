@@ -3,7 +3,7 @@ import { useGetProductMattressOffersLazyQuery } from '@vjcspy/apollo-bed-kingdom
 import { selectProduct } from '@vjcspy/r/build/modules/catalog/store/product/product.selectors';
 import { createUiHOC } from '@web/ui-extension';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '@main/packages-web-redux';
 
 export const withOfferProductState = createUiHOC(() => {
   const [listAmMattress, setListAmMattress] = useState<any[]>([]);

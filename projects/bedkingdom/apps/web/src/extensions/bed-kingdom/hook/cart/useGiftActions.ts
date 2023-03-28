@@ -11,7 +11,7 @@ import {
   bedRemoveGiftToCartAction,
 } from '@vjcspy/r/build/modules/checkout/store/cart/actions/content.cart.gift.actions';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@main/packages-web-redux';
 
 export const useGiftActions = () => {
   const dispatch = useDispatch();

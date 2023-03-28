@@ -2,7 +2,7 @@ import { setCalculatorFinance } from '@extensions/bed-kingdom/store/content/cont
 import { selectCalculatorFinance } from '@extensions/bed-kingdom/store/content/content.content.selector';
 import { createUiHOC } from '@web/ui-extension';
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const withBedCalculatorFinanceData = createUiHOC(() => {
   const dispatch = useDispatch();

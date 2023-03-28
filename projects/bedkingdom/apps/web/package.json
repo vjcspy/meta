@@ -30,6 +30,7 @@
     "chitility": "workspace:*",
     "clsx": "latest",
     "html-react-parser": "^1.4.0",
+    "moment": "^2.29.4",
     "next": "^12",
     "next-compose-plugins": "^2.2.1",
     "next-pwa": "^5.4.0",

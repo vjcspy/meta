@@ -1,7 +1,7 @@
 import { bedSetAmLabelProduct } from '@extensions/bed-kingdom/store/products/product.actions';
 import { useAmLabelProviderLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@main/packages-web-redux';
 
 export const useAmLabelProductActions = () => {
   const dispatch = useDispatch();

@@ -48,8 +48,9 @@ const AddToCartForm = combineHOC(
     const day = date.getDay();
     return day !== 0 && day !== 6;
   };
-  // @ts-ignore
   // eslint-disable-next-line react/display-name
+
+  // @ts-ignore
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <div
       className="delivery-date  d-flex align-items-center"
@@ -145,7 +146,8 @@ const AddToCartForm = combineHOC(
   ));
   const isAddingToCArt = useMemo(() => {
     if (props.actions?.isAddingProductId) {
-      return props.actions.isAddingProductId(props.state?.product?.id);
+      // @ts-ignore
+      return props.actions?.isAddingProductId(props.state?.product?.id);
     }
 
     return false;
@@ -170,7 +172,7 @@ const AddToCartForm = combineHOC(
         props.actions.openCart();
       });
     } else {
-      console.warning('could not found product in state', props);
+      console.warn('could not found product in state', props);
     }
   }, [isAddingToCArt, props?.state.product, qty]);
 
@@ -307,7 +309,7 @@ const AddToCartForm = combineHOC(
         <>
           {productDelivery === 75 ? (
             <div className="b-product-delivery flex items-center pt-5">
-              <div className="delivery-name items-center mr-3 lg:mr-9 flex">
+              <div className="delivery-name mr-3 flex items-center lg:mr-9">
                 <img
                   className="delivery-icon mr-2"
                   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAATCAMAAABbR/ZNAAAAM1BMVEVHcExmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYIfjouAAAAEHRSTlMA7KiwOhHlS/d5zmIulCC/obFtDgAAANBJREFUGBllwQt2hCAQRcELNDR/3/5XGz2Oc0xSxanrlzB5yVr+Jucly3gLqZ2MW5bzVmoopWhxq8abBqepzmWv4ZfJTTZj706pGxg91Mviprm0ohpH5T9ZTDDlCNqRUooxOh+ymIDSsmDESzoGH7LY995qWWT+kg1dbIteaw+1VuehwTSziQtzX8Pd+dLg5uKkzSnzIQcyMAVkpYFXdXK76PB8qHpO4pRKmloe0g6XXmIP3tRK4rYEJh5y0OJharMUHqVYk/E1au2bR+61DuAHYWIJ+3epQ94AAAAASUVORK5CYII="
@@ -330,8 +332,8 @@ const AddToCartForm = combineHOC(
               )}
             </div>
           ) : (
-            <div className="flex justify-between mb-3 pt-5">
-              <div className="delivery-name items-center mr-3 lg:mr-9 flex">
+            <div className="mb-3 flex justify-between pt-5">
+              <div className="delivery-name mr-3 flex items-center lg:mr-9">
                 <img
                   className="delivery-icon mr-2"
                   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAATCAMAAABbR/ZNAAAAM1BMVEVHcExmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYIfjouAAAAEHRSTlMA7KiwOhHlS/d5zmIulCC/obFtDgAAANBJREFUGBllwQt2hCAQRcELNDR/3/5XGz2Oc0xSxanrlzB5yVr+Jucly3gLqZ2MW5bzVmoopWhxq8abBqepzmWv4ZfJTTZj706pGxg91Mviprm0ohpH5T9ZTDDlCNqRUooxOh+ymIDSsmDESzoGH7LY995qWWT+kg1dbIteaw+1VuehwTSziQtzX8Pd+dLg5uKkzSnzIQcyMAVkpYFXdXK76PB8qHpO4pRKmloe0g6XXmIP3tRK4rYEJh5y0OJharMUHqVYk/E1au2bR+61DuAHYWIJ+3epQ94AAAAASUVORK5CYII="
@@ -357,7 +359,7 @@ const AddToCartForm = combineHOC(
             <div className="b-actions-qty">
               <div
                 className={clsx(
-                  'cursor-pointer b-actions-icon',
+                  'b-actions-icon cursor-pointer',
                   parseInt(qty, 10) === 1 && 'divDisable'
                 )}
                 onClick={() => {

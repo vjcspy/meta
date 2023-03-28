@@ -1,5 +1,5 @@
+import { useRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hook/userRouterWithStoreActions';
 import { useAccountState } from '@vjcspy/r/build/modules/account/hook/useAccountState';
-import { useRouterWithStoreActions } from '@vjcspy/web-store/build/hook/router/userRouterWithStoreActions';
 import { createUiHOC } from '@web/ui-extension';
 import { useEffect } from 'react';
 

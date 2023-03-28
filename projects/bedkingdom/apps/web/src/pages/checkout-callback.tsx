@@ -11,9 +11,9 @@ const CheckoutCallback: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
+    const orderId = router.query?.order_id;
     switch (router?.query?.return_type) {
       case 'checkout_success':
-        const orderId = router.query?.order_id;
         if (orderId) {
           setResolved(true);
           RouterSingleton.push('/order-complete?order_number=' + orderId);

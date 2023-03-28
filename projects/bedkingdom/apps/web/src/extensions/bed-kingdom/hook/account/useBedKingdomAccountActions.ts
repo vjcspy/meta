@@ -32,7 +32,7 @@ import {
   updateCustomerFailAction,
 } from '@vjcspy/r/build/modules/account/store/customer_update/actions';
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedKingdomAccountActions = () => {
   const dispatch = useDispatch();

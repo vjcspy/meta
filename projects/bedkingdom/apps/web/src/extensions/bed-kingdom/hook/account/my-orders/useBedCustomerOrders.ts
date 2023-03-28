@@ -3,7 +3,7 @@ import { useGetBedKingdomCustomerOrdersLazyQuery } from '@vjcspy/apollo-bed-king
 import { gotCustomerOrders } from '@vjcspy/r/build/modules/account/store/customer-order/actions';
 import { selectOrders } from '@vjcspy/r/build/modules/account/store/customer-order/selector';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedCustomerOrders = () => {
   const dispatch = useDispatch();

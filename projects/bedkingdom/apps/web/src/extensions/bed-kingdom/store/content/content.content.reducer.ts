@@ -8,7 +8,7 @@ import {
   setStatusReview,
 } from '@extensions/bed-kingdom/store/content/content.content.actions';
 import { bedContentStateFactory } from '@extensions/bed-kingdom/store/content/content.content.state';
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from '@main/packages-web-redux';
 
 export const bedContentReducer = createReducer(
   bedContentStateFactory(),
