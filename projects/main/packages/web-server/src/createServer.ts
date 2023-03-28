@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import { CacheFile } from 'chitility/dist/util/cache-file';
-import * as console from 'console';
 import type { Express, Request, Response } from 'express';
 import express from 'express';
 import type { ParsedUrlQuery } from 'querystring';
