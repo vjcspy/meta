@@ -1,0 +1,7 @@
+fragment BedKingdomWishlistItem on WishlistItemInterface{
+    id
+    quantity
+    product {
+        ...BedKingdomProductItem
+    }
+}

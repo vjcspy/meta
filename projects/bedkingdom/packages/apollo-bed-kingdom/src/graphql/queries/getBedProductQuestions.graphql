@@ -1,0 +1,21 @@
+query getBedProductQuestions($productId: Int!) {
+    getProductQuestions(productId: $productId, currentPage: 1) {
+        total
+        question_setting{
+            page_size
+            is_show_ask_question_form
+            is_allow_unregistered_customer_ask
+            gdpr_enable
+            gdpr_text
+            is_notify_user
+        }
+        questions{
+            question_id
+            title
+            is_show_full_answer
+            answer
+            short_answer
+            question_link
+        }
+    }
+}

@@ -1,0 +1,39 @@
+fragment ConfigurableProductListItem on ConfigurableProduct{
+    ... on ConfigurableProduct {
+        configurable_options {
+            attribute_code
+            uid
+            attribute_uid
+            label
+            values {
+                uid
+                default_label
+                label
+                store_label
+                use_default_value
+            }
+        }
+        variants {
+            attributes {
+                code
+                uid
+                value_index
+                label
+            }
+            product {
+                uid
+                image{
+                    url
+                }
+                media_gallery {
+                    url
+                }
+                sku
+                stock_status
+                bed_data {
+                    ...BedData
+                }
+            }
+        }
+      }
+}

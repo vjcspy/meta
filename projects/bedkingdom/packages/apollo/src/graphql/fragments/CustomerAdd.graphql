@@ -1,0 +1,14 @@
+fragment CustomerAdd on CustomerAddress{
+    id
+    firstname
+    middlename
+    lastname
+    street
+    city
+    postcode
+    telephone
+    country_code
+    iz_address_province
+    iz_address_district
+    iz_address_ward
+}

@@ -1,0 +1,11 @@
+query resolveChiakiPage($urlKey: String!,$userId: String!) {
+    chiakiPageResolver(url: $urlKey, userId: $userId){
+        id
+        redirectCode
+        relative_url
+        config_data
+        additional_data
+        type
+        metadata
+    }
+}

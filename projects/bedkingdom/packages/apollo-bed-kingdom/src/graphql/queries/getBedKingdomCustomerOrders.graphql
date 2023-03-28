@@ -1,0 +1,19 @@
+query getBedKingdomCustomerOrders(
+  $pageSize: Int
+  $currentPage: Int
+  $filter: CustomerOrdersFilterInput
+) {
+  customer {
+    orders(pageSize: $pageSize, currentPage: $currentPage, filter: $filter) {
+      items {
+        ...BedKingdomCustomerOrder
+      }
+      total_count
+      page_info {
+        current_page
+        page_size
+        total_pages
+      }
+    }
+  }
+}

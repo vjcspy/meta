@@ -1,0 +1,320 @@
+//Footer
+footer {
+  .b-footer {
+    @apply bg-main-blue;
+    a {
+      @apply text-white;
+    }
+
+    .b-footer__title {
+      @apply text-16px mb-1 md:mb-3 md:text-20px font-bold font-heading  ;
+
+    }
+    .b-widget__4 .b-footer__title{
+      margin-bottom: 20px;
+    }
+    // Query Media
+    @screen md {
+      .b-widget__4,
+      .b-widget__1 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+      }
+
+      .b-widget__2,
+      .b-widget__3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 16.666667%;
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+      }
+    }
+
+    @screen xxl {
+      .b-widget__2 {
+        padding-left: 1%;
+      }
+
+      .b-widget__3 {
+        padding-left: 1%;
+      }
+
+      .b-widget__4 {
+        padding-left: 5%;
+      }
+    }
+
+    .about__btn {
+      @apply text-color-222 relative font-bold h-44 bg-white text-center rounded-28 text-color-222 flex items-center justify-center min-w-165 whitespace-nowrap;
+      padding: 0 15px 0 50px;
+      margin-right: 10px;
+
+      &:before {
+        @apply w-22px h-22px absolute;
+        content: "";
+        background: url('../../images/icon-ring.png') no-repeat;
+        left: 20px;
+        top: 13px;
+      }
+    }
+
+    .about__btn.call_btn {
+      &:before {
+        background: url('../../images/icon-location.png') no-repeat;
+        top: 12px;
+        height: 23px;
+      }
+    }
+  }
+
+  .trustpilot-widget.stl-2 {
+    @apply text-center bg-main-blue ml-auto m-auto;
+
+    .tp-stars {
+      width: 120px;
+    }
+
+    .tp-widget-title.text-white.m-0 {
+      @apply flex mr-2;
+      strong {
+        @apply mr-1;
+      }
+    }
+
+    .tp-widget-logo__inner {
+      position: relative;
+      height: auto;
+      width: 100%;
+      padding: 0;
+      top: 5px;
+
+      svg {
+        max-width: 80px;
+        min-width: 80px;
+      }
+    }
+
+    .tp-widget-logo {
+      @apply ml-2 w-auto;
+    }
+
+    > a {
+      @apply flex items-center justify-center;
+    }
+
+    path.tp-logo__text {
+      fill: #fff;
+    }
+  }
+
+  .b-footer__payment {
+    @apply block mt-5;
+    p {
+      @apply mt-3 mb-3;
+    }
+  }
+
+  .b-footer__linkBuy {
+    margin-top: 20px;
+    @screen sm {
+      margin-top: 12px;
+    }
+  }
+
+  .b-footer__title2 {
+    margin-top: 32px;
+
+    span {
+      position: relative;
+
+      &:after {
+        @apply absolute;
+        content: "";
+        background: url('../../images/icon-check2.png') no-repeat;
+        width: 17px;
+        height: 17px;
+        right: -20px;
+        top: 3px;
+      }
+    }
+  }
+
+  .b-footer__linkBuy {
+    li {
+      flex: 0 0 50%;
+      @apply relative pl-5;
+      @screen xxl {
+        margin-left: 40px;
+      }
+
+      &:first-child {
+        margin: 0;
+      }
+
+      &:before {
+        @apply absolute left-0;
+        content: "";
+        background: url('../../images/icon-check.png') no-repeat;
+        width: 14px;
+        height: 11px;
+        top: 5px;
+      }
+    }
+  }
+
+  .b-widget {
+    padding-top: 47px;
+  }
+
+  .b-footer__content.about {
+    @apply block lg:mr-12;
+    margin-top: 18px;
+
+    .about__info {
+      line-height: 33px;
+      @apply block mb-5;
+    }
+
+    .about-btn__form {
+      margin-top: 39px;
+    }
+  }
+
+  ul.b-footer__link {
+    line-height: 36px;
+    @media (max-width: 565px) {
+      line-height: 26px;
+    }
+  }
+
+  .b-footer-bottom {
+    border-color: rgba(255, 255, 255, 0.1);
+    @apply border-t border-solid text-center;
+    padding: 5px 0 5px;
+    @screen xl {
+      margin-top: 50px;
+    }
+    p{
+      @apply mt-3 mb-3;
+    }
+  }
+
+  ul.social-icons {
+    @media (min-width: 566px) {
+      margin-top: 32px;
+    }
+
+    li {
+      @apply inline-block text-center bg-main-306199 w-43px h-43px mr-2 rounded-100 text-0;
+      line-height: 43px;
+      vertical-align: middle;
+      &.twitter{
+        span{
+          @apply inline-block;
+          vertical-align: middle;
+          svg{
+            width: 17px;
+          }
+        }
+      }
+      .fa:before {
+        font-size: 20px;
+        line-height: 43px;
+      }
+
+      &.twitter {
+        background: #000;
+      }
+
+      &.instagram {
+        background: #eb5e57;
+      }
+
+      &.youtube {
+        background: #bd3134;
+      }
+
+      &.pinterest {
+        background: #b81620;
+      }
+    }
+  }
+
+  .b-footer-mobile {
+    padding-top: 22px;
+
+    .b-footer__title2 span:after {
+      right: -10px;
+    }
+
+    ul.social-icons {
+      @apply text-center pb-4;
+    }
+
+
+    .b-footer__linkBuy {
+      margin: 10px 0 0;
+
+      li {
+        @apply flex w-1/2;
+        padding: 0 10px 0 20px;
+
+        &:before {
+          @apply block;
+        }
+
+        a {
+          @apply whitespace-nowrap;
+        }
+      }
+    }
+
+    .b-footer__info {
+      padding: 0 12px;
+      margin-bottom: 15px;
+
+      &.stl-2 {
+        text-align: center;
+
+        .b-widget__4 {
+          margin-bottom: 25px;
+        }
+
+        .b-footer__payment {
+          margin-top: 15px;
+        }
+
+        .b-footer__title {
+          position: relative;
+          margin: 0 -25px;
+          padding: 0 25px;
+
+          span {
+            padding: 0 15px;
+            background: #0d3665;
+            z-index: 3;
+            position: relative;
+          }
+
+          &:before {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.14);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            right: 0;
+          }
+        }
+      }
+    }
+
+    .b-widget {
+      padding-top: 0;
+    }
+  }
+}

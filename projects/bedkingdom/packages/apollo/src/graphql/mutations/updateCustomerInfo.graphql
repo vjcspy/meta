@@ -1,0 +1,7 @@
+mutation updateCustomerInfo($input: CustomerUpdateInput!){
+    updateCustomerV2(input: $input){
+        customer{
+            ...CustomerDetail
+        }
+    }
+}

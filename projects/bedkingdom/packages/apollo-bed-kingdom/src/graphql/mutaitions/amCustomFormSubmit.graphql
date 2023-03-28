@@ -1,0 +1,9 @@
+mutation amCustomFormSubmit($form_data: String){
+    amCustomFormSubmit(
+        input: {
+            form_data: $form_data
+        }
+    ) {
+        status
+    }
+}

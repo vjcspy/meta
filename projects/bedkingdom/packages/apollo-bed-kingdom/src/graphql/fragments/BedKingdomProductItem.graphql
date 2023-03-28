@@ -1,0 +1,28 @@
+fragment BedKingdomProductItem on ProductInterface {
+    __typename
+    id
+    uid
+    name
+    sku
+    delivery
+    new_from_date
+    new_to_date
+    stock_status
+    url_key
+    media_gallery {
+        url
+    }
+    image{
+        url
+    }
+    description {
+        html
+    }
+    price_range{
+        ...PriceRange
+    }
+    bed_data {
+        ...BedData
+    }
+    ...ConfigurableProductListItem
+}

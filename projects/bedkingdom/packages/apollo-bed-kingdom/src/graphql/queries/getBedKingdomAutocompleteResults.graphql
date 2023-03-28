@@ -1,0 +1,13 @@
+query getBedKingdomAutocompleteResults($inputText: String!,$pageSize: Int = 20) {
+    products(search: $inputText, currentPage: 1, pageSize: $pageSize,sort: {
+        relevance: DESC,
+    }) {
+        items {
+            ...BedKingdomProductItem
+        }
+        page_info {
+            total_pages
+        }
+        total_count
+    }
+}

@@ -1,0 +1,776 @@
+@use "sass:math";
+
+// Star Global
+.productList__stars {
+  position: relative;
+
+  .slick-list & {
+    &:hover {
+      .tp-widget-wrapper {
+        @apply block;
+        top: -200px;
+        @screen mdm {
+          top: -180px;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .tp-widget-wrapper {
+      @apply block z-10;
+    }
+  }
+}
+
+// Newletter
+.b-section__newleter {
+  @apply bg-main-FBFBFB;
+  .b-bestReviews {
+    padding: 30px 20px 30px 0;
+    color: #f4f4f4;
+    height: 100%;
+    background: #197dac url("../../images/bestReview-2.png") right 55px no-repeat;
+    @screen md {
+      .b-bestReviews_wrap {
+        @apply flex;
+        .b-bestReviews__intro {
+          flex: 0 0 58.333333%;
+          max-width: 58.333333%;
+        }
+
+        .b-bestReviews__image {
+          flex: 0 0 41.666667%;
+          max-width: 41.666667%
+        }
+      }
+    }
+    @media only screen and (min-width: 992px) {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      padding: 44px 20px 30px 0;
+    }
+    @media (min-width: 768px) and (max-width: 992px) {
+      margin: 0;
+      padding: 30px 15px;
+    }
+    @media only screen and (max-width: 767px) {
+      margin: 0 -10px;
+      padding: 25px 20px;
+      background-size: cover;
+    }
+  }
+
+  @screen mdm {
+    .trustpilot-widget.stl-2 a {
+      @apply flex justify-between items-center w-full;
+      .tp-widget-logo {
+        width: 35%;
+        @apply m-0 pl-3.5;
+      }
+
+      .tp-widget__info {
+        width: 65%;
+
+        .tp-widget-title {
+          @apply pr-3.5 text-14px whitespace-nowrap;
+        }
+      }
+    }
+  }
+  .b-bestReviews .b-bestReviews__introTitle {
+    @apply text-22px font-normal mb-5;
+    @screen lg {
+      @apply text-24px;
+    }
+    @screen mdm {
+      @apply text-22px text-center mb-3.5;
+    }
+  }
+
+  .row-roleBestReview {
+    @media only screen and (min-width: 1200px) {
+      box-shadow: 1000px 0 #fbfbfb, -1000px 0 #197dac;
+    }
+  }
+
+  .b-bestReviews__image {
+    .trustpilot-widget {
+      max-width: 245px;
+      @media (max-width: 767px) {
+        max-width: 90%;
+        margin: 0 auto;
+      }
+    }
+
+    .tp-widget-title {
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    .trustpilot-widget.stl-2 .tp-widget-logo {
+      margin: 10px auto 8px;
+      width: 95px;
+    }
+
+    .trustpilot-widget.stl-2 .tp-stars {
+      max-width: 125px;
+      width: 100%;
+    }
+  }
+
+  .b-bestReviews__introDesc {
+    font-size: 15px;
+    line-height: 25px;
+    margin-bottom: 1rem;
+    font-style: italic;
+    @media only screen and (min-width: 992px) {
+      font-size: 16px;
+    }
+    @media only screen and (max-width: 767px) {
+      font-size: 16px;
+      text-align: center;
+      font-style: normal;
+      font-weight: normal;
+      margin-bottom: 20px;
+    }
+  }
+
+  .b-subscribe {
+    background: #fbfbfb;
+    padding: 20px;
+
+    .b-form-input {
+      .b-input {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+        @apply pr-5;
+      }
+
+      .b-actions {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      margin: 0 -20px;
+      .row {
+        margin: 0 -5px;
+
+        > div {
+          padding: 0 5px;
+        }
+      }
+      form.row.g-3.mb-4 {
+        margin-bottom: 10px !important;
+      }
+    }
+    @media (min-width: 768px) and (max-width: 992px) {
+      padding: 20px 0 10px;
+    }
+    @media only screen and (min-width: 1200px) {
+      padding: 62px 0 40px 55px;
+      min-height: 300px;
+    }
+
+    .b-subscribe__title {
+      @apply text-24px;
+      font-weight: 600;
+      margin-bottom: 23px;
+
+      @screen mdm {
+        @apply text-18px text-center;
+        line-height: 22px;
+        margin: 0 auto 15px;
+      }
+    }
+
+    .b-subscribe__subtitle {
+      font-size: 16px;
+      margin-bottom: 20px;
+      @media only screen and (max-width: 767px) {
+        display: none;
+      }
+    }
+
+    input {
+      height: 44px;
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+      @apply w-full block rounded-3 bg-white;
+      &:focus{
+        outline: none;
+      }
+    }
+
+    .b-blockBtn--action {
+      margin-bottom: 0;
+      font-weight: 500;
+      text-align: center;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      background-image: none;
+      white-space: nowrap;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      padding: 0 12px;
+      text-decoration: none;
+      border-radius: 3px;
+      font-size: 16px;
+      line-height: 44px;
+      height: 44px;
+      color: #fff;
+      background-color: #2361aa;
+      display: block;
+      width: 100%;
+      border: none;
+      @media only screen and (min-width: 992px) {
+        min-width: 150px;
+        max-width: 150px;
+      }
+    }
+  }
+
+  .b-subscribe__label {
+    @apply text-16px lg:text-color-666 text-color-222 italic lg:mt-2 m-0 inline-block;
+    @screen mdm {
+      @apply text-color-222 text-14px mt-0 w-full text-center mt-3;
+    }
+  }
+}
+
+// Trustpilot
+.b-section__trustpilot {
+  padding: 20px 0 40px;
+}
+
+//Services
+.b-bottom__services,
+.b-menu__services {
+  padding: 30px 15px;
+  a.b-menu__btn {
+    @apply relative h-50px flex items-center text-color-222 font-bold bg-main-F8F8F8 whitespace-nowrap;
+    border-radius: 30px;
+    padding: 0 15px 0 45px;
+
+    &.tel {
+      &:before {
+        background: url('../../images/icon-ring.png') no-repeat;
+        width: 22px;
+        top: 12px;
+        height: 23px;
+      }
+    }
+
+    &:before {
+      @apply absolute;
+      content: "";
+      background: url('../../images/icon-location.png') no-repeat;
+      width: 22px;
+      height: 23px;
+      left: 17px;
+      top: 13px;
+    }
+  }
+}
+
+// Listing Tab
+.b-section__productTabs {
+  @apply block;
+  @screen mdm {
+    @apply mb-3;
+  }
+  .slick-list {
+    padding-top: 3px
+  }
+  .b-product-image{
+    > img {
+      bottom: auto;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      object-fit: cover;
+      width: 100%;
+      height: 130px;
+      @screen lg{
+        height: 200px;
+      }
+
+      @screen xl{
+        height: 250px;
+      }
+    }
+  }
+  .b-listingTab__title {
+    @apply block mt-6 md:mt-8;
+    .b-listingTab__titleLists {
+      @apply flex cursor-pointer;
+      @screen mdm {
+        margin: 0 -15px;
+      }
+      li {
+        @apply relative border-0 rounded-0 inline-block pb-2.5;
+        @screen mdm {
+          flex: 0 0 25%;
+          max-width: 25%;
+        }
+        &.list-group-item {
+          @apply relative;
+          margin-right: -1px;
+
+          &.active {
+            @apply shadow-none;
+            .b-listingTab__titleListLink {
+              @apply text-white;
+            }
+          }
+        }
+
+        &.tab-item1 {
+
+          box-shadow: 0 -6px 0 #ceab03 inset, -1px 1px 0 rgba(0, 0, 0, 0.13) inset, 1px 0px 0 rgba(0, 0, 0, 0.13) inset;
+
+          &.active {
+            @apply bg-listingTabs-tab1;
+            &:after {
+              background: linear-gradient(
+                              45deg, #ceab03 50%, rgba(255, 255, 255, 0) 51%, rgba(255, 255, 255, 0) 100%);
+              content: "";
+              height: 15px;
+              bottom: -15px;
+              transform: translate(-50%, -50%) rotate(
+                              -45deg);
+              width: 15px;
+              @apply absolute left-1/2;
+            }
+          }
+        }
+
+        &.active a {
+          @apply text-white;
+        }
+
+        .b-listingTab__titleListLink {;
+          padding: 14px 5px 7px;
+
+          @apply lg:text-18px text-15px block text-center text-black font-normal;
+          @screen md {
+            min-width: 185px;
+          }
+        }
+
+        &.tab-item2 {
+          @apply relative;
+          box-shadow: 0 -6px 0 #29a4de inset, -1px 1px 0 rgba(0, 0, 0, 0.13) inset, 1px 0px 0 rgba(0, 0, 0, 0.13) inset;
+
+          &.active {
+            background: #55b9e8;
+
+            &:after {
+              background: linear-gradient(
+                              45deg, #29a4de 50%, rgba(255, 255, 255, 0) 51%, rgba(255, 255, 255, 0) 100%);
+              content: "";
+              height: 15px;
+              bottom: -15px;
+              transform: translate(-50%, -50%) rotate(
+                              -45deg);
+              width: 15px;
+              @apply absolute left-1/2;
+            }
+          }
+        }
+
+        &.tab-item3 {
+          @apply relative;
+          box-shadow: 0 -6px 0 #a096e6 inset, -1px 1px 0 rgba(0, 0, 0, 0.13) inset, 1px 0px 0 rgba(0, 0, 0, 0.13) inset;
+
+          &.active {
+            background: #beb7ee;
+
+            &:after {
+              background: linear-gradient(
+                              45deg, #a096e6 50%, rgba(255, 255, 255, 0) 51%, rgba(255, 255, 255, 0) 100%);
+              content: "";
+              height: 15px;
+              bottom: -15px;
+              transform: translate(-50%, -50%) rotate(
+                              -45deg);
+              width: 15px;
+              @apply absolute left-1/2;
+            }
+          }
+        }
+
+        &.tab-item4 {
+          @apply relative;
+          box-shadow: 0 -6px 0 #f98f70 inset, -1px 1px 0 rgba(0, 0, 0, 0.13) inset, 1px 0px 0 rgba(0, 0, 0, 0.13) inset;
+
+          &.active {
+            background: #FDA287;
+
+            &:after {
+              background: linear-gradient(
+                              45deg, #f98f70 50%, rgba(255, 255, 255, 0) 51%, rgba(255, 255, 255, 0) 100%);
+              content: "";
+              height: 15px;
+              bottom: -15px;
+              transform: translate(-50%, -50%) rotate(
+                              -45deg);
+              width: 15px;
+              @apply absolute left-1/2;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .b-listingTab__content {
+    margin-top: 30px;
+  }
+}
+
+//Tabs Category
+.b-section__categoryTabs {
+  .b-listingTab__content {
+    margin-top: 0;
+    @screen mdm {
+      padding: 15px 0 0;
+    }
+  }
+
+  .list-group-item {
+    cursor: pointer;
+
+    .b-categoryRole__iconLink.white {
+      display: none;
+    }
+
+    .b-categoryRole__iconLink {
+      > span:first-child {
+        min-width: 100px;
+      }
+
+      @media only screen and (max-width: 576px) {
+        opacity: 0.7;
+      }
+    }
+
+    &:hover,
+    &.active {
+      span {
+        @apply text-white;
+      }
+
+      .b-categoryRole__iconLink {
+        opacity: 1;
+        @screen mdm {
+          opacity: 1;
+        }
+      }
+
+      @media only screen and (min-width: 767px) {
+        .b-categoryRole__iconLink {
+          display: none;
+
+          &.white {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  .slick-slider {
+    .slick-list {
+      padding-top: 3px;
+      margin-top: -3px;
+    }
+  }
+
+  @screen lg {
+    padding: 30px 0;
+    margin-top: 0;
+  }
+
+  @screen mdm {
+    @apply p-0;
+  }
+
+  .b-categoryRole__side {
+    @media only screen and (max-width: 991px) {
+      padding: 0;
+    }
+  }
+
+  padding: 30px 0;
+  color: black;
+  background: #f5f5f5;
+  @media only screen and (max-width: 767px) {
+    background: #f8f8f8;
+  }
+
+  .list-group {
+    @apply flex;
+    @screen mdm {
+      @apply bg-white;
+      padding: 0 25px;
+      margin: 0 -10px;
+    }
+    @media (min-width: 768px) and (max-width: 992px) {
+      > li:not(:last-child) {
+        @apply border-r-0;
+      }
+    }
+    @media only screen and (min-width: 992px) {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      margin-bottom: 0;
+      border-radius: .25rem;
+    }
+  }
+
+  .b-categoryRole__sideLists .list-group-item {
+    border: 1px solid #e6e6e6;
+    margin-bottom: 15px;
+    background: #fff;
+    width: 100%;
+    cursor: pointer;
+    @media only screen and (max-width: 767px) {
+      border: none;
+      margin-bottom: 0;
+    }
+
+    &:hover,
+    &.active {
+      background: #2062ac;
+      @media only screen and (max-width: 767px) {
+        background: #F8F8F8;
+      }
+
+      a {
+        color: #fff;
+      }
+    }
+  }
+
+  .b-blockBtn--viewMore {
+    @apply text-center w-210px clear-both m-auto;
+    padding: 30px 0 0;
+    @screen mdm {
+      padding: 15px 0 25px;
+    }
+
+    .b-blockBtn--action {
+      @apply mb-0 text-center align-middle cursor-pointer whitespace-nowrap text-16px h-44 text-white bg-main-2361aa border-0 block w-full font-bold rounded-3;
+      touch-action: manipulation;
+      padding: 0 12px;
+      text-decoration: none;
+      line-height: 44px;
+      @media only screen and (min-width: 992px) {
+        min-width: 150px;
+      }
+    }
+  }
+
+  .b-categoryRole__sideListLink {
+    @apply min-h-70 text-color-222 xl:text-16px font-normal flex items-center;
+    padding: 15px 5px;
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      @apply flex-wrap justify-center text-center;
+      > span {
+        flex: 0 0 100%;
+
+        img {
+          @apply m-auto ;
+        }
+      }
+    }
+
+    @screen mdm {
+      @apply justify-center;
+    }
+
+    @screen lg {
+      > span:first-child {
+        @apply min-w-70;
+      }
+
+      padding: 20px;
+    }
+
+    .b-categoryRole__iconLink {
+      @screen lg {
+        @apply mr-3.5;
+      }
+      @media (min-width: 768px) and (max-width: 992px) {
+        flex: 100%;
+        @apply min-h-55 mb-2.5;
+      }
+    }
+  }
+}
+
+// Trustpilot Global
+.trustpilot-widget {
+  &.stl-2 {
+    .tp-widget-logo {
+      margin: 0 0 8px;
+      width: 55%;
+    }
+
+    .tp-stars.tp-stars--4 .tp-star:nth-child(5) .tp-star__canvas,
+    .tp-stars.tp-stars--4 .tp-star:nth-child(5) .tp-star__canvas--half {
+      fill: #dcdce6;
+    }
+
+    path.tp-star__shape {
+      fill: #fff;
+    }
+
+    .tp-stars {
+      max-width: 225px;
+      width: 90%;
+    }
+
+    .tp-widget-businessinfo {
+      color: #fff;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .tp-widget-stars {
+      margin: 0 0 8px;
+      width: 94%;
+      display: block;
+    }
+
+    .tp-stars--4 .tp-star:nth-of-type(-n+4) .tp-star__canvas, .tp-stars--4 .tp-star:nth-of-type(-n+4) .tp-star__canvas--half {
+      fill: #73cf11;
+    }
+
+    .tp-widget-logo__inner {
+      position: relative;
+      height: 0;
+      width: 100%;
+      padding: 0;
+      padding-bottom: 24.6031746031746%;
+    }
+
+    .tp-logo__text {
+      fill: #fff;
+    }
+  }
+
+  &.stl_3 {
+    .tp-widget-wrappers {
+      max-width: none;
+      min-height: 150px;
+      min-width: 300px;
+      will-change: transform;
+      height: 100%;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .tp-widget-logo {
+      margin: 5px auto 0;
+      width: 106px;
+    }
+
+    .tp-widget-stars {
+      justify-content: space-between;
+    }
+
+    .tp-widget-stars {
+      margin: 0 0 12px;
+    }
+
+    .slick-slide {
+      padding: 0 20px;
+    }
+
+    .tp-widget-readmore-arrow {
+      display: none;
+    }
+
+    div#numberOfReviews {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .tp-widget-stars.title {
+      font-size: 14px;
+      font-weight: 700;
+      height: 16px;
+      margin: 0 0 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .tp-widget-humanscore {
+      font-size: 24px;
+      margin: 0 0 12px;
+
+      a {
+        color: #191919;
+        text-decoration: none;
+      }
+    }
+
+    @media screen and (max-height: 139px) {
+      .tp-widget-businessinfo {
+        margin-bottom: 8px;
+      }
+    }
+
+    .tp-widget-businessinfo {
+      font-size: 13px;
+      line-height: 16px;
+      margin: 0 0 16px;
+    }
+
+    .tp-widget-wrappers .wrapper-left {
+      text-align: center;
+      z-index: 100;
+    }
+
+    .wrapper-right {
+      margin: 20px 0 0;
+      overflow: hidden;
+      position: relative;
+      font-size: 13px;
+      @media (min-width: 768px) and (max-width: 1199px) {
+        padding: 0;
+      }
+    }
+
+    .tp-widget-stars.author {
+      height: 14px;
+      left: 20px;
+      overflow: hidden;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: calc(100% - 20px);
+      z-index: 2;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 12px;
+    }
+  }
+}
+
+.disableScroll{
+  @apply overflow-hidden;
+}
+

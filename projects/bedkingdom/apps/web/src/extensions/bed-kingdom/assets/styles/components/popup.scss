@@ -1,0 +1,64 @@
+.popup-overlay .popup-content{
+  @apply pl-2 pr-2 md:pl-5 md:pr-5 pb-5 max-w-360 md:max-w-700 m-3 pt-0 w-full bg-white;
+  &.delete-content{
+    min-width: 320px;
+    max-width: 320px;
+    .header{
+      @apply text-15px;
+    }
+  }
+  &.orderConfirm-content{
+    margin: 0 auto!important;
+    @screen mdm{
+     @apply max-w-full;
+      .popup-orderConfirm{
+        @apply p-2;
+        .content-inner{
+          overflow-y: scroll;
+          max-height: 90vh;
+        }
+      }
+    }
+  }
+  .header{
+    @apply pl-2 pr-2 -mr-2 -ml-2 md:-ml-5 md:-mr-5 md:pl-5 md:pr-5 pt-2 pb-2 bg-color-e6e6e6 text-16px md:text-18px flex  justify-between mb-4;
+  }
+  .content{
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 20px;
+    margin-right: -20px;
+  }
+}
+
+.popup-content.popup-content{
+  @media (min-width: 992px) {
+    min-width: 900px;
+  }
+  .head-popup {
+    padding: 10px 20px;
+    display: block;
+    text-align: right;
+    .popup-action-close{
+      padding: 0;
+      border:none;
+      background: transparent;
+      &:before{
+        content: "\f00d ";
+        display: block;
+        font-family: FontAwesome;
+        color: #444;
+        font-size: 22px;
+      }
+    }
+  }
+
+  .content-popup{
+    overflow-y: auto;
+    padding: 0 20px 20px;
+
+  }
+}
+.popup-overlay {
+  background: rgba(0,0,0,.5);
+}

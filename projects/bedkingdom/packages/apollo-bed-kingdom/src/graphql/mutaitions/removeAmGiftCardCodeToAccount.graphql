@@ -1,0 +1,10 @@
+mutation removeAmGiftCardCodeToAccount($amGiftcardCode: String!){
+    removeAmGiftCardCodeToAccount(
+        input:{
+            am_giftcard_code: $amGiftcardCode
+        }
+    ) {
+        error
+        message
+    }
+}

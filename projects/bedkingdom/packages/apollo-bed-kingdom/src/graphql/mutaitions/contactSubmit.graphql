@@ -1,0 +1,10 @@
+mutation contactSubmit($form_data: String){
+    contactSubmit(
+        input: {
+            form_data: $form_data
+        }
+    ) {
+        code
+        message
+    }
+}

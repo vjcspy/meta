@@ -1,0 +1,17 @@
+mutation addConfigurableProductsToCart($input: AddConfigurableProductsToCartInput) {
+    addConfigurableProductsToCart(
+        input: $input
+    ) {
+        cart {
+            id
+            items {
+                id
+                product {
+                    sku
+                    stock_status
+                }
+                quantity
+            }
+        }
+    }
+}

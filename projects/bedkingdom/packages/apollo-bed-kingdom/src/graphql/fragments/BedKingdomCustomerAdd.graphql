@@ -1,0 +1,11 @@
+fragment BedKingdomCustomerAdd on CustomerAddress{
+    id
+    firstname
+    middlename
+    lastname
+    street
+    city
+    postcode
+    telephone
+    country_code
+}

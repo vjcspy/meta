@@ -1,0 +1,34 @@
+{
+  "name": "@vjcspy/r",
+  "version": "1.0.0",
+  "description": "react redux BASE module",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "repository": "https://github.com/vjcspy/web-base",
+  "license": "MIT",
+  "keywords": [],
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "lint": "eslint --fix --ext ts,tsx ."
+  },
+  "engines": {
+    "node": ">=10.22"
+  },
+  "dependencies": {
+    "@web/base": "workspace:*",
+    "@main/packages-web-apollo": "workspace:*",
+    "@web/ui-extension": "workspace:*",
+    "chitility": "workspace:*",
+    "@main/packages-web-redux": "workspace:*",
+    "@vjcspy/apollo": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}

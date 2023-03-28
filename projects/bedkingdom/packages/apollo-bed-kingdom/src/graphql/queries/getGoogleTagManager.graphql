@@ -1,0 +1,7 @@
+query getGoogleTagManager{
+    getGoogleTagManager{
+        head
+        body
+        footer
+    }
+}

@@ -1,0 +1,8 @@
+mutation updateBedKingdomCustomerV2($input:CustomerUpdateInput!){
+    updateCustomerV2(input: $input) {
+        customer{
+            ...BedKingdomCustomerDetail
+        }
+    }
+}
+

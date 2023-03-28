@@ -1,0 +1,5 @@
+query getBedKingdomMegaMenuSSR($menuId: Int!){
+    getMenuItems(menuId: $menuId){
+        ...MegaMenuItem
+    }
+}

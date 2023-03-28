@@ -1,0 +1,22 @@
+query amLabelProvider($productIds: [Int]){
+    amLabelProvider(productIds: $productIds, mode: PRODUCT) {
+        items{
+            label_id
+            product_id
+            position
+            name
+            txt
+            image
+            size
+            style
+            tooltip_settings{
+                status
+                color
+                text_color
+                text
+            }
+            is_visible
+            customer_group_ids
+        }
+    }
+}

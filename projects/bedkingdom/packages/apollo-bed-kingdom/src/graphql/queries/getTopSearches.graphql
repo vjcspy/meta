@@ -1,0 +1,9 @@
+query getTopSearches{
+    getTopSearches {
+        query_id
+        query_text
+        num_results
+        popularity
+        redirect
+    }
+}

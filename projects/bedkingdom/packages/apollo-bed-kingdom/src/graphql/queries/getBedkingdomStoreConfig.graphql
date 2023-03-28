@@ -1,0 +1,11 @@
+query getBedkingdomStoreConfig{
+    storeConfig {
+        default_title
+        default_description
+        default_keywords
+        head_includes
+        secure_base_url
+        locale
+        id
+    }
+}

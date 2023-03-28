@@ -1,0 +1,5 @@
+mutation createBedKingdomCustomerAddress($input: CustomerAddressInput!){
+    createCustomerAddress(input: $input){
+        ...BedKingdomCustomerAdd
+    }
+}

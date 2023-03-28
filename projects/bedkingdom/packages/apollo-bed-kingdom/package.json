@@ -1,0 +1,44 @@
+{
+  "name": "@vjcspy/apollo-bed-kingdom",
+  "version": "1.0.0",
+  "description": "Apollo Graphql module",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "module": "build/module/index.js",
+  "repository": "https://github.com/vjcspy/graphql",
+  "license": "MIT",
+  "keywords": [],
+  "scripts": {
+    "describe": "npm-scripts-info",
+    "build": "pnpm run build:main",
+    "build:main": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig.module.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "engines": {
+    "node": ">=14.11"
+  },
+  "dependencies": {
+    "graphql": "latest",
+    "graphql-tag": "latest",
+    "@apollo/client": "latest"
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*",
+    "@graphql-codegen/add": "latest",
+    "@graphql-codegen/cli": "latest",
+    "@graphql-codegen/fragment-matcher": "latest",
+    "@graphql-codegen/introspection": "latest",
+    "@graphql-codegen/schema-ast": "latest",
+    "@graphql-codegen/time": "latest",
+    "@graphql-codegen/typescript": "latest",
+    "@graphql-codegen/typescript-document-nodes": "latest",
+    "@graphql-codegen/typescript-graphql-files-modules": "latest",
+    "@graphql-codegen/typescript-operations": "latest",
+    "@graphql-codegen/typescript-react-apollo": "latest",
+    "@apollo/client": "latest",
+    "graphql": "latest"
+  }
+}

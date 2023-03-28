@@ -1,0 +1,10 @@
+mutation addAmGiftCardCodeToAccount($amGiftcardCode: String!){
+    addAmGiftCardCodeToAccount(
+        input:{
+            am_giftcard_code: $amGiftcardCode
+        }
+    ) {
+        error
+        message
+    }
+}

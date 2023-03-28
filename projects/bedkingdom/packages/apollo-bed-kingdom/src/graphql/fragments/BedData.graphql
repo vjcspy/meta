@@ -1,0 +1,23 @@
+fragment BedData on BedData{
+        bed_category_product_image {
+            url
+            url_mobile
+            label
+        }
+        trustpilot_product_reviews_summary {
+            product_id
+            stars_average
+            total
+            one_star
+            two_stars
+            three_stars
+            four_stars
+            five_stars
+            attributes {
+                quality
+                value_for_money
+            }
+        }
+        finance_price
+        gtm_tag_click
+}

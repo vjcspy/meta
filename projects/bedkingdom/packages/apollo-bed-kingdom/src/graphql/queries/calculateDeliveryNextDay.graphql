@@ -1,0 +1,6 @@
+query calculateDeliveryNextDay($productId: Int!) {
+    calculateDeliveryNextDay(productId: $productId) {
+        limit_dates
+        min_date
+    }
+}

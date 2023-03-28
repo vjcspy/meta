@@ -1,0 +1,9 @@
+query getBedProductAttachments($productId: Int!) {
+    getProductAttachments(productId: $productId){
+        icon_url
+        frontend_url
+        label
+        file_size
+        readable_file_size
+    }
+}

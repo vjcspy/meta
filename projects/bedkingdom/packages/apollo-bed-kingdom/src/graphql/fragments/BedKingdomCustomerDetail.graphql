@@ -1,0 +1,30 @@
+fragment BedKingdomCustomerDetail on Customer{
+    id
+    email
+    firstname
+    lastname
+    gender
+    is_subscribed
+    date_of_birth
+    default_billing
+    default_shipping
+    group_id
+    addresses{
+        id
+        firstname
+        middlename
+        lastname
+        street
+        city
+        postcode
+        telephone
+        country_code
+        region {
+            region
+            region_code
+        }
+        default_billing
+        default_shipping
+        fax
+    }
+}

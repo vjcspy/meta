@@ -1,0 +1,179 @@
+fragment ConfigurableProduct on ConfigurableProduct{
+    ... on ConfigurableProduct {
+        configurable_options {
+            attribute_code
+            uid
+            attribute_uid
+            label
+            values {
+                uid
+                default_label
+                label
+                store_label
+                use_default_value
+            }
+        }
+        variants {
+            attributes {
+                code
+                uid
+                value_index
+                label
+            }
+            product {
+                id
+                delivery
+                price_tiers {
+                    discount {
+                        amount_off
+                        percent_off
+                    }
+                    final_price {
+                        currency
+                        value
+                    }
+                    quantity
+                }
+                special_price
+                price_range {
+                    maximum_price {
+                        regular_price {
+                            currency
+                            value
+                        }
+                        discount {
+                            amount_off
+                            percent_off
+                        }
+                        final_price {
+                            currency
+                            value
+                        }
+                        fixed_product_taxes {
+                            amount {
+                                currency
+                                value
+                            }
+                            label
+                        }
+                    }
+                    minimum_price {
+                        regular_price {
+                            currency
+                            value
+                        }
+                        discount {
+                            amount_off
+                            percent_off
+                        }
+                        final_price {
+                            currency
+                            value
+                        }
+                        fixed_product_taxes {
+                            amount {
+                                currency
+                                value
+                            }
+                            label
+                        }
+                    }
+                }
+                ... on CustomizableProductInterface{
+                    options{
+                        uid
+                        required
+                        sort_order
+                        title
+                        ...on CustomizableDropDownOption{
+                            required
+                            sort_order
+                            title
+                            uid
+                            value{
+                                option_type_id
+                                price
+                                price_type
+                                sku
+                                uid
+                                title
+                                sort_order
+                                base_image
+                            }
+                        }
+                        ... on CustomizableCheckboxOption{
+                            required
+                            sort_order
+                            title
+                            uid
+                            value{
+                                option_type_id
+                                price
+                                price_type
+                                sku
+                                sort_order
+                                title
+                                uid
+                                base_image
+                            }
+                        }
+#                        ... on CustomizableMultipleOption{
+#                            required
+#                            sort_order
+#                            title
+#                            uid
+#                            value{
+#                                option_type_id
+#                                price
+#                                price_type
+#                                sku
+#                                sort_order
+#                                title
+#                                uid
+#                                base_image
+#                            }
+#                        }
+#                        ...on CustomizableRadioOption{
+#                            required
+#                            sort_order
+#                            title
+#                            uid
+#                            value{
+#                                option_type_id
+#                                price
+#                                price_type
+#                                sku
+#                                sort_order
+#                                title
+#                                uid
+#                                base_image
+#                            }
+#                        }
+                    }
+                }
+                media_gallery {
+                    disabled
+                    label
+                    position
+                    url
+                    __typename
+                }
+                sku
+                stock_status
+                bed_data{
+                    bed_product_image{
+                        url
+                        url_mobile
+                        url_thumbnail
+                        label
+                        position
+                        isMain
+                        type
+                        videoUrl
+                    }
+                }
+
+            }
+        }
+      }
+}

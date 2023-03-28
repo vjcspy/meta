@@ -1,0 +1,49 @@
+mutation updateProductsInWishlist(
+  $wishlistId: ID!
+  $wishlistItems: [WishlistItemUpdateInput!]!
+) {
+  updateProductsInWishlist(
+    wishlistId: $wishlistId
+    wishlistItems: $wishlistItems
+  ) {
+    wishlist {
+      id
+      items_count
+      items_v2 {
+        items {
+          id
+          quantity
+          product {
+            name
+            sku
+            uid
+            image {
+              url
+            }
+            small_image {
+              url
+            }
+            price_range {
+              minimum_price {
+                regular_price {
+                  currency
+                  value
+                }
+              }
+              maximum_price {
+                regular_price {
+                  currency
+                  value
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    user_errors {
+      code
+      message
+    }
+  }
+}

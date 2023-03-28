@@ -1,0 +1,44 @@
+query getBedKingdomHomeBanner($sliderId: Int!){
+    getBannerHomepage(sliderId: $sliderId){
+        slider_id
+        slider_config{
+            title
+            show_title
+            status
+            dots
+            thumbs
+            center
+            items
+        }
+        banner_config{
+            id
+            title
+            status
+            url
+            wrap_link
+            banner_type
+            image{
+                img
+                height
+                width
+            }
+            mobile_image{
+                img
+                height
+                width
+            }
+            thumb_image{
+                img
+                height
+                width
+            }
+        }
+        breakpoint_config{
+            breakpoint_1
+            breakpoint_2
+            breakpoint_3
+            breakpoint_4
+        }
+        media_url
+    }
+}

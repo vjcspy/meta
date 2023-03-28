@@ -1,4 +1,5 @@
 export * from './drivers';
+export { storeManager } from './store';
 export * from './store';
 export type { Actions, CaseReducer, CaseReducers } from '@reduxjs/toolkit';
 export * from '@reduxjs/toolkit';

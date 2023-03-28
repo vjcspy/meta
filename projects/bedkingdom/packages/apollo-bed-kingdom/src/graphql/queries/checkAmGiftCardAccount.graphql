@@ -1,0 +1,13 @@
+query checkAmGiftCardAccount($input: AmGiftCardAccountInput! ){
+    amGiftCardAccount(
+        input: $input
+    ) {
+        code
+        expiration_date
+        status
+        current_balance{
+            value
+            currency
+        }
+    }
+}

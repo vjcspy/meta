@@ -1,0 +1,6 @@
+mutation gdprAnonymisePerform{
+    gdprAnonymisePerform{
+        error
+        message
+    }
+}

@@ -1,0 +1,23 @@
+fragment TrustpilotBusinessReviewsResponse on TrustpilotBusinessReviewsResponse{
+    stars
+    trust_score
+    display_name
+    number_of_reviews{
+        total
+        one_star
+        two_stars
+        three_stars
+        four_stars
+        five_stars
+    }
+    website_url
+    reviews{
+        stars
+        created_at
+        title
+        content
+        review_url
+        consumer_display_name
+        company_response
+    }
+}

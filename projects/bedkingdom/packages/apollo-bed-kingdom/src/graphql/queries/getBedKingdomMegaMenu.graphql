@@ -1,0 +1,14 @@
+query getBedKingdomMegaMenu($menuId: Int!){
+    getMenuItems(menuId: $menuId){
+        ...MegaMenuItem
+        children{
+            ...MegaMenuItem
+            children{
+                ...MegaMenuItem
+                children{
+                    ...MegaMenuItem
+                }
+            }
+        }
+    }
+}

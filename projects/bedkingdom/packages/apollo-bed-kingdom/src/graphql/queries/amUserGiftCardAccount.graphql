@@ -1,0 +1,11 @@
+query amUserGiftCardAccount{
+    amUserGiftCardAccount{
+        code
+        expiration_date
+        status
+        current_balance{
+            value
+            currency
+        }
+    }
+}

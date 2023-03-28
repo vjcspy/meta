@@ -1,0 +1,122 @@
+// Slick Global
+.slick-slider {
+  .slick-list {
+    margin: 0 -8px;
+    @screen mdm {
+      margin: 0 -5px;
+    }
+    .slick-slide {
+      padding: 0 8px;
+
+      .b-section__slider & {
+        padding: 0;
+      }
+
+      @screen mdm {
+        padding: 0 5px;
+      }
+    }
+  }
+
+  &:hover {
+    .slick-arrow {
+      @apply opacity-100 visible transition-all;
+      &.slick-next {
+        right: -20px;
+
+        .b-section__trustpilot & {
+          @apply right-0;
+        }
+      }
+
+      &.slick-prev {
+        left: -20px;
+
+        .b-section__trustpilot & {
+          @apply left-0;
+        }
+      }
+    }
+  }
+
+  .slick-dots {
+    @apply m-auto text-center static;
+
+    .b-section__slider & {
+      @apply left-1/2 bottom-4;
+      transform: translateX(-50%);
+    }
+
+    li {
+      margin: 0 4px;
+      @apply w-auto h-auto;
+      button {
+        @apply bg-white block rounded-100 border-0 p-0;
+        height: 8px;
+        width: 8px;
+
+        .b-section__categoryTabs & {
+          background: #D2D2D2;
+        }
+
+        &:before {
+          @apply hidden;
+        }
+      }
+
+      &:hover button,
+      &.slick-active button {
+        @apply bg-main-2361aa rounded-10 cursor-pointer;
+        width: 23px;
+        transition: 0.2s all;
+
+        .b-section__slider & {
+          background: #55BAE8;
+        }
+
+        .b-section__categoryTabs & {
+          background: #2362AA;
+        }
+      }
+
+    }
+  }
+
+  .slick-arrow {
+    @apply cursor-pointer opacity-0 absolute top-1/2 z-10 rounded-0 bg-transparent text-0 hidden md:block;
+    visibility: hidden;
+
+    @screen mdm {
+      display: none !important;
+    }
+    &.slick-prev {
+      transform: translateY(0%, -50%);
+    }
+
+    &.slick-next {
+      transform: translate(0%, 50%) rotate(180deg);
+    }
+
+    &:before {
+      background: #F8F9FA url("../../images/slider-arrow.svg") no-repeat;
+      content: "";
+      width: 44px;
+      height: 44px;
+      display: block;
+      border-radius: 100%;
+
+      .b-section__slider & {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
+    &.slick-next {
+      right: -60px;
+    }
+
+    &.slick-prev {
+      left: -60px;
+    }
+  }
+}

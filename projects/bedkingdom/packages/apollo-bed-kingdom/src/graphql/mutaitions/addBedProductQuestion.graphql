@@ -1,0 +1,8 @@
+mutation addBedProductQuestion($input: ProductQuestionInput ){
+    addProductQuestion(
+        input:$input
+    ) {
+        code
+        message
+    }
+}

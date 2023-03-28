@@ -1,0 +1,28 @@
+query getAmastyPage($pageId: Int!){
+    amlanding(id: $pageId) {
+        page_id
+        title
+        identifier
+        page_layout
+        layout_columns_count
+        layout_include_navigation
+        layout_heading
+        layout_file
+        layout_file_alt
+        layout_top_description
+        layout_bottom_description
+        layout_static_top
+        layout_static_bottom
+        default_sort_by
+        creation_time
+        update_time
+        is_active
+        dynamic_category_id
+        dynamic_category_url
+        sort_order
+        layout_update_xml
+        conditions_serialized
+        meta_data
+        store_id
+    }
+}

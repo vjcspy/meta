@@ -1,0 +1,230 @@
+fragment BedKingdomCustomerOrderDetails on CustomerOrder{
+    id
+    number
+    order_date
+    billing_address {
+        firstname
+        middlename
+        lastname
+        street
+        city
+        postcode
+        telephone
+        country_code
+    }
+    shipping_address {
+        firstname
+        middlename
+        lastname
+        street
+        city
+        postcode
+        telephone
+        country_code
+    }
+    shipping_method
+    payment_methods {
+        name
+        type
+        additional_data {
+            name
+            value
+        }
+    }
+    total {
+        grand_total {
+            value
+            currency
+        }
+        total_shipping {
+            currency
+            value
+        }
+        total_tax {
+            currency
+            value
+        }
+        subtotal {
+            currency
+            value
+        }
+        discounts{
+            amount{
+                currency
+                value
+            }
+            label
+        }
+    }
+    status
+    carrier
+    items {
+        id
+        product_name
+        product_sku
+        quantity_ordered
+        product_sale_price {
+            currency
+            value
+        }
+        quantity_shipped
+        selected_options {
+            label
+            value
+        }
+        additional_options{
+            label
+            value
+        }
+        entered_options{
+            label
+            value
+        }
+        quantity_ordered
+        quantity_shipped
+        quantity_refunded
+        quantity_invoiced
+        quantity_canceled
+        quantity_returned
+    }
+    invoices {
+        id
+        number
+        total {
+            grand_total {
+                value
+                currency
+            }
+            total_shipping {
+                currency
+                value
+            }
+            total_tax {
+                currency
+                value
+            }
+            subtotal {
+                currency
+                value
+            }
+            discounts{
+                amount{
+                    currency
+                    value
+                }
+                label
+            }
+        }
+        items {
+            id
+            product_name
+            product_sku
+            product_sale_price{
+                value
+                currency
+            }
+            discounts{
+                amount{
+                    value
+                    currency
+                }
+                label
+            }
+            order_item{
+                id
+                product_name
+                product_sku
+                product_url_key
+                product_type
+                status
+                product_sale_price{
+                    value
+                    currency
+                }
+                discounts{
+                    amount{
+                        value
+                        currency
+                    }
+                    label
+                }
+                selected_options{
+                    label
+                    value
+                }
+                entered_options{
+                    label
+                    value
+                }
+                additional_options{
+                    label
+                    value
+                }
+                quantity_ordered
+                quantity_shipped
+                quantity_refunded
+                quantity_invoiced
+                quantity_canceled
+                quantity_returned
+            }
+            quantity_invoiced
+        }
+    }
+    shipments {
+        id
+        number
+        items {
+            id
+            product_name
+            product_sku
+
+            product_sale_price {
+                currency
+                value
+            }
+            quantity_shipped
+            order_item{
+                id
+                product_name
+                product_sku
+                product_url_key
+                product_type
+                status
+                product_sale_price{
+                    value
+                    currency
+                }
+                discounts{
+                    amount{
+                        value
+                        currency
+                    }
+                    label
+                }
+                selected_options{
+                    label
+                    value
+                }
+                entered_options{
+                    label
+                    value
+                }
+                additional_options{
+                    label
+                    value
+                }
+                quantity_ordered
+                quantity_shipped
+                quantity_refunded
+                quantity_invoiced
+                quantity_canceled
+                quantity_returned
+            }
+        }
+        tracking {
+            title
+            number
+            carrier
+        }
+    }
+}

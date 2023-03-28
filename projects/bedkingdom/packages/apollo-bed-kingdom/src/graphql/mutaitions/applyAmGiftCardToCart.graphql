@@ -1,0 +1,9 @@
+mutation applyAmGiftCardToCart($input: ApplyAmGiftCardToCartInput){
+    applyAmGiftCardToCart(
+        input:$input
+    ) {
+        cart{
+            ...BedCartData
+        }
+    }
+}

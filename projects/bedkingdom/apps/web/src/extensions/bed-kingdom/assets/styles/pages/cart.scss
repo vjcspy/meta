@@ -1,0 +1,44 @@
+.b-cart{
+  @screen lg{
+    &.container{
+      //max-width: 1280px;
+    }
+  }
+  .b-cart-grid{
+    @screen md{
+      grid-template-columns: 72% 28%;
+    }
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+textarea:focus, input:focus{
+  outline: none;
+}
+table>tbody>tr>td, table>tbody>tr>th,
+table>tfoot>tr>td, table>tfoot>tr>th,
+table>thead>tr>td, table>thead>tr>th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-bottom: 1px solid #ddd;
+}
+
+.b-qty{
+  .b-minus,
+  .b-plus{
+    min-width: 35px;
+  }
+  .input-text{
+    line-height: 36px;
+    min-width: 32px;
+  }
+}

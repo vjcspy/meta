@@ -1,0 +1,29 @@
+mutation setExistedShippingAddress(
+    $cartId: String!
+    $customerAddressId: Int!
+    $customerNotes: String!
+) {
+    setShippingAddressesOnCart(
+        input: {
+            cart_id: $cartId
+            shipping_addresses: [
+                {
+                    customer_address_id: $customerAddressId
+                    customer_notes: $customerNotes
+                }
+            ]
+        }
+    ) {
+        cart {
+            id
+            shipping_addresses {
+                available_shipping_methods {
+                    carrier_code
+                    carrier_title
+                    method_code
+                    method_title
+                }
+            }
+        }
+    }
+}

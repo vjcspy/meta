@@ -1,0 +1,7 @@
+query getBedkingdomProductDetailByUrlKey($urlKey: String) {
+    products(filter: { url_key: { eq: $urlKey } }){
+        items {
+            ...BedKingdomProductDetails
+        }
+    }
+}

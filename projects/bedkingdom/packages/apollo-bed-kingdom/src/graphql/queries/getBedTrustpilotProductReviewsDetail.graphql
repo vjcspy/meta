@@ -1,0 +1,19 @@
+query getBedTrustpilotProductReviewsDetail($productId: Int!, $pageSize : Int, $currentPage: Int, $stars: String) {
+    getTrustpilotProductReviewsDetail(productId: $productId, stars: $stars, pageSize: $pageSize, currentPage: $currentPage){
+        trustpilot_product_reviews{
+            review_id
+            product_id
+            consumer_display_name
+            content
+            created_at
+            stars
+            attributes
+        }
+        trustpilot_attachment_summary{
+            attachment_id
+            product_id
+            review_id
+            processed_files
+        }
+    }
+}

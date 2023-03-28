@@ -1,0 +1,7 @@
+export class CheckoutConstant {
+  static BILLING_SAME_AS_SHIPPING = true;
+  static GUEST_CART_ID_KEY = 'GUEST_CART_ID';
+  static CHECKOUT_HOOK_KEY = 'CHECKOUT_HOOK_KEY';
+
+  static GET_CART_DETAIL_ERROR_COUNT = 'GET_CART_DETAIL_ERROR_COUNT';
+}

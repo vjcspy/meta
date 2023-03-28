@@ -1,0 +1,198 @@
+.b-checkout-page.container{
+  @screen lg{
+    max-width: 1280px;
+  }
+}
+.b-step-title{
+  span{
+    @apply bg-main-26ade4 text-white text-center inline-block text-15px;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    margin: 0 7px 0 0;
+    font-family: Verdana,sans-serif;
+  }
+}
+.grid-checkout{
+  @screen lg {
+    grid-template-columns: 70% 30% !important;
+  }
+}
+.b-checkout-wrap{
+
+}
+.field-tooltip{
+  &.active .field-tooltip-content{
+    display: block;
+  }
+  .field-tooltip-content{
+    border-radius: 1px;
+    font-size: 14px;
+    padding: 12px;
+    display: none;
+    position: absolute;
+    text-transform: none;
+    top: -9px;
+    word-wrap: break-word;
+    z-index: 2;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #fff;
+    width: 200px;
+    box-shadow: 0 0 45px rgba(0, 0, 0,0.1);
+    right: -50%;
+  }
+  .label >span{
+    top: 10px;
+  }
+}
+
+.input-text{
+  @apply h-40px border border-color-ccc pl-2 pr-2;
+}
+
+.b-checkout__label:after{
+  content: '*';
+  @apply text-12px ml-2;
+  color: #e02b27;
+}
+
+.b-checkbox-form {
+  @apply block relative;
+  padding-left: 25px;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    left: 2px;
+    z-index: 1;
+    top: 2px;
+    &:checked ~ .checkmark {
+      @apply bg-color-26ade4 border-color-26ade4;
+    }
+  }
+  .checkmark {
+    @apply absolute top-0 left-0 rounded-3 border border-color-ccc;
+    height: 18px;
+    width: 18px;
+    &:after {
+      content: "";
+      @apply hidden absolute;
+    }
+  }
+  input:checked ~ .checkmark:after {
+    @apply block;
+  }
+  .checkmark:after {
+    left: 6px;
+    top: 1px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(
+                    45deg);
+  }
+}
+.b-radio-form {
+  @apply block relative;
+  input {
+    @apply opacity-0 cursor-pointer z-1 absolute;
+    left: 2px;
+    top: 2px;
+    &:checked ~ .checkmark {
+      @apply bg-color-26ade4 border-color-26ade4;
+    }
+  }
+  .checkmark {
+    @apply block relative top-0 left-0 rounded-100 border border-color-ccc;
+    height: 18px;
+    width: 18px;
+    &:after {
+      content: "";
+      @apply hidden absolute;
+    }
+  }
+  input:checked ~ .checkmark:after {
+    @apply block;
+  }
+  .checkmark:after {
+    left: 4px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    @apply bg-white rounded-100;
+    transform: rotate(
+                    45deg);
+  }
+}
+.b-checkout-shipping-method-content{
+  margin: 0 -16px;
+  padding: 0 16px 5px;
+}
+.b-payment-oPay .b-payment-content{
+  label{
+    min-width: 50px;
+  }
+  input{
+    border: 1px solid transparent;
+    &:focus{
+      border: 1px solid #FF2528;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0) inset, 0 1px 0 rgba(255, 255, 255, 0), 0 0 2px 0 rgba(255, 0, 0,0.5);
+    }
+  }
+}
+.b-payment-kLarna{
+  .b-payment-item{
+    margin-bottom: -1px;
+    &.active{
+      @apply border-color-2362AA rounded-3;
+      border-width: 3px;
+    }
+  }
+  .list-group-item{
+    list-style: inherit;
+    padding-left: 20px;
+    li{
+      padding-bottom: 5px;
+    }
+  }
+}
+
+.b-code-title {
+  &.active{
+    svg{
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.b-checkout-miniCart-wrap{
+  -webkit-overflow-scrolling: touch;
+  max-height: 30vh;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #eee;
+  }
+}

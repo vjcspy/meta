@@ -1,0 +1,20 @@
+query getHomePageCategories($filters: CategoryFilterInput , $pageSize: Int, $currentPage: Int) {
+    categories (
+        filters: $filters
+    ) {
+        items {
+            uid
+            name
+            url_key
+            products(
+                pageSize: $pageSize
+                currentPage: $currentPage
+                sort: { position: ASC }
+            ) {
+                items {
+                    ...BedKingdomProductItem
+                }
+            }
+        }
+    }
+}

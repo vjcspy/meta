@@ -1,0 +1,9 @@
+query getProductMattressOffers($id: Int!){
+    getProductMattressOffers(productId: $id) {
+        id
+        name
+        image
+        url
+        description
+    }
+}

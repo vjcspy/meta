@@ -1,0 +1,6 @@
+mutation addXnotifStock($input: XnotifInput){
+    xnotifStock(
+        input: $input
+    )
+}
+
