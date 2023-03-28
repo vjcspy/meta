@@ -11,6 +11,7 @@ import {
   selectURI,
   serializeFetchParameter,
 } from '@apollo/client';
+import { format } from '@web/base';
 import { isDevelopment } from 'chitility/dist/util/environment';
 import type { DefinitionNode } from 'graphql';
 
@@ -191,7 +192,7 @@ function fetchQuery(
       operation.setContext({ response });
       if (isDevelopment()) {
         console.info(
-          'operator response',
+          format.context('httpLinkPersisted'),
           operation.operationName,
           'chosenURI',
           chosenURI,
@@ -224,7 +225,12 @@ function fetchQuery(
         )
       ) {
         if (isDevelopment()) {
-          console.info('query not registered', chosenURI, err.result);
+          console.info(
+            format.context('httpLinkPersisted'),
+            'query not registered',
+            chosenURI,
+            err.result
+          );
           return fetchPersistentQuery(
             fetcher,
             observer,
@@ -304,14 +310,21 @@ function fetchPersistentQuery(
     .then((response) => {
       if (response.status === 201) {
         if (isDevelopment()) {
-          console.log(`registered ${operation.operationName}, re-fetch query`);
+          console.log(
+            format.context('httpLinkPersisted'),
+            `registered ${operation.operationName}, re-fetch query`
+          );
         }
         fetchQuery(fetcher, observer, chosenURI, body, operation, options);
       }
     })
     .catch((err: any) => {
       if (isDevelopment()) {
-        console.log('register query error', err);
+        console.log(
+          format.context('httpLinkPersisted'),
+          'register query error',
+          err
+        );
       }
       if (err.result && err.result.errors && err.result.data) {
         observer.next(err.result);
