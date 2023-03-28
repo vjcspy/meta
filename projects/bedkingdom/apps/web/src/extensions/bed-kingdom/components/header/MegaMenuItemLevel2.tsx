@@ -1,4 +1,4 @@
-import { MegamenuItemsOutput } from '@vjcspy/apollo-bed-kingdom/build/graphql/generated/_generated-types';
+import type { MegamenuItemsOutput } from '@vjcspy/apollo-bed-kingdom/build/graphql/generated/_generated-types';
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { UiExtension } from '@web/ui-extension';
 import clsx from 'clsx';
@@ -12,13 +12,6 @@ const MegaMenuItemLevel2: React.FC<{
   closeMenu?: () => void;
 }> = React.memo((props) => {
   const { asPath } = useRouter();
-  if (
-    props?.item?.show_content !== '1' ||
-    props?.item?.children?.length === 0
-  ) {
-    return null;
-  }
-
   const activeMenuByLink = useCallback(
     (item: any) => {
       if (item?.url_path?.includes(asPath) && asPath !== '/') {
@@ -31,6 +24,13 @@ const MegaMenuItemLevel2: React.FC<{
     },
     [asPath]
   );
+
+  if (
+    props?.item?.show_content !== '1' ||
+    props?.item?.children?.length === 0
+  ) {
+    return null;
+  }
 
   return (
     <>

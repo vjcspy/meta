@@ -65,8 +65,8 @@ const MyAccountOrders = combineHOC(
                     id="my-orders-table"
                   >
                     <thead className="mdm:hidden">
-                      <tr className="text-color-222 text-left">
-                        <th scope="col" className="id text-color-222 pl-0">
+                      <tr className="text-left text-color-222">
+                        <th scope="col" className="id pl-0 text-color-222">
                           Order #
                         </th>
                         <th scope="col" className="date text-color-222">
@@ -104,28 +104,25 @@ const MyAccountOrders = combineHOC(
 
                         return (
                           <tr
-                            className="md:text-15px weight-600"
+                            className="weight-600 md:text-15px"
                             key={order?.number}
                           >
                             <td
                               data-th="Order #"
-                              className="col id font-bold md:text-16px pt-3 pb-3 pl-0"
+                              className="col id py-3 pl-0 font-bold md:text-16px"
                             >
                               {order?.number}
                             </td>
-                            <td data-th="Date" className="col date pt-3 pb-3">
+                            <td data-th="Date" className="col date py-3">
                               {moment(order?.order_date).format('DD/MM/YYYY')}
                             </td>
-                            <td
-                              data-th="Ship To"
-                              className="col shipping pt-3 pb-3"
-                            >
+                            <td data-th="Ship To" className="col shipping py-3">
                               {order?.shipping_address?.firstname}{' '}
                               {order?.shipping_address?.lastname}
                             </td>
                             <td
                               data-th="Order Total"
-                              className="col total pt-3 pb-3"
+                              className="col total py-3"
                             >
                               <span className="price">
                                 <UiExtension
@@ -134,10 +131,7 @@ const MyAccountOrders = combineHOC(
                                 />
                               </span>
                             </td>
-                            <td
-                              data-th="Status"
-                              className="col status pt-3 pb-3"
-                            >
+                            <td data-th="Status" className="col status py-3">
                               <span
                                 className={clsx('status-order', statusClass)}
                               >
@@ -146,10 +140,10 @@ const MyAccountOrders = combineHOC(
                             </td>
                             <td
                               data-th="Actions"
-                              className="col actions md:text-right pr-0"
+                              className="col actions pr-0 md:text-right"
                             >
                               <span
-                                className="action view border-r border-color-ccc mr-2 pr-2 cursor-pointer underline"
+                                className="action view mr-2 cursor-pointer border-r border-color-ccc pr-2 underline"
                                 onClick={() => {
                                   RouterSingleton.push(
                                     '/' +
@@ -199,6 +193,7 @@ const MyAccountOrders = combineHOC(
           ) : (
             <div className="block-content">
               <div className="table-wrapper orders-recent">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 <span>You don't have any orders yet!</span>
               </div>
             </div>

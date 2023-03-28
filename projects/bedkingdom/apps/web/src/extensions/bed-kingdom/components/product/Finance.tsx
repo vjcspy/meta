@@ -34,7 +34,7 @@ const Finance = combineHOC(
   return (
     <>
       {dataPrice && parseFloat(dataPrice + '') > 250 && (
-        <div className="b-product-calculator xxl:flex xxl:items-center xxl:justify-between text-center">
+        <div className="b-product-calculator text-center xxl:flex xxl:items-center xxl:justify-between">
           Finance this item from as little as{' '}
           <strong>
             <UiExtension
@@ -48,7 +48,7 @@ const Finance = combineHOC(
             productDataPrice={dataPrice}
             setPriceRepayments={props?.actions?.setCalculatorFinanceActions}
             itemDiv={
-              <div className="xxl:mt-0 mt-3 xxl:ml-0 xxl:mr-3 ml-auto mr-auto btn-default">
+              <div className="btn-default mx-auto mt-3 xxl:mt-0 xxl:ml-0 xxl:mr-3">
                 Calculator
               </div>
             }

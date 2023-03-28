@@ -50,8 +50,8 @@ const MyAccountAddressBook = combineHOC(
     return (
       <Popup
         trigger={
-          <div className="b-shipping-new-address-form mb-2 clear-both mt-4">
-            <button type="button" className="btn-default text-14px pl-3 pr-3">
+          <div className="b-shipping-new-address-form clear-both mb-2 mt-4">
+            <button type="button" className="btn-default px-3 text-14px">
               <span>New Address</span>
             </button>
           </div>
@@ -79,7 +79,7 @@ const MyAccountAddressBook = combineHOC(
     return (
       <Popup
         trigger={
-          <div className="action edit text-color-222 pr-2 underline">
+          <div className="action edit pr-2 text-color-222 underline">
             <span>Edit</span>
           </div>
         }
@@ -167,7 +167,7 @@ const MyAccountAddressBook = combineHOC(
               <div className="actions">
                 <button
                   type="button"
-                  className="action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap mr-3 min-w-125 font-bold"
+                  className="action mr-3 h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white"
                   onClick={() => {
                     close();
                   }}
@@ -176,7 +176,7 @@ const MyAccountAddressBook = combineHOC(
                 </button>
                 <button
                   type="button"
-                  className="action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap min-w-125 font-bold"
+                  className="action h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white"
                   value="Cancel Coupon"
                   onClick={() => {
                     if (
@@ -205,13 +205,13 @@ const MyAccountAddressBook = combineHOC(
         <span className="text-26px">Address Book</span>
       </h1>
       <div className="block-dashboard-addresses mb-6 md:mb-12">
-        <div className="block-title border-b border-color-ccc text-18px pb-2 mb-4">
+        <div className="block-title mb-4 border-b border-color-ccc pb-2 text-18px">
           <strong>Default Addresses</strong>
         </div>
-        <div className="block-content grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="block-content grid grid-cols-1 gap-4 md:grid-cols-2">
           {defaultBilling && (
             <div className="box box-billing-address">
-              <strong className="box-title text-16px mb-2 block">
+              <strong className="box-title mb-2 block text-16px">
                 <span>Default Billing Address</span>
               </strong>
               <div className="box-content">
@@ -233,7 +233,7 @@ const MyAccountAddressBook = combineHOC(
           )}
           {defaultShipping && (
             <div className="box box-shipping-address">
-              <strong className="box-title text-16px mb-2 block">
+              <strong className="box-title mb-2 block text-16px">
                 <span>Default Shipping Address</span>
               </strong>
               <div className="box-content">
@@ -257,14 +257,14 @@ const MyAccountAddressBook = combineHOC(
       {props?.state?.customer?.addresses &&
         props?.state?.customer?.addresses.length > 0 && (
           <div className="b-addresses-list">
-            <div className="block-title border-b border-color-ccc text-18px pb-2 mb-4">
+            <div className="block-title mb-4 border-b border-color-ccc pb-2 text-18px">
               <strong>Additional Address Entries</strong>
             </div>
             <div className="b-block-content">
               <div className="table-wrapper additional-addresses">
                 <table className="table-order-items table-additional-addresses-items border-0">
                   <thead>
-                    <tr className="text-left text-color-222 whitespace-nowrap">
+                    <tr className="whitespace-nowrap text-left text-color-222">
                       <th scope="col" className="col firstname pl-0">
                         First Name
                       </th>
@@ -324,7 +324,7 @@ const MyAccountAddressBook = combineHOC(
                         </td>
                         <td
                           data-th="Actions"
-                          className="col actions pr-0 cursor-pointer"
+                          className="col actions cursor-pointer pr-0"
                         >
                           <div className="flex">
                             {popupEditAddress(item)}

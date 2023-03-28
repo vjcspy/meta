@@ -1,10 +1,10 @@
-import { withStringSearchData } from '@modules/catalog/hoc/withStringSearchData';
 import { withRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hoc/withRouterWithStoreActions';
+import { withStringSearchData } from '@modules/catalog/hoc/withStringSearchData';
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
 const BreadCrumbsForSearch = combineHOC(
-    withRouterWithStoreActions,
+  withRouterWithStoreActions,
   withStringSearchData
 )((props) => {
   return (
@@ -27,7 +27,7 @@ const BreadCrumbsForSearch = combineHOC(
         <div className="b-category-info">
           <div className="b-category-description">
             <div className="flex justify-between">
-              <div className="col-des col-des">
+              <div className="col-des">
                 <h1 className="b-category-name">{`SEARCH RESULTS FOR: "${
                   props?.state?.searchString ?? ''
                 }"`}</h1>

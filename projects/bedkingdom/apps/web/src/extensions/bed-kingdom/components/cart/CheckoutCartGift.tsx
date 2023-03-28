@@ -74,10 +74,10 @@ const CheckoutCartGift = combineHOC(
   }, [checkGiftCart]);
 
   return (
-    <div className="b-cart-gift border-color-ccc border-b mb-2 pb-3">
+    <div className="b-cart-gift mb-2 border-b border-color-ccc pb-3">
       {/*click xoa class hidden duoi b-cart-gift__content*/}
       <div
-        className="b-cart-gift__head flex justify-between pb-2 items-center text-main-2362AA font-bold cursor-pointer"
+        className="b-cart-gift__head flex cursor-pointer items-center justify-between pb-2 font-bold text-main-2362AA"
         onClick={() => {
           setShowGift(!showGift);
         }}
@@ -108,16 +108,16 @@ const CheckoutCartGift = combineHOC(
         <form>
           <input
             type="text"
-            className="h-36px border border-color-ccc rounded-3 w-full pl-2"
+            className="h-36px w-full rounded-3 border border-color-ccc pl-2"
             {...register('gift', { required: true })}
           />
           {errors.gift && (
             <span className="mt-2 text-red-700">This is a required field.</span>
           )}
-          <div className="actions-toolbar flex mt-2">
+          <div className="actions-toolbar mt-2 flex">
             {checkGiftCart ? (
               <button
-                className="action h-36px bg-main-2361aa mr-2 rounded-3 text-white pl-2 pr-2"
+                className="action mr-2 h-36px rounded-3 bg-main-2361aa px-2 text-white"
                 type="submit"
                 disabled={props?.state?.isUpdatingCoupon}
                 onClick={handleSubmit(onSubmitGift)}
@@ -126,7 +126,7 @@ const CheckoutCartGift = combineHOC(
               </button>
             ) : (
               <button
-                className="action h-36px bg-main-2361aa mr-2 rounded-3 text-white pl-2 pr-2"
+                className="action mr-2 h-36px rounded-3 bg-main-2361aa px-2 text-white"
                 type="submit"
                 disabled={props?.state?.isUpdatingCoupon}
                 onClick={handleSubmit(onSubmitGift)}
@@ -136,7 +136,7 @@ const CheckoutCartGift = combineHOC(
             )}
 
             <button
-              className="action h-36px bg-main-2361aa rounded-3 text-white pl-2 pr-2"
+              className="action h-36px rounded-3 bg-main-2361aa px-2 text-white"
               type="submit"
               onClick={handleSubmit(onSubmitCheckGift)}
             >

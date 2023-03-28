@@ -33,7 +33,7 @@ const CustomerService = combineHOC()((props) => {
       />
       <section className="b-breadcrumbs mt-3 mb-5">
         <div className="container mx-auto px-4">
-          <ul className="b-breadcrumbs-items uppercase text-12px">
+          <ul className="b-breadcrumbs-items text-12px uppercase">
             <li className="b-breadcrumbs-item home inline-block">
               <span>Home </span>
             </li>
@@ -43,19 +43,19 @@ const CustomerService = combineHOC()((props) => {
           </ul>
         </div>
       </section>
-      <section className="b-customer-service container mx-auto px-4 mdm:mb-8 mb-12">
-        <h1 className="b-page-title text-2xl md:text-3xl mb-8 mt-3">
+      <section className="b-customer-service container mx-auto mb-12 px-4 mdm:mb-8">
+        <h1 className="b-page-title mb-8 mt-3 text-2xl md:text-3xl">
           <span>Customer Service</span>
         </h1>
-        <div className="b-page-content grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 gap-4">
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+        <div className="b-page-content grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('CMS_CONTACT'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Contact Us
               </h2>
             </div>
@@ -67,17 +67,17 @@ const CustomerService = combineHOC()((props) => {
               alt="Contact Us"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('COMPLAINT_INFORMATION'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Complaints
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Visit Our Complaints Procedure Page
               </div>
             </div>
@@ -89,17 +89,17 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('HOW_TO_ORDER'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 How To Order
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Help On How To Order
               </div>
             </div>
@@ -111,17 +111,17 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('TERM'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Sale Conditions
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 View Our Full Terms And Conditions
               </div>
             </div>
@@ -133,17 +133,17 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('PAYMENT_METHOD'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Payment Methods
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Accepted Methods Of Payment
               </div>
             </div>
@@ -155,17 +155,17 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('SALES_OFFS'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Sales
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Current Sales and Offers with Voucher Codes
               </div>
             </div>
@@ -177,14 +177,14 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('RETURN'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Returns
               </h2>
             </div>
@@ -196,17 +196,17 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('PRICE_MATCH'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Price Match
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Vist Our Price Match Page
               </div>
             </div>
@@ -218,12 +218,12 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div className="pt-2">
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 FAQs
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Frequently Asked Customer Questions
               </div>
             </div>
@@ -235,17 +235,17 @@ const CustomerService = combineHOC()((props) => {
               alt="img"
             />
           </div>
-          <div className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer">
+          <div className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5">
             <div
               className="pt-2"
               onClick={() => {
                 RouterSingleton.push(ROUTES.r('FREE_DELIVERY'));
               }}
             >
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Free Delivery
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Information on Free Delivery
               </div>
             </div>
@@ -258,16 +258,16 @@ const CustomerService = combineHOC()((props) => {
             />
           </div>
           <div
-            className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer"
+            className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5"
             onClick={() => {
               RouterSingleton.push(ROUTES.r('DAMANGESS'));
             }}
           >
             <div className="pt-2">
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Damages/Parts
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Damages/Return Forms
               </div>
             </div>
@@ -280,16 +280,16 @@ const CustomerService = combineHOC()((props) => {
             />
           </div>
           <div
-            className="service-item contactus flex border border-color-e6e6e6 rounded-7 pl-3 pr-3 pt-5 pb-5 justify-between cursor-pointer"
+            className="service-item contactus flex cursor-pointer justify-between rounded-7 border border-color-e6e6e6 px-3 py-5"
             onClick={() => {
               RouterSingleton.push(ROUTES.r('SUGGESTIONSS'));
             }}
           >
             <div className="pt-2">
-              <h2 className="text-18px md:text-22px text-main-dfb700 font-bold">
+              <h2 className="text-18px font-bold text-main-dfb700 md:text-22px">
                 Suggestions
               </h2>
-              <div className="desc-text text-main-1979c3 mt-1">
+              <div className="desc-text mt-1 text-main-1979c3">
                 Help Us to Make Our Services Better
               </div>
             </div>

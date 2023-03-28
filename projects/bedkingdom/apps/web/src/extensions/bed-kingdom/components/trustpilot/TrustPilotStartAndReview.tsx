@@ -8,8 +8,8 @@ const TrustPilotStartAndReview: React.FC<{ star: any }> = combineHOC(
   return (
     <div className="trustpilot-widget stl-2 text-center">
       <a href="https://uk.trustpilot.com/review/www.bedkingdom.co.uk">
-        <div className="tp-widget__info flex justify-between items-center">
-          <div className="tp-widget-title text-white m-0">
+        <div className="tp-widget__info flex items-center justify-between">
+          <div className="tp-widget-title m-0 text-white">
             <strong>
               {Intl.NumberFormat('en-US').format(
                 props.state?.businessReviewsData?.number_of_reviews?.total || 0

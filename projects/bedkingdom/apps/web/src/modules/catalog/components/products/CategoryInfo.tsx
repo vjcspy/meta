@@ -1,7 +1,6 @@
 import { withBedKingdomCategoryData } from '@extensions/bed-kingdom/hoc/products/withBedKingdomCategoryData';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import clsx from 'clsx';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const CategoryInfo = combineHOC(withBedKingdomCategoryData)((props) => {
@@ -39,7 +38,7 @@ const CategoryInfo = combineHOC(withBedKingdomCategoryData)((props) => {
       <div className="b-category-info">
         <div className="b-category-description">
           <div className="flex justify-between">
-            <div className="col-des col-des">
+            <div className="col-des">
               <div className={`b-category-view ${readMore && 'active'}`}>
                 <h3 className="b-category-name">{props?.category?.name}</h3>
                 <div id="cty-description" className="b-category-wrap">
@@ -52,7 +51,7 @@ const CategoryInfo = combineHOC(withBedKingdomCategoryData)((props) => {
                 </div>
                 {checkContent && (
                   <span className="read-description">
-                    <span className="showDescription pt-2 pb-2 pr-3 pl-3 flex text-14px shadow-200 text-color-222 max-w-125 cursor-pointer bg-main-FAFAFA">
+                    <span className="showDescription flex max-w-125 cursor-pointer bg-main-FAFAFA py-2 px-3 text-14px text-color-222 shadow-200">
                       <svg
                         aria-hidden="true"
                         focusable="false"

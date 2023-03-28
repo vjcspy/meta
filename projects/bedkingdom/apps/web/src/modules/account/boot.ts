@@ -5,4 +5,6 @@ UiManager.config({
   extensionConfigs: [ACCOUNT_EXTENSION_CONFIGS],
 });
 
-export function bootAccount() {}
+export function bootAccount() {
+  //EMPTY
+}

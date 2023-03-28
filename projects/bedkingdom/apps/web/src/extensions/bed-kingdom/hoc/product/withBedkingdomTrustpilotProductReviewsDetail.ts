@@ -1,8 +1,5 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
-import {
-  useGetBedProductMoreInformationLazyQuery,
-  useGetBedTrustpilotProductReviewsDetailLazyQuery,
-} from '@vjcspy/apollo-bed-kingdom';
+import { useGetBedTrustpilotProductReviewsDetailLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import { createUiHOC } from '@web/ui-extension';
 import { useCallback, useEffect, useState } from 'react';
 

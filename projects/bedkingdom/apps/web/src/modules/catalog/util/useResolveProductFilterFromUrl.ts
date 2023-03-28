@@ -3,10 +3,10 @@
  * @returns {{filters: CatalogCategoryListingFilter[]}}
  */
 import { useDispatch } from '@main/packages-web-redux';
+import { useUrlRewriteContext } from '@main/packages-web-storefront/src/modules/url-rewrite/context/url-rewrite';
 import type { CatalogCategoryListingFilter } from '@vjcspy/apollo';
 import { productsResolvedFiltersData } from '@vjcspy/r/build/modules/catalog/store/products/products.actions';
 import { queryToFilters } from '@vjcspy/r/build/modules/catalog/util/queryToFilters';
-import { useUrlRewriteContext } from '@main/packages-web-storefront/src/modules/url-rewrite/context/url-rewrite';
 import { Registry } from 'chitility';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';

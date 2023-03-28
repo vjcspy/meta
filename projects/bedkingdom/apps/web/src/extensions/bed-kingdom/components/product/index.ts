@@ -1,10 +1,7 @@
 import { BEDKINGDOM_PRODUCT_DETAIL_EXT_CFG } from '@extensions/bed-kingdom/components/product/description-detail';
 import { BEDKINGDOM_PRODUCT_OPTIONS_EXT_CFG } from '@extensions/bed-kingdom/components/product/options-type';
-import {
-  ExtensionConfig,
-  ExtensionCustomizeType,
-  ExtensionType,
-} from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
+import { ExtensionCustomizeType, ExtensionType } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const BEDKINGDOM_PRODUCT_EXT_CFG: ExtensionConfig[] = [

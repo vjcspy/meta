@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import {
   calculateKlarna,
   getFinanceProductKlarna,
@@ -11,7 +12,7 @@ import {
 import BED_KINGDOM_COMMON from '@extensions/bed-kingdom/values/BED_KINGDOM_COMMON';
 import { combineHOC } from '@web/ui-extension';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const Finance = combineHOC()(() => {
   const [tabActive, setTabActive] = useState('v12');
@@ -166,8 +167,8 @@ const Finance = combineHOC()(() => {
 
   return (
     <div className="klarna-landing-pages">
-      <div className="klarna-landing-content container ml-auto mr-auto mt-5">
-        <div className="klarna-tabs w-full ml-auto mr-auto inline-block">
+      <div className="klarna-landing-content container mx-auto mt-5">
+        <div className="klarna-tabs mx-auto inline-block w-full">
           <div
             className={clsx(
               'item-main v12 cursor-pointer',
@@ -379,12 +380,12 @@ const Finance = combineHOC()(() => {
                         representative.
                       </div>
                       <div
-                        className="section text-center mb-2"
+                        className="section mb-2 text-center"
                         id="lowestMonthlyPayments"
                       >
                         <button
                           title="Click"
-                          className="btn bg-main-DDDDDD rounded-3 pt-2 pb-2  h-33px ml-auto mr-auto text-14px font-normal pl-4 pr-4"
+                          className="btn mx-auto h-33px rounded-3 bg-main-DDDDDD  py-2 px-4 text-14px font-normal"
                           onClick={() => getLowestMonthlyPayments()}
                         >
                           Lowest Monthly Repayment
@@ -578,7 +579,7 @@ const Finance = combineHOC()(() => {
                 <div id="klarna-popup-content">
                   <div className="body ">
                     <div className="header">Loan Calculator</div>
-                    <div className="grid md:grid-cols-3 gap-3">
+                    <div className="grid gap-3 md:grid-cols-3">
                       <div className="item p-3">
                         <div className="section">
                           Use this calculator to see which finance option suits
@@ -730,7 +731,7 @@ const Finance = combineHOC()(() => {
                           id="lowestMonthlyPaymentsKlarna"
                         >
                           <button
-                            className="btn bg-main-26ade4 text-white rounded-3 pt-2 pb-2  h-33px ml-auto mr-auto text-14px font-normal pl-4 pr-4"
+                            className="btn mx-auto h-33px rounded-3 bg-main-26ade4 py-2  px-4 text-14px font-normal text-white"
                             title="Click"
                             onClick={() =>
                               getLowestMonthlyPaymentsKlarnaKlarna()
@@ -811,7 +812,7 @@ const Finance = combineHOC()(() => {
                         <div className="table-wrapper orders-recent">
                           <table
                             id="pay-later"
-                            className="data table table-order-items recent"
+                            className="data table-order-items recent table"
                           >
                             <thead>
                               <tr>
@@ -980,7 +981,7 @@ const Finance = combineHOC()(() => {
                         <div className="table-wrapper orders-recent">
                           <table
                             id="3-instalments"
-                            className="data table table-order-items recent"
+                            className="data table-order-items recent table"
                           >
                             <thead>
                               <tr>
@@ -1183,7 +1184,7 @@ const Finance = combineHOC()(() => {
                         <div className="table-wrapper orders-recent">
                           <table
                             id="how-it-works"
-                            className="data table table-order-items recent"
+                            className="data table-order-items recent table"
                           >
                             <thead>
                               <tr>

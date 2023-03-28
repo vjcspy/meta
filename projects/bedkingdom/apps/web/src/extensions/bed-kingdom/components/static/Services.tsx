@@ -2,12 +2,12 @@ import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React from 'react';
 
-const Services: React.FC = combineHOC()((props) => {
+const Services: React.FC = combineHOC()(() => {
   return (
     <>
-      <section className="b-section_service pt-4 pb-4  mdm:pt-3 mdm:pb-3">
+      <section className="b-section_service py-4 mdm:py-3">
         <div className="container mx-auto md:px-4">
-          <div className="service_wrap grid gap-2 md:gap-3 lg:gap-4 grid-cols-4">
+          <div className="service_wrap grid grid-cols-4 gap-2 md:gap-3 lg:gap-4">
             <a
               href="https://www.bedkingdom.co.uk/free_delivery"
               className="services-item md:flex md:items-center"
@@ -21,9 +21,9 @@ const Services: React.FC = combineHOC()((props) => {
                 />
               </div>
               <div className="services-item__info ">
-                <div className="services-item__name md:ml-2 lg:ml-4 lg:uppercase  md:text-left text-center">
+                <div className="services-item__name text-center md:ml-2 md:text-left  lg:ml-4 lg:uppercase">
                   Free Delivery
-                  <span className="block capitalize font-normal md:block hidden">
+                  <span className="hidden font-normal capitalize md:block">
                     Most Of UK
                   </span>
                 </div>
@@ -42,9 +42,9 @@ const Services: React.FC = combineHOC()((props) => {
                 />
               </div>
               <div className="services-item__info">
-                <div className="services-item__name md:ml-2 lg:ml-4 lg:uppercase  md:text-left text-center">
+                <div className="services-item__name text-center md:ml-2 md:text-left  lg:ml-4 lg:uppercase">
                   Excellent Service
-                  <span className="block capitalize font-normal md:block hidden">
+                  <span className="hidden font-normal capitalize md:block">
                     Highly rated on Trustpilot{' '}
                   </span>
                 </div>
@@ -63,9 +63,9 @@ const Services: React.FC = combineHOC()((props) => {
                 />
               </div>
               <div className="services-item__info">
-                <div className="services-item__name md:ml-2 lg:ml-4 lg:uppercase md:text-left text-center">
+                <div className="services-item__name text-center md:ml-2 md:text-left lg:ml-4 lg:uppercase">
                   Price Match{' '}
-                  <span className="block capitalize font-normal md:block hidden">
+                  <span className="hidden font-normal capitalize md:block">
                     Price match guarantee*{' '}
                   </span>
                 </div>
@@ -84,9 +84,9 @@ const Services: React.FC = combineHOC()((props) => {
                 />
               </div>
               <div className="services-item__info">
-                <div className="services-item__name md:ml-2 lg:ml-4 lg:uppercase  md:text-left text-center">
+                <div className="services-item__name text-center md:ml-2 md:text-left  lg:ml-4 lg:uppercase">
                   0% Finance{' '}
-                  <span className="block capitalize font-normal md:block hidden">
+                  <span className="hidden font-normal capitalize md:block">
                     Available
                   </span>
                 </div>

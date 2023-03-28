@@ -1,11 +1,11 @@
-import { useImageSizeBaseOnCfg } from '@modules/ui/hook/useImageSizeBaseOnCfg';
 import { withRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hoc/withRouterWithStoreActions';
+import { useImageSizeBaseOnCfg } from '@modules/ui/hook/useImageSizeBaseOnCfg';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const ProductListingItemVerticalSimple: React.FC<{ product: any }> = combineHOC(
-    withRouterWithStoreActions
+  withRouterWithStoreActions
 )((props) => {
   const [showDes, setShowDes] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -58,13 +58,13 @@ const ProductListingItemVerticalSimple: React.FC<{ product: any }> = combineHOC(
         </div>
         <div className="item-content">
           <div className="b-product__info text-left">
-            <div className="productList__title text-16px lg:text-18px mb-2">
+            <div className="productList__title mb-2 text-16px lg:text-18px">
               <span onClick={() => go(props.product?.url_key + '.html')}>
                 {props.product?.name}
               </span>
             </div>
             <div
-              className={`productList-des text-justify md:block hidden text-color-666 ${
+              className={`productList-des hidden text-justify text-color-666 md:block ${
                 showDes && 'active'
               }`}
               dangerouslySetInnerHTML={{
@@ -72,7 +72,7 @@ const ProductListingItemVerticalSimple: React.FC<{ product: any }> = combineHOC(
               }}
             />
             <p
-              className="productList-more text-color-2362AA font-bold md:block hidden cursor-pointer pt-3"
+              className="productList-more hidden cursor-pointer pt-3 font-bold text-color-2362AA md:block"
               onClick={() => setShowDes(!showDes)}
             >
               {showDes ? '+ ReadLess' : '+ ReadMore'}

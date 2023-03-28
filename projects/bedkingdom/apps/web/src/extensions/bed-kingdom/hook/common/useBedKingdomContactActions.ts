@@ -12,7 +12,7 @@ export const useBedKingdomContactActions = () => {
       variables: {
         form_data: formData,
       },
-    }).catch(() => {});
+    });
   }, []);
 
   useEffect(() => {

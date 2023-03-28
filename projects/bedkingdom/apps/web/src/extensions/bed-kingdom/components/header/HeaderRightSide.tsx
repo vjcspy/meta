@@ -4,8 +4,8 @@ import React from 'react';
 const HeaderRightSide = React.memo(() => {
   return (
     <>
-      <div className="b-block-right flex justify-end items-center">
-        <div className="b-help-wrap lg:flex items-center hidden">
+      <div className="b-block-right flex items-center justify-end">
+        <div className="b-help-wrap hidden items-center lg:flex">
           <div className="need_help_icon mr-2">
             <svg
               width={30}

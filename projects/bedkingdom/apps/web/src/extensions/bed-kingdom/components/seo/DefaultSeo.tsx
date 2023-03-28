@@ -1,7 +1,7 @@
 import COMMON from '@values/extendable/COMMON';
 import { combineHOC } from '@web/ui-extension';
 import { DefaultSeo as NextDefaultSeo } from 'next-seo';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const DefaultSeo: React.FC = combineHOC()(() => {
   return (

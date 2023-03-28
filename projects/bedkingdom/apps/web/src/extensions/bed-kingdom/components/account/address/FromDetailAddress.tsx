@@ -120,7 +120,6 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
 
   // init form value
   useEffect(() => {
-    let isMounted = true;
     if (props.address?.id) {
       setValue('firstname', props.address?.firstname ?? '');
       setValue('lastname', props.address?.lastname ?? '');
@@ -137,7 +136,6 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
     }
 
     return () => {
-      isMounted = false;
       setListDataByPostCode([]);
     };
   }, [props.address?.id]);
@@ -160,10 +158,10 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
       <div className="content">
         <form>
           <div className="b-shipping-new-address-form mb-4">
-            <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+            <div className="b-form mb-2 grid grid-cols-1 gap-3 md:grid-cols-2">
               <div className="form-input required mb-3">
                 <label
-                  className="label font-bold mb-2 block b-checkout__label"
+                  className="label b-checkout__label mb-2 block font-bold"
                   htmlFor="firstname"
                 >
                   <span>First Name</span>
@@ -177,7 +175,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                     })}
                     max={50}
                     placeholder="First Name"
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                   {errors.firstname && (
                     <span className="mt-2 text-red-700">
@@ -189,7 +187,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
 
               <div className="form-input required mb-3">
                 <label
-                  className="label font-bold mb-2 block b-checkout__label"
+                  className="label b-checkout__label mb-2 block font-bold"
                   htmlFor="firstname"
                 >
                   <span>Last Name</span>
@@ -203,7 +201,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                     })}
                     max={50}
                     placeholder="Last Name"
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                   {errors.lastname && (
                     <span className="mt-2 text-red-700">
@@ -213,10 +211,10 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                 </div>
               </div>
             </div>
-            <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+            <div className="b-form mb-2 grid grid-cols-1 gap-3 md:grid-cols-2">
               <div className="form-input required mb-3">
                 <label
-                  className="label font-bold mb-2 block b-checkout__label"
+                  className="label b-checkout__label mb-2 block font-bold"
                   htmlFor="firstname"
                 >
                   <span>Phone number</span>
@@ -229,7 +227,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                       required: true,
                     })}
                     placeholder="Mobile Number *"
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                   {errors.telephone && (
                     <span className="mt-2 text-red-700">
@@ -240,7 +238,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
               </div>
               <div className="form-input required mb-3">
                 <label
-                  className="label font-bold mb-2 block"
+                  className="label mb-2 block font-bold"
                   htmlFor="firstname"
                 >
                   <span>Postal Code </span>
@@ -253,7 +251,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                       required: true,
                     })}
                     placeholder="Postal Code "
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                   {errors.postcode && (
                     <span className="mt-2 text-red-700">
@@ -271,7 +269,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
             <button
               type="button"
               className={clsx(
-                'btn-default text-14px bg-color-6bc85e h-40px hover:opacity-80 mb-5 pl-4 pr-4',
+                'btn-default mb-5 h-40px bg-color-6bc85e px-4 text-14px hover:opacity-80',
                 statusButton &&
                   'divDisable btn-loader btn-loader-active divDisable'
               )}
@@ -290,7 +288,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
               <div className="control">
                 <select
                   placeholder="---- Please select your address ----"
-                  className="input-text w-full h-40px "
+                  className="input-text h-40px w-full "
                   onChange={(e) => {
                     setValueToInput(e.target.value);
                   }}
@@ -310,7 +308,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
             )}
 
             <div className="b-street">
-              <div className="b-checkout__label mt-4 text-14px mb-4 label font-bold mb-2 block">
+              <div className="b-checkout__label label mb-2 block text-14px font-bold">
                 <span> Street Address</span>
               </div>
               <div className="b-form mb-4">
@@ -344,10 +342,10 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                   {...register('street2')}
                 />
               </div>
-              <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+              <div className="b-form mb-2 grid grid-cols-1 gap-3 md:grid-cols-2">
                 <div className="form-input required mb-3">
                   <label
-                    className="label font-bold mb-2 block b-checkout__label"
+                    className="label b-checkout__label mb-2 block font-bold"
                     htmlFor="firstname"
                   >
                     <span>Country</span>
@@ -358,7 +356,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                         required: true,
                       })}
                       placeholder="Country *"
-                      className="input-text w-full h-40px "
+                      className="input-text h-40px w-full "
                     >
                       <option value="GB">United Kingdom</option>
                     </select>
@@ -371,7 +369,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                 </div>
                 <div className="form-input  mb-3">
                   <label
-                    className="label font-bold mb-2 block"
+                    className="label mb-2 block font-bold"
                     htmlFor="firstname"
                   >
                     <span>County</span>
@@ -382,15 +380,15 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                       // name="region"
                       {...register('region')}
                       placeholder="County"
-                      className="input-text w-full h-40px "
+                      className="input-text h-40px w-full "
                     />
                   </div>
                 </div>
               </div>
-              <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+              <div className="b-form mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
                 <div className="form-input required mb-3">
                   <label
-                    className="label font-bold mb-2 block b-checkout__label"
+                    className="label b-checkout__label mb-2 block font-bold"
                     htmlFor="firstname"
                   >
                     <span>Town / City</span>
@@ -403,7 +401,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                         required: true,
                       })}
                       placeholder="Town / City *"
-                      className="input-text w-full h-40px "
+                      className="input-text h-40px w-full "
                     />
                     {errors.city && (
                       <span className="mt-2 text-red-700">
@@ -414,7 +412,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                 </div>
                 <div className="form-input mb-3">
                   <label
-                    className="label font-bold mb-2 block"
+                    className="label mb-2 block font-bold"
                     htmlFor="firstname"
                   >
                     <span>Fax</span>
@@ -425,7 +423,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                       // name="fax"
                       {...register('fax')}
                       placeholder="Fax"
-                      className="input-text w-full h-40px "
+                      className="input-text h-40px w-full "
                     />
                   </div>
                 </div>
@@ -442,7 +440,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
                 Use as my default billing address
               </label>
             </div>
-            <div className="mt-2 mb-2">
+            <div className="my-2">
               <input
                 type="checkbox"
                 id="default_shipping"
@@ -459,7 +457,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
       <div className="actions mt-5">
         <button
           type="button"
-          className="action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap mr-3 min-w-125 font-bold"
+          className="action mr-3 h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white"
           onClick={() => {
             props?.close();
           }}
@@ -469,7 +467,7 @@ const FromDetailAddress: React.FC<{ close: any; address?: any }> = combineHOC(
         <button
           type="button"
           className={clsx(
-            'action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap min-w-125 font-bold',
+            'action h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white',
             props?.state?.isUpdatingAddress && 'btn-loader btn-loader-active'
           )}
           value="Cancel Coupon"

@@ -67,7 +67,7 @@ const AccountLoginForm: React.FC = combineHOC(
         </div>
 
         <div
-          className="mt-4 underline b-loginForgot inline-block cursor-pointer"
+          className="b-loginForgot mt-4 inline-block cursor-pointer underline"
           onClick={() => go(ROUTES.r('ACCOUNT_FORGET_PASSWORD'))}
         >
           <span>Forgot Password?</span>
@@ -78,7 +78,7 @@ const AccountLoginForm: React.FC = combineHOC(
             type="submit"
             disabled={props?.state?.loadingToken}
             className={clsx(
-              'btn-primary mdm:h-40px h-44 bg-color-2362AA white text-16px rounded text-white text-center w-full font-bold mt-4',
+              'btn-primary white mt-4 h-44 w-full rounded bg-color-2362AA text-center text-16px font-bold text-white mdm:h-40px',
               props?.state?.loadingToken && 'btn-loader btn-loader-active'
             )}
           >

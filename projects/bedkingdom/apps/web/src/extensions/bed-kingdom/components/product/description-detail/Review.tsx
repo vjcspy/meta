@@ -28,7 +28,7 @@ const Review = combineHOC(
         ref={refReview}
       >
         <div
-          className="b-info-label flex items-center justify-between cursor-pointer"
+          className="b-info-label flex cursor-pointer items-center justify-between"
           onClick={() => {
             props?.actions?.setShowReview(!props?.state?.showReview);
           }}

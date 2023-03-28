@@ -5,7 +5,7 @@ import React from 'react';
 const AccountRegister = () => {
   return (
     <div className="block-customer-register mb-4">
-      <h2 className="b-customer__title text-22px mdm:text-18px text-black font-bold mb-5">
+      <h2 className="b-customer__title mb-5 text-22px font-bold text-black mdm:text-18px">
         New Customers
       </h2>
       <p className="b-customer__subtitle mb-5 text-gray-600">
@@ -14,7 +14,7 @@ const AccountRegister = () => {
       </p>
       <button
         type="submit"
-        className="btn-primary mdm:h-40px h-44 bg-color-2362AA white text-16px rounded text-white text-center w-full font-bold mt-4"
+        className="btn-primary white mt-4 h-44 w-full rounded bg-color-2362AA text-center text-16px font-bold text-white mdm:h-40px"
         onClick={() => {
           RouterSingleton.push(ROUTES.r('ACCOUNT_REGISTER'));
         }}

@@ -1,4 +1,5 @@
-import { ExtensionDataConfig, UiExtension } from '@web/ui-extension';
+import type { ExtensionDataConfig } from '@web/ui-extension';
+import { UiExtension } from '@web/ui-extension';
 import React, { useMemo } from 'react';
 
 import { usePCMSPage } from '../../../hook/pcms-page/usePCMSPage';

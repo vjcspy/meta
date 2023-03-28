@@ -1,7 +1,5 @@
-import {
-  ExtensionDataConfig,
-  useExtensionForHook,
-} from '@web/ui-extension';
+import type { ExtensionDataConfig } from '@web/ui-extension';
+import { useExtensionForHook } from '@web/ui-extension';
 import React from 'react';
 
 const TwoColumns = React.memo<{

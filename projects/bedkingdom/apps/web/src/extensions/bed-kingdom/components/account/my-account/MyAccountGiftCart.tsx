@@ -21,7 +21,7 @@ const MyAccountGiftCart = combineHOC(
     return (
       <Popup
         trigger={
-          <span className="action view border-r border-color-ccc mr-2 pr-2 cursor-pointer underline">
+          <span className="action view mr-2 cursor-pointer border-r border-color-ccc pr-2 underline">
             <span> Remove</span>
           </span>
         }
@@ -43,7 +43,7 @@ const MyAccountGiftCart = combineHOC(
               <div className="actions">
                 <button
                   type="button"
-                  className="action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap min-w-125 font-bold"
+                  className="action h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white"
                   onClick={() => {
                     close();
                     props?.actions?.setIsOpenPopupActions(false);
@@ -53,7 +53,7 @@ const MyAccountGiftCart = combineHOC(
                 </button>
                 <button
                   type="button"
-                  className="ml-3 action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap min-w-125 font-bold"
+                  className="action ml-3 h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white"
                   value="Cancel Coupon"
                   onClick={() => {
                     if (
@@ -96,7 +96,7 @@ const MyAccountGiftCart = combineHOC(
               <table className="table-order-items w-full" id="my-orders-table">
                 <thead className="mdm:hidden">
                   <tr className="text-left text-color-222">
-                    <th scope="col" className="id text-color-222 pl-0">
+                    <th scope="col" className="id pl-0 text-color-222">
                       Code
                     </th>
                     <th scope="col" className="date text-color-222">
@@ -115,28 +115,28 @@ const MyAccountGiftCart = combineHOC(
                 </thead>
                 <tbody>
                   {props?.state?.amUserGiftCardList.map((item: any) => (
-                    <tr className="md:text-15px weight-600" key={item?.code}>
+                    <tr className="weight-600 md:text-15px" key={item?.code}>
                       <td
                         data-th="Order #"
-                        className="col id font-bold md:text-16px pt-3 pb-3 pl-0"
+                        className="col id py-3 pl-0 font-bold md:text-16px"
                       >
                         {item?.code}
                       </td>
-                      <td data-th="Date" className="col date pt-3 pb-3">
+                      <td data-th="Date" className="col date py-3">
                         {item?.status}
                       </td>
-                      <td data-th="Ship To" className="col shipping pt-3 pb-3">
+                      <td data-th="Ship To" className="col shipping py-3">
                         <UiExtension
                           uiId="CURRENCY"
                           price={item?.current_balance?.value}
                         />
                       </td>
-                      <td data-th="Order Total" className="col total pt-3 pb-3">
+                      <td data-th="Order Total" className="col total py-3">
                         <span className="price">
                           {moment(item?.expiration_date).format('YYYY-MM-DD')}
                         </span>
                       </td>
-                      <td data-th="Order Total" className="col total pt-3 pb-3">
+                      <td data-th="Order Total" className="col total py-3">
                         {popupDeleteGift(item?.code)}
                       </td>
                     </tr>
@@ -149,7 +149,7 @@ const MyAccountGiftCart = combineHOC(
 
       <div className="form-gift-card max-w-440">
         <div className="form-input mb-3">
-          <label className="label font-bold mb-2 block">
+          <label className="label mb-2 block font-bold">
             <span>Apply Gift Card Code</span>
           </label>
           <form>
@@ -157,7 +157,7 @@ const MyAccountGiftCart = combineHOC(
               <input
                 type="text"
                 placeholder="Enter your Code"
-                className="input-text w-full h-40px "
+                className="input-text h-40px w-full "
                 {...register('amGiftcardCode', {
                   required: true,
                 })}
@@ -175,7 +175,7 @@ const MyAccountGiftCart = combineHOC(
           type="button"
           onClick={handleSubmit(onSubmit)}
           className={clsx(
-            'btn btn-default mt-8 pl-8 pr-8',
+            'btn btn-default mt-8 px-8',
             props.state?.statusAdd && 'btn-loader btn-loader-active'
           )}
           disabled={props.state?.statusAdd}

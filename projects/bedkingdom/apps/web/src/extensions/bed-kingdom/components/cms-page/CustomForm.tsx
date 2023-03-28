@@ -1,5 +1,5 @@
 import { withBedKingdomCustomerForm } from '@extensions/bed-kingdom/hoc/common/withBedKingdomCustomerForm';
-import { combineHOC, UiExtension } from '@web/ui-extension';
+import { combineHOC } from '@web/ui-extension';
 import clsx from 'clsx';
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -43,12 +43,12 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                   item?.required && 'required'
                 )}
               >
-                <label className="label font-bold mb-2 block" htmlFor="Name">
+                <label className="label mb-2 block font-bold" htmlFor="Name">
                   <span>{item?.label}</span>
                 </label>
                 <div className="control">
                   <select
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                     {...register(item?.name, {
                       required: !!item?.required,
                     })}
@@ -75,7 +75,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                   item?.required && 'required'
                 )}
               >
-                <label className="label font-bold mb-2 block" htmlFor="Name">
+                <label className="label mb-2 block font-bold" htmlFor="Name">
                   <span>{item?.label}</span>
                 </label>
                 <div className="control">
@@ -84,7 +84,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                     {...register(item?.name, {
                       required: !!item?.required,
                     })}
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                 </div>
               </div>
@@ -98,7 +98,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                 )}
               >
                 <label
-                  className="label font-bold mb-2 block"
+                  className="label mb-2 block font-bold"
                   htmlFor="Telephone Number *"
                 >
                   <span>{item?.label}</span>
@@ -109,7 +109,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                     {...register(item?.name, {
                       required: !!item?.required,
                     })}
-                    className="input-text w-full h-40px max-w-125"
+                    className="input-text h-40px w-full max-w-125"
                   />
                 </div>
               </div>
@@ -123,7 +123,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                 )}
               >
                 <label
-                  className="label font-bold mb-2 block"
+                  className="label mb-2 block font-bold"
                   htmlFor="Telephone Number *"
                 >
                   <span>{item?.label}</span>
@@ -148,7 +148,9 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                         <label
                           htmlFor={`raido-${it?.value}-${item?.name}`}
                           title={it?.label}
-                          onClick={() => {}}
+                          onClick={() => {
+                            //EMPTY
+                          }}
                         >
                           {it?.label}
                         </label>
@@ -166,7 +168,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                 )}
               >
                 <label
-                  className="label font-bold mb-2 block"
+                  className="label mb-2 block font-bold"
                   htmlFor="Comments *"
                 >
                   <span>{item?.label}</span>
@@ -176,7 +178,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
                     {...register(item?.name, {
                       required: !!item?.required,
                     })}
-                    className="input-text input-text w-full min-h-92"
+                    className="input-text min-h-92 w-full"
                     cols={5}
                     rows={3}
                   />
@@ -216,7 +218,7 @@ const CustomForm = combineHOC(withBedKingdomCustomerForm)((props) => {
             <button
               type="button"
               className={clsx(
-                'btn btn-default mt-8 pl-8 pr-8',
+                'btn btn-default mt-8 px-8',
                 props.state?.statusLoading &&
                   'divDisable btn-loader btn-loader-active divDisable'
               )}

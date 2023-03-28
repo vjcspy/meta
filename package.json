@@ -15,7 +15,7 @@
     "start": "turbo run start --no-daemon --filter=@bedkingdom/apps-*",
     "main": "___________________________MAIN___________________________",
     "dev:api": "turbo run dev --no-daemon --filter=nestjs",
-    "lint": "turbo run lint --no-daemon",
+    "lint": "turbo run lint --no-daemon --filter=@bedkingdom/apps-*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "watch": "turbo run watch --parallel --no-daemon"
   },

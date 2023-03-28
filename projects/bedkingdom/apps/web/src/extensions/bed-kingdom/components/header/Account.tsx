@@ -14,7 +14,7 @@ const Account = combineHOC(
   return (
     <>
       <UiExtension uiId="ONLY_MOBILE">
-        <div className="b-myAccount flex items-center ml-8">
+        <div className="b-myAccount ml-8 flex items-center">
           <span className="b-myAccount-icon mr-2">
             <svg
               version="1.1"
@@ -35,7 +35,7 @@ const Account = combineHOC(
           </span>
           <div>
             {!props.state?.customer && (
-              <ul className="b-myAccount__links cursor-pointer flex text-sm">
+              <ul className="b-myAccount__links flex cursor-pointer text-sm">
                 <li>
                   <div
                     onClick={() => {
@@ -69,7 +69,7 @@ const Account = combineHOC(
                   >
                     <span>My Account</span>
                   </div>
-                  <ul className="b-myAccount__links flex text-sm cursor-pointer">
+                  <ul className="b-myAccount__links flex cursor-pointer text-sm">
                     <li>
                       <div
                         onClick={() => {

@@ -732,7 +732,7 @@ function fetBanner() {
   return fetchGraphql(query, { sliderId: 1 }, 'getBedKingdomHomeBanner');
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const state: any = {};
   try {
     const megamenuRes = await fetchMegaMenu();

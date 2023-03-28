@@ -1,5 +1,5 @@
 import ROUTES from '@values/extendable/ROUTES';
-import { WishlistItemInput } from '@vjcspy/apollo';
+import type { WishlistItemInput } from '@vjcspy/apollo';
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';

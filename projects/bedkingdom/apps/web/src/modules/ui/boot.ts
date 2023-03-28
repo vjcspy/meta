@@ -25,4 +25,6 @@ UiManager.config({
   ],
 });
 
-export function bootUiModule() {}
+export function bootUiModule() {
+  //EMPTY
+}

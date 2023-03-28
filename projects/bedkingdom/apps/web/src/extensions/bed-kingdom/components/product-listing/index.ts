@@ -1,5 +1,5 @@
 import { BEDKINGDOM_PRODUCT_ITEM_VERTICAL_CFG } from '@extensions/bed-kingdom/components/product-listing/list-item-vertical';
-import { ExtensionConfig } from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const BEDKINGDOM_PRODUCT_CFG: ExtensionConfig[] = [

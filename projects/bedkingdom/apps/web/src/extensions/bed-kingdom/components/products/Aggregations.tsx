@@ -65,6 +65,7 @@ const Aggregations = combineHOC(
         sortData = {
           manufacturer: SortEnum.Desc,
         };
+        break;
       case 'manufacturer_ASC':
         sortData = {
           manufacturer: SortEnum.Asc,
@@ -89,7 +90,7 @@ const Aggregations = combineHOC(
                   {/*add class b-fillter-more-active*/}
                   {/*Cuc nay show PC*/}
                   <div
-                    className={`b-horizontal-bar__content md:block hidden ${
+                    className={`b-horizontal-bar__content hidden md:block ${
                       isMoreFilter && 'b-fillter-more-active'
                     }`}
                   >
@@ -106,7 +107,7 @@ const Aggregations = combineHOC(
                           ))}
                         </div>
                         {props.aggregations.length > 7 && (
-                          <div className="wrapper___more lg:block hidden">
+                          <div className="wrapper___more hidden lg:block">
                             <div
                               className="collapse-controller"
                               onClick={() => setIsMoreFilter(!isMoreFilter)}
@@ -257,7 +258,7 @@ const Aggregations = combineHOC(
                         </div>
                         <div className="b-short-list__controllers">
                           <div className="b-sortby_wrapper">
-                            <span className="pr-2 lg:inline-block hidden">
+                            <span className="hidden pr-2 lg:inline-block">
                               Sort By
                             </span>
                             <select

@@ -1,7 +1,5 @@
-import {
-  ExtensionDataConfig,
-  useStackComponent,
-} from '@web/ui-extension';
+import type { ExtensionDataConfig } from '@web/ui-extension';
+import { useStackComponent } from '@web/ui-extension';
 import React from 'react';
 
 const StackComponent = React.memo<{

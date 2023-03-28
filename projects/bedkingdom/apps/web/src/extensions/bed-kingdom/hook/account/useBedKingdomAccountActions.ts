@@ -1,6 +1,8 @@
+/* eslint-disable unused-imports/no-unused-vars,@typescript-eslint/no-empty-function */
 import { AlertService } from '@extensions/bed-kingdom/components/common/page-message/AlertService';
 import { bedShowResetPassword } from '@extensions/bed-kingdom/store/content/content.content.actions';
 import { selectStatusResetPassWord } from '@extensions/bed-kingdom/store/content/content.content.selector';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 import {
   useChangeCustomerPasswordMutation,
   useRequestPasswordResetEmailMutation,
@@ -32,7 +34,6 @@ import {
   updateCustomerFailAction,
 } from '@vjcspy/r/build/modules/account/store/customer_update/actions';
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedKingdomAccountActions = () => {
   const dispatch = useDispatch();
@@ -94,7 +95,6 @@ export const useBedKingdomAccountActions = () => {
           status: !!requestPasswordResetRes.data?.requestPasswordResetEmail,
         })
       );
-    } else {
     }
 
     if (

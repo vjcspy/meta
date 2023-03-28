@@ -2,7 +2,7 @@ import { withBedKingdomAccountActions } from '@extensions/bed-kingdom/hoc/accoun
 import { withCustomer } from '@vjcspy/r/build/modules/account/hoc/withCustomer';
 import { combineHOC } from '@web/ui-extension';
 import clsx from 'clsx';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 const MyAccountNewsletter = combineHOC(
   withCustomer,
@@ -37,7 +37,7 @@ const MyAccountNewsletter = combineHOC(
           />
           <label
             htmlFor="subscription_checkbox"
-            className="label pl-3 relative"
+            className="label relative pl-3"
           >
             <span>General Subscription</span>
           </label>
@@ -46,7 +46,7 @@ const MyAccountNewsletter = combineHOC(
         <button
           type="button"
           className={clsx(
-            'btn btn-default mt-8 pl-8 pr-8',
+            'btn btn-default mt-8 px-8',
             props?.state?.isLoadingState?.resetPassword &&
               'btn-loader btn-loader-active'
           )}

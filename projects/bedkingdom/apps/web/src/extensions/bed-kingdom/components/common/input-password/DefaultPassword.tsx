@@ -110,9 +110,9 @@ const DefaultPassword: React.FC<{
         Password Strength:
         {/*neu strong thay class text-red-600 = text-green-600 thay text- no pass theo cac trang thai*/}
         {value === 0 ? (
-          <span className="text-red-600 font-bold pl-2">No Password</span>
+          <span className="pl-2 font-bold text-red-600">No Password</span>
         ) : (
-          <span className={`font-bold pl-2 ${textStrength?.highlightClass}`}>
+          <span className={`pl-2 font-bold ${textStrength?.highlightClass}`}>
             {textStrength?.textShow}
           </span>
         )}

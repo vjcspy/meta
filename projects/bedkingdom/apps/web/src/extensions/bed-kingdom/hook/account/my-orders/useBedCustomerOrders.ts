@@ -1,9 +1,9 @@
-import { SearchResultPageInfo } from '@vjcspy/apollo';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
+import type { SearchResultPageInfo } from '@vjcspy/apollo';
 import { useGetBedKingdomCustomerOrdersLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import { gotCustomerOrders } from '@vjcspy/r/build/modules/account/store/customer-order/actions';
 import { selectOrders } from '@vjcspy/r/build/modules/account/store/customer-order/selector';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedCustomerOrders = () => {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ export const useBedCustomerOrders = () => {
     }
     if (getOrdersRes.data) {
       try {
-        if (!!getOrdersRes.data?.customer?.orders) {
+        if (getOrdersRes.data?.customer?.orders) {
           if (getOrdersRes.data?.customer?.orders?.page_info) {
             setPageInfoRes(getOrdersRes.data.customer.orders.page_info);
           }
@@ -66,7 +66,9 @@ export const useBedCustomerOrders = () => {
             setTotalCount(getOrdersRes.data.customer.orders?.total_count);
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //EMPTY
+      }
     }
   }, [getOrdersRes.data, getOrdersRes.error]);
 

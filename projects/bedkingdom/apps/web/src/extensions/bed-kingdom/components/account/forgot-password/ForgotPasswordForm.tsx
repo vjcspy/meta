@@ -1,4 +1,3 @@
-import BED_KINGDOM_COMMON from '@extensions/bed-kingdom/values/BED_KINGDOM_COMMON';
 import ROUTES from '@values/extendable/ROUTES';
 import { withAccountDefaultActions } from '@vjcspy/r/build/modules/account/hoc/withAccountDefaultActions';
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
@@ -21,7 +20,7 @@ const AccountRegisterForm = combineHOC(withAccountDefaultActions)((props) => {
 
   return (
     <div className="form-forgot mb-4">
-      <h2 className="b-customer__title text-22px mdm:text-18px text-black font-bold mb-6">
+      <h2 className="b-customer__title mb-6 text-22px font-bold text-black mdm:text-18px">
         Reset your password
       </h2>
       <p className="text-gray-600text-gray-600">
@@ -50,12 +49,12 @@ const AccountRegisterForm = combineHOC(withAccountDefaultActions)((props) => {
         <div className="mt-3 grid grid-cols-2 gap-4">
           <button
             type="submit"
-            className="btn-primary mdm:h-40px h-44 bg-color-2362AA white text-16px rounded text-white text-center font-bold mt-4"
+            className="btn-primary white mt-4 h-44 rounded bg-color-2362AA text-center text-16px font-bold text-white mdm:h-40px"
           >
             Submit
           </button>
           <button
-            className="btn-primary bg-color-e02b27 text-white mdm:h-40px h-44  text-16px rounded text-center font-bold mt-4"
+            className="btn-primary mt-4 h-44 rounded bg-color-e02b27  text-center text-16px font-bold text-white mdm:h-40px"
             onClick={() => {
               RouterSingleton.push(ROUTES.r('ACCOUNT_LOGIN'));
             }}
@@ -63,7 +62,7 @@ const AccountRegisterForm = combineHOC(withAccountDefaultActions)((props) => {
             Cancel
           </button>
         </div>
-        <p className="text-12px text-color-e02b27 block mt-5">
+        <p className="mt-5 block text-12px text-color-e02b27">
           * Required Fields
         </p>
       </form>

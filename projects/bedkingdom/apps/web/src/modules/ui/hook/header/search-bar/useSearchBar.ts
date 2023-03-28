@@ -26,7 +26,7 @@ export const useSearchBar = (handleChange?: (value: string) => void) => {
       if (hasValue && isValid && !!handleChange) {
         handleChange(valueCheck);
       } else {
-        if (!!handleChange) {
+        if (handleChange) {
           handleChange('');
         }
       }

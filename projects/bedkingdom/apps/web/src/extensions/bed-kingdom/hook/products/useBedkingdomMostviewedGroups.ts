@@ -1,11 +1,11 @@
 import { useAmLabelProductActions } from '@extensions/bed-kingdom/hook/product/useAmLabelProductActions';
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
+import { useSelector } from '@main/packages-web-redux';
 import { useAmMostviewedGroupsLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import { selectProduct } from '@vjcspy/r/build/modules/catalog/store/product/product.selectors';
 import { useEffect, useState } from 'react';
-import { useSelector } from '@main/packages-web-redux';
 
-export const useBedkingdomMostviewedGroups = (props: any) => {
+export const useBedkingdomMostviewedGroups = (_props: any) => {
   const [productIds, setProductIds] = useState<any[]>([]);
   const [listMostViewed, setListMostViewed] = useState<any[]>([]);
   const product = useSelector(selectProduct);

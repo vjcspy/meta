@@ -29,7 +29,7 @@ const CheckoutCartButton = combineHOC(
       <Popup
         trigger={
           <button
-            className="action h-40px bg-main-2361aa rounded-3 text-white pl-3 pr-3"
+            className="action h-40px rounded-3 bg-main-2361aa px-3 text-white"
             // onClick={() => clearItemsCart()}
           >
             Clear Basket
@@ -49,7 +49,7 @@ const CheckoutCartButton = combineHOC(
               <div className="actions">
                 <button
                   type="button"
-                  className="action h-40px mr-3 min-w-125 font-bold"
+                  className="action mr-3 h-40px min-w-125 font-bold"
                   onClick={() => {
                     close();
                   }}
@@ -58,7 +58,7 @@ const CheckoutCartButton = combineHOC(
                 </button>
                 <button
                   type="button"
-                  className="action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap min-w-125 font-bold"
+                  className="action h-40px min-w-125 whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white"
                   value="Cancel Coupon"
                   onClick={() => {
                     clearItemsCart();
@@ -76,7 +76,7 @@ const CheckoutCartButton = combineHOC(
   }, [props.state?.cart]);
 
   return (
-    <div className="actions-toolbar flex mt-2 justify-end pt-4 mb-20">
+    <div className="actions-toolbar mt-2 mb-20 flex justify-end pt-4">
       {popupDeleteAllItem()}
       {/*<button className="action h-40px bg-main-2361aa ml-2 rounded-3 text-white pl-3 pr-3">*/}
       {/*  Update Basket*/}

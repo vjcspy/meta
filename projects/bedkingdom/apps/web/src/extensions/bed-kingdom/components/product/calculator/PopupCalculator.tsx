@@ -1,7 +1,8 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import { withBedStatusPopupData } from '@extensions/bed-kingdom/hoc/content/withBedStatusPopupData';
 import { combineHOC } from '@web/ui-extension';
 import moment from 'moment/moment';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Popup from 'reactjs-popup';
 
 import BED_KINGDOM_COMMON from '../../../values/BED_KINGDOM_COMMON';
@@ -273,6 +274,7 @@ const PopupCalculator = combineHOC(withBedStatusPopupData)(
           )}`;
         }
         interest = initialPayments * months - loanAmount;
+        // eslint-disable-next-line unused-imports/no-unused-vars
         const annualRate =
           ((interest / loanAmount) * 100) /
           ((months + financeProduct.deferredPeriod) / 12);
@@ -532,7 +534,7 @@ const PopupCalculator = combineHOC(withBedStatusPopupData)(
                 <div className="content-inner">
                   <div className="b-klarna-tabs">
                     <div
-                      className={`b-item-main cursor-pointer v12 ${
+                      className={`b-item-main v12 cursor-pointer ${
                         activeTab === 'v12' && 'active'
                       }`}
                     >
@@ -547,7 +549,7 @@ const PopupCalculator = combineHOC(withBedStatusPopupData)(
                       </a>
                     </div>
                     <div
-                      className={`b-item-main cursor-pointer klarna ${
+                      className={`b-item-main klarna cursor-pointer ${
                         activeTab === 'klarna' && 'active'
                       }`}
                     >
@@ -562,7 +564,7 @@ const PopupCalculator = combineHOC(withBedStatusPopupData)(
                       </a>
                     </div>
                     <div
-                      className={`b-item-main cursor-pointer clearpay ${
+                      className={`b-item-main clearpay cursor-pointer ${
                         activeTab === 'clearpay' && 'active'
                       }`}
                     >

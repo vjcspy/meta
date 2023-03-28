@@ -5,16 +5,16 @@ import React from 'react';
 const ComplaintInformation = combineHOC()((props) => {
   const formId = useExtAdditionConfig('form_id', props);
   return (
-    <section className="b-cms-contact container container-1200 mx-auto px-4">
-      <h1 className="b-page-title text-2xl md:text-3xl mb-8 mt-3">
+    <section className="b-cms-contact container-1200 container mx-auto px-4">
+      <h1 className="b-page-title mb-8 mt-3 text-2xl md:text-3xl">
         <span>Complaint Information</span>
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 mb-5">
+      <div className="mb-5 grid grid-cols-1 md:grid-cols-2 md:gap-10">
         <div className="b-page-content">
-          <strong className="text-16px block mb-3">
+          <strong className="mb-3 block text-16px">
             Complaints Information
           </strong>
-          <p className="block mb-3">
+          <p className="mb-3 block">
             If you would like to submit a complaint to our customer service
             team, please fill out the form below. Please include as much
             information as possible as this will help us to process your

@@ -1,5 +1,5 @@
-import { useProductDetailBySkuQuery } from '@vjcspy/apollo/build/graphql/generated/_generated-hooks';
 import { withPriceFormat } from '@main/packages-web-storefront/src/modules/catalog/hoc/withPriceFormat';
+import { useProductDetailBySkuQuery } from '@vjcspy/apollo/build/graphql/generated/_generated-hooks';
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 

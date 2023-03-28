@@ -1,6 +1,5 @@
 import { withAmLabelProductState } from '@extensions/bed-kingdom/hoc/product/withAmLabelProductState';
 import { combineHOC } from '@web/ui-extension';
-import moment from 'moment/moment';
 import React, { useMemo } from 'react';
 
 const ContentProductItemLabel: React.FC<{ product: any }> = combineHOC(

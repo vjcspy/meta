@@ -7,8 +7,8 @@ import ReactTooltip from 'react-tooltip';
 
 const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
   return (
-    <section className="b-branch-page container mx-auto px-4 mb-10 md:mt-10">
-      <div className="b-branch-form-search flex max-w-440 border border-color-ccc rounded-3 h-40px pl-2 pr-2 items-center relative">
+    <section className="b-branch-page container mx-auto mb-10 px-4 md:mt-10">
+      <div className="b-branch-form-search relative flex h-40px max-w-440 items-center rounded-3 border border-color-ccc px-2">
         <svg
           width="23"
           height="23"
@@ -23,7 +23,7 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
         </svg>
         <input
           type="text"
-          className="pl-2 w-full"
+          className="w-full pl-2"
           placeholder="Search brand here..."
           value={props?.state?.searchString}
           onChange={(e) => props?.actions?.setSearchString(e.target.value)}
@@ -31,7 +31,7 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
         {/*Add class hidden on the div below when focus input*/}
         {props?.state?.searchResults && (
           <span
-            className="b-branch-actionClose pr-2 cursor-pointer"
+            className="b-branch-actionClose cursor-pointer pr-2"
             onClick={() => props?.actions?.setSearchString('')}
           >
             <svg
@@ -51,13 +51,13 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
         {/*add class active*/}
         <div
           className={clsx(
-            'b-brands-dropdown pb-3 pt-3',
+            'b-brands-dropdown py-3',
             Array.isArray(props?.state?.searchResults) && 'active'
           )}
         >
           {props?.state?.searchResults?.map((brand: any) => (
             <div
-              className="b-brands-item pl-3 mb-1 pr-3 pt-1 pb-1 hover:bg-gray-100 cursor-pointer"
+              className="b-brands-item mb-1 cursor-pointer px-3 py-1 hover:bg-gray-100"
               key={brand['brandId']}
               onClick={() => {
                 RouterSingleton.push(`/${brand['url']}`);
@@ -72,7 +72,7 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
         {/*add class active khi duoc chon, add class disable khi trong page k co branch do tuong ung chu cai dau*/}
         <div
           className={clsx(
-            'b-filter-letter b-filter-letter-all text-center cursor-pointer',
+            'b-filter-letter b-filter-letter-all cursor-pointer text-center',
             props?.state?.filter['char'] === 'all' && 'active'
           )}
           onClick={() => props?.actions?.setCharacterFilter('all')}
@@ -84,7 +84,7 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
           .map((c) => (
             <div
               className={clsx(
-                'b-filter-letter text-center cursor-pointer',
+                'b-filter-letter cursor-pointer text-center',
                 props?.state?.filter['char'] === c.toUpperCase() && 'active',
                 !props?.state?.brandListData?.all_letters ||
                   (props?.state?.brandListData?.all_letters?.indexOf(
@@ -101,18 +101,18 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
             </div>
           ))}
 
-        <div className="b-filter-letter text-center cursor-pointer">#</div>
+        <div className="b-filter-letter cursor-pointer text-center">#</div>
       </div>
-      <div className="b-branch-list grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
+      <div className="b-branch-list grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-10">
         {Object.entries(props?.state?.groupedBrands).map((d: any) => (
           <div className="b-branch-list-item mb-6" key={d[0]}>
-            <h3 className="b-branch-title text-26px uppercase font-bold mb-3">
+            <h3 className="b-branch-title mb-3 text-26px font-bold uppercase">
               {d[0]}
             </h3>
             <div className="b-branch-content grid grid-cols-2 gap-4">
               {d[1].map((brand: any) => (
                 <div
-                  className="b-item flex cursor-pointer b-branch-item items-center p-3 justify-center"
+                  className="b-item b-branch-item flex cursor-pointer items-center justify-center p-3"
                   key={brand['brandId']}
                   onClick={() => {
                     RouterSingleton.push(`/${brand['url']}`);
@@ -138,7 +138,7 @@ const BrandListContainer = combineHOC(withBrandListContainer)((props) => {
                       )}
                     </a>
                   </div>
-                  <span className="b-branch-label break-words font-bold text-center mt-5 block mb-4">
+                  <span className="b-branch-label mt-5 mb-4 block break-words text-center font-bold">
                     {brand['label']}
                   </span>
                   {(brand?.short_description || brand?.description) && (

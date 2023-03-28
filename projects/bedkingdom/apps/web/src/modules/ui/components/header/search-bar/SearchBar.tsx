@@ -1,7 +1,7 @@
 import withSearchBar from '@extensions/bed-kingdom/hoc/header/SearchBar/withSearchBar';
 import withSearchDataSuggest from '@extensions/bed-kingdom/hoc/header/SearchBar/withSearchDataSuggest';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 const SearchBar = combineHOC(
   withSearchBar,

@@ -1,6 +1,6 @@
+import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
 import { useExtAdditionConfig } from '@modules/ui/hook/config/useExtAdditionConfig';
 import { useCmsBlocksLazyQuery } from '@vjcspy/apollo';
-import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
 import isArray from 'lodash';
 import { useEffect } from 'react';
 

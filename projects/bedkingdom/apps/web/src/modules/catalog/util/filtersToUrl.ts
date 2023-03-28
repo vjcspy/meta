@@ -1,4 +1,4 @@
-import { CatalogCategoryListingFilter } from '@vjcspy/apollo';
+import type { CatalogCategoryListingFilter } from '@vjcspy/apollo';
 import Router from 'next/router';
 
 export const filtersToUrl = (filters: CatalogCategoryListingFilter[]) => {

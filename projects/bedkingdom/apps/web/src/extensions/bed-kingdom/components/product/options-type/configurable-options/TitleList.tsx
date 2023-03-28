@@ -7,7 +7,7 @@ const TitleList = combineHOC(withProductInfo)((props) => {
   return (
     <>
       <div className="b-product-options active">
-        <div className="options-label flex justify-between items-center">
+        <div className="options-label flex items-center justify-between">
           <span>{props.option['label']}</span>
           <i className="fa fa-angle-up" />
         </div>

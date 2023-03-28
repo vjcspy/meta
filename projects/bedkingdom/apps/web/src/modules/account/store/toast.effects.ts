@@ -128,7 +128,7 @@ const generateCustomerSuccess$ = createEffect((action$) =>
 const generateCustomerFail$ = createEffect((action$) =>
   action$.pipe(
     ofType(generateCustomerTokenFail),
-    map((action) => {
+    map(() => {
       // _errorToast(
       //   action?.payload?.error?.message ||
       //     translate('login_fail', {

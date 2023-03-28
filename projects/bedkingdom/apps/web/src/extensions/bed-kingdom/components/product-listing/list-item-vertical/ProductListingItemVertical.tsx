@@ -1,6 +1,5 @@
 import { UiExtension } from '@web/ui-extension';
 import React, { useMemo } from 'react';
-import LazyLoad from 'react-lazyload';
 
 const ProductListingItemVertical: React.FC<{ product: any }> = (props) => {
   const Item = useMemo(() => {

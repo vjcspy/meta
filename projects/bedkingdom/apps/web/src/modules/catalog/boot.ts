@@ -7,4 +7,6 @@ UiManager.config({
   extensionConfigs: [PRICE_CPT, PRODUCTS_EXT_CFG, PRODUCT_EXT_CFG],
 });
 
-export function bootCatalog() {}
+export function bootCatalog() {
+  //EMPTY
+}

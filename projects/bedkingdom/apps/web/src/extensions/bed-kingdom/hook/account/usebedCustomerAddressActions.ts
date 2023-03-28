@@ -1,7 +1,6 @@
-import {
-  CustomerAddressInput,
-  useDeleteCustomerAddressMutation,
-} from '@vjcspy/apollo';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
+import type { CustomerAddressInput } from '@vjcspy/apollo';
+import { useDeleteCustomerAddressMutation } from '@vjcspy/apollo';
 import {
   useCreateBedKingdomCustomerAddressMutation,
   useUpdateBedKingdomCustomerAddMutation,
@@ -19,7 +18,6 @@ import {
 } from '@vjcspy/r/build/modules/account/store/customer-address/actions';
 import { selectIsUpdatingAddress } from '@vjcspy/r/build/modules/checkout/store/cart/cart.selector';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedCustomerAddressActions = () => {
   const [isDeletedAddress, setIsDeletedAddress] = useState(false);
@@ -45,16 +43,14 @@ export const useBedCustomerAddressActions = () => {
           input,
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      })
-        .then((r) => {})
-        .catch((error: any) => {
-          console.log('error', error.message);
-          dispatch(
-            updateCustomerAddressErrorAction({
-              error: error,
-            })
-          );
-        });
+      }).catch((error: any) => {
+        console.log('error', error.message);
+        dispatch(
+          updateCustomerAddressErrorAction({
+            error: error,
+          })
+        );
+      });
     },
     []
   );
@@ -108,7 +104,7 @@ export const useBedCustomerAddressActions = () => {
           input,
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      }).then((r) => {});
+      });
     },
     []
   );

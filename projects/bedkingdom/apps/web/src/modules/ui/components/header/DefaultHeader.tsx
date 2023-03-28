@@ -2,7 +2,7 @@ import { combineHOC } from '@web/ui-extension';
 import Head from 'next/head';
 import React from 'react';
 
-const DefaultHeader: React.FC = combineHOC()((props) => {
+const DefaultHeader: React.FC = combineHOC()(() => {
   return (
     <>
       <Head>

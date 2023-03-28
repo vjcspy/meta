@@ -30,8 +30,8 @@ const MyAccount = combineHOC(withAccountState)((props) => {
       );
     } else {
       return (
-        <section className="b-myAccount-page container mx-auto px-4 mb-10 md:mt-10">
-          <div className="grid md:gap-7 grid-account">
+        <section className="b-myAccount-page container mx-auto mb-10 px-4 md:mt-10">
+          <div className="grid-account grid md:gap-7">
             <UiExtension uiId="MY_ACCOUNT_SIDEBAR" />
             {CONTENT}
           </div>

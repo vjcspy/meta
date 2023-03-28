@@ -1,5 +1,5 @@
 import { withOfferProductState } from '@extensions/bed-kingdom/hoc/product/withOfferProductState';
-import { combineHOC, UiExtension } from '@web/ui-extension';
+import { combineHOC } from '@web/ui-extension';
 import React, { useState } from 'react';
 
 const Offers = combineHOC(withOfferProductState)(
@@ -12,7 +12,7 @@ const Offers = combineHOC(withOfferProductState)(
           props?.state?.listAmMattress.length > 0 && (
             <div className="b-product-info b-info-review cursor-pointer">
               <div
-                className="b-info-label flex items-center justify-between cursor-pointer"
+                className="b-info-label flex cursor-pointer items-center justify-between"
                 onClick={() => {
                   setShowOffers(!showOffers);
                 }}
@@ -61,17 +61,17 @@ const Offers = combineHOC(withOfferProductState)(
                               alt="Maxitex Magic Memory 250 Mattress"
                             />
                           </div>
-                          <div className="b-offers-detail mdm:mt-3  ml-3 md:ml-5">
+                          <div className="b-offers-detail ml-3  md:ml-5 mdm:mt-3">
                             <strong className="mattress-name">
                               <a
-                                className="mattress-link text-main-1979c3 block mb-2"
+                                className="mattress-link mb-2 block text-main-1979c3"
                                 href={item?.url}
                               >
                                 {item?.name}
                               </a>
                             </strong>
                             <div
-                              className="mattress-offer-description md:block hidden"
+                              className="mattress-offer-description hidden md:block"
                               dangerouslySetInnerHTML={{
                                 __html: item?.description,
                               }}

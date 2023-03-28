@@ -1,4 +1,5 @@
-import { MegamenuItemsOutput } from '@vjcspy/apollo-bed-kingdom/build/graphql/generated/_generated-types';
+/* eslint-disable unused-imports/no-unused-vars */
+import type { MegamenuItemsOutput } from '@vjcspy/apollo-bed-kingdom/build/graphql/generated/_generated-types';
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { UiExtension } from '@web/ui-extension';
 import clsx from 'clsx';
@@ -97,17 +98,17 @@ const MegaMenuItem: React.FC<{
                   className={clsx(
                     'grid ',
                     props?.item?.child_col === '1' &&
-                      'grid-cols-1 md:grid-cols-1 gap-1',
+                      'grid-cols-1 gap-1 md:grid-cols-1',
                     props?.item?.child_col === '2' &&
-                      'grid-cols-1 md:grid-cols-2 gap-2',
+                      'grid-cols-1 gap-2 md:grid-cols-2',
                     props?.item?.child_col === '3' &&
-                      'grid-cols-1 md:grid-cols-3 gap-3',
+                      'grid-cols-1 gap-3 md:grid-cols-3',
                     props?.item?.child_col === '4' &&
-                      'grid-cols-1 md:grid-cols-4 gap-3',
+                      'grid-cols-1 gap-3 md:grid-cols-4',
                     props?.item?.child_col === '5' &&
-                      'grid-cols-1 md:grid-cols-5 gap-3',
+                      'grid-cols-1 gap-3 md:grid-cols-5',
                     props?.item?.child_col === '6' &&
-                      'grid-cols-1 md:grid-cols-6 gap-3'
+                      'grid-cols-1 gap-3 md:grid-cols-6'
                   )}
                 >
                   {/*neu column 1 thi add grid-cols-1*/}
@@ -139,7 +140,7 @@ const MegaMenuItem: React.FC<{
                           }}
                         >
                           <span
-                            className="text-15px mb-2 block font-bold b-sub_title"
+                            className="b-sub_title mb-2 block text-15px font-bold"
                             onClick={() => {
                               props?.goToCat(c);
                               if (props?.closeMenu) {
@@ -222,17 +223,17 @@ const MegaMenuItem: React.FC<{
                   className={clsx(
                     'grid ',
                     props?.item?.child_col === '1' &&
-                      'grid-cols-1 md:grid-cols-1 gap-1',
+                      'grid-cols-1 gap-1 md:grid-cols-1',
                     props?.item?.child_col === '2' &&
-                      'grid-cols-1 md:grid-cols-2 gap-2',
+                      'grid-cols-1 gap-2 md:grid-cols-2',
                     props?.item?.child_col === '3' &&
-                      'grid-cols-1 md:grid-cols-3 gap-3',
+                      'grid-cols-1 gap-3 md:grid-cols-3',
                     props?.item?.child_col === '4' &&
-                      'grid-cols-1 md:grid-cols-4 gap-3',
+                      'grid-cols-1 gap-3 md:grid-cols-4',
                     props?.item?.child_col === '5' &&
-                      'grid-cols-1 md:grid-cols-5 gap-3',
+                      'grid-cols-1 gap-3 md:grid-cols-5',
                     props?.item?.child_col === '6' &&
-                      'grid-cols-1 md:grid-cols-6 gap-3'
+                      'grid-cols-1 gap-3 md:grid-cols-6'
                   )}
                 >
                   {/*neu column 1 thi add grid-cols-1*/}

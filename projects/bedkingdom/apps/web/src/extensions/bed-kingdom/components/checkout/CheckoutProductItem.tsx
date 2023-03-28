@@ -105,7 +105,7 @@ const CheckoutProductItem = combineHOC()((props) => {
           {props?.item?.date_picker && (
             <dl
               className={clsx(
-                'details-option flex hidden text-color-666',
+                'details-option flex text-color-666',
                 !showView && 'hidden'
               )}
             >

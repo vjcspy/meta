@@ -1,26 +1,25 @@
-import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React from 'react';
 
-const CheckoutShippingBilling = combineHOC()((props) => {
+const CheckoutShippingBilling = combineHOC()(() => {
   return (
     <div className="b-checkout-wrap  border border-color-e6e6e6 p-4">
       <div className="b-checkout-shipping-method">
         <div className="b-step-title flex items-center text-26px">
           <span>3</span>Shipping Methods
         </div>
-        <div className="b-checkout-shipping-method-content border-b-2 border-color-e6e6e6 flex items-center mt-4">
+        <div className="b-checkout-shipping-method-content mt-4 flex items-center border-b-2 border-color-e6e6e6">
           <div className="b-radio-form">
             <input type="radio" />
             <span className="checkmark" />
           </div>
-          <div className="price ml-3 mr-3 text-black font-bold">£0.00</div>
-          <div className="delivery ml-3 mr-3">Delivery Charge</div>
+          <div className="price mx-3 font-bold text-black">£0.00</div>
+          <div className="delivery mx-3">Delivery Charge</div>
           <div className="free ml-3">Free To Most Areas</div>
         </div>
       </div>
       <div className="b-checkout-payment-method">
-        <div className="b-step-title flex items-center text-26px pt-4">
+        <div className="b-step-title flex items-center pt-4 text-26px">
           <span>4</span>Payment Method
         </div>
         <div className="b-checkout-shipping-method-content mt-4">
@@ -30,41 +29,41 @@ const CheckoutShippingBilling = combineHOC()((props) => {
                 <input type="radio" checked />
                 <span className="checkmark" />
               </div>
-              <div className="logo ml-4 mr-4">
+              <div className="logo mx-4">
                 <img src="../assets/images/icons-img/opayo_logo.jpg" />
               </div>
               <div>Pay With Credit / Debit Card</div>
             </div>
             {/*khi chon option ben tren remove class hidden ben duoi*/}
-            <div className="b-payment-content hidden md:pl-4 pt-4">
-              <div className="flex items-center pt-2 pb-2 border-b border-color-e6e6e6">
+            <div className="b-payment-content hidden pt-4 md:pl-4">
+              <div className="flex items-center border-b border-color-e6e6e6 py-2">
                 <label className="pr-2">Name:</label>
                 <input
-                  className="pl-3 h-30px w-full md:w-3/4"
+                  className="h-30px w-full pl-3 md:w-3/4"
                   type="text"
                   placeholder="Cardholder Name"
                 />
               </div>
-              <div className="flex items-center pt-2 pb-2 border-b border-color-e6e6e6">
+              <div className="flex items-center border-b border-color-e6e6e6 py-2">
                 <label className="pr-2">Card:</label>
                 <input
-                  className="pl-3 h-30px w-full md:w-3/4"
+                  className="h-30px w-full pl-3 md:w-3/4"
                   type="number"
                   placeholder="0000 0000 0000 0000"
                 />
               </div>
-              <div className="flex items-center pt-2 pb-2 border-b border-color-e6e6e6">
+              <div className="flex items-center border-b border-color-e6e6e6 py-2">
                 <label className="pr-2">Expiry:</label>
                 <input
-                  className="pl-3 h-30px w-full md:w-3/4"
+                  className="h-30px w-full pl-3 md:w-3/4"
                   type="number"
                   placeholder="MMYY"
                 />
               </div>
-              <div className="flex items-center pt-2 pb-2">
+              <div className="flex items-center py-2">
                 <label className="pr-2">CVC:</label>
                 <input
-                  className="pl-3 h-30px max-w-55px"
+                  className="h-30px max-w-55px pl-3"
                   type="number"
                   placeholder="123"
                 />
@@ -77,7 +76,7 @@ const CheckoutShippingBilling = combineHOC()((props) => {
                 <input type="radio" checked />
                 <span className="checkmark" />
               </div>
-              <div className="logo ml-4 mr-4">
+              <div className="logo mx-4">
                 <img
                   src="https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg"
                   width={55}
@@ -87,42 +86,42 @@ const CheckoutShippingBilling = combineHOC()((props) => {
               <div>Pay in instalments</div>
             </div>
             {/*khi chon option ben tren remove class hidden ben duoi*/}
-            <div className="b-payment-content hidden md:pl-4 pt-4">
-              <div className="text-16px font-bold mb-3">Pay over time</div>
+            <div className="b-payment-content hidden pt-4 md:pl-4">
+              <div className="mb-3 text-16px font-bold">Pay over time</div>
               {/*add class active neu select 1 option*/}
-              <div className="b-payment-item active border border-color-666 pt-2 pb-2 pl-3 pr-3 cursor-pointer flex flex-wrap items-center min-h-55">
-                <div className="text-black text-15px font-bold">
+              <div className="b-payment-item active flex min-h-55 cursor-pointer flex-wrap items-center border border-color-666 py-2 px-3">
+                <div className="text-15px font-bold text-black">
                   Pay later in 3 interest-free instalments of £280.81
                 </div>
                 <p className="text-color-666">Autopay with your card</p>
               </div>
-              <div className="b-payment-item border border-color-666 pt-2 pb-2 pl-3 pr-3 cursor-pointer min-h-55 flex flex-wrap items-center">
-                <div className="text-black text-15px font-bold">
+              <div className="b-payment-item flex min-h-55 cursor-pointer flex-wrap items-center border border-color-666 py-2 px-3">
+                <div className="text-15px font-bold text-black">
                   £140.41 pm for 6 months
                 </div>
               </div>
-              <div className="b-payment-item border border-color-666 pt-2 pb-2 pl-3 pr-3 cursor-pointer min-h-55 flex flex-wrap items-center">
-                <div className="text-black text-15px font-bold">
+              <div className="b-payment-item flex min-h-55 cursor-pointer flex-wrap items-center border border-color-666 py-2 px-3">
+                <div className="text-15px font-bold text-black">
                   £240.41 pm for 9 months
                 </div>
               </div>
-              <div className="b-payment-item border border-color-666 pt-2 pb-2 pl-3 pr-3 cursor-pointer min-h-55 flex flex-wrap items-center">
-                <div className="text-black text-15px font-bold">
+              <div className="b-payment-item flex min-h-55 cursor-pointer flex-wrap items-center border border-color-666 py-2 px-3">
+                <div className="text-15px font-bold text-black">
                   £240.41 pm for 12 months
                 </div>
               </div>
-              <div className="b-payment-item border border-color-666 pt-2 pb-2 pl-3 pr-3 cursor-pointer min-h-55 flex flex-wrap items-center">
-                <div className="text-black text-15px font-bold">
+              <div className="b-payment-item flex min-h-55 cursor-pointer flex-wrap items-center border border-color-666 py-2 px-3">
+                <div className="text-15px font-bold text-black">
                   £240.41 pm for 24 months
                 </div>
               </div>
-              <div className="b-payment-item border border-color-666 pt-2 pb-2 pl-3 pr-3 cursor-pointer min-h-55 flex flex-wrap items-center">
-                <div className="text-black text-15px font-bold">
+              <div className="b-payment-item flex min-h-55 cursor-pointer flex-wrap items-center border border-color-666 py-2 px-3">
+                <div className="text-15px font-bold text-black">
                   £28.41 pm for 36 months
                 </div>
               </div>
 
-              <div className="bg-color-F0EEEB p-3 text-16px text-color-666 mt-4 mb-4">
+              <div className="my-4 bg-color-F0EEEB p-3 text-16px text-color-666">
                 <ul className="list-group-item">
                   <li>£140.41 pm for 6 months</li>
                   <li>Estimated total if you follow this plan: £842.44</li>
@@ -139,7 +138,7 @@ const CheckoutShippingBilling = combineHOC()((props) => {
                 rate to increase as described in the representative example
                 below.
               </p>
-              <p className="font-bold mb-4 mt-0">
+              <p className="mb-4 mt-0 font-bold">
                 Representative example: Representative APR (variable) 18.9% APR
                 with an assumed credit limit of £1,200 and a purchase rate of
                 18.9% p.a.
@@ -186,23 +185,23 @@ const CheckoutShippingBilling = combineHOC()((props) => {
               <div>Pay With Finance - From 0% APR</div>
             </div>
             {/*khi chon option ben tren remove class hidden ben duoi*/}
-            <div className="b-payment-content md:pl-4 pt-3">
-              <div className="pt-2 pb-2">
-                <label className="b-checkout__label block mb-2">
+            <div className="b-payment-content pt-3 md:pl-4">
+              <div className="py-2">
+                <label className="b-checkout__label mb-2 block">
                   Please choose your deposit percentage:
                 </label>
-                <select className="border border-color-ccc h-40px w-full pl-2">
+                <select className="h-40px w-full border border-color-ccc pl-2">
                   <option value="">Select</option>
                   <option value="10">10%</option>
                   <option value="20">20%</option>
                   <option value="30">30%</option>
                 </select>
               </div>
-              <div className="pt-2 pb-2">
-                <label className="b-checkout__label block mb-2">
+              <div className="py-2">
+                <label className="b-checkout__label mb-2 block">
                   Please choose your package plan:
                 </label>
-                <select className="border border-color-ccc h-40px w-full pl-2">
+                <select className="h-40px w-full border border-color-ccc pl-2">
                   <option value="">Select</option>
                   <option value="27/244b3e7a-0ffb-41f2-88d5-adf78b6a3d9e/6/0.166667/0/Interest Free Finance (6 Months)">
                     Interest Free Finance (6 Months)
@@ -233,7 +232,7 @@ const CheckoutShippingBilling = combineHOC()((props) => {
                 <input type="radio" checked />
                 <span className="checkmark" />
               </div>
-              <div className="logo ml-4 mr-4">
+              <div className="logo mx-4">
                 <img
                   src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/pp-acceptance-medium.png"
                   width={68}
@@ -251,7 +250,7 @@ const CheckoutShippingBilling = combineHOC()((props) => {
               </a>
             </div>
             {/*khi chon option ben tren remove class hidden ben duoi*/}
-            <div className="b-payment-content md:pl-4 pt-4">
+            <div className="b-payment-content pt-4 md:pl-4">
               <p className="mt-0 mb-3">
                 You will be redirected to the PayPal website after you click the
                 place order button.

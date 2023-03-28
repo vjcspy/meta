@@ -1,4 +1,5 @@
 import { AlertService } from '@extensions/bed-kingdom/components/common/page-message/AlertService';
+import { useDispatch } from '@main/packages-web-redux';
 import {
   useApplyAmGiftCardToCartMutation,
   useCheckAmGiftCardAccountLazyQuery,
@@ -11,7 +12,6 @@ import {
   bedRemoveGiftToCartAction,
 } from '@vjcspy/r/build/modules/checkout/store/cart/actions/content.cart.gift.actions';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from '@main/packages-web-redux';
 
 export const useGiftActions = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const useGiftActions = () => {
             am_gift_card_code,
           },
         },
-      }).catch(() => {});
+      });
     },
     []
   );
@@ -50,7 +50,7 @@ export const useGiftActions = () => {
             am_gift_card_code,
           },
         },
-      }).catch(() => {});
+      });
     },
     []
   );

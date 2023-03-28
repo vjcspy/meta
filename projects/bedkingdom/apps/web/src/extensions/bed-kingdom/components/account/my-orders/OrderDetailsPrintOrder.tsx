@@ -8,7 +8,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
 
     return (
       <>
-        <div className="action print text-color-2362AA cursor-pointer">
+        <div className="action print cursor-pointer text-color-2362AA">
           <ReactToPrint
             trigger={() => <span>Print Order</span>}
             content={() => componentRef.current}
@@ -20,7 +20,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
             ref={componentRef}
           >
             <thead>
-              <tr className="hidden md:table-row text-left text-color-222 whitespace-nowrap">
+              <tr className="hidden whitespace-nowrap text-left text-color-222 md:table-row">
                 <th
                   scope="col"
                   className="col firstname pl-0"
@@ -51,7 +51,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                 </th>
                 <th
                   scope="col"
-                  className="col country text-right pr-0"
+                  className="col country pr-0 text-right"
                   style={{ paddingLeft: '60px' }}
                 >
                   Subtotal
@@ -64,7 +64,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                   key={item?.id}
                   style={{ paddingLeft: '60px', paddingTop: '50px' }}
                 >
-                  <td data-th="Name" className="col firstname pl-0 pb-4 pt-4">
+                  <td data-th="Name" className="col firstname py-4 pl-0">
                     <div className="item-options inline-block">
                       <div className="product name product-item-name font-bold">
                         {item?.product_name}
@@ -73,7 +73,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                         item?.entered_options.length > 0 &&
                         item?.entered_options.map((it: any) => (
                           <div key={it?.value}>
-                            <div className="font-bold mt-3 block">
+                            <div className="mt-3 block font-bold">
                               {it?.label}
                             </div>
                             <div>{it?.value} </div>
@@ -83,7 +83,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                         item?.additional_options.length > 0 &&
                         item?.additional_options.map((it: any) => (
                           <div key={it?.value}>
-                            <div className="font-bold mt-3 block">
+                            <div className="mt-3 block font-bold">
                               {it?.label}
                             </div>
                             <div>{it?.value} </div>
@@ -94,7 +94,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                         item?.selected_options.length > 0 &&
                         item?.selected_options.map((it: any) => (
                           <div key={it?.value}>
-                            <div className="font-bold mt-3">{it?.label}</div>
+                            <div className="mt-3 font-bold">{it?.label}</div>
                             <div>{it?.value}</div>
                           </div>
                         ))}
@@ -117,7 +117,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                   </td>
                   <td
                     data-th="Subtotal"
-                    className="col subtotal pr-0 md:text-right text-16px font-bold pb-0"
+                    className="col subtotal pr-0 pb-0 text-16px font-bold md:text-right"
                   >
                     <UiExtension
                       uiId="CURRENCY"
@@ -131,7 +131,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
             </tbody>
           </table>
           <div className="order-total pt-5 text-16px">
-            <div className="md:text-right mb-2">
+            <div className="mb-2 md:text-right">
               Subtotal
               <span className="price pl-3">
                 <UiExtension
@@ -140,7 +140,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                 />
               </span>
             </div>
-            <div className="md:text-right mb-2">
+            <div className="mb-2 md:text-right">
               Shipping &amp; Handling
               <span className="price pl-3">
                 <UiExtension
@@ -149,7 +149,7 @@ const OrderDetailsPrintOrder: React.FC<{ orderDetail: any }> = combineHOC()(
                 />
               </span>
             </div>
-            <div className="md:text-right mb-2">
+            <div className="mb-2 md:text-right">
               Tax
               <span className="price  pl-3">
                 <UiExtension

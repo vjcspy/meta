@@ -1,6 +1,6 @@
 import { AlertService } from '@extensions/bed-kingdom/components/common/page-message/AlertService';
+import { useDispatch } from '@main/packages-web-redux';
 import {
-  useCreateAccountMutation,
   useRequestPasswordResetEmailMutation,
   useSignInMutation,
 } from '@vjcspy/apollo';
@@ -15,7 +15,6 @@ import {
   requestPasswordResetFailAction,
 } from '@vjcspy/r/build/modules/account/store/customer_reset_password/actions';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from '@main/packages-web-redux';
 
 export const useBedAccountDefaultActions = () => {
   const dispatch = useDispatch();
@@ -34,7 +33,9 @@ export const useBedAccountDefaultActions = () => {
       variables: {
         ...customerData,
       },
-    }).catch(() => {});
+    }).catch(() => {
+      //EMPTY
+    });
   }, []);
 
   useEffect(() => {
@@ -65,7 +66,9 @@ export const useBedAccountDefaultActions = () => {
           email,
           password,
         },
-      }).catch(() => {});
+      }).catch(() => {
+        //EMPTY
+      });
     }
   }, []);
 
@@ -75,7 +78,9 @@ export const useBedAccountDefaultActions = () => {
       variables: {
         email,
       },
-    }).catch(() => {});
+    }).catch(() => {
+      //EMPTY
+    });
   }, []);
 
   useEffect(() => {

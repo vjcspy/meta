@@ -1,6 +1,5 @@
 import { SLIDER_IMAGE_SWATCHES } from '@extensions/bed-kingdom/values/BED_KINGDOM_SETTING_SLIDER';
 import { withRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hoc/withRouterWithStoreActions';
-import { useImageSizeBaseOnCfg } from '@modules/ui/hook/useImageSizeBaseOnCfg';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -24,17 +23,6 @@ const ProductListingItemConfigurable: React.FC<{ product: any }> = combineHOC(
   }, []);
 
   const mediaRef = useRef<any>();
-
-  const currentWidth = useMemo(() => {
-    return mediaRef?.current?.offsetWidth;
-  }, [mediaRef.current]);
-
-  const { width, height } = useImageSizeBaseOnCfg(
-    ['product', 'default_image_w_h'],
-    undefined,
-    currentWidth,
-    undefined
-  );
 
   const productChildren = useMemo(() => {
     const newVariants: any = [];

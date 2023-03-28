@@ -1,6 +1,7 @@
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 import { useGetBedkingdomWishlistDetailLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import { selectCustomer } from '@vjcspy/r/build/modules/account/store/account.selector';
-import { WishlistPaging } from '@vjcspy/r/build/modules/account/store/account.state';
+import type { WishlistPaging } from '@vjcspy/r/build/modules/account/store/account.state';
 import {
   getWishListAction,
   getWishListAfterAction,
@@ -12,7 +13,6 @@ import {
   selectWishlistPaging,
 } from '@vjcspy/r/build/modules/account/store/wishlisht/wishlist.selector';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedCustomerWishlistData = () => {
   const wishlists = useSelector(selectCustomerWishlist);
@@ -54,7 +54,7 @@ export const useBedCustomerWishlistData = () => {
   }, [customer]);
 
   useEffect(() => {
-    if (!!customer) {
+    if (customer) {
       dispatch(getWishListAction());
       getWishlistQuery({
         variables: {

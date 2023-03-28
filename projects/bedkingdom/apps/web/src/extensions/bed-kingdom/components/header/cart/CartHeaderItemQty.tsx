@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 const CartHeaderItemQty: React.FC<{
@@ -8,7 +8,9 @@ const CartHeaderItemQty: React.FC<{
   imme?: boolean;
 }> = (props) => {
   const [qty, setQty] = useState<any>(props.qty);
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [errorInput, setErrorInput] = useState<boolean>(false);
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [isUpdatingInput, setIsUpdatingInput] = useState(false);
 
   const isValidNumber = useCallback((number: any) => {
@@ -28,25 +30,9 @@ const CartHeaderItemQty: React.FC<{
     }
   }, [props.qty]);
 
-  const handleInputChange = useCallback((event: any) => {
-    setQty(event.target.value);
-  }, []);
-
-  const updateQty = useCallback(() => {
-    try {
-      if (isValidNumber(qty)) {
-      } else {
-        setQty(1);
-      }
-    } catch (e) {
-      setQty(1);
-    }
-    setIsUpdatingInput(false);
-  }, [qty]);
-
   const debounceUpdateQty = useMemo(
     () =>
-      _.debounce(
+      debounce(
         (qty: number) => {
           if (props.whenUpdateItemQty) {
             props.whenUpdateItemQty(qty);
@@ -72,7 +58,7 @@ const CartHeaderItemQty: React.FC<{
       <div className="b-qty__group">
         <div className="b-buttons__added flex items-center justify-between">
           <span
-            className="b-btn minus flex items-center justify-between cursor-pointer"
+            className="b-btn minus flex cursor-pointer items-center justify-between"
             onClick={() => setQty(isValidNumber(qty - 1) ? qty - 1 : qty)}
           >
             <svg
@@ -109,7 +95,7 @@ const CartHeaderItemQty: React.FC<{
             }}
           />
           <span
-            className="b-btn plus flex items-center justify-between cursor-pointer"
+            className="b-btn plus flex cursor-pointer items-center justify-between"
             onClick={() => setQty(qty + 1)}
           >
             <svg

@@ -19,6 +19,7 @@ const CustomizableOptions = combineHOC(
       ) {
         data = [
           ...data,
+          // eslint-disable-next-line no-unsafe-optional-chaining
           ...props?.state?.productInfo?.configurable?.variants[0]?.product
             ?.options,
         ];

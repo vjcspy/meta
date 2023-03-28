@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 const CheckoutCartItemQty: React.FC<{
@@ -10,7 +10,7 @@ const CheckoutCartItemQty: React.FC<{
 }> = (props) => {
   const [qty, setQty] = useState<any>(props.qty);
   const [errorInput, setErrorInput] = useState<boolean>(false);
-  const [isUpdatingInput, setIsUpdatingInput] = useState(false);
+  const [isUpdatingInput] = useState(false);
 
   const isValidNumber = useCallback((number: any) => {
     if (isNaN(number)) {
@@ -29,25 +29,9 @@ const CheckoutCartItemQty: React.FC<{
     }
   }, [props.qty]);
 
-  const handleInputChange = useCallback((event: any) => {
-    setQty(event.target.value);
-  }, []);
-
-  const updateQty = useCallback(() => {
-    try {
-      if (isValidNumber(qty)) {
-      } else {
-        setQty(1);
-      }
-    } catch (e) {
-      setQty(1);
-    }
-    setIsUpdatingInput(false);
-  }, [qty]);
-
   const debounceUpdateQty = useMemo(
     () =>
-      _.debounce(
+      debounce(
         (qty: number) => {
           if (props.whenUpdateItemQty) {
             props.whenUpdateItemQty(qty);
@@ -71,10 +55,10 @@ const CheckoutCartItemQty: React.FC<{
 
   return (
     <>
-      <div className="b-qty flex justify-between items-center max-w-125 border border-color-ccc h-40px rounded-3 text-18px text-center md:ml-auto">
+      <div className="b-qty flex h-40px max-w-125 items-center justify-between rounded-3 border border-color-ccc text-center text-18px md:ml-auto">
         <div
           className={clsx(
-            'b-minus cursor-pointer flex justify-center',
+            'b-minus flex cursor-pointer justify-center',
             parseInt(qty, 10) === 1 && 'divDisable'
           )}
           onClick={() => {
@@ -112,7 +96,7 @@ const CheckoutCartItemQty: React.FC<{
           }}
         />
         <div
-          className="b-plus w-30px cursor-pointer flex justify-center"
+          className="b-plus flex w-30px cursor-pointer justify-center"
           onClick={() => {
             setQty(qty + 1);
             setErrorInput(false);

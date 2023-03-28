@@ -1,9 +1,5 @@
-import { useGetCustomerOrdersLazyQuery } from '@vjcspy/apollo';
-import {
-  useGetBedKingdomCustomerOrdersDetailsLazyQuery,
-  useGetBedKingdomCustomerOrdersLazyQuery,
-  useGetBedKingdomCustomerOrdersQuery,
-} from '@vjcspy/apollo-bed-kingdom';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
+import { useGetBedKingdomCustomerOrdersDetailsLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import {
   getCustomerOrderDetailAction,
   getCustomerOrderDetailAfterAction,
@@ -14,7 +10,6 @@ import first from 'lodash/first';
 import isArray from 'lodash/isArray';
 import size from 'lodash/size';
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedKingdomCustomerOrderDetail = () => {
   const orderDetail = useSelector(selectOrderDetail);

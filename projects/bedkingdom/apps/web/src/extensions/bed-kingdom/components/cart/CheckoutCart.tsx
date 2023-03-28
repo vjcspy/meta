@@ -19,13 +19,13 @@ const CheckoutCart = combineHOC(
       props?.state?.cart?.items?.length === 0
     ) {
       return (
-        <section className="b-cart container mx-auto px-4 mb-12 min-h-70 pt-10">
-          <div className="grid b-cart-grid md:gap-12">
+        <section className="b-cart container mx-auto mb-12 min-h-70 px-4 pt-10">
+          <div className="b-cart-grid grid md:gap-12">
             <div className="b-cart-form-container mb-12">
-              <h5 className="text-18px text-left font-bold">
+              <h5 className="text-left text-18px font-bold">
                 You have no items in your basket.
               </h5>
-              <h5 className="text-18px text-left  font-bold">
+              <h5 className="text-left text-18px  font-bold">
                 Click{' '}
                 <u
                   onClick={() => RouterSingleton.push('/')}
@@ -43,15 +43,15 @@ const CheckoutCart = combineHOC(
 
     return (
       <>
-        <section className="b-cart container mx-auto px-4 mb-12 min-h-70">
+        <section className="b-cart container mx-auto mb-12 min-h-70 px-4">
           {props?.state?.isUpdatingTotals && (
             <UiExtension uiId="LOADING_INDICATOR" global={false} />
           )}
-          <h4 className="b-page-title text-26px text-left mdm:mb-6 mb-8 mt-10 mdm:mt-5 font-bold">
+          <h4 className="b-page-title mb-8 mt-10 text-left text-26px font-bold mdm:mb-6 mdm:mt-5">
             Basket
           </h4>
 
-          <div className="grid b-cart-grid md:gap-12">
+          <div className="b-cart-grid grid md:gap-12">
             {props?.state?.cart?.items &&
               props?.state?.cart?.items?.length > 0 && (
                 <>

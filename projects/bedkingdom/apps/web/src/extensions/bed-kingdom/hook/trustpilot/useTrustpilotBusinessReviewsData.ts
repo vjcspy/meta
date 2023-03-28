@@ -1,8 +1,5 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
-import {
-  useGetTrustpilotBusinessReviewsLazyQuery,
-  useGetTrustpilotBusinessReviewsQuery,
-} from '@vjcspy/apollo-bed-kingdom';
+import { useGetTrustpilotBusinessReviewsLazyQuery } from '@vjcspy/apollo-bed-kingdom';
 import { useEffect } from 'react';
 
 export const useTrustpilotBusinessReviewsData = () => {

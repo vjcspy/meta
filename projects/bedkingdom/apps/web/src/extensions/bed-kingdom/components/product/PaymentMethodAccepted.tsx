@@ -1,7 +1,7 @@
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const PaymentMethodAccepted = combineHOC()((props) => {
+const PaymentMethodAccepted = combineHOC()(() => {
   return (
     <div className="payment-icons-desktop pb-3">
       <img

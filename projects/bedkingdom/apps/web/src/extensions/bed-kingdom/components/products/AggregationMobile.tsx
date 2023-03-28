@@ -199,9 +199,9 @@ const Aggregations = combineHOC(withBedChangeTypeListActions)((props) => {
                       : 'Position'}
                   </span>
                   {props.sortType === 'ASC' ? (
-                    <i className="fa fa-long-arrow-up text-color-2362AA ml-2 font-bold" />
+                    <i className="fa fa-long-arrow-up ml-2 font-bold text-color-2362AA" />
                   ) : (
-                    <i className="fa fa-long-arrow-down text-color-2362AA ml-2 font-bold" />
+                    <i className="fa fa-long-arrow-down ml-2 font-bold text-color-2362AA" />
                   )}
                 </div>
                 <div onClick={() => props.setIsShowSortMobile(false)}>
@@ -273,9 +273,9 @@ const Aggregations = combineHOC(withBedChangeTypeListActions)((props) => {
               <span>
                 <span>
                   {props.sortType === 'ASC' ? (
-                    <i className="fa fa-long-arrow-up text-color-2362AA font-bold text-18px" />
+                    <i className="fa fa-long-arrow-up text-18px font-bold text-color-2362AA" />
                   ) : (
-                    <i className="fa fa-long-arrow-down text-color-2362AA font-bold text-18px" />
+                    <i className="fa fa-long-arrow-down text-18px font-bold text-color-2362AA" />
                   )}
                 </span>
               </span>

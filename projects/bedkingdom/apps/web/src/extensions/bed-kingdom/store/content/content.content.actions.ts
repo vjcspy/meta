@@ -23,7 +23,7 @@ export const setCalculatorFinance = createAction<{
 }>(SET_CALCULATOR_FINANCE, PREFIX);
 
 const GET_CALCULATOR_FINANCE = 'GET_CALCULATOR_FINANCE';
-export const getCalculatorFinance = createAction<{}>(
+export const getCalculatorFinance = createAction<any>(
   GET_CALCULATOR_FINANCE,
   PREFIX
 );

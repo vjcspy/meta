@@ -1,13 +1,13 @@
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const CheckoutSuggestProducts: React.FC = combineHOC()((props) => {
+const CheckoutSuggestProducts: React.FC = combineHOC()(() => {
   return (
     <div className="b-recently-product mb-10">
-      <div className="b-recently-heading text-center text-18px mt-5 mb-5 md:text-22px md:mt-10 md:mb-10">
+      <div className="b-recently-heading my-5 text-center text-18px md:my-10 md:text-22px">
         <strong>YOU MAY ALSO LIKE...</strong>
       </div>
-      <div className="b-recently-content grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="b-recently-content grid grid-cols-2 gap-4 md:grid-cols-4">
         <div className="b-product__item text-center">
           <div className="b-product__media">
             <div

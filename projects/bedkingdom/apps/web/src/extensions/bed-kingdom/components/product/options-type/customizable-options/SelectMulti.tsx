@@ -40,7 +40,7 @@ const Select = combineHOC(
       )}
     >
       <div
-        className="options-label flex justify-between items-center"
+        className="options-label flex items-center justify-between"
         onClick={() => {
           setCollapse(!collapse);
         }}
@@ -78,7 +78,7 @@ const Select = combineHOC(
                 </a>
                 <div className="item-info mdm:w-full">
                   <div className="item-name">{v['title']}</div>
-                  <div className="text-color-2362AA text-16px font-bold mt-1">
+                  <div className="mt-1 text-16px font-bold text-color-2362AA">
                     <PriceInfo value={v} />
                   </div>
                   <div className="item-price relative">
@@ -86,7 +86,7 @@ const Select = combineHOC(
                     {isMobile &&
                       !props?.fns?.isCustomizableOptionSelected(v['uid']) && (
                         <div
-                          className="btn-default pl-4 pr-4 text-xs max-w-125 h-26px bg-main-eac200 btn-customize"
+                          className="btn-default btn-customize h-26px max-w-125 bg-main-eac200 px-4 text-xs"
                           onClick={() =>
                             props?.actions?.customizable?.toggleCustomizableOption(
                               props.option.uid,
@@ -99,10 +99,10 @@ const Select = combineHOC(
                       )}
                     {/*show group khi click button select ben duoi acc class active*/}
                     {props?.fns?.isCustomizableOptionSelected(v['uid']) && (
-                      <div className="group-choose-options flex justify-between mt-1 md:mt-2">
+                      <div className="group-choose-options mt-1 flex justify-between md:mt-2">
                         {/* */}
                         <div
-                          className="btn-default pl-2 pr-2 md:pl-3 md:pr-3 text-xs h-26px mr-1 md:mr-2 whitespace-nowrap"
+                          className="btn-default mr-1 h-26px whitespace-nowrap px-2 text-xs md:mr-2 md:px-3"
                           onClick={() => {
                             props?.actions?.customizable?.toggleCustomizableOption(
                               props.option.uid,
@@ -123,7 +123,7 @@ const Select = combineHOC(
               {!isMobile &&
                 !props?.fns?.isCustomizableOptionSelected(v['uid']) && (
                   <div
-                    className="btn-default pl-7 pr-7 text-14px h-36px bg-main-eac200"
+                    className="btn-default h-36px bg-main-eac200 px-7 text-14px"
                     onClick={() =>
                       props?.actions?.customizable?.toggleCustomizableOption(
                         props.option.uid,

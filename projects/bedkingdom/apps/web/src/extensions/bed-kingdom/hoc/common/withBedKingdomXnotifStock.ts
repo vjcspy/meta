@@ -1,7 +1,7 @@
 import { AlertService } from '@extensions/bed-kingdom/components/common/page-message/AlertService';
 import { useAddXnotifStockMutation } from '@vjcspy/apollo-bed-kingdom';
 import { createUiHOC } from '@web/ui-extension';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const withBedKingdomXnotifStock = createUiHOC(() => {
   const [xnotifStockMutation, xnotifStockRes] = useAddXnotifStockMutation();
@@ -14,7 +14,9 @@ export const withBedKingdomXnotifStock = createUiHOC(() => {
           product_id: productId,
         },
       },
-    }).catch(() => {});
+    }).catch(() => {
+      //EMPTY
+    });
   }, []);
 
   useEffect(() => {

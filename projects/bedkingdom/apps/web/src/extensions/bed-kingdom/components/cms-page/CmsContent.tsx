@@ -71,7 +71,7 @@ const CmsContent = combineHOC(
         <meta
           name="title"
           content={
-            !!props?.state?.data?.cmsPage?.meta_title
+            props?.state?.data?.cmsPage?.meta_title
               ? props?.state?.data?.cmsPage?.meta_title
               : props?.state?.storeConfigData?.default_title ?? ''
           }
@@ -79,7 +79,7 @@ const CmsContent = combineHOC(
         <meta
           name="keywords"
           content={
-            !!props?.state?.data?.cmsPage?.meta_keywords
+            props?.state?.data?.cmsPage?.meta_keywords
               ? props?.state?.data?.cmsPage?.meta_keywords
               : props?.state?.storeConfigData?.default_keywords ?? ''
           }
@@ -88,7 +88,7 @@ const CmsContent = combineHOC(
         <meta
           name="description"
           content={
-            !!props?.state?.data?.cmsPage?.meta_description
+            props?.state?.data?.cmsPage?.meta_description
               ? props?.state?.data?.cmsPage?.meta_description
               : props?.state?.storeConfigData?.default_description ?? ''
           }
@@ -129,7 +129,7 @@ const CmsContent = combineHOC(
       />
       <section className="b-breadcrumbs mt-3 mb-5">
         <div className="container mx-auto px-4">
-          <ul className="b-breadcrumbs-items uppercase text-12px">
+          <ul className="b-breadcrumbs-items text-12px uppercase">
             <li
               className="b-breadcrumbs-item home inline-block"
               onClick={() => RouterSingleton.push('/')}
@@ -144,11 +144,11 @@ const CmsContent = combineHOC(
           </ul>
         </div>
       </section>
-      <section className="b-cms-contact container container-1200 mx-auto px-4">
-        <h1 className="b-page-title text-2xl md:text-3xl mb-8 mt-3">
+      <section className="b-cms-contact container-1200 container mx-auto px-4">
+        <h1 className="b-page-title mb-8 mt-3 text-2xl md:text-3xl">
           <span>{props?.state?.data?.cmsPage?.title}</span>
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-1 md:gap-10 mb-5">
+        <div className="mb-5 grid grid-cols-1 md:grid-cols-1 md:gap-10">
           <div
             className="b-page-content"
             dangerouslySetInnerHTML={{

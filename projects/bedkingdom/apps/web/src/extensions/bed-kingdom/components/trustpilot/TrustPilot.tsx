@@ -31,13 +31,13 @@ const TrustPilot: React.FC = combineHOC(withTrustpilotBusinessReviewsData)(
     return (
       <UiExtension uiId="ONLY_DESKTOP">
         <LazyLoad once={true} height={200} offset={[-100, 0]}>
-          <section className="b-section__trustpilot md:block hidden">
+          <section className="b-section__trustpilot hidden md:block">
             <div className="container mx-auto md:px-4">
               <div className="trustPilot-widget stl_3">
                 <div id="wrapper-right" className="wrapper-right">
                   {SLIDER}
                 </div>
-                <div id="wrapper-left" className="wrapper-left mt-3 f-16">
+                <div id="wrapper-left" className="wrapper-left f-16 mt-3">
                   Rated{' '}
                   <strong>
                     {props.state.businessReviewsData?.trust_score}

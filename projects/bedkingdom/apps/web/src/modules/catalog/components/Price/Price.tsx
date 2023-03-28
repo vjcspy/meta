@@ -5,8 +5,8 @@ import React, { useMemo } from 'react';
 const Price = combineHOC(withPriceFormat)((props) => {
   const isShowRange = useMemo(() => {
     return (
-      props.priceRange?.maximum_price?.final_price?.value! >
-      props.priceRange?.minimum_price?.final_price?.value!
+      props.priceRange?.maximum_price?.final_price?.value >
+      props.priceRange?.minimum_price?.final_price?.value
     );
   }, [props.priceRange]);
 

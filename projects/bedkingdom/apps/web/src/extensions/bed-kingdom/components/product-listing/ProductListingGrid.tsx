@@ -70,7 +70,7 @@ const ProductListingGrid = combineHOC()(
         <div
           id="products-listing-container"
           ref={containerRef}
-          className="b-products b-procduct-grid grid grid-cols-2 gap-2 lg:grid-cols-4 lg:gap-7 mt-3 md:mt-7"
+          className="b-products b-procduct-grid mt-3 grid grid-cols-2 gap-2 md:mt-7 lg:grid-cols-4 lg:gap-7"
         >
           {props.products?.map((product: any) => {
             return (
@@ -112,7 +112,7 @@ const ProductListingGrid = combineHOC()(
               <div className="b-category-info">
                 <div className="b-category-description">
                   <div className="flex justify-between">
-                    <div className="col-des col-des">
+                    <div className="col-des">
                       <h1 className="b-category-name">Search Tips</h1>
                       <ul>
                         <li>Double check your spelling.</li>
@@ -132,7 +132,7 @@ const ProductListingGrid = combineHOC()(
         {!props?.isLoading && checkShowLoadMore && (
           <button
             type="button"
-            className="btn-default btn-loadMore text-14px mt-5 h-40px hover:opacity-80 mb-5 pl-10 pr-10 ml-auto mr-auto h-48"
+            className="btn-default btn-loadMore my-5 mx-auto h-48 px-10 text-14px hover:opacity-80"
             onClick={() => loadMore()}
           >
             Load More

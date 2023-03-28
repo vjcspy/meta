@@ -93,12 +93,12 @@ const Header: React.FC = combineHOC(
           </div>
         </div>
       )}
-      <div className="b-header-center pt-4 pb-4">
+      <div className="b-header-center py-4">
         <UiExtension uiId="DEFAULT_META" />
         <UiExtension uiId="DEFAULT_GOOGLE_TAG_MANAGER" />
         <UiExtension uiId="ONLY_DESKTOP">
           <div className="container mx-auto md:px-4">
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="b-block-left flex items-center justify-between">
                 <div
                   className="b-header-logo mr-11 cursor-pointer"
@@ -119,7 +119,7 @@ const Header: React.FC = combineHOC(
         </UiExtension>
         <UiExtension uiId="ONLY_MOBILE">
           <div className="container mx-auto">
-            <div className="header-mb grid grid-cols-3 gap-3 items-center">
+            <div className="header-mb grid grid-cols-3 items-center gap-3">
               <div className="block-left">
                 <div className="block-left__wrap flex items-center">
                   <div
@@ -194,7 +194,7 @@ const Header: React.FC = combineHOC(
                 </div>
               </div>
               <div className="block-right">
-                <div className="block-right__wrap flex justify-end items-center">
+                <div className="block-right__wrap flex items-center justify-end">
                   <div
                     className="b-myAccount__mb mr-3"
                     onClick={() =>

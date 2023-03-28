@@ -1,4 +1,4 @@
-import { combineHOC, UiExtension } from '@web/ui-extension';
+import { combineHOC } from '@web/ui-extension';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -13,7 +13,7 @@ const MyAccountPaging: React.FC<{
   setPageCurrentAction: (data: number) => void;
 }> = combineHOC()((props) => {
   return (
-    <div className="b-pager mdm:text-center md:flex justify-between items-center mt-8 mb-8 text-15px">
+    <div className="b-pager my-8 items-center justify-between text-15px md:flex mdm:text-center">
       <p className="b-toolbar-amount hidden md:block">
         <span className="toolbar-number">
           Items {props?.itemFrom} to {props?.itemTo} of {props?.itemCount} total
@@ -82,7 +82,7 @@ const MyAccountPaging: React.FC<{
         <strong className="limiter-label">Show</strong>
         <select
           id="limiter"
-          className="limiter-options bg-gray-100 p-2 rounded-3 ml-2 mr-2 border border-color-ccc"
+          className="limiter-options mx-2 rounded-3 border border-color-ccc bg-gray-100 p-2"
           onChange={(val) => {
             if (val?.target?.value !== props?.pageSize) {
               props?.setPageSizeAction(val?.target?.value);

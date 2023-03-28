@@ -104,10 +104,10 @@ const TrustPilotStartOnListItem: React.FC<{ dataRate: any }> = React.memo(
                 </div>
               </div>
               <UiExtension uiId="ONLY_DESKTOP">
-                <div className="tp-widget-readmore text-13px lg:text-14px cursor-pointer md:block hidden">
+                <div className="tp-widget-readmore hidden cursor-pointer text-13px md:block lg:text-14px">
                   {props.dataRate?.total || 0} reviews
                 </div>
-                <span className="tp-widget-readmore-arrow cursor-pointer md:block hidden" />
+                <span className="tp-widget-readmore-arrow hidden cursor-pointer md:block" />
               </UiExtension>
             </div>
 

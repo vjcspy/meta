@@ -55,6 +55,7 @@ const Alert = ({ id, fade }) => {
 
   function omit(arr: any, key: any) {
     return arr.map((obj: any) => {
+      // eslint-disable-next-line unused-imports/no-unused-vars
       const { [key]: omitted, ...rest } = obj;
       return rest;
     });

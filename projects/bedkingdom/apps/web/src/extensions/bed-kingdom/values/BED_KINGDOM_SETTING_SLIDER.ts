@@ -1,4 +1,4 @@
-import { Settings } from 'react-slick';
+import type { Settings } from 'react-slick';
 
 export const SLIDER_BUSINESS_REVIEWS: Settings = {
   dots: false,

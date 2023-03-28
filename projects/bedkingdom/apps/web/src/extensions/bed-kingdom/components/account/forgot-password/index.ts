@@ -1,4 +1,4 @@
-import { ExtensionConfig } from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const ACCOUNT_FORGOT_PASSWORD_CONFIGS: ExtensionConfig[] = [

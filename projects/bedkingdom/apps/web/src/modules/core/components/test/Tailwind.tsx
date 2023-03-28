@@ -2,11 +2,11 @@ import React from 'react';
 
 const Tailwind: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl" />
-        <div className="relative md:px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="max-w-md mx-auto">
+    <div className="flex min-h-screen flex-col justify-center bg-gray-100 py-6 sm:py-12">
+      <div className="relative py-3 sm:mx-auto sm:max-w-xl">
+        <div className="absolute inset-0 -skew-y-6 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg sm:-rotate-6 sm:skew-y-0 sm:rounded-3xl" />
+        <div className="relative bg-white py-10 shadow-lg sm:rounded-3xl sm:p-20 md:px-4">
+          <div className="mx-auto max-w-md">
             <div>
               <img
                 src="/images/icons/icon-512x512.png"
@@ -15,16 +15,16 @@ const Tailwind: React.FC = () => {
               />
             </div>
             <div className="divide-y divide-gray-200">
-              <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+              <div className="space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
                 <p>
                   An advanced online playground for Tailwind CSS, including
                   support for things like:
                 </p>
                 <ul className="list-disc space-y-2">
                   <li className="flex items-start">
-                    <span className="h-6 flex items-center sm:h-7">
+                    <span className="flex h-6 items-center sm:h-7">
                       <svg
-                        className="flex-shrink-0 h-5 w-5 text-cyan-500"
+                        className="h-5 w-5 shrink-0 text-cyan-500"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -44,9 +44,9 @@ const Tailwind: React.FC = () => {
                     </p>
                   </li>
                   <li className="flex items-start">
-                    <span className="h-6 flex items-center sm:h-7">
+                    <span className="flex h-6 items-center sm:h-7">
                       <svg
-                        className="flex-shrink-0 h-5 w-5 text-cyan-500"
+                        className="h-5 w-5 shrink-0 text-cyan-500"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -65,9 +65,9 @@ const Tailwind: React.FC = () => {
                     </p>
                   </li>
                   <li className="flex items-start">
-                    <span className="h-6 flex items-center sm:h-7">
+                    <span className="flex h-6 items-center sm:h-7">
                       <svg
-                        className="flex-shrink-0 h-5 w-5 text-cyan-500"
+                        className="h-5 w-5 shrink-0 text-cyan-500"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -86,7 +86,7 @@ const Tailwind: React.FC = () => {
                   new idea, or creating a demo to share online.
                 </p>
               </div>
-              <div className="pt-6 text-base leading-6 font-bold sm:text-lg sm:leading-7">
+              <div className="pt-6 text-base font-bold leading-6 sm:text-lg sm:leading-7">
                 <p>Want to dig deeper into Tailwind?</p>
                 <p>
                   <a

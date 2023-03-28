@@ -1,6 +1,6 @@
 import { withBedKingdomContactActions } from '@extensions/bed-kingdom/hoc/common/withBedKingdomContactActions';
 import { combineHOC } from '@web/ui-extension';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Contact = combineHOC(withBedKingdomContactActions)((props) => {
@@ -26,8 +26,8 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
     }
   }, []);
   return (
-    <section className="b-cms-contact container container-1200 mx-auto px-4">
-      <h1 className="b-page-title text-2xl md:text-3xl mb-8 mt-3">
+    <section className="b-cms-contact container-1200 container mx-auto px-4">
+      <h1 className="b-page-title mb-8 mt-3 text-2xl md:text-3xl">
         <span>Contact Us</span>
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10">
@@ -37,14 +37,14 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
               Jot us a note and we’ll get back to you as quickly as possible.
             </p>
             <div className="form-input required mb-3">
-              <label className="label font-bold mb-2 block" htmlFor="Name">
+              <label className="label mb-2 block font-bold" htmlFor="Name">
                 <span>Name</span>
               </label>
               <div className="control">
                 <input
                   type="text"
                   title="Name"
-                  className="input-text w-full h-40px "
+                  className="input-text h-40px w-full "
                   {...register('name', {
                     required: true,
                   })}
@@ -57,7 +57,7 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
               )}
             </div>
             <div className="form-input required mb-3">
-              <label className="label font-bold mb-2 block" htmlFor="Name">
+              <label className="label mb-2 block font-bold" htmlFor="Name">
                 <span>Email</span>
               </label>
               <div className="control">
@@ -69,7 +69,7 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
                       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
                     ),
                   })}
-                  className="input-text w-full h-40px "
+                  className="input-text h-40px w-full "
                 />
               </div>
               {errors.name && (
@@ -80,18 +80,18 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
             </div>
             <div className="form-input mb-3">
               <label
-                className="label font-bold mb-2 block"
+                className="label mb-2 block font-bold"
                 htmlFor="Phone Number"
               >
                 <span>Phone Number</span>
               </label>
               <div className="control">
-                <input type="number" className="input-text w-full h-40px " />
+                <input type="number" className="input-text h-40px w-full " />
               </div>
             </div>
             <div className="form-input required mb-3">
               <label
-                className="label font-bold mb-2 block"
+                className="label mb-2 block font-bold"
                 htmlFor="What’s on your mind?"
               >
                 <span>What’s on your mind?</span>
@@ -102,7 +102,7 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
                     required: true,
                   })}
                   title="What’s on your mind?"
-                  className="input-text input-text w-full min-h-92"
+                  className="input-text min-h-92 w-full"
                   cols={5}
                   rows={3}
                   maxLength={200}
@@ -116,7 +116,7 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
             </div>
             <button
               type="submit"
-              className="btn btn-default pl-5 pr-5 text-sm"
+              className="btn btn-default px-5 text-sm"
               disabled={props?.state?.statusButton}
             >
               Submit
@@ -125,11 +125,11 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
         </form>
         <div className="b-page-address">
           <div className="shop-address mb-5">
-            <h2 className="text-2xl font-bold mb-4 block">Customer Service:</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h2 className="mb-4 block text-2xl font-bold">Customer Service:</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <dl className="left">
                 <dt>
-                  <strong className="block mb-2">Telephone:</strong>
+                  <strong className="mb-2 block">Telephone:</strong>
                 </dt>
                 <dd>01924950108</dd>
                 <dt className="mt-2 block">
@@ -150,7 +150,7 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
             </div>
           </div>
           <div className="shop-address">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
                 <strong className="mb-2 block">
                   Returns and Postal Address:
@@ -182,10 +182,10 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 border-t border-color-ccc mt-14 pt-14 mb-8">
+      <div className="mt-14 mb-8 grid grid-cols-1 border-t border-color-ccc pt-14 md:grid-cols-2 md:gap-10">
         <div>
           <div className="shop-address mb-4">
-            <h2 className="text-2xl font-bold mb-2 block">
+            <h2 className="mb-2 block text-2xl font-bold">
               Returns and Postal Address:
             </h2>
             <p>
@@ -212,7 +212,7 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
           </div>
           <div className="shop-address">
             <div className="shop-details">
-              <h2 className="text-2xl font-bold mb-2 block">Our Showroom:</h2>
+              <h2 className="mb-2 block text-2xl font-bold">Our Showroom:</h2>
               <div>
                 <strong>Address:</strong>
                 <div>

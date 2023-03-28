@@ -1,8 +1,8 @@
-import {
+import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
+import type {
   ProductAttributeFilterInput,
   ProductAttributeSortInput,
 } from '@vjcspy/apollo';
-import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
 import { useGetBedKingdomCatalogProductsQuery } from '@vjcspy/apollo-bed-kingdom';
 
 export const useBedKingdomProductsQuery = (

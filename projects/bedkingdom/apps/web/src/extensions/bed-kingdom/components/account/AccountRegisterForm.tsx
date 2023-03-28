@@ -17,7 +17,6 @@ const AccountRegisterForm = combineHOC(
     handleSubmit,
     watch,
     register,
-    setValue,
     formState: { errors },
   } = useForm();
   const onSubmit = useCallback((data: any) => {
@@ -59,13 +58,13 @@ const AccountRegisterForm = combineHOC(
 
   return (
     <section className="b-customer-page mx-auto">
-      <h4 className="b-page-title text-26px text-center mdm:mb-6 mb-14 mt-10 mdm:mt-5 font-bold">
+      <h4 className="b-page-title mb-14 mt-10 text-center text-26px font-bold mdm:mb-6 mdm:mt-5">
         Create New Customer Account
       </h4>
-      <div className="max-w-440 mx-auto px-4">
+      <div className="mx-auto max-w-440 px-4">
         <div className="block-customer-login mb-5 lg:mb-10">
           <div className="form-login">
-            <h2 className="b-customer__title text-22px mdm:text-18px text-black font-bold mb-6">
+            <h2 className="b-customer__title mb-6 text-22px font-bold text-black mdm:text-18px">
               Register
             </h2>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -201,7 +200,7 @@ const AccountRegisterForm = combineHOC(
                 />
                 <label
                   htmlFor="assistance_allowed_checkbox"
-                  className="label pl-2 relative"
+                  className="label relative pl-2"
                 >
                   <span>Allow remote shopping assistance</span>
                 </label>
@@ -211,7 +210,7 @@ const AccountRegisterForm = combineHOC(
                   type="submit"
                   disabled={props?.state?.isCreating}
                   className={clsx(
-                    'btn-primary mdm:h-40px h-44 bg-color-2362AA white text-16px rounded text-white text-center w-full font-bold mt-4',
+                    'btn-primary white mt-4 h-44 w-full rounded bg-color-2362AA text-center text-16px font-bold text-white mdm:h-40px',
                     props?.state?.isCreating && 'btn-loader btn-loader-active'
                   )}
                 >
@@ -227,7 +226,7 @@ const AccountRegisterForm = combineHOC(
                   onClick={() => {
                     RouterSingleton.push(ROUTES.r('ACCOUNT_LOGIN'));
                   }}
-                  className="btn-primary mdm:h-40px h-44 bg-white white text-16px rounded text-black text-center w-full font-bold mt-3 border-black border mb-3"
+                  className="btn-primary white my-3 h-44 w-full rounded border border-black bg-white text-center text-16px font-bold text-black mdm:h-40px"
                 >
                   Login
                 </button>

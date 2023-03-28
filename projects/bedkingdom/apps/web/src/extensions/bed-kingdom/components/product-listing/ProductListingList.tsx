@@ -1,6 +1,6 @@
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 
 const ProductListingList = combineHOC()(
   React.memo((props) => {
@@ -76,7 +76,7 @@ const ProductListingList = combineHOC()(
                   <div className="b-category-info">
                     <div className="b-category-description">
                       <div className="flex justify-between">
-                        <div className="col-des col-des">
+                        <div className="col-des">
                           <h1 className="b-category-name">Search Tips</h1>
                           <ul>
                             <li>Double check your spelling.</li>
@@ -98,7 +98,7 @@ const ProductListingList = combineHOC()(
           {!props?.isLoading && checkShowLoadMore && (
             <button
               type="button"
-              className="btn-default text-14px mt-3 h-40px hover:opacity-80 mb-5 pl-4 pr-4"
+              className="btn-default mt-3 mb-5 h-40px px-4 text-14px hover:opacity-80"
               onClick={() => loadMore()}
             >
               Load More

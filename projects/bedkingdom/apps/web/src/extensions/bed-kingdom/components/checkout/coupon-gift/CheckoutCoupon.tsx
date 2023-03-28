@@ -53,7 +53,7 @@ const CheckoutCoupon = combineHOC(
     <div className="b-discount-code">
       {/*click vao title add class active ben duoi*/}
       <div
-        className="b-code-title flex items-center mb-2 font-bold"
+        className="b-code-title mb-2 flex items-center font-bold"
         onClick={() => {
           setShowDiscount(!showDiscount);
         }}
@@ -85,7 +85,7 @@ const CheckoutCoupon = combineHOC(
             />
             <button
               type="button"
-              className="btn-default bg-color-6bc85e h-40px rounded-3 hover:opacity-80 ml-1 text-14px pl-3 pr-3 whitespace-nowrap"
+              className="btn-default ml-1 h-40px whitespace-nowrap rounded-3 bg-color-6bc85e px-3 text-14px hover:opacity-80"
               onClick={() => {
                 cancelCoupon();
               }}
@@ -104,7 +104,7 @@ const CheckoutCoupon = combineHOC(
             />
             <button
               type="submit"
-              className="btn-default bg-color-6bc85e h-40px rounded-3 hover:opacity-80 ml-1 text-14px pl-3 pr-3 whitespace-nowrap"
+              className="btn-default ml-1 h-40px whitespace-nowrap rounded-3 bg-color-6bc85e px-3 text-14px hover:opacity-80"
               disabled={props?.state?.isUpdatingCoupon}
             >
               Apply Discount

@@ -1,8 +1,8 @@
+import { useSelector } from '@main/packages-web-redux';
 import { selectCustomerWishlist } from '@vjcspy/r/build/modules/account/store/wishlisht/wishlist.selector';
 import { createUiHOC } from '@web/ui-extension';
 import forEach from 'lodash/forEach';
-import { useCallback, useMemo } from 'react';
-import { useSelector } from '@main/packages-web-redux';
+import { useCallback } from 'react';
 
 export const withProductWishlistDataCheckout = createUiHOC(() => {
   const wishlists = useSelector(selectCustomerWishlist);

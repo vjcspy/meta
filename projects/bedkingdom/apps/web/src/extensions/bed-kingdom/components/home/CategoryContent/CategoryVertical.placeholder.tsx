@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryVerticalPlaceholder = React.memo((props) => {
+const CategoryVerticalPlaceholder = React.memo(() => {
   return (
     <>
       {' '}
@@ -8,19 +8,19 @@ const CategoryVerticalPlaceholder = React.memo((props) => {
         <div className="container mx-auto md:px-4">
           <div className="b-categoryRole__main">
             <div className="b-categoryRole__side">
-              <div className="animate-pulse bg-gray-300 w-full min-h-92 mb-4" />
-              <div className="animate-pulse bg-gray-300 w-full min-h-92 mb-4" />
-              <div className="animate-pulse bg-gray-300 w-full min-h-92 mb-4" />
-              <div className="animate-pulse bg-gray-300 w-full min-h-92 mb-4" />
-              <div className="animate-pulse bg-gray-300 w-full min-h-92 mb-4" />
+              <div className="mb-4 min-h-92 w-full animate-pulse bg-gray-300" />
+              <div className="mb-4 min-h-92 w-full animate-pulse bg-gray-300" />
+              <div className="mb-4 min-h-92 w-full animate-pulse bg-gray-300" />
+              <div className="mb-4 min-h-92 w-full animate-pulse bg-gray-300" />
+              <div className="mb-4 min-h-92 w-full animate-pulse bg-gray-300" />
             </div>
             <div className="b-listingTab__content">
-              <div className="grid grid-cols-3 gap-4 mb-7">
-                <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
-                <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
-                <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
+              <div className="mb-7 grid grid-cols-3 gap-4">
+                <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
+                <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
+                <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
               </div>
-              <div className="m-auto w-210px h-44 animate-pulse bg-gray-300 rounded mt-13" />
+              <div className="mt-13 m-auto h-44 w-210px animate-pulse rounded bg-gray-300" />
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { createUiHOC } from '@web/ui-extension';
 import { Registry } from 'chitility';
 import { useEffect, useMemo } from 'react';
 
-export const withAmastyPageContainer = createUiHOC((props) => {
+export const withAmastyPageContainer = createUiHOC(() => {
   const dispath = useDispatch();
   const urlRewriteContextValue = useUrlRewriteContext();
 

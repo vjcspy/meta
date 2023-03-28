@@ -1,10 +1,10 @@
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const CheckoutSecure = combineHOC()((props) => {
+const CheckoutSecure = combineHOC()(() => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="b-secure-checkout">
           <h4 className="flex items-center text-24px">
             <svg
@@ -33,7 +33,7 @@ const CheckoutSecure = combineHOC()((props) => {
           <img src="/images/checkout/payments-sprite-combined.png" />
         </div>
       </div>
-      <div className="b-checkout-signIn text-right text-color-26ade4 mt-3 mb-3 cursor-pointer">
+      <div className="b-checkout-signIn my-3 cursor-pointer text-right text-color-26ade4">
         Sign In
       </div>
     </>

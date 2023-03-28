@@ -1,7 +1,7 @@
 import { useAmLabelProductActions } from '@extensions/bed-kingdom/hook/product/useAmLabelProductActions';
 import BED_KINGDOM_COMMON from '@extensions/bed-kingdom/values/BED_KINGDOM_COMMON';
-import { useExtAdditionConfig } from '@modules/ui/hook/config/useExtAdditionConfig';
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
+import { useExtAdditionConfig } from '@modules/ui/hook/config/useExtAdditionConfig';
 import { useGetHomePageCategoriesQuery } from '@vjcspy/apollo-bed-kingdom';
 import { useEffect, useMemo, useState } from 'react';
 

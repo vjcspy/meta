@@ -1,19 +1,19 @@
 import { useExtAdditionConfig } from '@modules/ui/hook/config/useExtAdditionConfig';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
 const Returns = combineHOC()((props) => {
   const formId = useExtAdditionConfig('form_id', props);
 
   return (
-    <section className="b-cms-contact container container-1200 mx-auto px-4 mb-5">
-      <h1 className="b-page-title text-2xl md:text-3xl mb-8 mt-3">
+    <section className="b-cms-contact container-1200 container mx-auto mb-5 px-4">
+      <h1 className="b-page-title mb-8 mt-3 text-2xl md:text-3xl">
         <span>Returns</span>
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 mb-5">
+      <div className="mb-5 grid grid-cols-1 md:grid-cols-2 md:gap-10">
         <div className="b-page-content">
-          <strong className="text-16px block mb-3">Returns Form</strong>
-          <p className="block mt-1 mb-3">
+          <strong className="mb-3 block text-16px">Returns Form</strong>
+          <p className="mt-1 mb-3 block">
             We are confident that you will be delighted with your purchases from
             Bedkingdom.co.uk. However, we accept there may be occasions where
             you would wish to return a product to ensure we can deal with your
@@ -56,6 +56,7 @@ const Returns = combineHOC()((props) => {
             </p>
             <p>
               6. Provided the inspection is successful, a refund will be issued
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               in accordance with our T&C's
             </p>
             <p>
@@ -96,7 +97,9 @@ const Returns = combineHOC()((props) => {
           </p>
           <p>
             Most of our products come with a standard 12 month manufacturers
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
             warranty, each with their own T&C's included. If any item(s) that
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
             you have purchased develop a fault, and it's more than 28 working
             days since you received them, then provided your item(s) are within
             their warranty period, you will be entitled to a warranty repair.
@@ -134,6 +137,7 @@ const Returns = combineHOC()((props) => {
             >
               mattress
             </a>{' '}
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
             or pillow this can't be returned for health and hygiene reasons. If
             when goods are inspected we find any of the above has been breached
             we will return the item to you at your expense and no refund will be

@@ -2,7 +2,7 @@ import withMegaMenuData from '@extensions/bed-kingdom/hoc/navigator/withMegaMenu
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const MobileCart = combineHOC(withMegaMenuData)((props) => {
+const MobileCart = combineHOC(withMegaMenuData)(() => {
   return <></>;
 });
 

@@ -22,6 +22,7 @@ const Info = combineHOC(
     handleSubmit,
     register,
     setValue,
+    // eslint-disable-next-line unused-imports/no-unused-vars
     formState: { errors },
   } = useForm();
 
@@ -88,7 +89,7 @@ const Info = combineHOC(
         </h1>
       </UiExtension>
 
-      <div className="b-product-sku-code flex justify-between border-b-1">
+      <div className="b-product-sku-code border-b-1 flex justify-between">
         <span>Sku: {skuProduct}</span>
         <span>
           Product By:{' '}
@@ -100,7 +101,7 @@ const Info = combineHOC(
 
       {props?.state?.product?.stock_status === 'IN_STOCK' && (
         <>
-          <div className="b-product-prices flex justify-between  border-b-1">
+          <div className="b-product-prices border-b-1 flex  justify-between">
             <UiExtension
               uiId="PRODUCT_INFO_PRICE"
               productInfo={productInfoData}

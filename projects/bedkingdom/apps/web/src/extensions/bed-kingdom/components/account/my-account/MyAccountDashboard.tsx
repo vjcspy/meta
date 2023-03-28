@@ -1,20 +1,20 @@
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const MyAccountDashboard = combineHOC()((props) => {
+const MyAccountDashboard = combineHOC()(() => {
   return (
     <div className="b-sidebar-additional">
       <div className="b-block-sidebar">
         <h1 className="b-account-title mb-5 mdm:font-bold">
           <span className="text-26px">My Account</span>
         </h1>
-        <div className="block-dashboard-info mb-6 md:mb-12 x">
-          <div className="block-title border-b border-color-ccc text-20px pb-2 mb-4">
+        <div className="block-dashboard-info x mb-6 md:mb-12">
+          <div className="block-title mb-4 border-b border-color-ccc pb-2 text-20px">
             <strong>Account Information</strong>
           </div>
-          <div className="block-content grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="block-content grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="box-information">
-              <strong className="box-title text-16px mb-2 block">
+              <strong className="box-title mb-2 block text-16px">
                 <span>Contact Information</span>
               </strong>
               <div className="box-content">
@@ -22,7 +22,7 @@ const MyAccountDashboard = combineHOC()((props) => {
               </div>
               <div className="box-actions mt-4 block">
                 <a
-                  className="action edit border-r border-color-ccc mr-2 pr-2 text-main-1979c3"
+                  className="action edit mr-2 border-r border-color-ccc pr-2 text-main-1979c3"
                   href="https://admin.magedemo.co.uk/customer/account/edit/"
                 >
                   <span>Edit</span>
@@ -36,7 +36,7 @@ const MyAccountDashboard = combineHOC()((props) => {
               </div>
             </div>
             <div className="box box-newsletter">
-              <strong className="box-title text-16px mb-2 block">
+              <strong className="box-title mb-2 block text-16px">
                 <span>Newsletters</span>
               </strong>
               <div className="box-content">
@@ -54,18 +54,18 @@ const MyAccountDashboard = combineHOC()((props) => {
           </div>
         </div>
         <div className="block-dashboard-addresses mb-6 md:mb-12">
-          <div className="block-title border-b border-color-ccc text-18px pb-2 mb-4">
+          <div className="block-title mb-4 border-b border-color-ccc pb-2 text-18px">
             <strong>Address Book</strong>
             <a
-              className="action edit text-14px pl-4 text-main-1979c3 cursor-pointer"
+              className="action edit cursor-pointer pl-4 text-14px text-main-1979c3"
               href="https://admin.magedemo.co.uk/customer/address/"
             >
               <span>Manage Addresses</span>
             </a>
           </div>
-          <div className="block-content grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="block-content grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="box box-billing-address">
-              <strong className="box-title text-16px mb-2 block">
+              <strong className="box-title mb-2 block text-16px">
                 <span>Default Billing Address</span>
               </strong>
               <div className="box-content">
@@ -94,7 +94,7 @@ const MyAccountDashboard = combineHOC()((props) => {
               </div>
             </div>
             <div className="box box-shipping-address">
-              <strong className="box-title text-16px mb-2 block">
+              <strong className="box-title mb-2 block text-16px">
                 <span>Default Shipping Address</span>
               </strong>
               <div className="box-content">
@@ -124,11 +124,11 @@ const MyAccountDashboard = combineHOC()((props) => {
             </div>
           </div>
         </div>
-        <div className="block block-dashboard-orders">
-          <div className="block-title border-b border-color-ccc text-20px pb-2 mb-4">
+        <div className="block-dashboard-orders block">
+          <div className="block-title mb-4 border-b border-color-ccc pb-2 text-20px">
             <strong>Recent Orders</strong>
             <a
-              className="action view text-14px pl-4 text-main-1979c3"
+              className="action view pl-4 text-14px text-main-1979c3"
               href="https://admin.magedemo.co.uk/sales/order/history/"
             >
               <span>View All</span>
@@ -138,8 +138,8 @@ const MyAccountDashboard = combineHOC()((props) => {
             <div className="table-wrapper orders-recent">
               <table className="table-order-items w-full" id="my-orders-table">
                 <thead className="mdm:hidden">
-                  <tr className="text-color-222 text-left">
-                    <th scope="col" className="id text-color-222 pl-0">
+                  <tr className="text-left text-color-222">
+                    <th scope="col" className="id pl-0 text-color-222">
                       Order #
                     </th>
                     <th scope="col" className="date text-color-222">
@@ -158,30 +158,30 @@ const MyAccountDashboard = combineHOC()((props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="md:text-15px weight-600">
+                  <tr className="weight-600 md:text-15px">
                     <td
                       data-th="Order #"
-                      className="col id font-bold md:text-16px pt-3 pb-3 pl-0"
+                      className="col id py-3 pl-0 font-bold md:text-16px"
                     >
                       2000103878
                     </td>
-                    <td data-th="Date" className="col date pt-3 pb-3">
+                    <td data-th="Date" className="col date py-3">
                       25/10/2021
                     </td>
-                    <td data-th="Ship To" className="col shipping pt-3 pb-3">
+                    <td data-th="Ship To" className="col shipping py-3">
                       lx binh
                     </td>
-                    <td data-th="Order Total" className="col total pt-3 pb-3">
+                    <td data-th="Order Total" className="col total py-3">
                       <span className="price">£549.99</span>
                     </td>
-                    <td data-th="Status" className="col status pt-3 pb-3">
+                    <td data-th="Status" className="col status py-3">
                       <span className="status-order">Pending</span>
                     </td>
                     <td
                       data-th="Actions"
-                      className="col actions md:text-right pr-0"
+                      className="col actions pr-0 md:text-right"
                     >
-                      <span className="action view border-r border-color-ccc mr-2 pr-2 cursor-pointer underline">
+                      <span className="action view mr-2 cursor-pointer border-r border-color-ccc pr-2 underline">
                         <span>View Order</span>
                       </span>
                       <span className="action order cursor-pointer  underline">
@@ -189,32 +189,32 @@ const MyAccountDashboard = combineHOC()((props) => {
                       </span>
                     </td>
                   </tr>
-                  <tr className="md:text-15px weight-600">
+                  <tr className="weight-600 md:text-15px">
                     <td
                       data-th="Order #"
-                      className="col id font-bold md:text-16px pt-3 pb-3 pl-0"
+                      className="col id py-3 pl-0 font-bold md:text-16px"
                     >
                       2000103878
                     </td>
-                    <td data-th="Date" className="col date pt-3 pb-3">
+                    <td data-th="Date" className="col date py-3">
                       25/10/2021
                     </td>
-                    <td data-th="Ship To" className="col shipping pt-3 pb-3">
+                    <td data-th="Ship To" className="col shipping py-3">
                       lx binh
                     </td>
-                    <td data-th="Order Total" className="col total pt-3 pb-3">
+                    <td data-th="Order Total" className="col total py-3">
                       <span className="price">£549.99</span>
                     </td>
 
-                    <td data-th="Status" className="col status pt-3 pb-3">
+                    <td data-th="Status" className="col status py-3">
                       {/*add class cho 4 trang thai khac nhau*/}
                       <span className="status-order completed">completed</span>
                     </td>
                     <td
                       data-th="Actions"
-                      className="col actions md:text-right pr-0"
+                      className="col actions pr-0 md:text-right"
                     >
-                      <span className="action view border-r border-color-ccc mr-2 pr-2 cursor-pointer underline">
+                      <span className="action view mr-2 cursor-pointer border-r border-color-ccc pr-2 underline">
                         <span>View Order</span>
                       </span>
                       <span className="action order cursor-pointer  underline">
@@ -222,32 +222,32 @@ const MyAccountDashboard = combineHOC()((props) => {
                       </span>
                     </td>
                   </tr>
-                  <tr className="md:text-15px weight-600">
+                  <tr className="weight-600 md:text-15px">
                     <td
                       data-th="Order #"
-                      className="col id font-bold md:text-16px pt-3 pb-3 pl-0"
+                      className="col id py-3 pl-0 font-bold md:text-16px"
                     >
                       2000103878
                     </td>
-                    <td data-th="Date" className="col date pt-3 pb-3">
+                    <td data-th="Date" className="col date py-3">
                       25/10/2021
                     </td>
-                    <td data-th="Ship To" className="col shipping pt-3 pb-3">
+                    <td data-th="Ship To" className="col shipping py-3">
                       lx binh
                     </td>
-                    <td data-th="Order Total" className="col total pt-3 pb-3">
+                    <td data-th="Order Total" className="col total py-3">
                       <span className="price">£549.99</span>
                     </td>
-                    <td data-th="Status" className="col status pt-3 pb-3">
+                    <td data-th="Status" className="col status py-3">
                       <span className="status-order processing">
                         processing
                       </span>
                     </td>
                     <td
                       data-th="Actions"
-                      className="col actions md:text-right pr-0"
+                      className="col actions pr-0 md:text-right"
                     >
-                      <span className="action view border-r border-color-ccc mr-2 pr-2 cursor-pointer underline">
+                      <span className="action view mr-2 cursor-pointer border-r border-color-ccc pr-2 underline">
                         <span>View Order</span>
                       </span>
                       <span className="action order cursor-pointer  underline">
@@ -255,30 +255,30 @@ const MyAccountDashboard = combineHOC()((props) => {
                       </span>
                     </td>
                   </tr>
-                  <tr className="md:text-15px weight-600">
+                  <tr className="weight-600 md:text-15px">
                     <td
                       data-th="Order #"
-                      className="col id font-bold md:text-16px pt-3 pb-3 pl-0"
+                      className="col id py-3 pl-0 font-bold md:text-16px"
                     >
                       2000103878
                     </td>
-                    <td data-th="Date" className="col date pt-3 pb-3">
+                    <td data-th="Date" className="col date py-3">
                       25/10/2021
                     </td>
-                    <td data-th="Ship To" className="col shipping pt-3 pb-3">
+                    <td data-th="Ship To" className="col shipping py-3">
                       lx binh
                     </td>
-                    <td data-th="Order Total" className="col total pt-3 pb-3">
+                    <td data-th="Order Total" className="col total py-3">
                       <span className="price">£549.99</span>
                     </td>
-                    <td data-th="Status" className="col status pt-3 pb-3">
+                    <td data-th="Status" className="col status py-3">
                       <span className="status-order canceled">canceled</span>
                     </td>
                     <td
                       data-th="Actions"
-                      className="col actions md:text-right pr-0 pt-3 pb-3"
+                      className="col actions py-3 pr-0 md:text-right"
                     >
-                      <span className="action view border-r border-color-ccc mr-2 pr-2 cursor-pointer underline">
+                      <span className="action view mr-2 cursor-pointer border-r border-color-ccc pr-2 underline">
                         <span>View Order</span>
                       </span>
                       <span className="action order cursor-pointer  underline">

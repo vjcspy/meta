@@ -1,6 +1,5 @@
 import { withCartDetailActions } from '@vjcspy/r/build/modules/checkout/hoc/cart/withCartDetailActions';
 import { withCheckoutCartData } from '@vjcspy/r/build/modules/checkout/hoc/cart/withCheckoutCartData';
-import { withCouponActions } from '@vjcspy/r/build/modules/checkout/hoc/cart/withCouponActions';
 import { combineHOC } from '@web/ui-extension';
 import clsx from 'clsx';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -54,10 +53,10 @@ const CheckoutCartCoupon = combineHOC(
   }, [props?.state?.cart]);
 
   return (
-    <div className="b-cart-coupon border-color-ccc border-b mb-2 pb-3">
+    <div className="b-cart-coupon mb-2 border-b border-color-ccc pb-3">
       {/*click xoa class hidden duoi b-cart-gift__content*/}
       <div
-        className="b-cart-gift__head flex justify-between pb-2 items-center text-main-2362AA font-bold cursor-pointer"
+        className="b-cart-gift__head flex cursor-pointer items-center justify-between pb-2 font-bold text-main-2362AA"
         onClick={() => {
           setShowDiscount(!showDiscount);
         }}
@@ -84,14 +83,14 @@ const CheckoutCartCoupon = combineHOC(
           <div className="flex">
             <input
               type="text"
-              className="h-36px border border-color-ccc rounded-3 w-full pl-2"
+              className="h-36px w-full rounded-3 border border-color-ccc pl-2"
               disabled={true}
               value={checkCoupon}
             />
             <div className="primary">
               <button
                 type="button"
-                className="action h-36px bg-main-2361aa rounded-3 text-white pl-2 pr-2 whitespace-nowrap -ml-1 rounded-tl-0 rounded-bl-0 "
+                className="action -ml-1 h-36px whitespace-nowrap rounded-3 rounded-l-0 bg-main-2361aa px-2 text-white"
                 value="Cancel Coupon"
                 onClick={() => {
                   cancelCoupon();
@@ -108,12 +107,12 @@ const CheckoutCartCoupon = combineHOC(
             <div className="flex">
               <input
                 type="text"
-                className="h-36px border border-color-ccc rounded-3 w-full pl-2"
+                className="h-36px w-full rounded-3 border border-color-ccc pl-2"
                 {...register('discount', { required: true })}
               />
               <div className="primary">
                 <button
-                  className="action h-36px bg-main-2361aa rounded-3 text-white pl-2 pr-2 whitespace-nowrap -ml-1 rounded-tl-0 rounded-bl-0 "
+                  className="action -ml-1 h-36px whitespace-nowrap rounded-3 rounded-l-0 bg-main-2361aa px-2 text-white"
                   type="submit"
                   value="Apply Discount"
                   disabled={props?.state?.isUpdatingCoupon}

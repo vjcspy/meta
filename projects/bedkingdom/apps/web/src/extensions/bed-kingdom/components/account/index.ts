@@ -2,11 +2,8 @@ import { BEDKINGDOM_ACCOUNT_ADDRESS_CONFIGS } from '@extensions/bed-kingdom/comp
 import { ACCOUNT_FORGOT_PASSWORD_CONFIGS } from '@extensions/bed-kingdom/components/account/forgot-password';
 import { BEDKINGDOM_MYACCOUNT_EXT_CFG } from '@extensions/bed-kingdom/components/account/my-account';
 import { HOME_MY_ORDERS_CONTENT_CFG } from '@extensions/bed-kingdom/components/account/my-orders';
-import {
-  ExtensionConfig,
-  ExtensionCustomizeType,
-  ExtensionType,
-} from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
+import { ExtensionCustomizeType, ExtensionType } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const BEDKINGDOM_ACCOUNT_EXTENSION_CONFIGS: ExtensionConfig[] = [

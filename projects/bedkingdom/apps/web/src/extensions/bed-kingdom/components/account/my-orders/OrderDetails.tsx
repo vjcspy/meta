@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import size from 'lodash/size';
 import moment from 'moment/moment';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const OrderDetails: React.FC = combineHOC(
   withBedKingdomCustomerOrderDetail,
@@ -16,7 +16,6 @@ const OrderDetails: React.FC = combineHOC(
   React.memo((props) => {
     const router = useRouter();
     const { order_number } = router.query;
-    const componentRef = useRef();
     const [activeTab, setActiveTab] = useState('item');
 
     useEffect(() => {
@@ -34,11 +33,11 @@ const OrderDetails: React.FC = combineHOC(
         {props?.state?.isUpdatingTotals && (
           <UiExtension uiId="LOADING_INDICATOR" global={false} />
         )}
-        <h1 className="b-account-title mt-4 mb-5 mdm:font-bold flex items-center">
+        <h1 className="b-account-title mt-4 mb-5 flex items-center mdm:font-bold">
           <span className="text-22px md:text-36px">
             Order # {props?.state?.orderDetail?.number}
           </span>
-          <span className="order-status pt-1 pb-1 pl-4 pr-4 border-2 rounded-3 text-12px uppercase md:inline-block ml-6">
+          <span className="order-status ml-6 rounded-3 border-2 py-1 px-4 text-12px uppercase md:inline-block">
             {props?.state?.orderDetail?.status}
           </span>
         </h1>
@@ -56,7 +55,7 @@ const OrderDetails: React.FC = combineHOC(
         <div className="actions-toolbar order-actions-toolbar mt-4">
           <div className="actions flex justify-between">
             <div
-              className="action order text-color-2362AA cursor-pointer"
+              className="action order cursor-pointer text-color-2362AA"
               onClick={() => {
                 if (
                   typeof props?.actions?.reorderAction === 'function' &&
@@ -126,7 +125,7 @@ const OrderDetails: React.FC = combineHOC(
             <>
               <table className="table-additional-addresses-items w-full">
                 <thead>
-                  <tr className="hidden md:table-row text-left text-color-222 whitespace-nowrap">
+                  <tr className="hidden whitespace-nowrap text-left text-color-222 md:table-row">
                     <th scope="col" className="col firstname pl-0">
                       Product Name
                     </th>
@@ -139,7 +138,7 @@ const OrderDetails: React.FC = combineHOC(
                     <th scope="col" className="col city">
                       Qty
                     </th>
-                    <th scope="col" className="col country text-right pr-0">
+                    <th scope="col" className="col country pr-0 text-right">
                       Subtotal
                     </th>
                   </tr>
@@ -147,10 +146,7 @@ const OrderDetails: React.FC = combineHOC(
                 <tbody>
                   {props?.state?.orderDetail?.items.map((item: any) => (
                     <tr key={item?.id}>
-                      <td
-                        data-th="Name"
-                        className="col firstname pl-0 pb-4 pt-4"
-                      >
+                      <td data-th="Name" className="col firstname py-4 pl-0">
                         <div className="item-options inline-block">
                           <div className="product name product-item-name font-bold">
                             {item?.product_name}
@@ -159,7 +155,7 @@ const OrderDetails: React.FC = combineHOC(
                             item?.entered_options.length > 0 &&
                             item?.entered_options.map((it: any) => (
                               <div key={it?.value}>
-                                <div className="font-bold mt-3 block">
+                                <div className="mt-3 block font-bold">
                                   {it?.label}
                                 </div>
                                 <div>{it?.value} </div>
@@ -169,7 +165,7 @@ const OrderDetails: React.FC = combineHOC(
                             item?.additional_options.length > 0 &&
                             item?.additional_options.map((it: any) => (
                               <div key={it?.value}>
-                                <div className="font-bold mt-3 block">
+                                <div className="mt-3 block font-bold">
                                   {it?.label}
                                 </div>
                                 <div>{it?.value} </div>
@@ -180,7 +176,7 @@ const OrderDetails: React.FC = combineHOC(
                             item?.selected_options.length > 0 &&
                             item?.selected_options.map((it: any) => (
                               <div key={it?.value}>
-                                <div className="font-bold mt-3">
+                                <div className="mt-3 font-bold">
                                   {it?.label}
                                 </div>
                                 <div>{it?.value}</div>
@@ -193,7 +189,7 @@ const OrderDetails: React.FC = combineHOC(
                       </td>
                       <td
                         data-th="Price"
-                        className="col price md:text-16px font-bold"
+                        className="col price font-bold md:text-16px"
                       >
                         <UiExtension
                           uiId="CURRENCY"
@@ -210,7 +206,7 @@ const OrderDetails: React.FC = combineHOC(
                       </td>
                       <td
                         data-th="Subtotal"
-                        className="col subtotal pr-0 md:text-right text-16px font-bold pb-0"
+                        className="col subtotal pr-0 pb-0 text-16px font-bold md:text-right"
                       >
                         <UiExtension
                           uiId="CURRENCY"
@@ -225,7 +221,7 @@ const OrderDetails: React.FC = combineHOC(
                 </tbody>
               </table>
               <div className="order-total pt-5 text-16px">
-                <div className="md:text-right mb-2">
+                <div className="mb-2 md:text-right">
                   Subtotal
                   <span className="price pl-3">
                     <UiExtension
@@ -234,7 +230,7 @@ const OrderDetails: React.FC = combineHOC(
                     />
                   </span>
                 </div>
-                <div className="md:text-right mb-2">
+                <div className="mb-2 md:text-right">
                   Shipping &amp; Handling
                   <span className="price pl-3">
                     <UiExtension
@@ -245,7 +241,7 @@ const OrderDetails: React.FC = combineHOC(
                     />
                   </span>
                 </div>
-                <div className="md:text-right mb-2">
+                <div className="mb-2 md:text-right">
                   Tax
                   <span className="price  pl-3">
                     <UiExtension
@@ -290,13 +286,13 @@ const OrderDetails: React.FC = combineHOC(
               />
             )}
         </div>
-        <div className="block block-order-details-view mt-6 border-t border-color-ccc pt-5">
-          <div className="block-title text-16px mb-4">
+        <div className="block-order-details-view mt-6 block border-t border-color-ccc pt-5">
+          <div className="block-title mb-4 text-16px">
             <strong>Order Information</strong>
           </div>
-          <div className="block-content gap-2 grid md:grid-cols-2 grid-cols-1">
+          <div className="block-content grid grid-cols-1 gap-2 md:grid-cols-2">
             <div className="box box-order-shipping-address mb-3">
-              <strong className="box-title block mb-2">
+              <strong className="box-title mb-2 block">
                 <span>Shipping Address</span>
               </strong>
               <div className="box-content">
@@ -315,13 +311,13 @@ const OrderDetails: React.FC = combineHOC(
               </div>
             </div>
             <div className="box box-order-shipping-method mb-3">
-              <strong className="box-title block mb-2">
+              <strong className="box-title mb-2 block">
                 <span>Shipping Method</span>
               </strong>
               <div className="box-content">Free Delivery - Free </div>
             </div>
             <div className="box box-order-billing-address">
-              <strong className="box-title block mb-2">
+              <strong className="box-title mb-2 block">
                 <span>Billing Address</span>
               </strong>
               <div className="box-content">
@@ -340,7 +336,7 @@ const OrderDetails: React.FC = combineHOC(
               </div>
             </div>
             <div className="box box-order-billing-method">
-              <strong className="box-title block mb-2">
+              <strong className="box-title mb-2 block">
                 <span> Payment Method</span>
               </strong>
               <div className="box-content">

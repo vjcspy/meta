@@ -89,7 +89,7 @@ const MyAccountWishlist = combineHOC(
         <h1 className="b-account-title mb-5 mdm:font-bold">
           <span className="text-26px">My Wish List</span>
         </h1>
-        <div className="b-block-content grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="b-block-content grid grid-cols-2 gap-4 md:grid-cols-3">
           {props.state?.wishlists
             ?.filter((it: any, key: number) => key === 0)
             .map((wishlist: any) => {
@@ -99,19 +99,19 @@ const MyAccountWishlist = combineHOC(
                     uiId="PRODUCT_LISTING_ITEM"
                     product={wishlistItem?.product}
                   />
-                  <div className="box-actions mb-4 md:flex items-center justify-between">
+                  <div className="box-actions mb-4 items-center justify-between md:flex">
                     <div
                       onClick={() => {
                         RouterSingleton.push(
                           `/${wishlistItem?.product?.url_key}.html`
                         );
                       }}
-                      className="action h-40px bg-main-2361aa rounded-3 text-white pl-4 pr-4 whitespace-nowrap md:min-w-125 mdm:w-full mdm:mb-2 font-bold flex items-center justify-center"
+                      className="action flex h-40px items-center justify-center whitespace-nowrap rounded-3 bg-main-2361aa px-4 font-bold text-white md:min-w-125 mdm:mb-2 mdm:w-full"
                     >
                       Add To Cart
                     </div>
                     <div
-                      className="action edit md:ml-3 h-40px bg-red-800 rounded-3 text-white pl-4 pr-4 whitespace-nowrap md:min-w-125 mdm:w-full font-bold flex items-center justify-center"
+                      className="action edit flex h-40px items-center justify-center whitespace-nowrap rounded-3 bg-red-800 px-4 font-bold text-white md:ml-3 md:min-w-125 mdm:w-full"
                       onClick={() => {
                         if (
                           typeof props?.actions?.removeWishlistItem ===

@@ -1,7 +1,7 @@
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const Breadcrumb = combineHOC()((props) => {
+const Breadcrumb = combineHOC()(() => {
   return (
     <section className="breadcrumb-bg">
       <div className="container mx-auto md:px-4">

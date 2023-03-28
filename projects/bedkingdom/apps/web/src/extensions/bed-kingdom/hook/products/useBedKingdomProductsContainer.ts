@@ -1,11 +1,12 @@
 import { useAmLabelProductActions } from '@extensions/bed-kingdom/hook/product/useAmLabelProductActions';
+import { useDispatch, useSelector } from '@main/packages-web-redux';
 import { useResolveProductFilterFromUrl } from '@modules/catalog/util/useResolveProductFilterFromUrl';
-import {
+import type {
   GetCatalogProductsQueryHookResult,
   ProductAttributeFilterInput,
   ProductAttributeSortInput,
-  SortEnum,
 } from '@vjcspy/apollo';
+import { SortEnum } from '@vjcspy/apollo';
 import {
   productsGotData,
   rangePriceFilterAction,
@@ -23,7 +24,6 @@ import { filtersToProductAttributeFilterInput } from '@vjcspy/r/build/modules/ca
 import R_CATALOG from '@vjcspy/r/build/modules/catalog/values/extendable/R_CATALOG';
 import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from '@main/packages-web-redux';
 
 export const useBedKingdomProductsContainer = (
   productsQueryHook: (
@@ -104,9 +104,9 @@ export const useBedKingdomProductsContainer = (
     if (productsQuery?.data?.products) {
       dispatch(
         productsGotData({
-          products: productsQuery.data.products?.items!,
-          aggregations: productsQuery.data.products?.aggregations!,
-          pageInfo: productsQuery.data.products?.page_info!,
+          products: productsQuery.data.products?.items as any,
+          aggregations: productsQuery.data.products?.aggregations as any,
+          pageInfo: productsQuery.data.products?.page_info as any,
           mergeWithExisting: true,
         })
       );

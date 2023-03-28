@@ -39,7 +39,7 @@ const CategoryHorizontal: React.FC = combineHOC(withHomePageCategoryData)(
         <section className="b-section__productTabs">
           <div className="container mx-auto md:px-4">
             <div className="b-listingTab__title">
-              <ul className="b-listingTab__titleLists justify-center list-group-horizontal">
+              <ul className="b-listingTab__titleLists list-group-horizontal justify-center">
                 {props.state.dataCategories.map((item: any, index: number) => (
                   <li
                     className={`list-group-item tab-item${index + 1} ${

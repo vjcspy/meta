@@ -1,6 +1,6 @@
 import { BEDKINGDOM_CART_HEADER_ITEM_EXT_CFG } from '@extensions/bed-kingdom/components/header/cart';
 import { BEDKINGDOM_MOBILE_SEARCH_HEADER_EXT_CFG } from '@extensions/bed-kingdom/components/header/search-bar';
-import { ExtensionConfig } from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const BEDKINGDOM_HEADER_EXT_CFG: ExtensionConfig[] = [

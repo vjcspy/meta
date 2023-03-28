@@ -1,8 +1,5 @@
-import {
-  ExtensionConfig,
-  ExtensionCustomizeType,
-  ExtensionType,
-} from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
+import { ExtensionCustomizeType, ExtensionType } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const BEDKING_ROOT_EXTENSION_CONFIG: ExtensionConfig[] = [

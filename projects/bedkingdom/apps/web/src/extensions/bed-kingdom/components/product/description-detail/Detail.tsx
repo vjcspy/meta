@@ -1,7 +1,7 @@
 import { withBedkingdomProductAttachmentData } from '@extensions/bed-kingdom/hoc/product/withBedkingdomProductAttachmentData';
 import { withOnlyCurrentProductState } from '@extensions/bed-kingdom/hoc/product/withOnlyCurrentProductState';
 import { combineHOC } from '@web/ui-extension';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const Detail = combineHOC(
   withOnlyCurrentProductState,

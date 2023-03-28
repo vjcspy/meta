@@ -27,7 +27,7 @@ const ResetPasswordForm: React.FC<any> = combineHOC(withAccountResetPassword)(
       <section className="b-customer-page mx-auto px-4">
         <div className="grid md:grid-cols-2 md:gap-20">
           <div className="form-forgot mb-4">
-            <h2 className="b-customer__title text-22px mdm:text-18px text-black font-bold mb-6">
+            <h2 className="b-customer__title mb-6 text-22px font-bold text-black mdm:text-18px">
               Reset your password
             </h2>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -78,7 +78,7 @@ const ResetPasswordForm: React.FC<any> = combineHOC(withAccountResetPassword)(
                     <button
                       type="submit"
                       // disabled={props?.state?.loadingToken}
-                      className="btn-primary mdm:h-40px h-44 bg-color-2362AA white text-16px rounded text-white text-center w-full font-bold mt-4"
+                      className="btn-primary white mt-4 h-44 w-full rounded bg-color-2362AA text-center text-16px font-bold text-white mdm:h-40px"
                     >
                       Set a New Password
                     </button>

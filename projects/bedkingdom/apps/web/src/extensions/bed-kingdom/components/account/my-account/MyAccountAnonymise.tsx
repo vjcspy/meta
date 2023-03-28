@@ -13,12 +13,12 @@ const MyAccountAnonymise = combineHOC(withBedKingdomAccountActions)((props) => {
           Are you sure you want to delete all information we have on record for
           you?
         </p>
-        <p className="block mt-3">
+        <p className="mt-3 block">
           After this you will no longer be able to login to your account,
           retrieve your account or view order and invoice history.
         </p>
         <div
-          className="text-color-2362AA mt-5 cursor-pointer"
+          className="mt-5 cursor-pointer text-color-2362AA"
           onClick={() => {
             if (
               typeof props?.actions?.gdprAnonymisePerformActions === 'function'

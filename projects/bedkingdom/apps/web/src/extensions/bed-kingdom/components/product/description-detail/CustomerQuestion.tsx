@@ -128,7 +128,7 @@ const CustomerQuestion = combineHOC(
                 <button
                   type="button"
                   title="Ask a Question"
-                  className="btn-default action border-0 pl-3 pr-3"
+                  className="btn-default action border-0 px-3"
                   onClick={() => {
                     setShowFormQuestion(!showFormQuestion);
                   }}
@@ -202,7 +202,7 @@ const CustomerQuestion = combineHOC(
                         )}
                       </div>
                     </div>
-                    <div className="field mt-2 mb-2">
+                    <div className="field my-2">
                       <label
                         className="label pl-0"
                         htmlFor="amfaq-notification"
@@ -225,7 +225,7 @@ const CustomerQuestion = combineHOC(
                     <>
                       <button
                         type="submit"
-                        className="btn-default border-none submit pl-3 pr-3"
+                        className="btn-default submit border-none px-3"
                       >
                         Send the Question
                       </button>

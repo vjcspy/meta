@@ -22,7 +22,7 @@ const SubscriberContent: React.FC = combineHOC(withSubscriberNewsletterActions)(
       <>
         <section className="b-section__newleter">
           <div className="container mx-auto md:px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 row-roleBestReview">
+            <div className="row-roleBestReview grid grid-cols-1 lg:grid-cols-2">
               <div className="b-bestReviews">
                 <div className="b-bestReviews_wrap md:flex">
                   <div className="b-bestReviews__intro">
@@ -85,7 +85,7 @@ const SubscriberContent: React.FC = combineHOC(withSubscriberNewsletterActions)(
                     <button
                       type="submit"
                       className={clsx(
-                        'b-blockBtn--action p__btn-loading p-btn p-btn__blue w-100 d-block text-white d-flex align-items-center justify-content-center font-weight-bold position-relative border-none',
+                        'b-blockBtn--action p__btn-loading p-btn p-btn__blue w-100 d-block d-flex align-items-center justify-content-center font-weight-bold position-relative border-none text-white',
                         props?.states?.statusButton &&
                           'btn-loader btn-loader-active'
                       )}

@@ -1,9 +1,5 @@
 import { withAmastyPageContainer } from '@extensions/bed-kingdom/hoc/amasty-page/withAmastyPage';
-import {
-  combineHOC,
-  UiExtension,
-  useStackComponent,
-} from '@web/ui-extension';
+import { combineHOC, UiExtension, useStackComponent } from '@web/ui-extension';
 import React from 'react';
 
 const AmastyLandingPageContainer = combineHOC(withAmastyPageContainer)(

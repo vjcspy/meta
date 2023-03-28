@@ -1,8 +1,6 @@
-import { useResponsive } from '@modules/ui/hook/useResponsive';
 import { withCurrentProductState } from '@vjcspy/r/build/modules/catalog/hoc/product/withCurrentProductState';
 import { withToggleShowCustomizableOptions } from '@vjcspy/r/build/modules/catalog/hoc/product/withToggleShowCustomizableOptions';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import clsx from 'clsx';
 import React, { useRef } from 'react';
 
 const CustomizableOptions = combineHOC(
@@ -10,7 +8,6 @@ const CustomizableOptions = combineHOC(
   withToggleShowCustomizableOptions
 )((props) => {
   const toggleShowElemRef = useRef<any>();
-  const { isMobile } = useResponsive();
 
   // useEffect(() => {
   //   if (

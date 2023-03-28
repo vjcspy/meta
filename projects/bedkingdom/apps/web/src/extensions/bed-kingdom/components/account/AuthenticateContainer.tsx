@@ -5,7 +5,6 @@ import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import {
   combineHOC,
   UiExtension,
-  useExtAdditionalData,
   useExtensionForHook,
 } from '@web/ui-extension';
 import React, { useEffect } from 'react';
@@ -29,8 +28,6 @@ const AuthenticateContainer: React.FC = combineHOC(
       props.state?.accountState?.token,
     ]);
 
-    const { data: title } = useExtAdditionalData(props, 'title');
-
     if (
       !props.state?.accountState?.isResolvedCustomerState ||
       !!props.state?.accountState?.token
@@ -41,7 +38,7 @@ const AuthenticateContainer: React.FC = combineHOC(
     return (
       <div className="block-customer-login mb-5 lg:mb-10">
         <div className="form-login mb-4">
-          <h2 className="b-customer__title text-22px mdm:text-18px text-black font-bold mb-6">
+          <h2 className="b-customer__title mb-6 text-22px font-bold text-black mdm:text-18px">
             Login Customers
           </h2>
           {CONTENT}

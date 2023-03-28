@@ -1,8 +1,5 @@
-import {
-  ExtensionConfig,
-  ExtensionCustomizeType,
-  ExtensionType,
-} from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
+import { ExtensionCustomizeType, ExtensionType } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const BED_KINGDOM_BRAND_DETAIL_EXT_CFG: ExtensionConfig[] = [

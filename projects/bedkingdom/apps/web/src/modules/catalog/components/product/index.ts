@@ -1,5 +1,5 @@
 import { PRODUCT_OPTIONS_EXT_CFG } from '@modules/catalog/components/product/option-type';
-import { ExtensionConfig } from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const PRODUCT_EXT_CFG: ExtensionConfig[] = [

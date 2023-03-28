@@ -1,4 +1,4 @@
-import { ExtensionConfig } from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
 
 import { PCMS_PAGE_EXTENSION_CONFIG } from './cms-page';
 import { ONE_COLUMN_EXTENSION_CONFIG } from './one-column';

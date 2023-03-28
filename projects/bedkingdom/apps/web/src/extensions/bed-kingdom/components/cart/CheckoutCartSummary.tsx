@@ -1,11 +1,8 @@
 import { withMgtCheckoutActions } from '@extensions/bed-kingdom/hoc/checkout/withMgtCheckoutActions';
-import BED_KINGDOM_COMMON from '@extensions/bed-kingdom/values/BED_KINGDOM_COMMON';
-import ROUTES from '@values/extendable/ROUTES';
 import { withCustomer } from '@vjcspy/r/build/modules/account/hoc/withCustomer';
 import { withCheckoutCartData } from '@vjcspy/r/build/modules/checkout/hoc/cart/withCheckoutCartData';
-import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 const CheckoutCartSummary = combineHOC(
   withCheckoutCartData,
@@ -53,13 +50,13 @@ const CheckoutCartSummary = combineHOC(
   }, [props?.state?.cart]);
 
   return (
-    <div className="rounded-20 shadow-300 p-5 mb-3">
-      <h3 className="b-summary-title text-22px text-left block font-bold border-b w-full border-color-ccc mb-3 pb-2">
+    <div className="mb-3 rounded-20 p-5 shadow-300">
+      <h3 className="b-summary-title mb-3 block w-full border-b border-color-ccc pb-2 text-left text-22px font-bold">
         Summary
       </h3>
       <UiExtension uiId="CHECKOUT_CART_GIFT" />
       <UiExtension uiId="CHECKOUT_CART_COUPON" />
-      <div className="b-totals-sub flex justify-between items-center pt-2 pb-2">
+      <div className="b-totals-sub flex items-center justify-between py-2">
         <span className="sub-title font-bold">Subtotal</span>
         <span className="amount">
           <UiExtension
@@ -71,7 +68,7 @@ const CheckoutCartSummary = combineHOC(
         </span>
       </div>
       {checkCoupon && props?.state?.cart?.prices?.discounts && (
-        <div className="b-totals-sub flex justify-between items-center pt-2 pb-2">
+        <div className="b-totals-sub flex items-center justify-between py-2">
           <span className="sub-title font-bold">Discount({checkCoupon})</span>
           <span className="amount">
             -
@@ -85,7 +82,7 @@ const CheckoutCartSummary = combineHOC(
         </div>
       )}
       {checkGiftCart && (
-        <div className="b-totals-sub flex justify-between items-center pt-2 pb-2">
+        <div className="b-totals-sub flex items-center justify-between py-2">
           <span className="sub-title font-bold">
             Gift Card ({checkGiftCart})
           </span>
@@ -101,7 +98,7 @@ const CheckoutCartSummary = combineHOC(
           </span>
         </div>
       )}
-      <div className="b-tax-sub flex justify-between items-center pt-2 pb-2">
+      <div className="b-tax-sub flex items-center justify-between py-2">
         <span className="sub-title font-bold">VAT</span>
         {props?.state?.cart?.prices?.applied_taxes &&
           Array.isArray(props?.state?.cart?.prices?.applied_taxes) &&
@@ -117,7 +114,7 @@ const CheckoutCartSummary = combineHOC(
             </span>
           )}
       </div>
-      <div className="b-grand-totals text-18px text-left block font-bold border-t w-full border-color-ccc pt-3 mt-3 mb-8 flex justify-between items-center">
+      <div className="b-grand-totals mt-3 mb-8 flex w-full items-center justify-between border-t border-color-ccc pt-3 text-left text-18px font-bold">
         <span className="sub-title font-bold">Order Total</span>
         <span className="price font-bold">
           <UiExtension

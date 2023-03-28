@@ -1,11 +1,10 @@
-import { useImageSizeBaseOnCfg } from '@modules/ui/hook/useImageSizeBaseOnCfg';
 import { withRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hoc/withRouterWithStoreActions';
 import { combineHOC, UiExtension } from '@web/ui-extension';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const ProductListingItemSimple: React.FC<{ product: any }> = combineHOC(
-    withRouterWithStoreActions
+  withRouterWithStoreActions
 )((props) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const imgSrc = isMobile
@@ -18,17 +17,6 @@ const ProductListingItemSimple: React.FC<{ product: any }> = combineHOC(
   }, []);
 
   const mediaRef = useRef<any>();
-
-  const currentWidth = useMemo(() => {
-    return mediaRef?.current?.offsetWidth;
-  }, [mediaRef.current]);
-
-  const { width, height } = useImageSizeBaseOnCfg(
-    ['product', 'default_image_w_h'],
-    undefined,
-    currentWidth,
-    undefined
-  );
 
   return (
     <div

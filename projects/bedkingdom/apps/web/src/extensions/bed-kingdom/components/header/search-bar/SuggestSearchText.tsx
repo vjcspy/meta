@@ -8,6 +8,7 @@ import React, { useCallback } from 'react';
 const SuggestSearchText = combineHOC(withRouterWithStoreActions)(
   // eslint-disable-next-line react/display-name
   React.memo((props) => {
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const goToPage = useCallback((string: any) => {
       if (string) {
         RouterSingleton.push(`${ROUTES.r('CATALOG_SEARCH')}/?q=${string}`);

@@ -1,6 +1,6 @@
 import { combineHOC, useExtensionForHook } from '@web/ui-extension';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const DefaultRoot = combineHOC()(
   React.memo((props) => {

@@ -63,6 +63,7 @@ module.exports = {
         ],
         "@typescript-eslint/no-explicit-any": "off", // Cho phep su dung any
         "no-prototype-builtins": "off",
+        "@next/next/no-html-link-for-pages": "off",
       }
     },
     // Configuration for testing

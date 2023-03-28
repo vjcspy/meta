@@ -5,7 +5,7 @@ import React from 'react';
 
 const BreadCrumbs = combineHOC(
   withBedKingdomCategoryData,
-    withRouterWithStoreActions
+  withRouterWithStoreActions
 )((props) => {
   if (!props.category) {
     return null;

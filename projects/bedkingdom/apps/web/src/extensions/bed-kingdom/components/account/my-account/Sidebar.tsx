@@ -5,14 +5,14 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
-const Sidebar = combineHOC()((props) => {
+const Sidebar = combineHOC()(() => {
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useState(false);
 
   return (
     <div className="b-sidebar-main">
       <div
-        className="block-collapsible-nav-title flex justify-between items-center md:hidden -ml-4 -mr-4 pl-4 pr-4 bg-color-f5f5f5 pt-3 pb-3  text-18px"
+        className="block-collapsible-nav-title -mx-4 flex items-center justify-between bg-color-f5f5f5 px-4 py-3 text-18px md:hidden"
         onClick={() => {
           setActiveMenu(!activeMenu);
         }}
@@ -34,7 +34,7 @@ const Sidebar = combineHOC()((props) => {
       {/*trong mobile click ben tren nay thi remove class hidden ben duoi*/}
       <div
         className={clsx(
-          'b-collapsible-nav md:block bg-color-f5f5f5 mdm:-ml-4 mdm:-mr-4 mdm:mb-4',
+          'b-collapsible-nav bg-color-f5f5f5 md:block mdm:-mx-4 mdm:mb-4',
           !activeMenu && 'hidden'
         )}
       >

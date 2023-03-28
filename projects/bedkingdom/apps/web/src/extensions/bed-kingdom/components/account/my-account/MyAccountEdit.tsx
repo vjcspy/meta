@@ -1,9 +1,9 @@
 import { withBedKingdomAccountActions } from '@extensions/bed-kingdom/hoc/account/withBedKingdomAccountActions';
 import { withCustomer } from '@vjcspy/r/build/modules/account/hoc/withCustomer';
-import { combineHOC, UiExtension } from '@web/ui-extension';
+import { combineHOC } from '@web/ui-extension';
 import clsx from 'clsx';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 const MyAccountEdit = combineHOC(
   withCustomer,
@@ -105,10 +105,10 @@ const MyAccountEdit = combineHOC(
       </h1>
       <form>
         <div className="block-dashboard-info mb-6 md:mb-12">
-          <div className="block-content grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="block-content grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="box-information">
               <div className="form-input required mb-6">
-                <label className="label font-bold mb-2 block b-checkout__label">
+                <label className="label b-checkout__label mb-2 block font-bold">
                   <span>First Name</span>
                 </label>
                 <div className="control">
@@ -120,7 +120,7 @@ const MyAccountEdit = combineHOC(
                     })}
                     max={50}
                     title="First Name"
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                 </div>
                 {errors.firstname && (
@@ -130,7 +130,7 @@ const MyAccountEdit = combineHOC(
                 )}
               </div>
               <div className="form-input required mb-6">
-                <label className="label font-bold mb-2 block b-checkout__label">
+                <label className="label b-checkout__label mb-2 block font-bold">
                   <span>Last Name</span>
                 </label>
                 <div className="control">
@@ -142,7 +142,7 @@ const MyAccountEdit = combineHOC(
                     })}
                     max={50}
                     title="Last Name"
-                    className="input-text w-full h-40px "
+                    className="input-text h-40px w-full "
                   />
                 </div>
                 {errors.lastname && (
@@ -157,7 +157,7 @@ const MyAccountEdit = combineHOC(
               {canEditEmail && (
                 <>
                   <div className="form-input required mb-6">
-                    <label className="label font-bold mb-2 block b-checkout__label">
+                    <label className="label b-checkout__label mb-2 block font-bold">
                       <span>Email</span>
                     </label>
                     <div className="control">
@@ -171,7 +171,7 @@ const MyAccountEdit = combineHOC(
                           ),
                         })}
                         max={50}
-                        className="input-text w-full h-40px "
+                        className="input-text h-40px w-full "
                       />
                     </div>
                     {errors.email && (
@@ -181,7 +181,7 @@ const MyAccountEdit = combineHOC(
                     )}
                   </div>
                   <div className="form-input required mb-6">
-                    <label className="label font-bold mb-2 block b-checkout__label">
+                    <label className="label b-checkout__label mb-2 block font-bold">
                       <span>Current Password</span>
                     </label>
                     <div className="control">
@@ -193,7 +193,7 @@ const MyAccountEdit = combineHOC(
                           minLength: 8,
                         })}
                         max={50}
-                        className="input-text w-full h-40px "
+                        className="input-text h-40px w-full "
                       />
                     </div>
                     {errors.password && (
@@ -208,7 +208,7 @@ const MyAccountEdit = combineHOC(
                 <>
                   {canEditPassword !== canEditEmail && (
                     <div className="form-input required mb-6">
-                      <label className="label font-bold mb-2 block b-checkout__label">
+                      <label className="label b-checkout__label mb-2 block font-bold">
                         <span>Current Password</span>
                       </label>
                       <div className="control">
@@ -220,7 +220,7 @@ const MyAccountEdit = combineHOC(
                             minLength: 8,
                           })}
                           max={50}
-                          className="input-text w-full h-40px "
+                          className="input-text h-40px w-full "
                         />
                       </div>
                       {errors.password && (
@@ -231,7 +231,7 @@ const MyAccountEdit = combineHOC(
                     </div>
                   )}
                   <div className="form-input required mb-6">
-                    <label className="label font-bold mb-2 block b-checkout__label">
+                    <label className="label b-checkout__label mb-2 block font-bold">
                       <span>New Password</span>
                     </label>
                     <div className="control">
@@ -243,7 +243,7 @@ const MyAccountEdit = combineHOC(
                           minLength: 8,
                         })}
                         max={50}
-                        className="input-text w-full h-40px "
+                        className="input-text h-40px w-full "
                         onChange={(val) => {
                           setNewPassword(val?.target?.value.length);
                           setPasswordVadility({
@@ -266,19 +266,19 @@ const MyAccountEdit = combineHOC(
                     Password Strength:
                     {/*neu strong thay class text-red-600 = text-green-600 thay text- no pass theo cac trang thai*/}
                     {newPassword === 0 ? (
-                      <span className="text-red-600 font-bold pl-2">
+                      <span className="pl-2 font-bold text-red-600">
                         No Password
                       </span>
                     ) : (
                       <span
-                        className={`font-bold pl-2 ${textStrength?.highlightClass}`}
+                        className={`pl-2 font-bold ${textStrength?.highlightClass}`}
                       >
                         {textStrength?.textShow}
                       </span>
                     )}
                   </div>
                   <div className="form-input required mb-6">
-                    <label className="label font-bold mb-2 block b-checkout__label">
+                    <label className="label b-checkout__label mb-2 block font-bold">
                       <span>Confirm New Password</span>
                     </label>
                     <div className="control">
@@ -292,7 +292,7 @@ const MyAccountEdit = combineHOC(
                             'Passwords dont match',
                         })}
                         max={50}
-                        className="input-text w-full h-40px "
+                        className="input-text h-40px w-full "
                       />
                     </div>
                     {errors.confirmNewPassword && (
@@ -318,7 +318,7 @@ const MyAccountEdit = combineHOC(
                   defaultChecked={canEditEmail}
                   onChange={(e) => setCanEditEmail(e.target.checked)}
                 />
-                <label className="label pl-3 relative" htmlFor="change-email">
+                <label className="label relative pl-3" htmlFor="change-email">
                   <span>Change Email</span>
                 </label>
               </div>
@@ -335,7 +335,7 @@ const MyAccountEdit = combineHOC(
                   onChange={(e) => setCanEditPassword(e.target.checked)}
                 />
                 <label
-                  className="label pl-3 relative"
+                  className="label relative pl-3"
                   htmlFor="change-password"
                 >
                   <span>Change Password</span>
@@ -353,7 +353,7 @@ const MyAccountEdit = combineHOC(
                 />
                 <label
                   htmlFor="assistance_allowed_checkbox"
-                  className="label pl-3 relative"
+                  className="label relative pl-3"
                 >
                   <span>Allow remote shopping assistance</span>
                 </label>
@@ -362,7 +362,7 @@ const MyAccountEdit = combineHOC(
                 type="button"
                 onClick={handleSubmit(onSubmit)}
                 className={clsx(
-                  'btn btn-default mt-8 pl-8 pr-8',
+                  'btn btn-default mt-8 px-8',
                   props?.state?.isLoadingState?.resetPassword &&
                     'btn-loader btn-loader-active'
                 )}

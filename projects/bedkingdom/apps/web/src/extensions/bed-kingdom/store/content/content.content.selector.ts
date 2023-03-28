@@ -1,4 +1,4 @@
-import { BedContentState } from '@extensions/bed-kingdom/store/content/content.content.state';
+import type { BedContentState } from '@extensions/bed-kingdom/store/content/content.content.state';
 
 export const selectTypeLisData = (state: {
   bed_king: { content: BedContentState };

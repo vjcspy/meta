@@ -3,7 +3,7 @@ import { useUiConfigData } from '@vjcspy/r/build/modules/content/hook/useUiConfi
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const useBrandListContainer = () => {
-  const { data, loading, refetch } = useGetBedkingdomBrandListQuery({
+  const { data, refetch } = useGetBedkingdomBrandListQuery({
     fetchPolicy: 'cache-and-network',
   });
 
@@ -26,11 +26,12 @@ export const useBrandListContainer = () => {
             key !== filter['char'] &&
             filter['char'] !== 'all'
           ) {
+            //EMPTY
           } else {
             if (typeof pre[key] !== 'object') {
               pre[key] = [];
             }
-            let curData = {
+            const curData = {
               ...cur,
               image:
                 cur && cur['image']

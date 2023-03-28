@@ -2,11 +2,11 @@ import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const CheckoutHeader = combineHOC()((props) => {
+const CheckoutHeader = combineHOC()(() => {
   return (
     <div className="b-checkout-heading">
       <div
-        className="b-checkout-logo text-center mt-3 mb-3"
+        className="b-checkout-logo my-3 text-center"
         onClick={() => RouterSingleton.push('/home')}
       >
         <img

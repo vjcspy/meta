@@ -8,7 +8,7 @@ const InfiniteScrollLoading = React.memo<{
   }
 
   return (
-    <div className="b-loading text-center mx-auto w-full">
+    <div className="b-loading mx-auto w-full text-center">
       <div className="lds-ellipsis">
         <div></div>
         <div></div>

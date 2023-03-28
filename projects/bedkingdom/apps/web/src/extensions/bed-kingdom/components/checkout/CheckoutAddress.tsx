@@ -1,16 +1,15 @@
-import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC } from '@web/ui-extension';
 import React from 'react';
 
-const CheckoutAddress = combineHOC()((props) => {
+const CheckoutAddress = combineHOC()(() => {
   return (
     <div className="b-checkout-wrap border border-color-e6e6e6 p-4">
-      <span className="b-step-title flex items-center text-26px mb-3">
+      <span className="b-step-title mb-3 flex items-center text-26px">
         <span>1</span>Shipping Address
       </span>
       <div className="b-control _with-tooltip relative">
         <input
-          className="b-input-text h-42px border border-color-ccc pl-2 w-full"
+          className="b-input-text h-42px w-full border border-color-ccc pl-2"
           type="email"
           name="username"
           placeholder="Email Address"
@@ -18,7 +17,7 @@ const CheckoutAddress = combineHOC()((props) => {
         {/*hover add class active*/}
         <div className="field-tooltip">
           <span className="label">
-            <span className="absolute right-3 w-20 h-20 text-color-666 cursor-pointer">
+            <span className="absolute right-3 h-20 w-20 cursor-pointer text-color-666">
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -41,7 +40,7 @@ const CheckoutAddress = combineHOC()((props) => {
             Well send your order confirmation here.
           </div>
         </div>
-        <span className="text-color-666 mt-2 block mb-3">
+        <span className="mt-2 mb-3 block text-color-666">
           You can create an account after checkout.
         </span>
       </div>
@@ -58,7 +57,7 @@ const CheckoutAddress = combineHOC()((props) => {
         </label>
       </div>
       <div className="b-shipping-new-address-form mb-4">
-        <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <div className="b-form mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
           <input
             className="input-text"
             type="text"
@@ -66,7 +65,7 @@ const CheckoutAddress = combineHOC()((props) => {
           />
           <input className="input-text" type="text" placeholder="Last Name *" />
         </div>
-        <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <div className="b-form mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
           <input className="input-text" type="text" placeholder="stal Code *" />
           <input
             className="input-text"
@@ -76,12 +75,12 @@ const CheckoutAddress = combineHOC()((props) => {
         </div>
         <button
           type="button"
-          className="btn-default text-14px w-full bg-color-6bc85e h-42px hover:opacity-80"
+          className="btn-default h-42px w-full bg-color-6bc85e text-14px hover:opacity-80"
         >
           <span>Click To Find Address</span>
         </button>
         <div className="b-street">
-          <div className="b-checkout__label mt-4 text-14px text-center mb-4">
+          <div className="b-checkout__label my-4 text-center text-14px">
             Street Address
           </div>
           <div className="b-form mb-4">
@@ -105,7 +104,7 @@ const CheckoutAddress = combineHOC()((props) => {
               placeholder="Street Address: Line 3 *"
             />
           </div>
-          <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+          <div className="b-form mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
             <input className="input-text" type="text" placeholder="County" />
             <input
               className="input-text"
@@ -113,7 +112,7 @@ const CheckoutAddress = combineHOC()((props) => {
               placeholder="Town / City *"
             />
           </div>
-          <div className="b-form grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+          <div className="b-form mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
             <input
               className="input-text"
               type="text"
@@ -122,7 +121,7 @@ const CheckoutAddress = combineHOC()((props) => {
           </div>
         </div>
       </div>
-      <div className="b-step-title flex items-center text-26px mb-3 mt-5">
+      <div className="b-step-title mb-3 mt-5 flex items-center text-26px">
         <span>2</span>Billing Address
       </div>
       <div className="b-choice b-checkbox-form field mb-4 mt-3">

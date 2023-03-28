@@ -1,4 +1,4 @@
-import { useUrlPath } from '@vjcspy/chitility/build/hook/useUrlPath';
+import { useUrlPath } from '@main/packages-web-storefront/src/modules/router/hook/useUrlPath';
 
 export const useCheckoutStepUrl = () => {
   const { pathname } = useUrlPath();

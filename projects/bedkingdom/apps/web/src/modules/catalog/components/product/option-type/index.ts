@@ -1,6 +1,6 @@
 import { PRODUCT_TYPE_OPTION_CONFIGURABLE_OPTIONS_CPT } from '@modules/catalog/components/product/option-type/configurable-options';
 import { PRODUCT_TYPE_OPTION_CUSTOMIZABLE_OPTIONS_CPT } from '@modules/catalog/components/product/option-type/customizable-options';
-import { ExtensionConfig } from '@web/ui-extension';
+import type { ExtensionConfig } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 
 export const PRODUCT_OPTIONS_EXT_CFG: ExtensionConfig[] = [

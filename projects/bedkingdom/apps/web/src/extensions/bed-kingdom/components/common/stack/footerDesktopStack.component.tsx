@@ -1,8 +1,5 @@
-import {
-  ExtensionDataConfig,
-  UiExtension,
-  useStackComponent,
-} from '@web/ui-extension';
+import type { ExtensionDataConfig } from '@web/ui-extension';
+import { UiExtension, useStackComponent } from '@web/ui-extension';
 import React from 'react';
 
 const FooterDesktopStackComponent = React.memo<{

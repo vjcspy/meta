@@ -17,7 +17,7 @@ import Slider from 'react-slick';
 
 const CategoryVertical: React.FC = combineHOC(
   withHomePageCategoryData,
-    withRouterWithStoreActions
+  withRouterWithStoreActions
 )(
   React.memo((props) => {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -286,7 +286,7 @@ const CategoryVertical: React.FC = combineHOC(
               >
                 <div className="b-categoryRole__sideListLink">
                   {iconTabVertical(index + 1)}
-                  <span className="md:block hidden">{item?.name}</span>
+                  <span className="hidden md:block">{item?.name}</span>
                 </div>
               </li>
             ))}

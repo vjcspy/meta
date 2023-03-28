@@ -77,7 +77,7 @@ const CheckoutGift = combineHOC(
     <div className="b-gift-code">
       {/*click vao title add class active ben duoi*/}
       <div
-        className="b-code-title flex items-center mb-2 font-bold"
+        className="b-code-title mb-2 flex items-center font-bold"
         onClick={() => {
           setShowGift(!showGift);
         }}
@@ -113,13 +113,13 @@ const CheckoutGift = combineHOC(
           {errors.gift && (
             <span className="mt-2 text-red-700">This is a required field.</span>
           )}
-          <div className="flex mt-5">
+          <div className="mt-5 flex">
             {checkGiftCart ? (
               <button
                 type="submit"
                 disabled={props?.state?.isUpdatingCoupon}
                 onClick={handleSubmit(onSubmitGift)}
-                className="btn-default bg-color-6bc85e h-40px rounded-3 hover:opacity-80 text-14px pl-3 pr-3 whitespace-nowrap mr-1"
+                className="btn-default mr-1 h-40px whitespace-nowrap rounded-3 bg-color-6bc85e px-3 text-14px hover:opacity-80"
               >
                 Remove Gift Card
               </button>
@@ -128,7 +128,7 @@ const CheckoutGift = combineHOC(
                 type="submit"
                 disabled={props?.state?.isUpdatingCoupon}
                 onClick={handleSubmit(onSubmitGift)}
-                className="btn-default bg-color-6bc85e h-40px rounded-3 hover:opacity-80 text-14px pl-3 pr-3 whitespace-nowrap mr-1"
+                className="btn-default mr-1 h-40px whitespace-nowrap rounded-3 bg-color-6bc85e px-3 text-14px hover:opacity-80"
               >
                 Add Gift Card
               </button>
@@ -137,7 +137,7 @@ const CheckoutGift = combineHOC(
             <button
               type="submit"
               onClick={handleSubmit(onSubmitCheckGift)}
-              className="btn-default bg-color-6bc85e h-40px rounded-3 hover:opacity-80 ml-1 text-14px pl-3 pr-3 whitespace-nowrap"
+              className="btn-default ml-1 h-40px whitespace-nowrap rounded-3 bg-color-6bc85e px-3 text-14px hover:opacity-80"
             >
               Check Gift Card Status
             </button>

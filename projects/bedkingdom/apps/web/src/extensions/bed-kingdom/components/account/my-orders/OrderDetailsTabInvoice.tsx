@@ -9,7 +9,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
     return (
       <>
         <div className="actions-toolbar">
-          <span className="action print text-color-2362AA cursor-pointer">
+          <span className="action print cursor-pointer text-color-2362AA">
             <ReactToPrint
               trigger={() => <span>Print All Invoices</span>}
               content={() => componentRef.current}
@@ -19,13 +19,13 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
         {props?.invoices.map((invoice: any) => (
           <div key={invoice?.number} ref={componentRef}>
             <div
-              className="order-title block mb-3"
+              className="order-title mb-3 block"
               style={{ padding: '60px 60px 0' }}
             >
-              <strong className="text-22px pr-6">
+              <strong className="pr-6 text-22px">
                 Invoice #{invoice?.number}
               </strong>
-              <span className="action print text-color-2362AA pl-4 cursor-pointer">
+              <span className="action print cursor-pointer pl-4 text-color-2362AA">
                 <ReactToPrint
                   trigger={() => <span>Print Invoice</span>}
                   content={() => componentRef.current}
@@ -34,7 +34,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
             </div>
             <table className="table-additional-addresses-items w-full">
               <thead>
-                <tr className="hidden md:table-row text-left text-color-222 whitespace-nowrap">
+                <tr className="hidden whitespace-nowrap text-left text-color-222 md:table-row">
                   <th scope="col" className="col firstname pl-0">
                     Product Name
                   </th>
@@ -47,7 +47,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                   <th scope="col" className="col city">
                     Qty Invoiced
                   </th>
-                  <th scope="col" className="col country text-right pr-0">
+                  <th scope="col" className="col country pr-0 text-right">
                     Subtotal
                   </th>
                 </tr>
@@ -59,7 +59,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                     style={{ paddingLeft: '60px', paddingTop: '20px' }}
                     className="table-additional-addresses-tr"
                   >
-                    <td data-th="Name" className="col firstname pl-0 pb-4 pt-4">
+                    <td data-th="Name" className="col firstname py-4 pl-0">
                       <div className="item-options inline-block">
                         <div className="product name product-item-name font-bold">
                           {inx?.product_name}
@@ -68,7 +68,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                           inx?.order_item?.entered_options.length > 0 &&
                           inx?.order_item?.entered_options.map((it: any) => (
                             <div key={it?.value}>
-                              <div className="font-bold mt-3 block">
+                              <div className="mt-3 block font-bold">
                                 {it?.label}
                               </div>
                               <div>{it?.value} </div>
@@ -78,7 +78,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                           inx?.order_item?.additional_options.length > 0 &&
                           inx?.order_item?.additional_options.map((it: any) => (
                             <div key={it?.value}>
-                              <div className="font-bold mt-3 block">
+                              <div className="mt-3 block font-bold">
                                 {it?.label}
                               </div>
                               <div>{it?.value} </div>
@@ -89,7 +89,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                           inx?.order_item?.selected_options.length > 0 &&
                           inx?.order_item?.selected_options.map((it: any) => (
                             <div key={it?.value}>
-                              <div className="font-bold mt-3">{it?.label}</div>
+                              <div className="mt-3 font-bold">{it?.label}</div>
                               <div>{it?.value}</div>
                             </div>
                           ))}
@@ -114,7 +114,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                     </td>
                     <td
                       data-th="Subtotal"
-                      className="col subtotal pr-0 md:text-right text-16px font-bold pb-0"
+                      className="col subtotal pr-0 pb-0 text-16px font-bold md:text-right"
                     >
                       <UiExtension
                         uiId="CURRENCY"
@@ -132,7 +132,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
               className="order-total pt-5 text-16px"
               style={{ paddingLeft: '60px', paddingTop: '20px' }}
             >
-              <div className="md:text-right mb-2">
+              <div className="mb-2 md:text-right">
                 Subtotal
                 <span className="price pl-3">
                   <UiExtension
@@ -141,7 +141,7 @@ const OrderDetailsTabInvoice: React.FC<{ invoices: any }> = combineHOC()(
                   />
                 </span>
               </div>
-              <div className="md:text-right mb-2">
+              <div className="mb-2 md:text-right">
                 VAT
                 <span className="price pl-3">
                   <UiExtension

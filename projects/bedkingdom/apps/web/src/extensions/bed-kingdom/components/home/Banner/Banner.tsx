@@ -3,8 +3,8 @@ import { HOME_BANNER_SLIDER } from '@extensions/bed-kingdom/values/BED_KINGDOM_S
 import COMMON from '@extensions/bed-kingdom/values/COMMON';
 import { withRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hoc/withRouterWithStoreActions';
 import { useUiContext } from '@modules/ui/context/ui';
-import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { useWindowDimensions } from '@web/base/dist/hook/useWindowDimensions';
+import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import map from 'lodash/map';
 import Head from 'next/head';

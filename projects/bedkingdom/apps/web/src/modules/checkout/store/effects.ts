@@ -66,7 +66,7 @@ const toastAddCouponFail$ = createEffect((action$) =>
 const checkoutCartRemoveItemError$ = createEffect((action$) =>
   action$.pipe(
     ofType(checkoutCartDetailRemoveItemErrorAction),
-    map((error) => {
+    map(() => {
       // const message =
       //   error?.payload?.error?.response?.errors[0]?.message ||
       //   error?.payload?.error?.message;
@@ -79,7 +79,7 @@ const checkoutCartRemoveItemError$ = createEffect((action$) =>
 const updateCartItemError$ = createEffect((action$) =>
   action$.pipe(
     ofType(updateCartItemError),
-    map((error) => {
+    map(() => {
       // const message =
       //   error?.payload?.error?.response?.errors[0]?.message ||
       //   error?.payload?.error?.message;

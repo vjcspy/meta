@@ -5,12 +5,12 @@ const CategoryHorizontalPlaceholder = React.memo(() => {
     <>
       <section className="b-section__productTabs" style={{ paddingTop: 35 }}>
         <div className="container mx-auto md:px-4">
-          <div className="max-w-780 w-full m-auto h-58px animate-pulse w-full bg-gray-300" />
-          <div className="grid grid-cols-4 gap-4 mt-7 mb-7">
-            <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
-            <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
-            <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
-            <div className="w-full min-h-362 animate-pulse bg-gray-300 rounded" />
+          <div className="m-auto h-58px w-full max-w-780 animate-pulse bg-gray-300" />
+          <div className="my-7 grid grid-cols-4 gap-4">
+            <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
+            <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
+            <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
+            <div className="min-h-362 w-full animate-pulse rounded bg-gray-300" />
           </div>
         </div>
       </section>

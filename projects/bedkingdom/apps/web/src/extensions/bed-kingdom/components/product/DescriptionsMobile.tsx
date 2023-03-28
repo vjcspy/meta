@@ -39,17 +39,17 @@ const DescriptionsMobile = combineHOC(withBedkingomMostviewedGroups)(
               <>
                 {props?.state?.listMostViewed.length > 3 ? (
                   <>
-                    <h3 className="text-18px md:text-26px font-bold mt-5 md:mt-7 mb-5">
+                    <h3 className="my-5 text-18px font-bold md:mt-7 md:text-26px">
                       Who Bought This Also Bought
                     </h3>
                     {SLIDER}
                   </>
                 ) : (
                   <div className="">
-                    <h3 className="text-18px md:text-26px font-bold mt-5 md:mt-7 mb-5">
+                    <h3 className="my-5 text-18px font-bold md:mt-7 md:text-26px">
                       Who Bought This Also Bought
                     </h3>
-                    <div className="grid md:grid-cols-2 md:grid-cols-3 gap-5">
+                    <div className="grid gap-5 md:grid-cols-3">
                       {Array.isArray(props?.state?.listMostViewed) &&
                         props?.state?.listMostViewed.map((product: any) => (
                           <UiExtension

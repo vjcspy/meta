@@ -1,3 +1,4 @@
+import { useDispatch } from '@main/packages-web-redux';
 import { useAddBedProductsToWishlistMutation } from '@vjcspy/apollo-bed-kingdom';
 import {
   addWishListAction,
@@ -5,7 +6,6 @@ import {
   addWishListErrorAction,
 } from '@vjcspy/r/build/modules/account/store/wishlisht/wishlist.actions';
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from '@main/packages-web-redux';
 
 export const useBedCustomerWishlistActions = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,9 @@ export const useBedCustomerWishlistActions = () => {
             wishlistItems,
           },
         });
-      } catch (e) {}
+      } catch (e) {
+        //EMPTY
+      }
     },
     [addWishlistRes?.loading]
   );
