@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "nodemon",
     "next:dev": "next dev",
-    "build": "NODE_ENV=production next build",
+    "build": "pnpm run build:next && pnpm run build:server",
+    "build:next": "NODE_ENV=production next build",
+    "build:server": "NODE_ENV=production tsc -p tsconfig.server.json",
     "start": "NODE_ENV=production node dist/index.js",
     "lint": "next lint --fix"
   },
