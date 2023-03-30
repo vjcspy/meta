@@ -186,7 +186,9 @@ export class DomainManager {
       // process request to get data
       const domainData = {
         domain,
-        websiteIds: Registry.getInstance().registry('DEFAULT_WEBSITE_IDS'),
+        websiteIds: Registry.getInstance().registry(
+          WEB_DOMAIN_KEY.DEFAULT_WEBSITE_IDS
+        ),
         shopOwnerId: 'default',
         // Nếu chỉ định luôn storeId thì domain sẽ force sử dụng dữ liệu của store này,
         // còn không thì sẽ lấy theo default store1
