@@ -25,7 +25,8 @@
     "@web/ui-extension": "workspace:*",
     "chitility": "workspace:*",
     "@main/packages-web-redux": "workspace:*",
-    "@vjcspy/apollo": "workspace:*"
+    "@vjcspy/apollo": "workspace:*",
+    "@main/packages-web-storefront": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",

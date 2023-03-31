@@ -1,7 +1,7 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
 import { useDispatch } from '@main/packages-web-redux';
+import { useUrlRewriteContext } from '@main/packages-web-storefront/src/modules/url-rewrite/context/url-rewrite';
 import { gotProductData } from '@modules/catalog/store/product/product.actions';
-import { useUrlRewriteContext } from '@modules/router/context/url-rewrite';
 import type { ProductDetailByUrlKeyQueryHookResult } from '@vjcspy/apollo/build';
 import { getUrlKey } from '@web/base/dist/util/getUrlKey';
 import { useEffect, useMemo } from 'react';

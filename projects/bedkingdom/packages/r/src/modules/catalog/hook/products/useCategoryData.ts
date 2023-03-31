@@ -1,6 +1,6 @@
 import { useDispatch } from '@main/packages-web-redux';
 import { productsGotCategoryData } from '@modules/catalog/store/products/products.actions';
-import { useUrlRewriteContext } from '@modules/router/context/url-rewrite';
+import { useUrlRewriteContext } from '@main/packages-web-storefront/src/modules/url-rewrite/context/url-rewrite';
 import { useGetCategoryDetailForListingQuery } from '@vjcspy/apollo';
 import { useEffect, useMemo } from 'react';
 

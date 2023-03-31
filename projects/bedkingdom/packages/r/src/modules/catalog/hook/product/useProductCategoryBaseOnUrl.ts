@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from '@main/packages-web-redux';
 import { gotProductCategoryBaseOnUrlAfterAction } from '@modules/catalog/store/product/product.actions';
 import { selectProduct } from '@modules/catalog/store/product/product.selectors';
-import { useUrlRewriteContext } from '@modules/router/context/url-rewrite';
+import { useUrlRewriteContext } from '@main/packages-web-storefront/src/modules/url-rewrite/context/url-rewrite';
 import { WEB_URL_REWRITE_KEY } from '@modules/router/values/WEB_URL_REWRITE_KEY';
 import { useGetCategoryDetailForListingLazyQuery } from '@vjcspy/apollo';
 import { useEffect, useState } from 'react';
