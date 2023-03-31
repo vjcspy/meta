@@ -7,7 +7,7 @@
     "dev:next": "next dev -p 3001",
     "build": "pnpm run build:next && pnpm run build:server",
     "build:next": "NODE_ENV=production next build",
-    "build:server": "NODE_ENV=production tsc -p tsconfig.server.json",
+    "build:server": "NODE_ENV=production tsc -p tsconfig.server.json && tsc-alias -p tsconfig.server.json",
     "start": "NODE_ENV=production node dist/index.js",
     "lint": "next lint --fix"
   },
