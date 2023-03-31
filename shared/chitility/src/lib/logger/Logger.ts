@@ -2,7 +2,7 @@ import type { LeveledLogMethod, Logger as WinstonLogger } from 'winston';
 import type * as Transport from 'winston-transport';
 
 export type LoggerConfig = {
-  type: string;
+  type?: string;
   context?: string;
   transports?: Transport[];
   level?: string;
@@ -10,7 +10,7 @@ export type LoggerConfig = {
 
 const _logger: Record<string, WinstonLogger> = {};
 export abstract class Logger {
-  private context: string | undefined;
+  protected context: string | undefined;
 
   private type: string;
 
@@ -21,16 +21,11 @@ export abstract class Logger {
   constructor(config: LoggerConfig) {
     this.context = config?.context;
     this.transports = config?.transports ?? [];
-    this.type = config.type;
+    this.type = config.type ?? 'default';
     this.level = config?.level ?? 'silly';
-
-    this._init();
   }
 
   private _init() {
-    if (typeof this.type !== 'string') {
-      throw new Error('Missing Type for Logger');
-    }
     if (typeof _logger[this.type] === 'undefined') {
       _logger[this.type] = this.createWinston();
     }
@@ -39,8 +34,8 @@ export abstract class Logger {
   abstract createWinston(): WinstonLogger;
 
   getInstance() {
+    this._init();
     _logger[this.type].defaultMeta = { context: this.context };
-
     return _logger[this.type];
   }
 

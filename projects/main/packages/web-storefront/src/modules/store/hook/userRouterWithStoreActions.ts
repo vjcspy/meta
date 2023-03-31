@@ -19,7 +19,7 @@ export const useRouterWithStoreActions = (
         await RouterSingleton.push(
           `${storeContextValue.storeData?.store['code']}\\${url}`,
           {
-            shallow: false,
+            shallow: true,
           }
         );
       } else {

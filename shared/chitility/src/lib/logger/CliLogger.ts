@@ -5,21 +5,27 @@ import { webConsoleFormat } from './format/web';
 import type { LoggerConfig } from './Logger';
 import { Logger } from './Logger';
 
-export type CliLoggerConfig = LoggerConfig;
+export interface CliLoggerConfig extends LoggerConfig {
+  file?: boolean;
+}
 export class CliLogger extends Logger {
+  private file = false;
   constructor(config: CliLoggerConfig | string) {
     if (typeof config === 'string') {
       // eslint-disable-next-line no-param-reassign
       config = {
         type: 'cli',
         context: config,
+        file: true,
       };
     }
-    if (typeof config?.level === 'undefined') {
-      // eslint-disable-next-line no-param-reassign
-      config.level = 'debug';
-    }
+    // if (typeof config?.level === 'undefined') {
+    //   config.level = 'debug';
+    // }
+    config.type = 'cli';
     super(config);
+
+    this.file = config.file ?? true;
   }
   createWinston() {
     return winston.createLogger({
@@ -49,25 +55,29 @@ export class CliLogger extends Logger {
           ),
         }),
         ...this.transports,
-        // new winston.transports.File({
-        //   format: winston.format.uncolorize(),
-        //   filename: `logs/${getInstanceId()}.debug.log`,
-        //   level: 'debug',
-        // }),
-        // new winston.transports.File({
-        //   format: winston.format.uncolorize(),
-        //   filename: `logs/${getInstanceId()}.info.log`,
-        //   level: 'info',
-        // }),
-        // new winston.transports.File({
-        //   format: winston.format.uncolorize(),
-        //   filename: `logs/${getInstanceId()}.error.log`,
-        //   level: 'error',
-        // }),
-        // new winston.transports.File({
-        //   format: winston.format.uncolorize(),
-        //   filename: 'logs/combined.log',
-        // }),
+        ...(this.file
+          ? [
+              new winston.transports.File({
+                format: winston.format.uncolorize(),
+                filename: `logs/debug.log`,
+                level: 'debug',
+              }),
+              new winston.transports.File({
+                format: winston.format.uncolorize(),
+                filename: `logs/info.log`,
+                level: 'info',
+              }),
+              new winston.transports.File({
+                format: winston.format.uncolorize(),
+                filename: `logs/error.log`,
+                level: 'error',
+              }),
+              new winston.transports.File({
+                format: winston.format.uncolorize(),
+                filename: 'logs/combined.log',
+              }),
+            ]
+          : []),
       ],
     });
   }

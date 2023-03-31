@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import chalk from 'chalk';
 import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import { CacheFile } from 'chitility/dist/util/cache-file';
@@ -22,12 +24,19 @@ export const createServer = async (
     useNextRoutingForPath?: string[];
     dev: boolean;
     rewritePrefix?: string;
+    routers?: any[];
   }
 ) => {
   app = nextApp;
   await nextApp.prepare();
   const server: Express = express();
   const nextRequestHandler: any = nextApp.getRequestHandler();
+
+  server.use(
+    express.json({
+      limit: '5mb',
+    })
+  );
 
   server.get('/_next/*', (req, res) => {
     const parsedUrl = parse(req.url, true);
@@ -38,10 +47,32 @@ export const createServer = async (
 
   server.use(serveStatic(config.publicPath));
   const {
-    useNextRoutingForPath = ['__nextjs', 'test'],
+    useNextRoutingForPath = ['__nextjs', 'test', 'api'],
     dev,
     rewritePrefix = '__rr',
+    routers = [],
   } = config;
+
+  if (routers.length > 0) {
+    for (const router of routers) {
+      if (Array.isArray(router)) {
+        if (router.length === 3) {
+          switch (router[0]) {
+            case 'get':
+              server.get(router[1], router[2]);
+              break;
+            case 'post':
+              server.post(router[1], router[2]);
+              break;
+            default:
+              throw new Error('not support method type');
+          }
+        } else if (router.length === 2) {
+          server.all(router[0], router[1]);
+        }
+      }
+    }
+  }
 
   server.get('*', async (req, res, next) => {
     const parsedUrl = parse(req.url, true);
@@ -86,17 +117,13 @@ export const createServer = async (
   server.use((req, res) => {
     res.status(404);
 
-    res.format({
-      html: function () {
-        res.render('404', { url: req.url });
-      },
-      json: function () {
-        res.json({ error: 'Not found' });
-      },
-      default: function () {
-        res.type('txt').send('Not found');
-      },
-    });
+    if (req.accepts('json')) {
+      res.json({ error: 'Not found' });
+      return;
+    }
+
+    // default to plain-text. send()
+    res.type('txt').send('Not found');
   });
 
   server.listen(config.port, () => {
@@ -139,7 +166,11 @@ async function renderHTML(
       rewritePrefix
     );
 
-    const CACHE_KEY = `FULL_PAGE_CACHE_${pathnameToRender}`;
+    const CACHE_KEY = `FULL_PAGE_CACHE_${
+      pathnameToRender === '' || pathnameToRender === '/'
+        ? 'index'
+        : pathnameToRender
+    }`;
     if (!dev) {
       const cachedPage = await CacheFile.get(CACHE_KEY);
       if (cachedPage?.html) {

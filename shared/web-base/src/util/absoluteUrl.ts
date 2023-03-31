@@ -1,12 +1,7 @@
 import type { IncomingMessage } from 'http';
 
-export function absoluteUrl(
-  req?: IncomingMessage,
-  localhostAddress = 'localhost:3000'
-) {
-  let host =
-    (req?.headers ? req.headers.host : window.location.host) ||
-    localhostAddress;
+export function absoluteUrl(req?: IncomingMessage) {
+  let host = (req?.headers ? req.headers.host : window.location.host) || '';
   let protocol = /^localhost(:\d+)?$/.test(host) ? 'http:' : 'https:';
 
   if (
@@ -26,7 +21,7 @@ export function absoluteUrl(
   } else if (typeof location !== 'undefined') {
     protocol = location.protocol;
   }
-
+  // var full = window.location.protocol+'//'+window.location.hostname+(window.location.port ? ':'+window.location.port: '');
   return {
     protocol,
     host,

@@ -1,4 +1,5 @@
 import { createServer } from '@main/packages-web-server';
+import megamenuController from '@server/controller/prerender/megamenu';
 import next from 'next';
 import * as path from 'path';
 
@@ -13,6 +14,7 @@ createServer(app, {
   useNextRoutingForPath: ['__nextjs', 'test', '_next'],
   dev,
   rewritePrefix: '',
+  routers: [['post', '/api/prerender/megamenu', megamenuController]],
 })
   .then(() => {
     // EMPTY
