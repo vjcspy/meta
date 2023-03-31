@@ -7,6 +7,6 @@
     "PORT": 3001
   },
   "nodemonConfig": {
-    "delay": 250
+    "delay": 500
   }
 }

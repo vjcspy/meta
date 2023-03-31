@@ -18,7 +18,6 @@ export function injectNextjsRouter(nextRouter: any, nextRouterSingleton?: any) {
       if (isSSR()) {
         nextRouterSingleton.push(url, undefined, { shallow: true });
       } else {
-        // console.log('url', url);
         if (typeof url === 'string') {
           window.location.href = url && url.charAt(0) === '/' ? url : `/${url}`;
         } else {
@@ -46,7 +45,19 @@ export function injectNextjsRouter(nextRouter: any, nextRouterSingleton?: any) {
       // TODO: implement
     },
     replace: async (url) => {
-      nextRouterSingleton.replace(url).then();
+      if (isSSR()) {
+        nextRouterSingleton.replace(url).then();
+      } else {
+        if (typeof url === 'string') {
+          window.location.replace(
+            url && url.charAt(0) === '/' ? url : `/${url}`
+          );
+        } else {
+          nextRouter.push(url, undefined, { shallow: true }).then(() => {
+            //EMPTY
+          });
+        }
+      }
     },
     reload: () => {
       nextRouterSingleton.reload();
