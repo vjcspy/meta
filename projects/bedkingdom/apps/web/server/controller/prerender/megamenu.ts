@@ -41,6 +41,7 @@ const resolveItem = async (menuItem: any) => {
 };
 
 const triggerRenderItem = async (menuItem: any) => {
+  const origin = Registry.getInstance().registry('PRERENDER_ORIGIN');
   if (menuItem?.id) {
     const CACHE_KEY = CACHE_PREFIX + menuItem.id;
     const cachedMegamenu = (await CacheFile.get(CACHE_KEY)) ?? {
@@ -62,9 +63,7 @@ const triggerRenderItem = async (menuItem: any) => {
               menuItem.link.charAt(0) === '/'
                 ? menuItem.link
                 : `/${menuItem.link}`;
-            const url = `${Registry.getInstance().registry(
-              'PRERENDER_ORIGIN'
-            )}${link}`;
+            const url = `${origin}${link}`;
 
             cachedMegamenu.type = 'category_link';
             cachedMegamenu.url = url;
@@ -85,16 +84,24 @@ const triggerRenderItem = async (menuItem: any) => {
           if (menuItem?.link) {
             cachedMegamenu.type = 'custom_link';
             cachedMegamenu.link = menuItem?.link;
-            try {
-              await fetch(menuItem?.link);
-              logger.info(
-                `pre-rendered menu ${menuItem.name} custom_link ${menuItem.link}`
-              );
+            if (
+              typeof cachedMegamenu.link === 'string' &&
+              cachedMegamenu.link.indexOf(origin) > -1
+            ) {
+              try {
+                await fetch(menuItem?.link);
+                logger.info(
+                  `pre-rendered menu ${menuItem.name} custom_link ${menuItem.link}`
+                );
+                cachedMegamenu.success = true;
+              } catch (e) {
+                logger.error(
+                  `Error: pre-render menu ${menuItem.name} custom_link ${menuItem.link}`
+                );
+              }
+            } else {
               cachedMegamenu.success = true;
-            } catch (e) {
-              logger.error(
-                `Error: pre-render menu ${menuItem.name} custom_link ${menuItem.link}`
-              );
+              cachedMegamenu.ignore = true;
             }
           }
       }
