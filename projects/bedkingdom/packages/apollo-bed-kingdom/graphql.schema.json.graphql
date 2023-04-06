@@ -9138,8 +9138,6 @@ input PaymentMethodInput {
     paypal_express: PaypalExpressInput
     "The purchase order number. Optional for most payment methods."
     purchase_order_number: String
-    "Required input for Stripe Payments"
-    stripe_payments: StripePaymentsInput
 }
 
 "Contains required input for Express Checkout and Payments Standard payments."
@@ -9276,6 +9274,8 @@ input ProductAttributeFilterInput {
     number_of_springs: FilterEqualTypeInput
     "Attribute label: Price"
     price: FilterRangeTypeInput
+    "Attribute label: Range"
+    ranges: FilterEqualTypeInput
     "Rating Filter"
     rating_summary: AmShopbyCustomFilterTypeInput
     "Attribute label: Room Type"
@@ -9673,13 +9673,6 @@ input SimpleProductCartItemInput {
     customizable_options: [CustomizableOptionInput]
     "An object containing the `sku`, `quantity`, and other relevant information about the product."
     data: CartItemInput!
-}
-
-input StripePaymentsInput {
-    "Stripe.js generated payment method token"
-    cc_stripejs_token: String!
-    "Specify whether the payment method should be saved"
-    save_payment_method: Boolean
 }
 
 "Modifies the specified items in the cart."
