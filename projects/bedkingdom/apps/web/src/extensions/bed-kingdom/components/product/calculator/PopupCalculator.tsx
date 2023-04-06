@@ -2,7 +2,7 @@
 import { withBedStatusPopupData } from '@extensions/bed-kingdom/hoc/content/withBedStatusPopupData';
 import { combineHOC } from '@web/ui-extension';
 import moment from 'moment/moment';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Popup from 'reactjs-popup';
 
 import BED_KINGDOM_COMMON from '../../../values/BED_KINGDOM_COMMON';
@@ -190,284 +190,278 @@ const PopupCalculator = combineHOC(withBedStatusPopupData)(
       ]?.productId
     );
 
-    const calculate = useCallback(
-      (financeProduct: any, cashPrice: any, deposit: any) => {
-        const apr = parseFloat(financeProduct.apr);
-        const monthlyrate = parseFloat(financeProduct.monthlyRate);
-        let calculatedApr;
-        const months = parseFloat(financeProduct.months);
-        const serviceFee = parseFloat(financeProduct.serviceFee);
-        let balancePayable: number;
-        let documentFee = 0;
-        cashPrice = parseFloat(cashPrice);
-        deposit = parseFloat(deposit);
-        const loanAmount = cashPrice - deposit;
-        let initialPayments;
-        let finalPayment;
-        balancePayable = loanAmount;
-        documentFee =
-          financeProduct.documentFee +
-          loanAmount * financeProduct.documentFeePercentage;
-        if (
-          financeProduct.documentFeeMinimum > 0 &&
-          documentFee < financeProduct.documentFeeMinimum
-        ) {
-          documentFee = financeProduct.documentFeeMinimum;
+    const calculate = (financeProduct: any, cashPrice: any, deposit: any) => {
+      const apr = parseFloat(financeProduct.apr);
+      const monthlyrate = parseFloat(financeProduct.monthlyRate);
+      let calculatedApr;
+      const months = parseFloat(financeProduct.months);
+      const serviceFee = parseFloat(financeProduct.serviceFee);
+      let balancePayable: number;
+      let documentFee = 0;
+      cashPrice = parseFloat(cashPrice);
+      deposit = parseFloat(deposit);
+      const loanAmount = cashPrice - deposit;
+      let initialPayments;
+      let finalPayment;
+      balancePayable = loanAmount;
+      documentFee =
+        financeProduct.documentFee +
+        loanAmount * financeProduct.documentFeePercentage;
+      if (
+        financeProduct.documentFeeMinimum > 0 &&
+        documentFee < financeProduct.documentFeeMinimum
+      ) {
+        documentFee = financeProduct.documentFeeMinimum;
+      }
+      if (
+        financeProduct.documentFeeMaximum > 0 &&
+        documentFee > financeProduct.documentFeeMaximum
+      ) {
+        documentFee = financeProduct.documentFeeMaximum;
+      }
+      if (monthlyrate == 0) {
+        initialPayments = Math.round((loanAmount / months) * 100) / 100;
+        if (initialPayments * months < loanAmount) {
+          initialPayments += 0.01;
         }
-        if (
-          financeProduct.documentFeeMaximum > 0 &&
-          documentFee > financeProduct.documentFeeMaximum
-        ) {
-          documentFee = financeProduct.documentFeeMaximum;
+        finalPayment = loanAmount - initialPayments * (months - 1);
+        calculatedApr = 0;
+      } else {
+        const yields = Math.pow(apr / 100 + 1, 1.0 / 12);
+        let pv = loanAmount - serviceFee;
+        if (financeProduct.deferredPeriod > 1) {
+          pv *= Math.pow(yields, financeProduct.deferredPeriod - 1);
         }
-        if (monthlyrate == 0) {
-          initialPayments = Math.round((loanAmount / months) * 100) / 100;
-          if (initialPayments * months < loanAmount) {
-            initialPayments += 0.01;
-          }
-          finalPayment = loanAmount - initialPayments * (months - 1);
-          calculatedApr = 0;
-        } else {
-          const yields = Math.pow(apr / 100 + 1, 1.0 / 12);
-          let pv = loanAmount - serviceFee;
-          if (financeProduct.deferredPeriod > 1) {
-            pv *= Math.pow(yields, financeProduct.deferredPeriod - 1);
-          }
-          initialPayments =
-            Math.floor(
-              (0 - pv / ((Math.pow(yields, 0 - months) - 1) / (yields - 1))) *
-                100
-            ) / 100;
-          finalPayment = initialPayments;
-          balancePayable = initialPayments * months;
-          calculatedApr = calculateApr(
-            loanAmount - financeProduct.serviceFee,
-            initialPayments,
-            financeProduct.deferredPeriod,
-            months
-          );
-        }
-        if (documentFee > 0) {
-          calculatedApr = calculateAprFromIrr(
-            loanAmount,
-            initialPayments,
-            months,
-            parseFloat(String(documentFee)),
-            parseFloat(financeProduct.documentFeeCollectionMonth)
-          );
-        }
-        let interest = balancePayable - loanAmount;
-        const chargeForCredit = interest + serviceFee + documentFee;
-        const amountPayable =
-          balancePayable + serviceFee + documentFee + deposit;
-        let productAvailable = true;
-        let availabilityReason = '';
-        if (loanAmount < financeProduct.minLoan) {
-          productAvailable = false;
-          availabilityReason = `Only available on loan amounts over £${financeProduct.minLoan.toFixed(
-            2
-          )}`;
-        } else if (loanAmount > financeProduct.maxLoan) {
-          productAvailable = false;
-          availabilityReason = `Only available on loan amounts under £${financeProduct.maxLoan.toFixed(
-            2
-          )}`;
-        }
-        interest = initialPayments * months - loanAmount;
-        // eslint-disable-next-line unused-imports/no-unused-vars
-        const annualRate =
-          ((interest / loanAmount) * 100) /
-          ((months + financeProduct.deferredPeriod) / 12);
-        // context change value
-        // @ts-ignore
-        // props?.setPriceRepayments(initialPayments.toFixed(2));
-        if (props?.setPriceRepayments && initialPayments.toFixed(2)) {
-          props?.setPriceRepayments(initialPayments.toFixed(2));
-        }
-        const financeCalculation = {
-          initialPayments: initialPayments.toFixed(2),
-          finalPayment: finalPayment.toFixed(2),
-          // balancePayable: balancePayable.toFixed(2),
-          // interest: interest.toFixed(2),
-          // chargeForCredit: chargeForCredit.toFixed(2),
-          amountPayable: amountPayable.toFixed(2),
-          // cashPrice: cashPrice.toFixed(2),
-          // deposit: deposit.toFixed(2),
-          loanAmount: loanAmount.toFixed(2),
+        initialPayments =
+          Math.floor(
+            (0 - pv / ((Math.pow(yields, 0 - months) - 1) / (yields - 1))) * 100
+          ) / 100;
+        finalPayment = initialPayments;
+        balancePayable = initialPayments * months;
+        calculatedApr = calculateApr(
+          loanAmount - financeProduct.serviceFee,
+          initialPayments,
+          financeProduct.deferredPeriod,
+          months
+        );
+      }
+      if (documentFee > 0) {
+        calculatedApr = calculateAprFromIrr(
+          loanAmount,
+          initialPayments,
           months,
-          monthsDeferred: financeProduct.deferredPeriod,
-          apr: calculatedApr.toFixed(2),
-          productAvailable,
-          availabilityReason,
-          productId: financeProduct.productId,
-          productGuid: financeProduct.productGuid,
-          name: financeProduct.name,
-          // settlementFee: financeProduct.settlementFee.toFixed(2),
-          // serviceFee: serviceFee?.toFixed(2),
-          // documentFee: documentFee?.toFixed(2),
-          // documentFeeMinimum: financeProduct.documentFeeMinimum,
-          // documentFeeMaximum: financeProduct.documentFeeMaximum,
-          // documentFeeCollectionMonth: financeProduct.documentFeeCollectionMonth,
-          // documentFeePercentage: financeProduct.documentFeePercentage,
-          // annualRate: annualRate.toFixed(2),
-        };
-        return financeCalculation;
-      },
-      [financeProductId, props?.productDataPrice, deposits]
-    );
+          parseFloat(String(documentFee)),
+          parseFloat(financeProduct.documentFeeCollectionMonth)
+        );
+      }
+      let interest = balancePayable - loanAmount;
+      const chargeForCredit = interest + serviceFee + documentFee;
+      const amountPayable = balancePayable + serviceFee + documentFee + deposit;
+      let productAvailable = true;
+      let availabilityReason = '';
+      if (loanAmount < financeProduct.minLoan) {
+        productAvailable = false;
+        availabilityReason = `Only available on loan amounts over £${financeProduct.minLoan.toFixed(
+          2
+        )}`;
+      } else if (loanAmount > financeProduct.maxLoan) {
+        productAvailable = false;
+        availabilityReason = `Only available on loan amounts under £${financeProduct.maxLoan.toFixed(
+          2
+        )}`;
+      }
+      interest = initialPayments * months - loanAmount;
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      const annualRate =
+        ((interest / loanAmount) * 100) /
+        ((months + financeProduct.deferredPeriod) / 12);
+      // context change value
+      // @ts-ignore
+      // props?.setPriceRepayments(initialPayments.toFixed(2));
+      if (props?.setPriceRepayments && initialPayments.toFixed(2)) {
+        props?.setPriceRepayments(initialPayments.toFixed(2));
+      }
+      const financeCalculation = {
+        initialPayments: initialPayments.toFixed(2),
+        finalPayment: finalPayment.toFixed(2),
+        // balancePayable: balancePayable.toFixed(2),
+        // interest: interest.toFixed(2),
+        // chargeForCredit: chargeForCredit.toFixed(2),
+        amountPayable: amountPayable.toFixed(2),
+        // cashPrice: cashPrice.toFixed(2),
+        // deposit: deposit.toFixed(2),
+        loanAmount: loanAmount.toFixed(2),
+        months,
+        monthsDeferred: financeProduct.deferredPeriod,
+        apr: calculatedApr.toFixed(2),
+        productAvailable,
+        availabilityReason,
+        productId: financeProduct.productId,
+        productGuid: financeProduct.productGuid,
+        name: financeProduct.name,
+        // settlementFee: financeProduct.settlementFee.toFixed(2),
+        // serviceFee: serviceFee?.toFixed(2),
+        // documentFee: documentFee?.toFixed(2),
+        // documentFeeMinimum: financeProduct.documentFeeMinimum,
+        // documentFeeMaximum: financeProduct.documentFeeMaximum,
+        // documentFeeCollectionMonth: financeProduct.documentFeeCollectionMonth,
+        // documentFeePercentage: financeProduct.documentFeePercentage,
+        // annualRate: annualRate.toFixed(2),
+      };
+      return financeCalculation;
+    };
 
-    const calculateKlara = useCallback(
-      (financeProductDataKlara: any, cashPrice: any, deposit: any) => {
-        const apr = parseFloat(financeProductDataKlara.apr);
-        const monthlyrate = parseFloat(financeProductDataKlara.monthlyRate);
-        let calculatedApr;
-        const months = parseFloat(financeProductDataKlara.months);
-        const serviceFee = parseFloat(financeProductDataKlara.serviceFee);
-        let balancePayable: number;
-        let documentFee = 0;
+    const calculateKlara = (
+      financeProductDataKlara: any,
+      cashPrice: any,
+      deposit: any
+    ) => {
+      const apr = parseFloat(financeProductDataKlara.apr);
+      const monthlyrate = parseFloat(financeProductDataKlara.monthlyRate);
+      let calculatedApr;
+      const months = parseFloat(financeProductDataKlara.months);
+      const serviceFee = parseFloat(financeProductDataKlara.serviceFee);
+      let balancePayable: number;
+      let documentFee = 0;
 
-        cashPrice = parseFloat(cashPrice);
+      cashPrice = parseFloat(cashPrice);
 
-        deposit = parseFloat(deposit);
+      deposit = parseFloat(deposit);
 
-        const loanAmount = cashPrice - deposit;
-        let initialPayments;
-        let finalPayment;
+      const loanAmount = cashPrice - deposit;
+      let initialPayments;
+      let finalPayment;
 
-        balancePayable = loanAmount;
+      balancePayable = loanAmount;
 
-        documentFee =
-          financeProductDataKlara.documentFee +
-          loanAmount * financeProductDataKlara.documentFeePercentage;
+      documentFee =
+        financeProductDataKlara.documentFee +
+        loanAmount * financeProductDataKlara.documentFeePercentage;
 
-        if (
-          financeProductDataKlara.documentFeeMinimum > 0 &&
-          documentFee < financeProductDataKlara.documentFeeMinimum
-        ) {
-          documentFee = financeProductDataKlara.documentFeeMinimum;
-        }
-        if (
-          financeProductDataKlara.documentFeeMaximum > 0 &&
-          documentFee > financeProductDataKlara.documentFeeMaximum
-        ) {
-          documentFee = financeProductDataKlara.documentFeeMaximum;
-        }
+      if (
+        financeProductDataKlara.documentFeeMinimum > 0 &&
+        documentFee < financeProductDataKlara.documentFeeMinimum
+      ) {
+        documentFee = financeProductDataKlara.documentFeeMinimum;
+      }
+      if (
+        financeProductDataKlara.documentFeeMaximum > 0 &&
+        documentFee > financeProductDataKlara.documentFeeMaximum
+      ) {
+        documentFee = financeProductDataKlara.documentFeeMaximum;
+      }
 
-        if (monthlyrate == 0) {
-          initialPayments = Math.round((loanAmount / months) * 100) / 100;
+      if (monthlyrate == 0) {
+        initialPayments = Math.round((loanAmount / months) * 100) / 100;
 
-          if (initialPayments * months < loanAmount) {
-            initialPayments += 0.01;
-          }
-
-          finalPayment = loanAmount - initialPayments * (months - 1);
-
-          calculatedApr = 0;
-        } else {
-          const yields = Math.pow(apr / 100 + 1, 1.0 / 12);
-
-          let pv = loanAmount - serviceFee;
-
-          if (financeProductDataKlara.deferredPeriod > 1) {
-            pv *= Math.pow(yields, financeProductDataKlara.deferredPeriod - 1);
-          }
-
-          initialPayments =
-            Math.floor(
-              (0 - pv / ((Math.pow(yields, 0 - months) - 1) / (yields - 1))) *
-                100
-            ) /
-              100 +
-            0.01;
-
-          finalPayment = initialPayments;
-
-          balancePayable = initialPayments * months;
-
-          calculatedApr = calculateApr(
-            loanAmount - financeProductDataKlara.serviceFee,
-            initialPayments,
-            financeProductDataKlara.deferredPeriod,
-            months
-          );
-        }
-
-        if (documentFee > 0) {
-          calculatedApr = calculateAprFromIrr(
-            loanAmount,
-            initialPayments,
-            months,
-            parseFloat(String(documentFee)),
-            parseFloat(financeProductDataKlara.documentFeeCollectionMonth)
-          );
-        }
-
-        // balancePayable = initialPayments * (months - 1);
-        // balancePayable += finalPayment;
-
-        let interest = balancePayable - loanAmount;
-
-        const chargeForCredit = interest + serviceFee + documentFee;
-
-        const amountPayable =
-          balancePayable + serviceFee + documentFee + deposit;
-
-        let productAvailable = true;
-        let availabilityReason = '';
-
-        if (loanAmount < financeProductDataKlara.minLoan) {
-          productAvailable = false;
-
-          availabilityReason = `Only available on loan amounts over £${financeProductDataKlara.minLoan.toFixed(
-            2
-          )}`;
-        } else if (loanAmount > financeProductDataKlara.maxLoan) {
-          productAvailable = false;
-
-          availabilityReason = `Only available on loan amounts under £${financeProductDataKlara.maxLoan.toFixed(
-            2
-          )}`;
+        if (initialPayments * months < loanAmount) {
+          initialPayments += 0.01;
         }
 
-        interest = initialPayments * months - loanAmount;
+        finalPayment = loanAmount - initialPayments * (months - 1);
 
-        const annualRate =
-          ((interest / loanAmount) * 100) /
-          ((months + financeProductDataKlara.deferredPeriod) / 12);
+        calculatedApr = 0;
+      } else {
+        const yields = Math.pow(apr / 100 + 1, 1.0 / 12);
 
-        const financeCalculation = {
-          initialPayments: initialPayments.toFixed(2),
-          finalPayment: finalPayment.toFixed(2),
-          balancePayable: balancePayable.toFixed(2),
-          interest: interest.toFixed(2),
-          chargeForCredit: chargeForCredit.toFixed(2),
-          amountPayable: amountPayable.toFixed(2),
-          // cashPrice: cashPrice.toFixed(2),
-          // deposit: deposit.toFixed(2),
-          loanAmount: loanAmount.toFixed(2),
+        let pv = loanAmount - serviceFee;
+
+        if (financeProductDataKlara.deferredPeriod > 1) {
+          pv *= Math.pow(yields, financeProductDataKlara.deferredPeriod - 1);
+        }
+
+        initialPayments =
+          Math.floor(
+            (0 - pv / ((Math.pow(yields, 0 - months) - 1) / (yields - 1))) * 100
+          ) /
+            100 +
+          0.01;
+
+        finalPayment = initialPayments;
+
+        balancePayable = initialPayments * months;
+
+        calculatedApr = calculateApr(
+          loanAmount - financeProductDataKlara.serviceFee,
+          initialPayments,
+          financeProductDataKlara.deferredPeriod,
+          months
+        );
+      }
+
+      if (documentFee > 0) {
+        calculatedApr = calculateAprFromIrr(
+          loanAmount,
+          initialPayments,
           months,
-          monthsDeferred: financeProductDataKlara.deferredPeriod,
-          apr,
-          productAvailable,
-          availabilityReason,
-          productId: financeProductDataKlara.productId,
-          productGuid: financeProductDataKlara.productGuid,
-          name: financeProductDataKlara.name,
-          // settlementFee: financeProductDataKlara.settlementFee.toFixed(2),
-          // serviceFee: serviceFee.toFixed(2),
-          // documentFee: documentFee.toFixed(2),
-          // documentFeeMinimum: financeProductDataKlara.documentFeeMinimum,
-          // documentFeeMaximum: financeProductDataKlara.documentFeeMaximum,
-          // documentFeeCollectionMonth:
-          //   financeProductDataKlara.documentFeeCollectionMonth,
-          // documentFeePercentage: financeProductDataKlara.documentFeePercentage,
-          // annualRate: annualRate.toFixed(2),
-        };
+          parseFloat(String(documentFee)),
+          parseFloat(financeProductDataKlara.documentFeeCollectionMonth)
+        );
+      }
 
-        return financeCalculation;
-      },
-      [financeProducKlaratId, props?.productDataPrice]
-    );
+      // balancePayable = initialPayments * (months - 1);
+      // balancePayable += finalPayment;
+
+      let interest = balancePayable - loanAmount;
+
+      const chargeForCredit = interest + serviceFee + documentFee;
+
+      const amountPayable = balancePayable + serviceFee + documentFee + deposit;
+
+      let productAvailable = true;
+      let availabilityReason = '';
+
+      if (loanAmount < financeProductDataKlara.minLoan) {
+        productAvailable = false;
+
+        availabilityReason = `Only available on loan amounts over £${financeProductDataKlara.minLoan.toFixed(
+          2
+        )}`;
+      } else if (loanAmount > financeProductDataKlara.maxLoan) {
+        productAvailable = false;
+
+        availabilityReason = `Only available on loan amounts under £${financeProductDataKlara.maxLoan.toFixed(
+          2
+        )}`;
+      }
+
+      interest = initialPayments * months - loanAmount;
+
+      const annualRate =
+        ((interest / loanAmount) * 100) /
+        ((months + financeProductDataKlara.deferredPeriod) / 12);
+
+      const financeCalculation = {
+        initialPayments: initialPayments.toFixed(2),
+        finalPayment: finalPayment.toFixed(2),
+        balancePayable: balancePayable.toFixed(2),
+        interest: interest.toFixed(2),
+        chargeForCredit: chargeForCredit.toFixed(2),
+        amountPayable: amountPayable.toFixed(2),
+        // cashPrice: cashPrice.toFixed(2),
+        // deposit: deposit.toFixed(2),
+        loanAmount: loanAmount.toFixed(2),
+        months,
+        monthsDeferred: financeProductDataKlara.deferredPeriod,
+        apr,
+        productAvailable,
+        availabilityReason,
+        productId: financeProductDataKlara.productId,
+        productGuid: financeProductDataKlara.productGuid,
+        name: financeProductDataKlara.name,
+        // settlementFee: financeProductDataKlara.settlementFee.toFixed(2),
+        // serviceFee: serviceFee.toFixed(2),
+        // documentFee: documentFee.toFixed(2),
+        // documentFeeMinimum: financeProductDataKlara.documentFeeMinimum,
+        // documentFeeMaximum: financeProductDataKlara.documentFeeMaximum,
+        // documentFeeCollectionMonth:
+        //   financeProductDataKlara.documentFeeCollectionMonth,
+        // documentFeePercentage: financeProductDataKlara.documentFeePercentage,
+        // annualRate: annualRate.toFixed(2),
+      };
+
+      return financeCalculation;
+    };
 
     const paymentCalculator: any = useMemo(() => {
       const financeProductData = getFinanceProduct(financeProductId); // get the object

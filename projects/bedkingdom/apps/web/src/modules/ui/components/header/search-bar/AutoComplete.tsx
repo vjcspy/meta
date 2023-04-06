@@ -1,5 +1,6 @@
 import { withRouterWithStoreActions } from '@main/packages-web-storefront/src/modules/store/hoc/withRouterWithStoreActions';
 import ROUTES from '@values/extendable/ROUTES';
+import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React, { useCallback } from 'react';
 
@@ -18,8 +19,8 @@ const AutoComplete: React.FC<{
     const { products, prodLimit = 10, valid, message, countProduct } = props;
 
     const go = useCallback((url: any) => {
-      if (props.actions?.go) {
-        props.actions.go(url);
+      if (url) {
+        RouterSingleton.push(url);
       }
     }, []);
 
@@ -73,7 +74,7 @@ const AutoComplete: React.FC<{
               <div
                 className="b-searchautocomplete__index-title"
                 onClick={() => {
-                  go(`/${ROUTES.r('CATALOG_SEARCH')}?q=${props.value}`);
+                  go(`${ROUTES.r('CATALOG_SEARCH')}?q=${props.value}`);
                   props.setExpanded(false);
                 }}
               >
