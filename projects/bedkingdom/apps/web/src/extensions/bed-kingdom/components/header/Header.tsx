@@ -8,12 +8,14 @@ import { withUiConfigData } from '@vjcspy/r/build/modules/content/hoc/withUiConf
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React, { useState } from 'react';
+import {withAccountActions} from "@vjcspy/r/build/modules/account/hoc/withAccountActions";
 
 const Header: React.FC = combineHOC(
   withUiConfigData,
   withInitAccountState,
   withSearchBar,
-  withCustomer
+  withCustomer,
+  withAccountActions,
 )((props) => {
   const megamenuId = useExtAdditionConfig('megamenu_id', props);
   const [activeMenuMobile, setActiveMenuMobile] = useState(false);
@@ -69,7 +71,10 @@ const Header: React.FC = combineHOC(
                 <li
                   className="link authorization-link"
                   onClick={() => {
-                    RouterSingleton.push(ROUTES.r('ACCOUNT_LOGIN'));
+                    if (typeof props?.actions?.logout === 'function') {
+                      props?.actions?.logout();
+                    }
+                    // RouterSingleton.push(ROUTES.r('ACCOUNT_LOGIN'));
                   }}
                 >
                   <span>Sign Out</span>
