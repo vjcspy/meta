@@ -2,20 +2,20 @@ import withSearchBar from '@extensions/bed-kingdom/hoc/header/SearchBar/withSear
 import { useExtAdditionConfig } from '@modules/ui/hook/config/useExtAdditionConfig';
 import { useResponsive } from '@modules/ui/hook/useResponsive';
 import ROUTES from '@values/extendable/ROUTES';
+import { withAccountActions } from '@vjcspy/r/build/modules/account/hoc/withAccountActions';
 import { withCustomer } from '@vjcspy/r/build/modules/account/hoc/withCustomer';
 import { withInitAccountState } from '@vjcspy/r/build/modules/account/hoc/withInitAccountState';
 import { withUiConfigData } from '@vjcspy/r/build/modules/content/hoc/withUiConfigData';
 import { RouterSingleton } from '@web/base/dist/util/router-singleton';
 import { combineHOC, UiExtension } from '@web/ui-extension';
 import React, { useState } from 'react';
-import {withAccountActions} from "@vjcspy/r/build/modules/account/hoc/withAccountActions";
 
 const Header: React.FC = combineHOC(
   withUiConfigData,
   withInitAccountState,
   withSearchBar,
   withCustomer,
-  withAccountActions,
+  withAccountActions
 )((props) => {
   const megamenuId = useExtAdditionConfig('megamenu_id', props);
   const [activeMenuMobile, setActiveMenuMobile] = useState(false);
