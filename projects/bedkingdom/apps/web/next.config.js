@@ -6,19 +6,19 @@ const withTM = require('next-transpile-modules')([
   '@vjcspy/react-360-view',
 ]);
 
-const runtimeCaching = require('next-pwa/cache');
+// const runtimeCaching = require('next-pwa/cache');
 
-const withPWA = require('next-pwa')({
-  disable: process.env.NODE_ENV !== 'production',
-  dest: 'public',
-  runtimeCaching,
-  buildExcludes: [/server\/.*$/, /chunks\/.*$/],
-  register: true,
-  skipWaiting: true,
-});
+// const withPWA = require('next-pwa')({
+//   disable: process.env.NODE_ENV !== 'production',
+//   dest: 'public',
+//   runtimeCaching,
+//   buildExcludes: [/server\/.*$/, /chunks\/.*$/],
+//   register: true,
+//   skipWaiting: true,
+// });
 
 module.exports = () => {
-  const plugins = [withTM, withPWA];
+  const plugins = [withTM];
   return plugins.reduce((acc, next) => next(acc), {
     // sassOptions: {
     //   includePaths: [
