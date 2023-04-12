@@ -1,9 +1,8 @@
 import { FetchPolicyResolve } from '@main/packages-web-apollo/dist/util/fetch-policy-resolve';
 import { format } from '@web/base';
 import { isSSR } from '@web/base/dist/util/isSSR';
-import { Registry } from 'chitility';
+import { ExtensionPoint, Registry } from 'chitility';
 import { DataObject } from 'chitility/dist/lib/extension/data-object';
-import { ExtensionPoint } from 'chitility/dist/lib/extension/extension-point';
 import { isDevelopment } from 'chitility/dist/util/environment';
 import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
@@ -13,6 +12,18 @@ import { useEffect, useRef, useState } from 'react';
 import { WEB_STOREFRONT_KEY } from '../../../etc/key';
 import { useDomainContext } from '../../domain/context/domain';
 import { resolveChiakiPageResolver } from '../util/resolveChiakiPageResolver';
+
+function isSameUrl(url: string, url1: string) {
+  // remove .html
+  if (url.slice(-5) === '.html') {
+    url = url.slice(0, -5);
+  }
+  if (url1.slice(-5) === '.html') {
+    url1 = url1.slice(0, -5);
+  }
+
+  return url === url1;
+}
 
 export const resolveStaticLayout = (pathname?: string) => {
   const pathWithOutPrefix = replace(pathname ?? '', '.html', '');
@@ -89,6 +100,7 @@ export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
       // Khi thực hiện chuyển page trên client cũng cần phải resolve static trước
       const staticData = resolveStaticLayout(urlKey);
       if (staticData) {
+        console.info(format.important('set new url-rewrite by static layout'));
         setResolvedUrlData(staticData);
       } else {
         refetch({
@@ -100,16 +112,24 @@ export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
   );
 
   useEffect(() => {
-    if (data && urlKey !== resolvedUrlData?.requestedPathname) {
-      console.info(format.important('set new url-rewrite data'));
-      setResolvedUrlData(
-        resolveChiakiPageResolver(
-          {
-            data,
-          },
-          urlKey
-        )
-      );
+    if (!isSameUrl(urlKey, resolvedUrlData.requestedPathname)) {
+      const staticData = resolveStaticLayout(urlKey);
+      if (staticData) {
+        console.info(format.important('set new url-rewrite by static layout'));
+        setResolvedUrlData(staticData);
+      } else if (data) {
+        console.info(
+          format.important('set new url-rewrite by chiaki resolver')
+        );
+        setResolvedUrlData(
+          resolveChiakiPageResolver(
+            {
+              data,
+            },
+            urlKey
+          )
+        );
+      }
     }
   }, [data, urlKey, resolvedUrlData]);
 
@@ -120,7 +140,7 @@ export const useResolveUnknownRouter = (fromServer: any, urlKey: string) => {
    * Ở đây đơn giản hoá điều kiện chỉ cần check xem pathname đã resolve trong context với urlKey hiện tại
    */
   useEffect(() => {
-    if (urlKey !== resolvedUrlData?.requestedPathname) {
+    if (!isSameUrl(urlKey, resolvedUrlData.requestedPathname)) {
       console.debug(format.important('refetch url-rewrite data'));
       setResolvedUrlData({
         isResolved: false,

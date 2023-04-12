@@ -21,6 +21,7 @@ export const bedkingdomExtendUiExtCfg = () => {
           additional_data: null,
           isResolved: true,
           pathname,
+          requestedPathname: pathname,
           metadata: null,
         });
         return false;
@@ -36,6 +37,7 @@ export const bedkingdomExtendUiExtCfg = () => {
           additional_data: null,
           isResolved: true,
           pathname,
+          requestedPathname: pathname,
           metadata: null,
         });
         return false;
