@@ -16,7 +16,7 @@ export class CliLogger extends Logger {
       config = {
         type: 'cli',
         context: config,
-        file: true,
+        file: false,
       };
     }
     // if (typeof config?.level === 'undefined') {
@@ -25,7 +25,7 @@ export class CliLogger extends Logger {
     config.type = 'cli';
     super(config);
 
-    this.file = config.file ?? true;
+    this.file = config.file ?? false;
   }
   createWinston() {
     return winston.createLogger({
