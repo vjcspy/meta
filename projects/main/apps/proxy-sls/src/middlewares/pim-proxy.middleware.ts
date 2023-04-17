@@ -3,21 +3,22 @@ import { CliLogger } from 'chitility/dist/lib/logger/CliLogger';
 import type { Request } from 'express';
 import type { Options } from 'http-proxy-middleware';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import process from 'process';
 
-const logger = new CliLogger('pim-proxy');
+const logger = new CliLogger('bedkingdom-proxy');
 const originalOptions: Options = {
   // TODO: need to resolve target by setting or domain name
-  target: 'https://www.bedkingdom.co.uk',
+  target: process.env.PIM_BASE_PROXY_URL,
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
   pathRewrite: {
     // '^/api/old-path': '/api/new-path', // rewrite path
     // '^/api/rest': '/rest', // remove base path
-    '^/proxy/bedkingdom': '', // remove base path
-    '^/proxy/bedkingdom/graphql': 'graphql', // remove base path
-    '^/dev/proxy/bedkingdom/graphql': 'graphql', // remove base path
-    '^/production/proxy/bedkingdom/graphql': 'graphql', // remove base path
-    '^/staging/proxy/bedkingdom/graphql': 'graphql', // remove base path
+    '^/proxy/pim': '', // remove base path
+    '^/proxy/pim/graphql': 'graphql', // remove base path
+    '^/dev/proxy/pim/graphql': 'graphql', // remove base path
+    '^/production/proxy/pim/graphql': 'graphql', // remove base path
+    '^/staging/proxy/pim/graphql': 'graphql', // remove base path
   },
   secure: false,
   onProxyReq: (_proxyReq, req: Request) => {
@@ -51,7 +52,7 @@ const originalOptions: Options = {
   },
 };
 
-export const bedkingdomProxy = createProxyMiddleware(
-  ['/proxy/bedkingdom/**'],
+export const pimProxy = createProxyMiddleware(
+  ['/proxy/pim/**'],
   originalOptions
 );
