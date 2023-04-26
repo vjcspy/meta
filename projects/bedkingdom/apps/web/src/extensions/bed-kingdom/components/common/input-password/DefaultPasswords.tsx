@@ -42,6 +42,9 @@ const DefaultPasswords: React.FC<{
               </InputAdornment>
             ),
           }}
+          inputProps={{
+              maxLength: 50,
+          }}
           {...field}
         />
       )}

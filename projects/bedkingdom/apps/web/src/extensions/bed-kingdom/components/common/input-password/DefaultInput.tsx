@@ -11,6 +11,8 @@ const DefaultInput: React.FC<{
   rules?: any;
   error?: boolean;
   helperText?: string;
+  onBlur?: any;
+  maxLength?: number;
 }> = React.memo((props) => {
   const InputRender = useCallback(
     // @ts-ignore
@@ -27,6 +29,10 @@ const DefaultInput: React.FC<{
           rows={props.rows ?? 1}
           multiline={props.rows && props.rows > 1}
           variant="outlined"
+          autoComplete='off'
+          autoFocus={true}
+          onBlur={props?.onBlur}
+          maxLength={props?.maxLength}
         />
       );
     },

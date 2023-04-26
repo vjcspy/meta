@@ -17,6 +17,7 @@ const AccountRegisterForm = combineHOC(
     handleSubmit,
     watch,
     register,
+    setValue,
     formState: { errors },
   } = useForm();
   const onSubmit = useCallback((data: any) => {
@@ -80,6 +81,8 @@ const AccountRegisterForm = combineHOC(
                     error={errors.first_name}
                     label={'First Name *'}
                     helperText="This is a required field."
+                    maxLength={50}
+                    onBlur={(e: any) => { setValue('first_name', e.target.value.trim())}}
                   />
                 </div>
               </div>
@@ -95,6 +98,7 @@ const AccountRegisterForm = combineHOC(
                     error={errors.middle_name}
                     label="Middle Name/Initial"
                     helperText="This is a required field."
+                    maxLength={50}
                   />
                 </div>
               </div>
@@ -110,6 +114,8 @@ const AccountRegisterForm = combineHOC(
                     error={errors.last_name}
                     label={'Last Name *'}
                     helperText="This is a required field."
+                    maxLength={50}
+                    onBlur={(e: any) => { setValue('last_name', e.target.value.trim())}}
                   />
                 </div>
               </div>
@@ -129,6 +135,8 @@ const AccountRegisterForm = combineHOC(
                     error={errors.email}
                     label={'Email *'}
                     helperText="Please enter the correct email"
+                    onBlur={(e: any) => { setValue('email', e.target.value.trim())}}
+                    maxLength={50}
                   />
                 </div>
               </div>

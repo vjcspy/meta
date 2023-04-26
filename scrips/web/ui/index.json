@@ -1,0 +1,143 @@
+{
+  "uiId": "DEFAULT_ROOT",
+  "extensionDataConfigs": [
+    {
+      "forHookId": "header",
+      "extensionDataConfigs": [
+        {
+          "uiId": "STACK",
+          "extensionDataConfigs": [
+            {
+              "uiId": "CMS_BLOCKS",
+              "additionalData": [
+                {
+                  "key": "cms_block_id",
+                  "value": "pwa_welcome_to_bed_king_dom"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uiId": "HEADER",
+          "additionalData": [
+            {
+              "key": "megamenu_id",
+              "value": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forHookId": "main",
+      "extensionDataConfigs": [
+        {
+          "uiId": "STACK",
+          "extensionDataConfigs": [
+            {
+              "uiId": "BEDKINGDOM_HOME_BANNER_CONTAINER",
+              "additionalData": [
+                {
+                  "key": "slider_id",
+                  "value": "1"
+                }
+              ]
+            },
+            {
+              "uiId": "KINGDOMBED_SERVICES"
+            },
+            {
+              "uiId": "BEDKINGDOM_HOME_CATEGORY_HORIZONTAL",
+              "additionalData": [
+                {
+                  "key": "category_ids",
+                  "value": "357,358,359,360"
+                }
+              ]
+            },
+            {
+              "uiId": "STACK",
+              "extensionDataConfigs": [
+                {
+                  "uiId": "BEDKINGDOM_HOME_CATEGORY_VERTICAL",
+                  "additionalData": [
+                    {
+                      "key": "category_ids",
+                      "value": "7,250,33,346,336"
+                    }
+                  ]
+                },
+                {
+                  "uiId": "CMS_BLOCKS",
+                  "additionalData": [
+                    {
+                      "key": "cms_block_id",
+                      "value": "pwa_blog_homepage"
+                    }
+                  ]
+                },
+                {
+                  "uiId": "BEDKINGDOM_HOME_CONTENT_SUBSCRIBER"
+                },
+                {
+                  "uiId": "BEDKINGDOM_TRUST_PILOT"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forHookId": "footer",
+      "extensionDataConfigs": [
+        {
+          "uiId": "STACK",
+          "extensionDataConfigs": [
+            {
+              "uiId": "FOOTER_DESKTOP_STACK",
+              "extensionDataConfigs": [
+                {
+                  "uiId": "CMS_BLOCKS",
+                  "additionalData": [
+                    {
+                      "key": "cms_block_id",
+                      "value": "pwa_footer_desktop"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "uiId": "FOOTER_MOBILE_STACK",
+              "extensionDataConfigs": [
+                {
+                  "uiId": "CMS_BLOCKS",
+                  "additionalData": [
+                    {
+                      "key": "cms_block_id",
+                      "value": "pwa_footer_social"
+                    }
+                  ]
+                },
+                {
+                  "uiId": "BEDKINGDOM_TRUST_PILOT_START_AND_REVIEW"
+                },
+                {
+                  "uiId": "CMS_BLOCKS",
+                  "additionalData": [
+                    {
+                      "key": "cms_block_id",
+                      "value": "pwa_footer_mobile"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

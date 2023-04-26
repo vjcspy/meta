@@ -32,13 +32,13 @@ const Header: React.FC = combineHOC(
                 <span>Bedkingdom.co.uk - Call Us 01924 950 108</span>
               </li>
               <li>
-                <a href="/showroom">Showroom</a>
+                <a href="https://www.bedkingdom.co.uk/showroom">Showroom</a>
               </li>
               <li>
                 <a href="/contact">Contact us</a>
               </li>
               <li>
-                <a href="/customer-service">Help</a>
+                <a href="/customer-services">Help</a>
               </li>
               <li className="nav item">
                 <a href="https://www.bedkingdom.co.uk/blog.html">Blog</a>
