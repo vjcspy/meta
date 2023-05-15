@@ -37,7 +37,7 @@ export const SLIDER_BUSINESS_REVIEWS: Settings = {
 
 export const SLIDER_PRODUCT_HORIZONTAL_ITEM_HOME: Settings = {
   dots: false,
-  infinite: true,
+  // infinite: false,
   speed: 1000,
   arrows: true,
   slidesToShow: 4,

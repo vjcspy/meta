@@ -29,7 +29,7 @@ const DefaultInput: React.FC<{
           rows={props.rows ?? 1}
           multiline={props.rows && props.rows > 1}
           variant="outlined"
-          autoComplete='off'
+          autoComplete="1233123"
           autoFocus={true}
           onBlur={props?.onBlur}
           maxLength={props?.maxLength}
