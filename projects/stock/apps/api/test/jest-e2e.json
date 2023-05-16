@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@stock/stock-info/(.*)": "<rootDir>/../libs/stock-info/src/$1",
+    "@stock/stock-info": "<rootDir>/../libs/stock-info/src"
+  }
+}

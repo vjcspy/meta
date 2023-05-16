@@ -2,7 +2,4 @@ packages:
   - "apps/nestjs"
   - "shared/*"
   #  ________ Projects ________
-  - "projects/main/packages/*"
-  - "projects/main/ui/*"
-  - "projects/bedkingdom/packages/*"
-  - "projects/bedkingdom/apps/*"
+  - "projects/stock/apps/*"
