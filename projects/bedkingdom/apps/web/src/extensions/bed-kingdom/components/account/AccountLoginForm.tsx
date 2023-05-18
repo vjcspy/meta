@@ -46,7 +46,9 @@ const AccountLoginForm: React.FC = combineHOC(
               error={errors.email}
               label={'Email*'}
               helperText="Please enter the correct email"
-              onBlur={(e: any) => { setValue('email', e.target.value.trim())}}
+              onBlur={(e: any) => {
+                setValue('email', e.target.value.trim());
+              }}
             />
           </div>
         </div>

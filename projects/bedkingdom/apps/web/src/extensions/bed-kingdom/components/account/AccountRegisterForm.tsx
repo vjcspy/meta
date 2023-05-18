@@ -82,7 +82,9 @@ const AccountRegisterForm = combineHOC(
                     label={'First Name *'}
                     helperText="This is a required field."
                     maxLength={50}
-                    onBlur={(e: any) => { setValue('first_name', e.target.value.trim())}}
+                    onBlur={(e: any) => {
+                      setValue('first_name', e.target.value.trim());
+                    }}
                   />
                 </div>
               </div>
@@ -115,7 +117,9 @@ const AccountRegisterForm = combineHOC(
                     label={'Last Name *'}
                     helperText="This is a required field."
                     maxLength={50}
-                    onBlur={(e: any) => { setValue('last_name', e.target.value.trim())}}
+                    onBlur={(e: any) => {
+                      setValue('last_name', e.target.value.trim());
+                    }}
                   />
                 </div>
               </div>
@@ -135,7 +139,9 @@ const AccountRegisterForm = combineHOC(
                     error={errors.email}
                     label={'Email *'}
                     helperText="Please enter the correct email"
-                    onBlur={(e: any) => { setValue('email', e.target.value.trim())}}
+                    onBlur={(e: any) => {
+                      setValue('email', e.target.value.trim());
+                    }}
                     maxLength={50}
                   />
                 </div>
