@@ -11,8 +11,8 @@
   "scripts": {
     "bedkingdom": "___________________________BEDKINGDOM___________________________",
     "build": "turbo run build --no-daemon --filter=@bedkingdom/apps-*",
-    "dev": "turbo run dev --no-daemon --filter=@bedkingdom/apps-*",
-    "start": "turbo run start --no-daemon --filter=@bedkingdom/apps-*",
+    "dev": "turbo run dev --no-daemon --filter=@stock/apps-*",
+    "start": "turbo run start --no-daemon --filter=@stock/apps-*",
     "main": "___________________________MAIN___________________________",
     "dev:api": "turbo run dev --no-daemon --filter=nestjs",
     "lint": "turbo run lint --no-daemon --filter=@bedkingdom/apps-*",
