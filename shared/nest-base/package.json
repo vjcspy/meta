@@ -17,7 +17,11 @@
   "dependencies": {
     "@golevelup/nestjs-common": "latest",
     "@golevelup/nestjs-discovery": "latest",
-    "@golevelup/nestjs-modules": "latest"
+    "@golevelup/nestjs-modules": "latest",
+    "nest-winston": "^1.9.2",
+    "splunk-logging": "^0.11.1",
+    "winston": "^3.8.2",
+    "winston-transport": "^4.5.0"
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",

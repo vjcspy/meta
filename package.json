@@ -9,8 +9,8 @@
     "projects/bedkingdom/apps/*"
   ],
   "scripts": {
-    "bedkingdom": "___________________________BEDKINGDOM___________________________",
-    "build": "turbo run build --no-daemon --filter=@bedkingdom/apps-*",
+    "stock": "___________________________STOCK___________________________",
+    "build": "turbo run build --no-daemon --filter=@stock/apps-*",
     "dev": "turbo run dev --no-daemon --filter=@stock/apps-*",
     "start": "turbo run start --no-daemon --filter=@stock/apps-*",
     "main": "___________________________MAIN___________________________",
