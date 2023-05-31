@@ -32,7 +32,7 @@ export const initLoggerInstance = (config: {
       levels: winston.config.cli.levels,
       level: 'silly',
       defaultMeta: {
-        iid: getAppName(),
+        appName: getAppName(),
       },
       transports: [
         new winston.transports.Console({
