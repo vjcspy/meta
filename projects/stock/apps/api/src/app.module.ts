@@ -1,3 +1,4 @@
+import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnModuleInit } from '@nestjs/common';
@@ -43,6 +44,7 @@ import { AppService } from './app.service';
       // Muốn handler nào được chạy thì cần phải khai báo
       handlers: [],
     }),
+    TestbedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

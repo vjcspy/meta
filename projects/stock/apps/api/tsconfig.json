@@ -7,10 +7,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@modules/stock-info": [
-        "src/modules"
-      ],
-      "@modules/stock-info/*": [
+      "@modules/*": [
         "src/modules/*"
       ]
     }
