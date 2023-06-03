@@ -35,6 +35,31 @@ export class WinstonLogger implements LoggerService {
       this.logger.info(message, { context: 'Unknown' });
     }
   }
+
+  public debug(message: any, ...metadata: any[]): void {
+    if (metadata.length > 0) {
+      /*
+       * NestJS luon truyen context la last param
+       * */
+      const context = metadata.pop();
+      this.logger.debug(message, { context, metadata });
+    } else {
+      this.logger.debug(message, { context: 'Unknown' });
+    }
+  }
+
+  // public debug?(message: any, context?: string): any {
+  //   context = context || this.context;
+  //
+  //   if ('object' === typeof message) {
+  //     const { message: msg, ...meta } = message;
+  //
+  //     return this.logger.debug(msg as string, { context, ...meta });
+  //   }
+  //
+  //   return this.logger.debug(message, { context });
+  // }
+
   // public log(message: any, context?: string): any {
   //   context = context || this.context;
   //
@@ -85,18 +110,6 @@ export class WinstonLogger implements LoggerService {
     }
 
     return this.logger.warn(message, { context });
-  }
-
-  public debug?(message: any, context?: string): any {
-    context = context || this.context;
-
-    if ('object' === typeof message) {
-      const { message: msg, ...meta } = message;
-
-      return this.logger.debug(msg as string, { context, ...meta });
-    }
-
-    return this.logger.debug(message, { context });
   }
 
   public verbose?(message: any, context?: string): any {

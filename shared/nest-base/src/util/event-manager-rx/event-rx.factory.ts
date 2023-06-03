@@ -3,8 +3,6 @@ import { isObject } from 'lodash';
 
 export class EventRxParamFactory {
   public exchangeKeyForValue(type: number, data: ParamData, args: any[]) {
-    console.log('EventRxParamFactory');
-    console.log(type, data, args);
     if (!args) {
       return null;
     }
