@@ -1,6 +1,7 @@
 import type { DiscoveredMethod } from '@golevelup/nestjs-discovery';
 import { Injectable, Logger } from '@nestjs/common';
-import { EMPTY, filter, isObservable, Subject } from 'rxjs';
+import * as _ from 'lodash';
+import { EMPTY, filter, isObservable, map, Subject } from 'rxjs';
 
 import type { EventRxHandler, EventRxHandlerConfig } from './event-rx.types';
 import type { EventRxAction } from './event-rx.types';
@@ -10,20 +11,15 @@ export class EventManagerReactive {
   private logger = new Logger(EventManagerReactive.name);
   private static _eventObservable = new Subject<EventRxAction>();
 
-  constructor() {
-    console.log('construct EventManagerReactive');
-  }
-
-  static get eventObservable() {
-    return this._eventObservable;
-  }
-
   static ofType(keys: string | string[]) {
     const KEYS = typeof keys === 'string' ? [keys] : keys;
 
     return EventManagerReactive._eventObservable.pipe(
       filter((value) => KEYS.includes(value.type))
     );
+  }
+  dispatch(action: EventRxAction) {
+    EventManagerReactive._eventObservable.next(action);
   }
 
   async createSubscriber(
@@ -37,20 +33,47 @@ export class EventManagerReactive {
     this.logger.log(
       `Create event subscriber ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`
     );
+    let preActionMetaChain: any;
     EventManagerReactive._eventObservable
       .pipe(
         filter((action) => {
           const types =
             typeof config.type === 'string' ? [config.type] : config.type;
 
-          if (typeof action?.meta === 'undefined') {
-            action.meta = {
-              chain: [action.type],
-            };
-          }
           return types.includes(action.type);
         }),
-        handlerPipe
+        map((value) => {
+          this.logger.log(
+            `Process ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`,
+            value
+          );
+          preActionMetaChain = value?.meta?.chain;
+          return value;
+        }),
+        handlerPipe,
+        map((action) => {
+          if (isObservable(action)) {
+            return action;
+          } else {
+            if (typeof preActionMetaChain !== 'undefined') {
+              action.meta = {
+                ...action.meta,
+                chain: _.clone(preActionMetaChain),
+              };
+              action.meta?.chain.push(
+                `${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}->${action.type}`
+              );
+            } else {
+              action.meta = {
+                chain: [
+                  `${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}->${action.type}`,
+                ],
+              };
+            }
+
+            return action;
+          }
+        })
       )
       .subscribe({
         next: (value) => {

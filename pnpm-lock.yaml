@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -294,18 +298,21 @@ importers:
       '@golevelup/nestjs-modules':
         specifier: latest
         version: 0.6.1(@nestjs/common@9.4.2)(rxjs@7.8.0)
+      chitility:
+        specifier: workspace:*
+        version: link:../chitility
+      fast-safe-stringify:
+        specifier: ^2.1.1
+        version: 2.1.1
+      logform:
+        specifier: ^2.5.1
+        version: 2.5.1
       nest-winston:
         specifier: ^1.9.2
         version: 1.9.2(@nestjs/common@9.4.2)(winston@3.8.2)
-      splunk-logging:
-        specifier: ^0.11.1
-        version: 0.11.1
       winston:
         specifier: ^3.8.2
         version: 3.8.2
-      winston-transport:
-        specifier: ^4.5.0
-        version: 4.5.0
     devDependencies:
       eslint-config-server:
         specifier: workspace:*

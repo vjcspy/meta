@@ -64,7 +64,7 @@ export class BaseModule implements OnApplicationBootstrap {
       })
     );
 
-    EventManagerReactive.eventObservable.next({
+    this.eventManagerReactive.dispatch({
       type: 'EventManagerReactive_INIT',
     });
   }

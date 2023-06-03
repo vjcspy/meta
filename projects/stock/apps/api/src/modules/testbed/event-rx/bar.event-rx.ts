@@ -1,21 +1,18 @@
 import { EventRx } from '@nest/base/dist/util/event-manager-rx/event-rx.decorator';
 import { EventRxHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EMPTY, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class BarEventRx {
-  private readonly logger = new Logger(BarEventRx.name);
   private isFirstTime = true;
   @EventRx({
     type: 'FOO_EVENT_1',
   })
   barEvent1(): EventRxHandler {
     return pipe(
-      map((action) => {
-        this.logger.log(`process action barEvent1 ${JSON.stringify(action)}`);
-
+      map(() => {
         if (this.isFirstTime) {
           this.isFirstTime = false;
           return {
@@ -33,9 +30,7 @@ export class BarEventRx {
   })
   barEvent2(): EventRxHandler {
     return pipe(
-      map((action) => {
-        this.logger.log(`process action barEvent2 ${JSON.stringify(action)}`);
-
+      map(() => {
         return {
           type: 'BAR_EVENT_2',
         };
@@ -47,11 +42,22 @@ export class BarEventRx {
   })
   barEvent3(): EventRxHandler {
     return pipe(
-      map((action) => {
-        this.logger.log(`process action barEvent3 ${JSON.stringify(action)}`);
-
+      map(() => {
         return {
           type: 'BAR_EVENT_3',
+        };
+      })
+    );
+  }
+
+  @EventRx({
+    type: ['BAR_EVENT_3'],
+  })
+  barEvent4(): EventRxHandler {
+    return pipe(
+      map(() => {
+        return {
+          type: 'BAR_EVENT_4',
         };
       })
     );

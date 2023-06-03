@@ -1,9 +1,11 @@
 import type { LoggerService } from '@nestjs/common';
-import { utilities, WinstonModule } from 'nest-winston';
+import { SplunkTransport } from 'chitility/dist/lib/logger/transport/SplunkTransport';
 import * as winston from 'winston';
+import { createLogger, format } from 'winston';
 
 import { getAppName, getInstanceId } from '../environment';
-import { SplunkTransport } from './transports/SplunkTransport';
+import { nestLikeConsoleFormat } from './format/nestlike';
+import { WinstonLogger } from './winston';
 
 let logger: LoggerService;
 export const initLoggerInstance = (config: {
@@ -17,79 +19,96 @@ export const initLoggerInstance = (config: {
   file?: boolean;
 }): LoggerService => {
   if (!logger) {
-    logger = WinstonModule.createLogger({
-      format: winston.format.combine(
-        winston.format.timestamp({
-          format: 'YYYY-MM-DD hh:mm:ss',
-        }),
-        winston.format.json({
-          space: 4,
-          maximumBreadth: 1,
-          maximumDepth: 1,
-          circularValue: null,
-        })
-      ),
-      levels: winston.config.cli.levels,
-      level: 'silly',
-      defaultMeta: {
-        appName: getAppName(),
-      },
-      transports: [
-        new winston.transports.Console({
-          format: winston.format.combine(
-            winston.format.ms(),
-            winston.format.colorize({
-              message: true,
-              level: true,
-              all: true,
-              colors: {
-                error: 'bold red',
-                debug: 'blue',
-                warn: 'underline yellow',
-                data: 'magenta',
-                info: 'white',
-                verbose: 'cyan',
-                silly: 'grey',
-              },
-            }),
-            utilities.format.nestLike(getInstanceId(), {
-              colors: true,
-              prettyPrint: true,
-            })
-          ),
-        }),
-        ...(config?.file === true
-          ? [
-              new winston.transports.File({
-                format: winston.format.uncolorize(),
-                filename: `logs/${getInstanceId()}.debug.log`,
-                level: 'debug',
+    logger = new WinstonLogger(
+      createLogger({
+        format: winston.format.combine(
+          winston.format.timestamp({
+            format: 'YYYY-MM-DD hh:mm:ss',
+          }),
+          winston.format.json({
+            space: 4,
+            circularValue: null,
+          })
+        ),
+        levels: winston.config.cli.levels,
+        level: 'silly',
+        // defaultMeta: {
+        //   appName: getAppName(),
+        // },
+        transports: [
+          new winston.transports.Console({
+            format: winston.format.combine(
+              winston.format.ms(),
+              winston.format.colorize({
+                message: true,
+                level: true,
+                all: true,
+                colors: {
+                  error: 'bold red',
+                  debug: 'blue',
+                  warn: 'underline yellow',
+                  data: 'magenta',
+                  info: 'white',
+                  verbose: 'cyan',
+                  silly: 'grey',
+                },
               }),
-              new winston.transports.File({
-                format: winston.format.uncolorize(),
-                filename: `logs/${getInstanceId()}.info.log`,
-                level: 'info',
-              }),
-              new winston.transports.File({
-                format: winston.format.uncolorize(),
-                filename: `logs/${getInstanceId()}.error.log`,
-                level: 'error',
-              }),
-              new winston.transports.File({
-                format: winston.format.uncolorize(),
-                filename: 'logs/combined.log',
-              }),
-            ]
-          : []),
-        new SplunkTransport({
-          enable: config?.splunk?.enable,
-          url: config?.splunk?.url,
-          token: config?.splunk?.token,
-          index: config?.splunk?.index,
-          source: config?.splunk?.source,
-        }),
-      ],
-    });
+              nestLikeConsoleFormat(getInstanceId(), {
+                colors: true,
+                prettyPrint: true,
+              })
+            ),
+          }),
+          ...(config?.file === true
+            ? [
+                new winston.transports.File({
+                  format: winston.format.combine(
+                    winston.format.uncolorize(),
+                    format.splat(),
+                    format.simple()
+                  ),
+                  filename: `logs/${getInstanceId()}.debug.log`,
+                  level: 'debug',
+                }),
+                new winston.transports.File({
+                  format: winston.format.combine(
+                    winston.format.uncolorize(),
+                    format.splat(),
+                    format.simple()
+                  ),
+                  filename: `logs/${getInstanceId()}.info.log`,
+                  level: 'info',
+                }),
+                new winston.transports.File({
+                  format: winston.format.combine(
+                    winston.format.uncolorize(),
+                    format.splat(),
+                    format.simple()
+                  ),
+                  filename: `logs/${getInstanceId()}.error.log`,
+                  level: 'error',
+                }),
+                new winston.transports.File({
+                  format: winston.format.combine(
+                    winston.format.uncolorize(),
+                    format.splat(),
+                    format.simple()
+                  ),
+                  filename: 'logs/combined.log',
+                }),
+              ]
+            : []),
+          new SplunkTransport({
+            appName: getAppName(),
+            enable: config?.splunk?.enable,
+            url: config?.splunk?.url,
+            token: config?.splunk?.token,
+            index: config?.splunk?.index,
+            source: config?.splunk?.source,
+          }) as any,
+        ],
+      })
+    );
   }
 
   return logger;
