@@ -5,6 +5,7 @@ import { EMPTY, filter, isObservable, map, Subject } from 'rxjs';
 
 import type { EventRxHandler, EventRxHandlerConfig } from './event-rx.types';
 import type { EventRxAction } from './event-rx.types';
+import type { ActionFactory } from './event-rx.types';
 
 @Injectable()
 export class EventManagerReactive {
@@ -18,8 +19,15 @@ export class EventManagerReactive {
       filter((value) => KEYS.includes(value.type))
     );
   }
-  dispatch(action: EventRxAction) {
-    EventManagerReactive._eventObservable.next(action);
+  dispatch(action: EventRxAction | ActionFactory<any>) {
+    let o: any = action;
+    if (typeof action === 'function') {
+      o = {
+        type: action().type,
+      };
+    }
+    this.logger.log(`Dispatch action ${o.type}`);
+    EventManagerReactive._eventObservable.next(o);
   }
 
   async createSubscriber(
@@ -37,9 +45,26 @@ export class EventManagerReactive {
     EventManagerReactive._eventObservable
       .pipe(
         filter((action) => {
-          const types =
-            typeof config.type === 'string' ? [config.type] : config.type;
+          let types: string[] = [];
+          if (Array.isArray(config.type)) {
+            types = config.type
+              .map((value) => {
+                if (typeof value === 'string') {
+                  return value;
+                } else if (typeof value === 'function' && value()?.type) {
+                  return value()?.type;
+                }
 
+                return undefined;
+              })
+              .filter((value) => !!value) as any;
+          } else {
+            if (typeof config.type === 'string') {
+              types = [config.type];
+            } else if (typeof config.type === 'function') {
+              types = [config.type().type];
+            }
+          }
           return types.includes(action.type);
         }),
         map((value) => {

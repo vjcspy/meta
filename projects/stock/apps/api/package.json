@@ -21,16 +21,20 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma": "___________________________ PRISMA ___________________________",
     "prisma:db:pull": "prisma db pull",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@nest/base": "workspace:*",
     "@nest/rabbitmq": "workspace:*",
+    "@nestjs/axios": "^2.0.0",
     "@nestjs/config": "^2.3.2",
-    "@prisma/client": "latest",
+    "@prisma/client": "^4.15.0",
     "@web/base": "workspace:*",
+    "axios": "^1.3.4",
     "chitility": "workspace:*",
-    "prisma": "^4.14.0"
+    "moment": "^2.29.4",
+    "node-html-parser": "^6.1.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -41,11 +45,11 @@
     "@types/supertest": "^2.0.11",
     "eslint-config-server": "workspace:*",
     "jest": "29.3.1",
+    "prisma": "^4.15.0",
     "supertest": "^6.1.3",
     "ts-jest": "29.0.3",
     "tsconfig": "workspace:*",
-    "tsconfig-paths": "4.1.1",
-    "prisma": "latest"
+    "tsconfig-paths": "4.1.1"
   },
   "jest": {
     "moduleFileExtensions": [

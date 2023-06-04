@@ -26,6 +26,7 @@
     "immutable": "latest",
     "lodash": "latest",
     "lodash-es": "^4.17.21",
+    "node-fetch": "^2.6.6",
     "reflect-metadata": "latest",
     "rxjs": "^7.8.0"
   },

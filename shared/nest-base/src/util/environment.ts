@@ -9,3 +9,10 @@ export function getAppName() {
 export function getInstanceId() {
   return process.env.INSTANCE_ID ? `PM2_${process.env.INSTANCE_ID}` : '_';
 }
+
+export function isMainProcess() {
+  return (
+    process.env.INSTANCE_ID === '0' ||
+    typeof process.env.INSTANCE_ID === 'undefined'
+  );
+}
