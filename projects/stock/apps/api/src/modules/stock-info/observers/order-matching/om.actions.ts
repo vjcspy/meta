@@ -8,6 +8,17 @@ export const SYNC_ORDER_MATCHING = actionFactory<{
   force?: boolean;
 }>('SYNC_ORDER_MATCHING');
 
+export const SYNC_ORDER_MATCHING_ERROR = actionFactory<{
+  code: string;
+  type: OrderMatchingType;
+  error?: Error;
+}>('SYNC_ORDER_MATCHING_ERROR');
+
+export const SYNC_ORDER_MATCHING_MAX_RETRY = actionFactory<{
+  code: string;
+  type: OrderMatchingType;
+}>('SYNC_ORDER_MATCHING_MAX_RETRY');
+
 export const SYNC_ORDER_MATCHING_FINISH = actionFactory<{
   code: string;
   type: OrderMatchingType;
@@ -17,6 +28,9 @@ export const SYNC_ORDER_MATCHING_LOAD_PAGE = actionFactory<{
   code: string;
   type: OrderMatchingType;
   page?: number;
+  meta?: {
+    headIndex: number;
+  };
 }>('SYNC_ORDER_MATCHING_LOAD_PAGE');
 
 export const SYNC_ORDER_MATCHING_LOAD_PAGE_AFTER = actionFactory<{
@@ -25,6 +39,18 @@ export const SYNC_ORDER_MATCHING_LOAD_PAGE_AFTER = actionFactory<{
   page: number;
   data: any;
 }>('SYNC_ORDER_MATCHING_LOAD_PAGE_AFTER');
+
+export const ORDER_MATCHING_LOAD_LAST_PAGE = actionFactory<{
+  code: string;
+  type: OrderMatchingType;
+  page: number;
+}>('ORDER_MATCHING_LOAD_LAST_PAGE');
+
+export const ORDER_MATCHING_NO_TRANSACTION = actionFactory<{
+  code: string;
+  type: OrderMatchingType;
+  meta: any;
+}>('ORDER_MATCHING_NO_TRANSACTION');
 
 export const SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR = actionFactory<{
   code: string;
@@ -37,6 +63,9 @@ export const ORDER_MATCHING_SAVE_SUCCESS = actionFactory<{
   code: string;
   type: OrderMatchingType;
   page: number;
+  meta: {
+    headIndex: number;
+  };
 }>('ORDER_MATCHING_SAVE_SUCCESS');
 export const ORDER_MATCHING_SAVE_ERROR = actionFactory<{
   code: string;

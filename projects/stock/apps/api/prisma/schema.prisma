@@ -434,6 +434,7 @@ model SyncStatus {
   error         String?
   date          DateTime
   meta          Json?
+  page          Int?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -446,6 +447,7 @@ model OrderMatching {
   code String
   type Int
   date DateTime
+  page Int
   meta Json
 
   @@index([code])

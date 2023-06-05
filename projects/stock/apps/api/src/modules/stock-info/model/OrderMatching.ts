@@ -1,7 +1,7 @@
 import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { Injectable } from '@nestjs/common';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export enum OrderMatchingType {
   HISTORY = 0,
@@ -11,10 +11,11 @@ export enum OrderMatchingType {
 @Injectable()
 export class OrderMatching {
   constructor(private readonly syncStatus: SyncStatus) {}
-  async saveByCodeAndType(code: string, type: number, data: any) {
+  async saveByCodeAndType(code: string, type: number, res: any) {
+    const { data, page } = res;
     let syncDate = moment().startOf('day');
-    if (Array.isArray(data.data) && data.data.length > 0) {
-      const _day = data.d;
+    if (Array.isArray(data) && data.length > 0) {
+      const _day = res.d;
       if (typeof _day !== 'string') {
         throw new Error(
           'Dữ liệu trả về bị lỗi, không parse được ngày hiện tại'
@@ -25,9 +26,10 @@ export class OrderMatching {
       // Xoá các bản ghi của ngày hôm đó
       await prisma.orderMatching.deleteMany({
         where: {
-          date: {
-            gte: syncDate.toDate(),
-          },
+          date: syncDate.toDate(),
+          code,
+          type,
+          page,
         },
       });
 
@@ -36,16 +38,19 @@ export class OrderMatching {
           code,
           type,
           date: syncDate.toDate(),
-          meta: data,
+          page,
+          meta: res,
         },
       });
 
       await this.syncStatus.saveSuccessStatus(this.getJobIdInfo(code, type), {
-        k: this.getJobIdInfo(code, type),
-        s: true,
+        key: this.getJobIdInfo(code, type),
+        is_success: false,
+        page,
         date: moment().toDate(),
-        meta: null,
       });
+    } else {
+      throw new Error('Please check data before save');
     }
   }
   getJobIdInfo(code, type) {

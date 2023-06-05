@@ -1,6 +1,6 @@
 import { prisma } from '@modules/core/util/prisma';
 import { Injectable } from '@nestjs/common';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Injectable()
 export class SyncStatus {
@@ -13,14 +13,23 @@ export class SyncStatus {
       },
     });
   }
-  async saveSuccessStatus(key: string, status: any) {
-    return prisma.syncStatus.upsert({
-      where: {
-        key,
-      },
-      update: status,
-      create: status,
-    });
+  async saveSuccessStatus(key: string, status: any, update = false) {
+    if (update) {
+      return prisma.syncStatus.update({
+        where: {
+          key,
+        },
+        data: status,
+      });
+    } else {
+      return prisma.syncStatus.upsert({
+        where: {
+          key,
+        },
+        update: status,
+        create: status,
+      });
+    }
   }
 
   async saveErrorStatus(key: string, error: any) {
@@ -29,7 +38,6 @@ export class SyncStatus {
         key,
       },
     });
-
     if (!status?.id) {
       await prisma.syncStatus.create({
         data: {

@@ -2,7 +2,7 @@ import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import type { Moment } from 'moment';
-import moment from 'moment';
+import * as moment from 'moment';
 import fetch from 'node-fetch';
 import { map } from 'rxjs';
 

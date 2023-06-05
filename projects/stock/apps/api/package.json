@@ -22,7 +22,7 @@
     "prisma": "___________________________ PRISMA ___________________________",
     "prisma:db:pull": "prisma db pull",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:generate": "prisma generatec"
+    "prisma:generate": "prisma generatecY"
   },
   "dependencies": {
     "@nest/base": "workspace:*",
