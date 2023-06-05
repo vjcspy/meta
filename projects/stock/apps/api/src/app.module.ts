@@ -1,10 +1,11 @@
+import { CoreModule } from '@modules/core/core.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { BaseModule } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
-import { HttpModule } from '@nestjs/axios';
 import type { OnModuleInit } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import * as process from 'process';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -22,10 +23,10 @@ import { AppService } from './app.service';
         '.env',
       ],
     }),
-    HttpModule, //https://docs.nestjs.com/techniques/http-module
+    CoreModule, //https://docs.nestjs.com/techniques/http-module
     BaseModule,
     RabbitMQModule.register({
-      uri: 'amqp://rabbitmq:rabbitmq@localhost:5672',
+      uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
       //Nếu không khai báo name thì mặc định là đang config cho default connection
       // name:'default',
       exchanges: [

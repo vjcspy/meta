@@ -425,3 +425,29 @@ model stock_price_sync_status_entity {
 
   @@unique([code, lastDate], map: "IDX_8ba3a6e51a856cff3192279c16")
 }
+
+model SyncStatus {
+  id            Int      @id @default(autoincrement())
+  key           String   @unique // key
+  is_success    Boolean // success
+  number_of_try Int?
+  error         String?
+  date          DateTime
+  meta          Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([key])
+  @@map("sync_status")
+}
+
+model OrderMatching {
+  id   Int      @id @default(autoincrement())
+  code String
+  type Int
+  date DateTime
+  meta Json
+
+  @@index([code])
+  @@map("order_matching")
+}
