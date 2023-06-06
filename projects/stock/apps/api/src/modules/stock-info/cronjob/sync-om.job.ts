@@ -1,12 +1,15 @@
 import { CronScheduleModel } from '@modules/core/model/CronSchedule.model';
+import { prisma } from '@modules/core/util/prisma';
 import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess } from '@nest/base';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import * as moment from 'moment/moment';
 
 @Injectable()
 export class SyncOmJob {
+  private readonly logger = new Logger(SyncOmJob.name);
   constructor(
     private syncOmPublisher: OrderMatchingPublisher,
     private cronScheduleModel: CronScheduleModel
@@ -30,17 +33,39 @@ export class SyncOmJob {
             return undefined;
           } else {
             // process and post slack
+            if (await this.isFinishSync(meta?.size)) {
+              // SYNC FULL SUCCESS
+              this.logger.log('Sync OM fully success');
+            } else {
+              this.logger.warn('Sync OM not fully success');
+              // SYNC FAIL
+            }
+
             return {
               isPostSlack: true,
             };
           }
         }
 
-        // process and post slack
-        return {
-          isPostSlack: true,
-        };
+        this.logger.error('Please return number records when publish sync om');
       }
     );
+  }
+
+  private async isFinishSync(totalCor: number) {
+    // dua vao sync status
+    const syncDate = moment().startOf('day');
+    const numberSyncSuccess = await prisma.syncStatus.count({
+      where: {
+        key: {
+          contains: 'sync_om',
+        },
+        date: {
+          gte: syncDate.toDate(),
+        },
+        is_success: true,
+      },
+    });
+    return numberSyncSuccess == 2 * totalCor;
   }
 }

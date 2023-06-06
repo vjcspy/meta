@@ -10,11 +10,12 @@ export enum CronScheduleStatus {
 @Injectable()
 export class CronScheduleModel {
   private readonly logger = new Logger(CronScheduleModel.name);
-  private async cronStart(jobCode: string) {
+  private async cronStart(jobCode: string, meta?: any) {
     return prisma.cronSchedule.create({
       data: {
         job_code: jobCode,
         status: CronScheduleStatus.PENDING,
+        meta,
       },
     });
   }
@@ -24,7 +25,7 @@ export class CronScheduleModel {
     jobFn: () => Promise<any>,
     whenSuccess?: (doc: CronSchedule) => Promise<any>
   ) {
-    const schedule = await prisma.cronSchedule.findFirst({
+    let schedule = await prisma.cronSchedule.findFirst({
       where: {
         job_code: jobCode,
         created_at: {
@@ -55,16 +56,16 @@ export class CronScheduleModel {
         }
       }
     } else {
-      await this.cronStart(jobCode);
-      await jobFn();
+      const startMeta = await jobFn();
+      schedule = await this.cronStart(jobCode, startMeta);
 
-      const meta = await whenSuccess(schedule);
+      const successMeta = await whenSuccess(schedule);
       prisma.cronSchedule.update({
         where: {
           id: schedule.id,
         },
         data: {
-          meta,
+          meta: { ...startMeta, ...successMeta },
           status: CronScheduleStatus.SUCCESS,
         },
       });

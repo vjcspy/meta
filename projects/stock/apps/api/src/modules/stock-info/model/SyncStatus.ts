@@ -7,9 +7,13 @@ export class SyncStatus {
   static INFOS: { id: string; meta: any }[] = [];
 
   async getStatus(key: string) {
-    return prisma.syncStatus.findUnique({
+    const syncDate = moment().startOf('day');
+    return prisma.syncStatus.findFirst({
       where: {
         key,
+        date: {
+          gte: syncDate.toDate(),
+        },
       },
     });
   }
