@@ -453,3 +453,16 @@ model OrderMatching {
   @@index([code])
   @@map("order_matching")
 }
+
+model CronSchedule {
+  id       Int    @id @default(autoincrement())
+  job_code String
+  status   Int
+  meta     Json?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([job_code])
+  @@map("cron_schedule")
+}
