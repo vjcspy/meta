@@ -10,6 +10,7 @@ const AccountRegisterForm = combineHOC(withAccountDefaultActions)((props) => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const onSubmit = useCallback((data: any) => {
@@ -43,6 +44,9 @@ const AccountRegisterForm = combineHOC(withAccountDefaultActions)((props) => {
               error={errors.email}
               label={'Email*'}
               helperText="Please enter the correct email"
+              onBlur={(e: any) => {
+                setValue('email', e.target.value.trim());
+              }}
             />
           </div>
         </div>

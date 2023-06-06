@@ -48,6 +48,10 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
                   {...register('name', {
                     required: true,
                   })}
+                  maxLength={50}
+                  onBlur={(e: any) => {
+                    e.target.value = e.target.value.trim();
+                  }}
                 />
               </div>
               {errors.name && (
@@ -69,10 +73,14 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
                       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
                     ),
                   })}
+                  maxLength={50}
                   className="input-text h-40px w-full "
+                  onBlur={(e: any) => {
+                    e.target.value = e.target.value.trim();
+                  }}
                 />
               </div>
-              {errors.name && (
+              {errors.email && (
                 <span className="mt-2 text-red-700">
                   Please enter the correct email.
                 </span>
@@ -86,8 +94,32 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
                 <span>Phone Number</span>
               </label>
               <div className="control">
-                <input type="number" className="input-text h-40px w-full " />
+                <input
+                  type="number"
+                  className="input-text h-40px w-full"
+                  {...register('phone', {
+                    maxLength: 10,
+                    pattern: new RegExp(
+                      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i
+                    ),
+                  })}
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                      event.preventDefault();
+                    }
+                  }}
+                />
               </div>
+              {errors.phone && errors.phone.type === 'maxLength' && (
+                <span className="mt-2 text-red-700">
+                  Your phone number is too long
+                </span>
+              )}
+              {errors.phone && errors.phone.type === 'pattern' && (
+                <span className="mt-2 text-red-700">
+                  Phone number is invalid.
+                </span>
+              )}
             </div>
             <div className="form-input required mb-3">
               <label
@@ -106,6 +138,9 @@ const Contact = combineHOC(withBedKingdomContactActions)((props) => {
                   cols={5}
                   rows={3}
                   maxLength={200}
+                  onBlur={(e: any) => {
+                    e.target.value = e.target.value.trim();
+                  }}
                 />
               </div>
               {errors.comment && (

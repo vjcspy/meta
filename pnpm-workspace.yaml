@@ -2,4 +2,6 @@ packages:
   - "apps/nestjs"
   - "shared/*"
   #  ________ Projects ________
+  - "projects/main/apps/proxy-sls"
+  #  ________ Projects ________
   - "projects/stock/apps/*"

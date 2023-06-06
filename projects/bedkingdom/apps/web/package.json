@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon",
-    "dev:next": "next dev -p 3001",
+    "dev:server": "nodemon",
+    "dev": "next dev -p 3001",
     "build": "pnpm run build:next && pnpm run build:server",
     "build:next": "NODE_ENV=production next build",
     "build:server": "NODE_ENV=production tsc -p tsconfig.server.json && tsc-alias -p tsconfig.server.json",

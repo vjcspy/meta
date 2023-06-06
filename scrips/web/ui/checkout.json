@@ -1,0 +1,28 @@
+{
+  "uiId": "DEFAULT_ROOT",
+  "extensionDataConfigs": [
+    {
+      "forHookId": "header",
+      "extensionDataConfigs": [
+      ]
+    },
+    {
+      "forHookId": "main",
+      "extensionDataConfigs": [
+        {
+          "uiId": "STACK",
+          "extensionDataConfigs": [
+            {
+              "uiId": "BEDKINGDOM_CHECKOUT_ONE_PAGE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forHookId": "footer",
+      "extensionDataConfigs": [
+      ]
+    }
+  ]
+}

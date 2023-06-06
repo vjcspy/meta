@@ -38,6 +38,10 @@ const originalOptions: Options = {
       delete proxyRes.headers['transfer-encoding'];
     }
     // delete proxyRes.headers['x-removed']; // remove header from response
+
+    if (proxyRes.statusCode === 410) {
+      proxyRes.headers['cache-control'] = 'must-revalidate, proxy-revalidate';
+    }
   },
 };
 
