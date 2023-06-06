@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'meta-stock',
-      script: './build/main.js',
+      script: './dist/main.js',
       instances: '4',
       instance_var: 'INSTANCE_ID',
       exec_mode: 'cluster',
