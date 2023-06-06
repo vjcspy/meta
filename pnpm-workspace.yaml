@@ -3,7 +3,5 @@ packages:
   - "shared/*"
   #  ________ Projects ________
   - "projects/main/apps/proxy-sls"
-  - "projects/main/packages/*"
-  - "projects/main/ui/*"
-  - "projects/bedkingdom/packages/*"
-  - "projects/bedkingdom/apps/*"
+  #  ________ Projects ________
+  - "projects/stock/apps/*"

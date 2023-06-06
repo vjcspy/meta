@@ -45,21 +45,21 @@ services:
       - RABBITMQ_DEFAULT_USER=rabbitmq
       - RABBITMQ_DEFAULT_PASS=123456aA@
 
-  mongo:
-    #    restart: always
-    image: mongo:latest
-    container_name: "${STACK_NAME}-mongodb"
-    hostname: "${STACK_NAME}-mongodb"
-    ports:
-      - "27018:27018"
-    volumes:
-      - mongo:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGO_INITDB_DATABASE=mk
+#  mongo:
+#    #    restart: always
+#    image: mongo:latest
+#    container_name: "${STACK_NAME}-mongodb"
+#    hostname: "${STACK_NAME}-mongodb"
+#    ports:
+#      - "27018:27018"
+#    volumes:
+#      - mongo:/data/db
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=root
+#      - MONGO_INITDB_ROOT_PASSWORD=root
+#      - MONGO_INITDB_DATABASE=mk
 
 volumes:
   postgres:
   rabbitmq:
-  mongo:
+#  mongo:

@@ -32,6 +32,7 @@ import { RabbitRpcParamsFactory } from './rabbitmq.factory';
       useFactory: async (
         config: RabbitMQConfig
       ): Promise<AmqpConnectionManager> => {
+        // create connection by config
         amqpConnectionManager.config(config);
         return amqpConnectionManager;
       },

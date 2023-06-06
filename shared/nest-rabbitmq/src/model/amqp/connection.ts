@@ -48,7 +48,7 @@ const defaultConfig: RabbitMQConfig = {
   enableControllerDiscovery: false,
 };
 export class AmqpConnection {
-  private readonly logger: Logger;
+  private readonly logger: Logger = new Logger(AmqpConnection.name);
 
   private readonly config: RabbitMQConfig;
 
@@ -79,7 +79,9 @@ export class AmqpConnection {
       ...config,
     };
 
-    this.logger = <Logger>this.config.logger;
+    if (config?.logger) {
+      this.logger = config.logger;
+    }
   }
 
   get configuration() {
@@ -112,6 +114,13 @@ export class AmqpConnection {
         this.logger.error(
           `Disconnected from RabbitMQ broker (${this.config.name})`,
           err?.stack
+        );
+      });
+
+      this._managedConnection.on('connectFailed', (arg) => {
+        this.logger.error(
+          `Fail to connect RabbitMQ broker ${arg.url} with message ${arg.err.message}`,
+          arg.err
         );
       });
 

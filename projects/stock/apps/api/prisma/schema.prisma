@@ -1,0 +1,455 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cor_entity {
+  id             Int       @id @default(autoincrement())
+  refId          Int?
+  catId          Int?
+  code           String    @unique(map: "IDX_ce504ece33ceadc9f7307e8101") @db.VarChar(255)
+  exchange       String    @db.VarChar(255)
+  industryName1  String?   @db.VarChar(255)
+  industryName2  String?   @db.VarChar(255)
+  industryName3  String?   @db.VarChar(255)
+  totalShares    BigInt
+  name           String    @db.VarChar(255)
+  firstTradeDate DateTime? @db.Date
+}
+
+model fa_beta_entity {
+  id         Int      @id @default(autoincrement())
+  code       String   @unique(map: "IDX_2836ee1b531807b0a69387ce79") @db.VarChar(255)
+  beta_12    Decimal? @db.Decimal(4, 3)
+  beta_24    Decimal? @db.Decimal(4, 3)
+  beta_36    Decimal? @db.Decimal(4, 3)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model financial_balance_sheet_entity {
+  id                                          Int     @id @default(autoincrement())
+  code                                        String  @db.VarChar(10)
+  quarter                                     Int?    @db.SmallInt
+  year                                        Int     @db.SmallInt
+  termType                                    Int     @db.SmallInt
+  periodBegin                                 String? @db.VarChar(6)
+  periodEnd                                   String? @db.VarChar(6)
+  united                                      String? @db.VarChar(3)
+  auditedStatus                               String  @db.VarChar(3)
+  assets                                      Int?
+  shortTermAssets                             Int?
+  cashAndCashEquivalents                      Int?
+  cash                                        Int?
+  cashEquivalents                             Int?
+  shortTermFinancialInvestments               Int?
+  availableForSaleSecurities                  Int?
+  availableForSaleSecurity                    Int?
+  heldToMaturityInvestments                   Int?
+  shortTermReceivables                        Int?
+  shortTermTradeAccountsReceivable            Int?
+  shortTermPrepaymentsToSuppliers             Int?
+  shortTermInterCompanyReceivables            Int?
+  progressBillingDefined                      Int?
+  shortTermLoanReceivables                    Int?
+  otherShortTermReceivables                   Int?
+  provisionForShortTermDoubtfulDebts          Int?
+  assetsAwaitingResolution                    Int?
+  inventoriesGroup                            Int?
+  inventories                                 Int?
+  provisionForDeclineInValueOfInventories     Int?
+  otherShortTermAssetsGroup                   Int?
+  shortTermPrepayments                        Int?
+  valueAddedTaxToBeReclaimed                  Int?
+  taxesAndOtherReceivables                    Int?
+  governmentBonds                             Int?
+  otherShortTermAssets                        Int?
+  longTermAssets                              Int?
+  longTermReceivables                         Int?
+  longTermTradeReceivables                    Int?
+  longTermPrepaymentsToSuppliers              Int?
+  capitalAtInterCompany                       Int?
+  longTermInterCompanyReceivables             Int?
+  longTermLoanReceivables                     Int?
+  otherLongTermReceivables                    Int?
+  provisionForLongTermDoubtfulDebts           Int?
+  fixedAssets                                 Int?
+  tangibleFixedAssets                         Int?
+  costMaterial                                Int?
+  accumulatedDepreciation                     Int?
+  financialLeasedFixedAssets                  Int?
+  costFinancialLeaseFixedAssets               Int?
+  accumulatedDepreciationFinancialLease       Int?
+  intangibleFixedAssets                       Int?
+  costIntangible                              Int?
+  accumulatedDepreciationIntangible           Int?
+  investmentProperties                        Int?
+  costInvestmentProperties                    Int?
+  accumulatedDepreciationInvestmentProperties Int?
+  longTermAssetsInProgress                    Int?
+  longTermProductionInProgress                Int?
+  constructionInProgress                      Int?
+  longTermFinancialInvestments                Int?
+  investmentsInSubsidiaries                   Int?
+  investmentsInAssociates                     Int?
+  investmentsInOtherEntities                  Int?
+  provisionForDiminution                      Int?
+  heldToMaturityFinancialInvestments          Int?
+  otherLongTermInvestments                    Int?
+  otherLongTermAssets                         Int?
+  longTermPrepayments                         Int?
+  deferredIncomeTaxAssets                     Int?
+  longTermEquipmentSuppliesSpareParts         Int?
+  otherLongTermAssetsRealEstate               Int?
+  goodwill                                    Int?
+  totalAssets                                 Int?
+  ownerEquityCapital                          Int?
+  liabilities                                 Int?
+  shortTermLiabilities                        Int?
+  shortTermTradeAccountsPayable               Int?
+  shortTermAdvancesFromCustomers              Int?
+  taxesAndOtherPayables                       Int?
+  payableToEmployees                          Int?
+  shortTermAcrruedExpenses                    Int?
+  shortTermInterCompanyPayables               Int?
+  constructionContractProgressPayments        Int?
+  shortTermUnearnedRevenue                    Int?
+  otherShortTermPayables                      Int?
+  shortTermBorrowingsAndFinancialLeases       Int?
+  provisionForShortTermLiabilities            Int?
+  bonusAndWelfareFund                         Int?
+  priceStabilizationFund                      Int?
+  governmentBondsCapital                      Int?
+  longTermLiabilities                         Int?
+  longTermTradePayables                       Int?
+  longTermAdvancesFromCustomers               Int?
+  longTermAcrruedExpenses                     Int?
+  interCompanyPayablesOnBusinessCapital       Int?
+  longTermInterCompanyPayables                Int?
+  longTermUnearnedRevenue                     Int?
+  otherLongTermLiabilities                    Int?
+  longTermBorrowingsAndFinancialLeases        Int?
+  convertibleBonds                            Int?
+  preferredStockDebt                          Int?
+  deferredIncomeTaxLiabilities                Int?
+  provisionForLongTermLiabilities             Int?
+  fundForTechnologyDevelopment                Int?
+  provisionForSeveranceAllowances             Int?
+  ownerEquityGroup                            Int?
+  ownerEquity                                 Int?
+  ownerCapital                                Int?
+  commonStockWithVotingRight                  Int?
+  preferredStock                              Int?
+  sharePremium                                Int?
+  convertibleBondOption                       Int?
+  otherCapitalOfOwners                        Int?
+  treasuryShares                              Int?
+  assetsRevaluationDifferences                Int?
+  foreignExchangeDifferences                  Int?
+  investmentAndDevelopmentFund                Int?
+  fundToSupportCorporateRestructuring         Int?
+  otherFundsFromOwnerEquity                   Int?
+  undistributedEarningsAfterTax               Int?
+  accumulatedRetainedEarning                  Int?
+  undistributedEarningsInThisPeriod           Int?
+  reservesForInvestmentInConstruction         Int?
+  minorityInterest                            Int?
+  financialReserves                           Int?
+  otherResourcesAndFunds                      Int?
+  subsidizedNotForProfitFunds                 Int?
+  fundsInvestedInFixedAssets                  Int?
+  cMinorityInterest                           Int?
+  totalOwnerEquityAndLiabilities              Int?
+
+  @@unique([code, periodBegin, periodEnd], map: "IDX_ccdff6f1b957fd5c2fcb39f314")
+}
+
+model financial_business_report_entity {
+  id                                           Int     @id @default(autoincrement())
+  code                                         String  @db.VarChar(10)
+  quarter                                      Int?    @db.SmallInt
+  year                                         Int     @db.SmallInt
+  termType                                     Int     @db.SmallInt
+  periodBegin                                  String? @db.VarChar(6)
+  periodEnd                                    String? @db.VarChar(6)
+  united                                       String? @db.VarChar(3)
+  auditedStatus                                String  @db.VarChar(3)
+  revenue                                      Int?
+  deductionFromRevenue                         Int?
+  netRevenue                                   Int?
+  costOfGoodsSold                              Int?
+  grossProfit                                  Int?
+  financialIncome                              Int?
+  financialExpenses                            Int?
+  interestExpenses                             Int?
+  shareOfAssociatesAndJointVenturesResult      Int?
+  sellingExpenses                              Int?
+  generalAndAdministrativeExpenses             Int?
+  operatingProfit                              Int?
+  otherIncome                                  Int?
+  otherExpenses                                Int?
+  otherProfit                                  Int?
+  shareOfAssociatesAndJointVentures            Int?
+  profitBeforeTax                              Int?
+  currentCorporateIncomeTaxExpenses            Int?
+  deferredIncomeTaxExpenses                    Int?
+  netProfitAfterTax                            Int?
+  minorityInterest                             Int?
+  profitAfterTaxForShareholdersOfParentCompany Int?
+  earningsPerShare                             Int?
+  dilutedEarningsPerShare                      Int?
+
+  @@unique([code, periodBegin, periodEnd], map: "IDX_3bf19664cecac4e569ce0d39c7")
+}
+
+model financial_cash_flow_entity {
+  id                                               Int     @id @default(autoincrement())
+  code                                             String  @db.VarChar(10)
+  quarter                                          Int?    @db.SmallInt
+  year                                             Int     @db.SmallInt
+  termType                                         Int     @db.SmallInt
+  periodBegin                                      String? @db.VarChar(6)
+  periodEnd                                        String? @db.VarChar(6)
+  united                                           String? @db.VarChar(3)
+  auditedStatus                                    String  @db.VarChar(3)
+  cashFlowsFromOperatingActivities                 Int?
+  profitBeforeTax                                  Int?
+  adjustmentsFor                                   Int?
+  depreciationOfFixedAssetsAndPropertiesInvestment Int?
+  reversalOfProvisionsOverProvisions               Int?
+  foreignxEchangeGainLoss                          Int?
+  lossProfitFromInvestmentActivities               Int?
+  interestExpense                                  Int?
+  lossProfitsFromDisposalOfFixedAsset              Int?
+  interestIncomeAndDividends                       Int?
+  allocationOfGoodwill                             Int?
+  otherAdjustmentsFor                              Int?
+  operatingProfitBeforeChangesInWorkingCapital     Int?
+  increaseDecreaseInReceivables                    Int?
+  increaseDecreaseInInventories                    Int?
+  increaseDecreaseInPayables                       Int?
+  increaseDecreaseInPrepaidExpenses                Int?
+  changesInAvailableForSaleSecurities              Int?
+  interestPaid                                     Int?
+  corporateIncomeTaxPaid                           Int?
+  otherReceiptsFromOperatingActivities             Int?
+  otherPaymentsForOperatingActivities              Int?
+  netCashFlowsFromOperatingActivities              Int?
+  cashFlowsFromInvestingActivities                 Int?
+  paymentForFixedAssets                            Int?
+  receiptsFromDisposalOfFixedAssets                Int?
+  loansPurchasesOfOtherEntities                    Int?
+  receiptsFromLoanRepayments                       Int?
+  paymentsForInvestmentInOtherEntities             Int?
+  collectionsOnInvestmentInOtherEntities           Int?
+  dividendsInterestAndProfit                       Int?
+  increaseDecreaseInTermDeposit                    Int?
+  purchasesOfMinoritySharesOfSubsidiaries          Int?
+  otherReceiptsFromInvestingActivities             Int?
+  otherPaymentsForInvestingActivities              Int?
+  netCashFlowsFromInvestingActivities              Int?
+  cashFlowsFromFinancingActivities                 Int?
+  receiptsFromEquityIssue                          Int?
+  paymentForShareRepurchases                       Int?
+  proceedsFromBorrowings                           Int?
+  principalRepayments                              Int?
+  repaymentOfFinancialLeases                       Int?
+  dividendsPaidProfitsDistributedToOwners          Int?
+  otherReceiptsFromFinancingActivities             Int?
+  otherPaymentsForFinancingActivities              Int?
+  netCashFlowsFromFinancingActivities              Int?
+  netCashFlowsDuringThePeriod                      Int?
+  cashAndCashEquivalents                           Int?
+  exchangeDifferenceDue                            Int?
+  cashAndCashEquivalentsAtEnd                      Int?
+
+  @@unique([code, periodBegin, periodEnd], map: "IDX_d0fffc189007c4a0c391aa7160")
+}
+
+model financial_indicators_entity {
+  id                                              Int      @id @default(autoincrement())
+  code                                            String   @db.VarChar(10)
+  quarter                                         Int?     @db.SmallInt
+  year                                            Int      @db.SmallInt
+  termType                                        Int      @db.SmallInt
+  periodBegin                                     String?  @db.VarChar(6)
+  periodEnd                                       String?  @db.VarChar(6)
+  united                                          String?  @db.VarChar(3)
+  auditedStatus                                   String   @db.VarChar(3)
+  costOfGoodSoldOverNetRevenue                    Decimal? @db.Decimal(10, 3)
+  sellingExpensesOverNetRevenue                   Decimal? @db.Decimal(10, 3)
+  generalAndAdministrativeExpensesOverNetRevenue  Decimal? @db.Decimal(10, 3)
+  interestExpensesOverNetRevenue                  Decimal? @db.Decimal(10, 3)
+  longTermAssetsOverTotalAssets                   Decimal? @db.Decimal(10, 3)
+  fixedAssetsOverTotalAssets                      Decimal? @db.Decimal(10, 3)
+  tangibleFixedAssetsOverFixedAssets              Decimal? @db.Decimal(10, 3)
+  financeLeaseOverFixedAssets                     Decimal? @db.Decimal(10, 3)
+  intangibleFixedAssetsOverFixedAssets            Decimal? @db.Decimal(10, 3)
+  constructionInProgressOverFixedAssets           Decimal? @db.Decimal(10, 3)
+  shortTermAssetsOverTotalAssets                  Decimal? @db.Decimal(10, 3)
+  cashOverShortTermAssets                         Decimal? @db.Decimal(10, 3)
+  shortTermInvestmentsOverShortTermAssets         Decimal? @db.Decimal(10, 3)
+  shortTermReceivablesOverShortTermAssets         Decimal? @db.Decimal(10, 3)
+  inventoryOverShortTermAssets                    Decimal? @db.Decimal(10, 3)
+  otherShortTermAssetsOverShortTermAssets         Decimal? @db.Decimal(10, 3)
+  accrualRatioCF                                  Decimal? @db.Decimal(10, 3)
+  cashToIncome                                    Decimal? @db.Decimal(10, 3)
+  netCashFlowsOverShortTermLiabilities            Decimal? @db.Decimal(10, 3)
+  accrualRatioBalanceSheetMethod                  Decimal? @db.Decimal(10, 3)
+  accrualRatioCashFlowMethod                      Decimal? @db.Decimal(10, 3)
+  cashReturnToAssets                              Decimal? @db.Decimal(10, 3)
+  cashReturnOnEquity                              Decimal? @db.Decimal(10, 3)
+  operatingCashFlowOverRevenues                   Decimal? @db.Decimal(10, 3)
+  debtCoverage                                    Decimal? @db.Decimal(10, 3)
+  cashFlowPerShareCPS                             Decimal? @db.Decimal(10, 3)
+  receivablesTurnover                             Decimal? @db.Decimal(10, 3)
+  daysOfSalesOutstanding                          Decimal? @db.Decimal(10, 3)
+  inventoryTurnover                               Decimal? @db.Decimal(10, 3)
+  daysOfInventoryOnHand                           Decimal? @db.Decimal(10, 3)
+  payablesTurnover                                Decimal? @db.Decimal(10, 3)
+  numberOfDaysOfPayables                          Decimal? @db.Decimal(10, 3)
+  fixedAssetTurnover                              Decimal? @db.Decimal(10, 3)
+  totalAssetTurnover                              Decimal? @db.Decimal(10, 3)
+  equityTurnover                                  Decimal? @db.Decimal(10, 3)
+  grossProfitMargin                               Decimal? @db.Decimal(10, 3)
+  ebitMargin                                      Decimal? @db.Decimal(10, 3)
+  ebitDAOverNetRevenue                            Decimal? @db.Decimal(10, 3)
+  netProfitMargin                                 Decimal? @db.Decimal(10, 3)
+  roe                                             Decimal? @db.Decimal(10, 3)
+  returnOnCapitalEmployedROCE                     Decimal? @db.Decimal(10, 3)
+  roa                                             Decimal? @db.Decimal(10, 3)
+  cashRatio                                       Decimal? @db.Decimal(10, 3)
+  quickRatio                                      Decimal? @db.Decimal(10, 3)
+  quickRatioShortTermReceivablesReference         Decimal? @db.Decimal(10, 3)
+  shortTermRatio                                  Decimal? @db.Decimal(10, 3)
+  interestCoverage                                Decimal? @db.Decimal(10, 3)
+  netRevenue                                      Decimal? @db.Decimal(10, 3)
+  grossProfit                                     Decimal? @db.Decimal(10, 3)
+  profitBeforeTax                                 Decimal? @db.Decimal(10, 3)
+  profitAfterTaxForShareholdersOfTheParentCompany Decimal? @db.Decimal(10, 3)
+  totalAssets                                     Decimal? @db.Decimal(10, 3)
+  longTermLiabilities                             Decimal? @db.Decimal(10, 3)
+  liabilities                                     Decimal? @db.Decimal(10, 3)
+  ownerEquity                                     Decimal? @db.Decimal(10, 3)
+  charterCapital                                  Decimal? @db.Decimal(10, 3)
+  shortTermLiabilitiesToTotalLiabilities          Decimal? @db.Decimal(10, 3)
+  debtToAssets                                    Decimal? @db.Decimal(10, 3)
+  liabilitiesToAssets                             Decimal? @db.Decimal(10, 3)
+  equityToAssets                                  Decimal? @db.Decimal(10, 3)
+  shortTermLiabilitiesToEquity                    Decimal? @db.Decimal(10, 3)
+  debtToEquity                                    Decimal? @db.Decimal(10, 3)
+  liabilitiesToEquity                             Decimal? @db.Decimal(10, 3)
+  trailingEPS                                     Decimal? @db.Decimal(10, 3)
+  bookValuePerShareBVPS                           Int?
+  pe                                              Decimal? @db.Decimal(10, 3)
+  pb                                              Decimal? @db.Decimal(10, 3)
+  ps                                              Decimal? @db.Decimal(10, 3)
+  dividendYield                                   Decimal? @db.Decimal(10, 3)
+  beta                                            Decimal? @db.Decimal(10, 3)
+  evOverEBIT                                      Decimal? @db.Decimal(10, 3)
+  evOverEBITDA                                    Decimal? @db.Decimal(10, 3)
+
+  @@unique([code, periodBegin, periodEnd], map: "IDX_335a78f8c48670a5fb5ba760cb")
+}
+
+model financial_info_status_entity {
+  id       Int     @id @default(autoincrement())
+  code     String  @db.VarChar(10)
+  type     String  @db.VarChar(4)
+  termType Int     @db.SmallInt
+  year     String  @db.VarChar(4)
+  quarter  String? @db.VarChar(1)
+  error    String? @db.Text
+
+  @@unique([code, termType, type], map: "IDX_1e019385c2375b76bfcc35e8f8")
+}
+
+model sector_entity {
+  id         Int    @id @default(autoincrement())
+  sectorName String @db.VarChar(255)
+  level      Int    @db.SmallInt
+}
+
+model stock_price_entity {
+  id                  Int      @id @default(autoincrement())
+  code                String   @db.VarChar(10)
+  date                String   @db.VarChar(10)
+  adClose             Int      @db.Integer
+  adHigh              Int      @db.Integer
+  adLow               Int      @db.Integer
+  adOpen              Int      @db.Integer
+  adRatio             Decimal  @db.Decimal(8, 3)
+  buyAvg              Int      @db.Integer
+  buyCount            Int      @db.Integer
+  buyQuantity         BigInt   @db.BigInt
+  buyForeignQuantity  BigInt   @db.BigInt
+  buyForeignValue     BigInt   @db.BigInt
+  currentForeignRoom  Int      @default(0) @db.Integer
+  dealVolume          Int?     @default(0) @db.Integer
+  exchange            Decimal? @db.Decimal(8, 3)
+  marketCap           Int?     @default(0) @db.Integer
+  pricePreviousClose  Int      @default(0) @db.Integer
+  putThroughValue     BigInt?  @default(0) @db.BigInt
+  putThroughVolume    Int?     @default(0) @db.Integer
+  shares              Int?     @default(0) @db.Integer
+  priceAverage        Decimal  @db.Decimal(10, 3)
+  priceBasic          Int      @db.Integer
+  priceClose          Int      @db.Integer
+  priceHigh           Int      @db.Integer
+  priceLow            Int      @db.Integer
+  priceOpen           Int      @db.Integer
+  sellAvg             Int      @db.Integer
+  sellCount           Int      @db.Integer
+  sellQuantity        BigInt   @db.BigInt
+  sellForeignQuantity BigInt   @db.BigInt
+  sellForeignValue    BigInt   @db.BigInt
+  totalTrade          BigInt   @db.BigInt
+  totalValue          BigInt   @db.BigInt
+  totalVolume         Int      @db.Integer
+  volume              Int      @db.Integer
+
+  @@unique([code, date], map: "IDX_d8a2cc44789d1df0e4e8f7c89f")
+}
+
+model stock_price_sync_status_entity {
+  id             Int       @id @default(autoincrement())
+  code           String    @unique(map: "IDX_3b535f86c3be7e53a20299d4fb") @db.VarChar(10)
+  lastDate       DateTime? @db.Date
+  lastUpdateDate DateTime  @db.Date
+  lastError      String?   @db.Text
+  try            Int?      @db.SmallInt
+
+  @@unique([code, lastDate], map: "IDX_8ba3a6e51a856cff3192279c16")
+}
+
+model SyncStatus {
+  id            Int      @id @default(autoincrement())
+  key           String   @unique // key
+  is_success    Boolean // success
+  number_of_try Int?
+  error         String?
+  date          DateTime
+  meta          Json?
+  page          Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([key])
+  @@map("sync_status")
+}
+
+model OrderMatching {
+  id   Int      @id @default(autoincrement())
+  code String
+  type Int
+  date DateTime
+  page Int
+  meta Json
+
+  @@index([code])
+  @@map("order_matching")
+}

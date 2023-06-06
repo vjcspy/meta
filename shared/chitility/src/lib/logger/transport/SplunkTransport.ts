@@ -3,7 +3,7 @@ import TransportStream from 'winston-transport';
 
 export type SplunkTransportConfig = {
   appName?: string;
-  enable: boolean;
+  enable: any;
   url: string;
   token: string;
   index: string;
@@ -27,7 +27,7 @@ export class SplunkTransport extends TransportStream {
   constructor(config: SplunkTransportConfig) {
     super(config);
 
-    if (config?.enable !== true) {
+    if (config?.enable !== 'true' && config?.enable !== true) {
       return;
     }
 
@@ -43,13 +43,12 @@ export class SplunkTransport extends TransportStream {
       return;
     }
 
-    this.name = 'SplunkStreamEvent';
+    this.name = config?.appName ?? 'SplunkStreamEvent';
     this.level = config.level || 'info';
-    const { sourcetype = '_json' } = config;
 
     this.defaultMetadata = {
-      source: config?.appName ?? config?.source ?? '',
-      sourcetype,
+      source: config?.source,
+      sourcetype: '_json',
       index: config.index,
     };
     if (config?.source) {
@@ -62,13 +61,11 @@ export class SplunkTransport extends TransportStream {
       this.defaultMetadata.index = config.index;
     }
 
-    /**
-     * Config event sent to splunk server
-     * */
+    // Override the default event formatter
     if (config?.eventFormatter) {
       this.server.eventFormatter = config.eventFormatter;
     } else {
-      this.server.eventFormatter = (message: any, severity: any) => {
+      this.server.eventFormatter = (message, severity) => {
         if (typeof message === 'string') {
           // eslint-disable-next-line no-param-reassign
           message = {
@@ -83,7 +80,7 @@ export class SplunkTransport extends TransportStream {
     }
   }
 
-  log(info: any, callback: any) {
+  log(info, callback) {
     if (!this.enable || this.maxError < this.errorCount) {
       callback(null, true);
       return;
@@ -105,7 +102,7 @@ export class SplunkTransport extends TransportStream {
       severity: level,
     };
 
-    this.server.send(payload, (error: any) => {
+    this.server.send(payload, (error) => {
       self.emit('logged');
       if (error) {
         // eslint-disable-next-line no-console
