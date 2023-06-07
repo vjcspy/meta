@@ -4,8 +4,16 @@ export const serverlessSimpleConfiguration: (config: {
   service: string;
   profile: string;
   region?: any;
+  plugins?: string[];
+  customs?: any;
 }) => AWS = (config) => {
-  const { service, profile, region = 'us-east-1' } = config;
+  const {
+    service,
+    profile,
+    region = 'us-east-1',
+    plugins = [],
+    customs = {},
+  } = config;
   return {
     useDotenv: true,
     service,
@@ -14,6 +22,7 @@ export const serverlessSimpleConfiguration: (config: {
       'serverless-dotenv-plugin',
       'serverless-esbuild',
       'serverless-offline',
+      ...plugins,
     ],
     provider: {
       name: 'aws',
@@ -84,6 +93,7 @@ export const serverlessSimpleConfiguration: (config: {
         keepNames: true,
         disableIncremental: true,
       },
+      ...customs,
     },
   };
 };
