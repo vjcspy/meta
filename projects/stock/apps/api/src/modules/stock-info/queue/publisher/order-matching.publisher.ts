@@ -2,7 +2,7 @@ import { prisma } from '@modules/core/util/prisma';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
 import { Injectable, Logger } from '@nestjs/common';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 @Injectable()
 export class OrderMatchingPublisher {
