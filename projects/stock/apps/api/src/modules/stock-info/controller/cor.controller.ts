@@ -19,7 +19,7 @@ export class CorController {
 
   @Get('sync-om')
   async syncOM() {
-    await this.omPublisher.publishOne('HSG');
+    await this.omPublisher.publishOne('YTC');
 
     return 'ok';
   }

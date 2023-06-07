@@ -105,7 +105,7 @@ export class OmEffects {
         const code = action.payload.code;
         const page = action.payload.page ?? 0;
         const type = action.payload.type;
-        const headIndex = action?.payload?.meta?.headIndex ?? -1;
+        const headIndex = action?.payload?.data?.headIndex ?? -1;
 
         const url =
           type === OrderMatchingType.INVESTOR
@@ -118,13 +118,13 @@ export class OmEffects {
               const total = res?.data?.total;
               if (total === 0) {
                 this.logger.log(
-                  `[${action.payload.code}|${type}] Không có dữ liệu giao dịch ${page}`
+                  `[${action.payload.code}|${type}] Không có dữ liệu giao dịch`
                 );
 
                 return ORDER_MATCHING_NO_TRANSACTION({
                   code,
                   type,
-                  meta: res.data,
+                  data: res.data,
                 });
               }
 
@@ -168,26 +168,14 @@ export class OmEffects {
   whenHaveNoTransaction(): EffectHandler {
     return pipe(
       mergeMap((action: any) => {
-        const { code, type, meta } = action.payload;
-        const _day = meta.d;
-        if (typeof _day !== 'string') {
-          return of(
-            SYNC_ORDER_MATCHING_ERROR({
-              code,
-              type,
-              error: new Error(
-                'Dữ liệu trả về bị lỗi, không parse được ngày hiện tại'
-              ),
-            })
-          );
-        }
-        const date = moment.utc(`${moment().year()}/${_day}`, 'YYYY/DD/MM');
+        const { code, type } = action.payload;
         return from(
           this.syncStatusService.saveSuccessStatus(
             this.orderMatching.getJobIdInfo(code, type),
             {
+              key: this.orderMatching.getJobIdInfo(code, type),
               is_success: true,
-              date,
+              date: moment().startOf('day').toDate(),
               meta: {
                 message: 'No transactions',
               },
@@ -249,7 +237,7 @@ export class OmEffects {
               code,
               page,
               type,
-              meta: {
+              data: {
                 headIndex: data?.headIndex,
               },
             });
@@ -279,13 +267,13 @@ export class OmEffects {
   triggerLoadNextPage() {
     return pipe(
       map((action: any) => {
-        const { code, page, type, meta } = action.payload;
+        const { code, page, type, data } = action.payload;
 
         return SYNC_ORDER_MATCHING_LOAD_PAGE({
           code,
           page: page + 1,
           type,
-          meta,
+          data,
         });
       })
     );

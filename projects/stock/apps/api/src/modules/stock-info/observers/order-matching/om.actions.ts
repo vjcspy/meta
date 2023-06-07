@@ -28,7 +28,7 @@ export const SYNC_ORDER_MATCHING_LOAD_PAGE = actionFactory<{
   code: string;
   type: OrderMatchingType;
   page?: number;
-  meta?: {
+  data?: {
     headIndex: number;
   };
 }>('SYNC_ORDER_MATCHING_LOAD_PAGE');
@@ -49,7 +49,7 @@ export const ORDER_MATCHING_LOAD_LAST_PAGE = actionFactory<{
 export const ORDER_MATCHING_NO_TRANSACTION = actionFactory<{
   code: string;
   type: OrderMatchingType;
-  meta: any;
+  data: any;
 }>('ORDER_MATCHING_NO_TRANSACTION');
 
 export const SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR = actionFactory<{
@@ -63,7 +63,7 @@ export const ORDER_MATCHING_SAVE_SUCCESS = actionFactory<{
   code: string;
   type: OrderMatchingType;
   page: number;
-  meta: {
+  data: {
     headIndex: number;
   };
 }>('ORDER_MATCHING_SAVE_SUCCESS');
