@@ -23,4 +23,11 @@ export class CorController {
 
     return 'ok';
   }
+
+  @Get('sync-om-all')
+  async syncOMAll() {
+    await this.omPublisher.publish();
+
+    return 'ok';
+  }
 }
