@@ -1,0 +1,7 @@
+.esbuild
+.env.local
+.serverless
+dist
+
+.env.development
+.env.production
