@@ -18,5 +18,9 @@ export function isMainProcess() {
 }
 
 export function isProduction() {
-  return process.env.NODE_ENV === 'production';
+  return getNodeEnv() === 'production';
+}
+
+export function getNodeEnv() {
+  return process.env.NODE_ENV;
 }

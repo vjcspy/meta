@@ -1,3 +1,4 @@
+import { getAppName, getInstanceId, getNodeEnv } from '@nest/base';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import * as process from 'process';
@@ -12,6 +13,11 @@ export class SlackHelper {
 
   postMessage(channelName: string, messageOptions: any) {
     if (this.getSlackUrl() && this.getSlackToken()) {
+      if (messageOptions?.text && getNodeEnv()) {
+        messageOptions.text = `[${getAppName()}|${getNodeEnv()}|${getInstanceId()}] ${
+          messageOptions.text
+        }`;
+      }
       this.httpService
         .post(`${this.getSlackUrl()}/post-message`, {
           token: this.getSlackToken(),
