@@ -1,7 +1,12 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
-import { BaseModule, getAppName, getInstanceId } from '@nest/base';
+import {
+  BaseModule,
+  getAppName,
+  getInstanceId,
+  isProduction,
+} from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
@@ -69,8 +74,12 @@ export class AppModule implements OnModuleInit, OnApplicationBootstrap {
   }
 
   onApplicationBootstrap(): any {
-    this.slackHelper.postMessage(SlackHelper.DEFAULT_CHANNEL_NAME, {
-      text: `Successfully bootstrap ${getAppName()}[${getInstanceId()}]`,
-    });
+    if (isProduction()) {
+      this.slackHelper.postMessage(SlackHelper.DEFAULT_CHANNEL_NAME, {
+        text: `Successfully bootstrap ${getAppName()}[${
+          process.env.NODE_ENV
+        }][${getInstanceId()}]`,
+      });
+    }
   }
 }

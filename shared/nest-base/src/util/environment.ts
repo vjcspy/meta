@@ -16,3 +16,7 @@ export function isMainProcess() {
     typeof process.env.INSTANCE_ID === 'undefined'
   );
 }
+
+export function isProduction() {
+  return process.env.NODE_ENV === 'production';
+}
