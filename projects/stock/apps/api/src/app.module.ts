@@ -1,8 +1,9 @@
 import { CoreModule } from '@modules/core/core.module';
+import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
-import { BaseModule } from '@nest/base';
+import { BaseModule, getAppName, getInstanceId } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
-import type { OnModuleInit } from '@nestjs/common';
+import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -57,10 +58,19 @@ import { AppService } from './app.service';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements OnModuleInit {
+export class AppModule implements OnModuleInit, OnApplicationBootstrap {
   private readonly logger = new Logger(AppModule.name);
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private slackHelper: SlackHelper
+  ) {}
   onModuleInit(): any {
     // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
+  }
+
+  onApplicationBootstrap(): any {
+    this.slackHelper.postMessage(SlackHelper.DEFAULT_CHANNEL_NAME, {
+      text: `Successfully bootstrap ${getAppName()}[${getInstanceId()}]`,
+    });
   }
 }
