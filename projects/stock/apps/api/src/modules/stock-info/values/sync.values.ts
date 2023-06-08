@@ -7,4 +7,6 @@ export class SyncValues {
 
   static ORDER_MATCHING_KEY = 'stock.info.sync.order-matching';
   static JOB_SYNC_OM_KEY = 'JOB_SYNC_OM_KEY';
+
+  static SLACK_CHANNEL_NAME = 'general-meta-bot-channel';
 }

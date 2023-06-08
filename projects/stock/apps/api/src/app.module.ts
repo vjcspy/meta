@@ -5,6 +5,7 @@ import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnModuleInit } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import * as process from 'process';
 
 import { AppController } from './app.controller';
@@ -23,6 +24,7 @@ import { AppService } from './app.service';
         '.env',
       ],
     }),
+    ScheduleModule.forRoot(),
     CoreModule, //https://docs.nestjs.com/techniques/http-module
     BaseModule,
     RabbitMQModule.register({

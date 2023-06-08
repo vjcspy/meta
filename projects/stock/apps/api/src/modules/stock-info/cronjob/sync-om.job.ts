@@ -1,3 +1,4 @@
+import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CronScheduleModel } from '@modules/core/model/CronSchedule.model';
 import { prisma } from '@modules/core/util/prisma';
 import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
@@ -12,7 +13,8 @@ export class SyncOmJob {
   private readonly logger = new Logger(SyncOmJob.name);
   constructor(
     private syncOmPublisher: OrderMatchingPublisher,
-    private cronScheduleModel: CronScheduleModel
+    private cronScheduleModel: CronScheduleModel,
+    private slackHelper: SlackHelper
   ) {}
 
   @Cron('* */15 17-23 * * *', {
@@ -29,16 +31,19 @@ export class SyncOmJob {
           const meta: any = JSON.parse(schedule.meta as any);
           if (meta?.isPostSlack) {
             // do nothing
-
             return undefined;
           } else {
             // process and post slack
             if (await this.isFinishSync(meta?.size)) {
-              // SYNC FULL SUCCESS
               this.logger.log('Sync OM fully success');
+              this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+                text: 'Sync OM fully success',
+              });
             } else {
               this.logger.warn('Sync OM not fully success');
-              // SYNC FAIL
+              this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+                text: 'Sync OM not fully success',
+              });
             }
 
             return {
