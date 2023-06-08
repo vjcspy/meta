@@ -3,8 +3,8 @@ import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { BaseModule } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnModuleInit } from '@nestjs/common';
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { Logger, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import * as process from 'process';
 
@@ -17,11 +17,13 @@ import { AppService } from './app.service';
       isGlobal: true,
       //If a variable is found in multiple files, the first one takes precedence.
       envFilePath: [
+        // `${process.cwd()}/.env.production`,
+        // `${process.cwd()}/.env`,
         '.env.development.local',
         '.env.local',
         '.env.development',
         '.env.production',
-        '.env',
+        '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
     ScheduleModule.forRoot(),
@@ -56,7 +58,9 @@ import { AppService } from './app.service';
   providers: [AppService],
 })
 export class AppModule implements OnModuleInit {
+  private readonly logger = new Logger(AppModule.name);
+  constructor(private readonly configService: ConfigService) {}
   onModuleInit(): any {
-    // TODO
+    // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
   }
 }

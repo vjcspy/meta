@@ -18,7 +18,7 @@ import {
   amqpConnectionManager,
 } from './model/amqp/connection-manager';
 import { RABBIT_ARGS_METADATA, RABBIT_HANDLER } from './rabbitmq.constants';
-import type { OPTIONS_TYPE } from './rabbitmq.definition';
+import type { ASYNC_OPTIONS_TYPE, OPTIONS_TYPE } from './rabbitmq.definition';
 import {
   RABBIT_CONFIG_TOKEN,
   RabbitMQConfigurableModuleClass,
@@ -80,6 +80,15 @@ export class RabbitMQModule
     }
 
     return dynamicModule;
+  }
+
+  static registerAsync(options: typeof ASYNC_OPTIONS_TYPE): DynamicModule {
+    // const dynamicModule = super.registerAsync(options);
+
+    return {
+      // your custom logic here
+      ...super.registerAsync(options),
+    };
   }
 
   public async onApplicationBootstrap() {
