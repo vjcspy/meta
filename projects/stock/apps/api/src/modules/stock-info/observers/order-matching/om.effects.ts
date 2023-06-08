@@ -1,3 +1,4 @@
+import { SlackHelper } from '@modules/core/helper/slack.helper';
 import {
   OrderMatching,
   OrderMatchingType,
@@ -31,7 +32,8 @@ export class OmEffects {
   constructor(
     private syncStatusService: SyncStatus,
     private httpService: HttpService,
-    private orderMatching: OrderMatching
+    private orderMatching: OrderMatching,
+    private slackHelper: SlackHelper
   ) {}
   @Effect({
     type: SYNC_ORDER_MATCHING,
@@ -321,10 +323,9 @@ export class OmEffects {
           this.orderMatching.getJobIdInfo(code, type)
         );
 
-        // TODO: implement slack
-        // this.slackService.postMessage(SLACK_CHANNEL.JOB_MONITORING_OM, {
-        //   text: `sync om error code|type ${code}|${type} `,
-        // });
+        this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+          text: `sync om error code|type ${code}|${type} `,
+        });
 
         return from(
           this.syncStatusService.saveErrorStatus(

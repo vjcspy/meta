@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'meta-stock',
       script: './dist/main.js',
-      instances: '4',
+      instances: '8',
       instance_var: 'INSTANCE_ID',
       exec_mode: 'cluster',
       env: {

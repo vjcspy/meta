@@ -17,7 +17,15 @@ export class SyncOmJob {
     private slackHelper: SlackHelper
   ) {}
 
-  @Cron('* */15 17-23 * * *', {
+  // * * * * * *
+  // | | | | | |
+  // | | | | | day of week
+  // | | | | months
+  // | | | day of month
+  // | | hours
+  // | minutes
+  // seconds (optional)
+  @Cron('0 */15 17,23 * * *', {
     name: SyncValues.JOB_SYNC_OM_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
@@ -28,7 +36,10 @@ export class SyncOmJob {
       () => this.syncOmPublisher.publish(),
       async (schedule) => {
         if (schedule?.meta) {
-          const meta: any = JSON.parse(schedule.meta as any);
+          const meta: any =
+            typeof schedule?.meta === 'object'
+              ? schedule.meta
+              : JSON.parse(schedule.meta as any);
           if (meta?.isPostSlack) {
             // do nothing
             return undefined;
@@ -39,20 +50,17 @@ export class SyncOmJob {
               this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
                 text: 'Sync OM fully success',
               });
-            } else {
-              this.logger.warn('Sync OM not fully success');
-              this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-                text: 'Sync OM not fully success',
-              });
+
+              return {
+                isPostSlack: true,
+              };
             }
-
-            return {
-              isPostSlack: true,
-            };
           }
+        } else {
+          this.logger.error(
+            'Please return number records when publish sync om'
+          );
         }
-
-        this.logger.error('Please return number records when publish sync om');
       }
     );
   }

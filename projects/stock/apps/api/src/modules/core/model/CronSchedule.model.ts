@@ -43,14 +43,24 @@ export class CronScheduleModel {
       }
 
       if (schedule.status === CronScheduleStatus.SUCCESS) {
-        const meta = await whenSuccess(schedule);
-        if (typeof meta === 'object') {
-          prisma.cronSchedule.update({
+        const successMeta = await whenSuccess(schedule);
+        const oMeta =
+          typeof schedule?.meta === 'object'
+            ? schedule.meta
+            : typeof schedule?.meta === 'string'
+            ? JSON.parse(schedule.meta)
+            : {};
+
+        if (typeof successMeta === 'object') {
+          await prisma.cronSchedule.update({
             where: {
               id: schedule.id,
             },
             data: {
-              meta,
+              meta: {
+                ...oMeta,
+                ...successMeta,
+              },
             },
           });
         }
@@ -60,7 +70,7 @@ export class CronScheduleModel {
       schedule = await this.cronStart(jobCode, startMeta);
 
       const successMeta = await whenSuccess(schedule);
-      prisma.cronSchedule.update({
+      await prisma.cronSchedule.update({
         where: {
           id: schedule.id,
         },
@@ -69,6 +79,8 @@ export class CronScheduleModel {
           status: CronScheduleStatus.SUCCESS,
         },
       });
+
+      this.logger.log(`Successfully run cron ${jobCode}`);
     }
   }
 }
