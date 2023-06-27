@@ -27,7 +27,7 @@ import { AppService } from './app.service';
         '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
-    ScheduleModule.forRoot(),
+    ...[process.env.CRON === 'false' ? undefined : ScheduleModule.forRoot()],
     CoreModule, //https://docs.nestjs.com/techniques/http-module
     BaseModule,
     RabbitMQModule.register({
