@@ -5,7 +5,7 @@ import type { Options } from 'http-proxy-middleware';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import process from 'process';
 
-const logger = new CliLogger('bedkingdom-proxy');
+const logger = new CliLogger('pim-proxy');
 const originalOptions: Options = {
   // TODO: need to resolve target by setting or domain name
   target: process.env.PIM_BASE_PROXY_URL,

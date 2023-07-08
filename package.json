@@ -15,6 +15,7 @@
     "start": "turbo run start --no-daemon --filter=@stock/apps-*",
     "main": "___________________________MAIN___________________________",
     "dev:api": "turbo run dev --no-daemon --filter=nestjs",
+    "dev:proxy": "turbo run dev --no-daemon --filter=@main/apps-proxy-sls",
     "lint": "turbo run lint --no-daemon --filter=@main/apps-*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "watch": "turbo run watch --parallel --no-daemon"
