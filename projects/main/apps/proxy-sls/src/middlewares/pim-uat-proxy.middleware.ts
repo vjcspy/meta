@@ -5,20 +5,20 @@ import type { Options } from 'http-proxy-middleware';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import process from 'process';
 
-const logger = new CliLogger('pim-lc-proxy');
+const logger = new CliLogger('pim-uat-proxy');
 const originalOptions: Options = {
   // TODO: need to resolve target by setting or domain name
-  target: process.env.PIM_BASE_PROXY_URL,
+  target: process.env.PIM_BASE_UAT_PROXY_URL,
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
   pathRewrite: {
     // '^/api/old-path': '/api/new-path', // rewrite path
     // '^/api/rest': '/rest', // remove base path
-    '^/proxy/pim': '', // remove base path
-    '^/proxy/pim/graphql': 'graphql', // remove base path
-    '^/dev/proxy/pim/graphql': 'graphql', // remove base path
-    '^/production/proxy/pim/graphql': 'graphql', // remove base path
-    '^/staging/proxy/pim/graphql': 'graphql', // remove base path
+    '^/proxy/pim-uat': '', // remove base path
+    '^/proxy/pim-uat/graphql': 'graphql', // remove base path
+    '^/dev/proxy/pim-uat/graphql': 'graphql', // remove base path
+    '^/production/proxy/pim-uat/graphql': 'graphql', // remove base path
+    '^/staging/proxy/pim-uat/graphql': 'graphql', // remove base path
   },
   secure: false,
   onProxyReq: (_proxyReq, req: Request) => {
@@ -52,7 +52,7 @@ const originalOptions: Options = {
   },
 };
 
-export const pimProxy = createProxyMiddleware(
-  ['/proxy/pim/**'],
+export const pimUATProxy = createProxyMiddleware(
+  ['/proxy/pim-uat/**'],
   originalOptions
 );
