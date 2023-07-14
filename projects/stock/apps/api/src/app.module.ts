@@ -7,6 +7,7 @@ import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
+import { PrismaClient } from '@prisma/client';
 import * as process from 'process';
 
 import { AppController } from './app.controller';
@@ -27,8 +28,9 @@ import { AppService } from './app.service';
         '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
-    ...[process.env.CRON === 'false' ? undefined : ScheduleModule.forRoot()],
-    CoreModule, //https://docs.nestjs.com/techniques/http-module
+    ...(process.env.CRON === 'false'
+      ? [CoreModule]
+      : [CoreModule, ScheduleModule.forRoot()]),
     BaseModule,
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
@@ -58,14 +60,25 @@ import { AppService } from './app.service';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements OnModuleInit, OnApplicationBootstrap {
+export class AppModule
+  extends PrismaClient
+  implements OnModuleInit, OnApplicationBootstrap
+{
   private readonly logger = new Logger(AppModule.name);
   constructor(
     private readonly configService: ConfigService,
     private slackHelper: SlackHelper
-  ) {}
-  onModuleInit(): any {
+  ) {
+    super();
+  }
+  async onModuleInit() {
     // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
+    try {
+      await this.$connect();
+    } catch (e) {
+      this.logger.error('Could not connect to PostgresDB');
+      throw new Error('Could not connect to PostgresDB');
+    }
   }
 
   onApplicationBootstrap(): any {
