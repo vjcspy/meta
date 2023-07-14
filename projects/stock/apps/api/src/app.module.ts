@@ -75,6 +75,7 @@ export class AppModule
     // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
     try {
       await this.$connect();
+      this.logger.log('Successfully connected to PostgresDB');
     } catch (e) {
       this.logger.error('Could not connect to PostgresDB');
       throw new Error('Could not connect to PostgresDB');
