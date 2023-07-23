@@ -16,7 +16,7 @@ export class FooEventRx {
         return {
           type: 'FOO_EVENT_1',
         };
-      })
+      }),
     );
   }
 }

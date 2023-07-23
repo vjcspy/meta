@@ -22,7 +22,7 @@ export const getPrice = async (code: string, year: number, page = 1) => {
       },
       body: null,
       method: 'GET',
-    }
+    },
   );
 
   const text = await res.text();

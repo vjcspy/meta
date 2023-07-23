@@ -33,7 +33,7 @@ export class OmEffects {
     private syncStatusService: SyncStatus,
     private httpService: HttpService,
     private orderMatching: OrderMatching,
-    private slackHelper: SlackHelper
+    private slackHelper: SlackHelper,
   ) {}
   @Effect({
     type: SYNC_ORDER_MATCHING,
@@ -51,7 +51,7 @@ export class OmEffects {
         return from(this.syncStatusService.getStatus(syncStatusKey)).pipe(
           map((syncStatus) => {
             this.logger.log(
-              `_________ [${action.payload.code}|${type}] START _________`
+              `_________ [${action.payload.code}|${type}] START _________`,
             );
 
             //TODO: not appropriate
@@ -66,7 +66,7 @@ export class OmEffects {
                 syncStatus.number_of_try > 3
               ) {
                 this.logger.error(
-                  `[${action.payload.code}|${type}] Sync fail quá nhiều`
+                  `[${action.payload.code}|${type}] Sync fail quá nhiều`,
                 );
 
                 return SYNC_ORDER_MATCHING_MAX_RETRY({
@@ -78,7 +78,7 @@ export class OmEffects {
                 date.isSame(curDate, 'day')
               ) {
                 this.logger.log(
-                  `[${action.payload.code}|${type}] ALREADY SYNCED`
+                  `[${action.payload.code}|${type}] ALREADY SYNCED`,
                 );
                 return SYNC_ORDER_MATCHING_FINISH({
                   code,
@@ -92,9 +92,9 @@ export class OmEffects {
               type,
               page: syncStatus?.page || 0,
             });
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -120,7 +120,7 @@ export class OmEffects {
               const total = res?.data?.total;
               if (total === 0) {
                 this.logger.log(
-                  `[${action.payload.code}|${type}] Không có dữ liệu giao dịch`
+                  `[${action.payload.code}|${type}] Không có dữ liệu giao dịch`,
                 );
 
                 return ORDER_MATCHING_NO_TRANSACTION({
@@ -139,7 +139,7 @@ export class OmEffects {
               }
 
               this.logger.log(
-                `[${action.payload.code}|${type}] Lấy dữ liệu page ${page} successful`
+                `[${action.payload.code}|${type}] Lấy dữ liệu page ${page} successful`,
               );
               return SYNC_ORDER_MATCHING_LOAD_PAGE_AFTER({
                 code,
@@ -149,7 +149,7 @@ export class OmEffects {
               });
             } else {
               this.logger.error(
-                `[${action.payload.code}|${type}] Response data wrong format`
+                `[${action.payload.code}|${type}] Response data wrong format`,
               );
               return SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR({
                 code,
@@ -158,9 +158,9 @@ export class OmEffects {
                 error: new Error('Response data wrong format'),
               });
             }
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -181,17 +181,17 @@ export class OmEffects {
               meta: {
                 message: 'No transactions',
               },
-            }
-          )
+            },
+          ),
         ).pipe(
           map(() =>
             SYNC_ORDER_MATCHING_FINISH({
               code,
               type,
-            })
-          )
+            }),
+          ),
         );
-      })
+      }),
     );
   }
 
@@ -208,17 +208,17 @@ export class OmEffects {
             {
               is_success: true,
             },
-            true
-          )
+            true,
+          ),
         ).pipe(
           map(() =>
             SYNC_ORDER_MATCHING_FINISH({
               code,
               type,
-            })
-          )
+            }),
+          ),
         );
-      })
+      }),
     );
   }
 
@@ -231,7 +231,7 @@ export class OmEffects {
         const { code, type, page, data } = action.payload;
 
         return from(
-          this.orderMatching.saveByCodeAndType(code, type, data)
+          this.orderMatching.saveByCodeAndType(code, type, data),
         ).pipe(
           map(() => {
             this.logger.log(`[${action.payload.code}|${type}] Save data OK`);
@@ -246,7 +246,7 @@ export class OmEffects {
           }),
           catchError((error: any) => {
             this.logger.error(
-              `[${action.payload.code}|${type}] ${error?.toString()}`
+              `[${action.payload.code}|${type}] ${error?.toString()}`,
             );
             return from(
               of(
@@ -254,12 +254,12 @@ export class OmEffects {
                   code,
                   type,
                   error,
-                })
-              )
+                }),
+              ),
             );
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -277,7 +277,7 @@ export class OmEffects {
           type,
           data,
         });
-      })
+      }),
     );
   }
 
@@ -289,22 +289,22 @@ export class OmEffects {
       map((action: any) => {
         const { code, type } = action.payload;
         const info = this.syncStatusService.getInfo(
-          this.orderMatching.getJobIdInfo(code, type)
+          this.orderMatching.getJobIdInfo(code, type),
         );
 
         if (info && typeof info?.meta?.resolve === 'function') {
           info.meta.resolve();
           this.logger.log(
-            `_________ [${action.payload.code}|${type}] DONE _________`
+            `_________ [${action.payload.code}|${type}] DONE _________`,
           );
         } else {
           this.logger.error(
-            `[${action.payload.code}|${type}] COULD NOT ACK QUEUE, NOT FOUND INFO`
+            `[${action.payload.code}|${type}] COULD NOT ACK QUEUE, NOT FOUND INFO`,
           );
         }
 
         return EMPTY;
-      })
+      }),
     );
   }
 
@@ -320,7 +320,7 @@ export class OmEffects {
       mergeMap((action: any) => {
         const { code, type, error } = action.payload;
         const info = this.syncStatusService.getInfo(
-          this.orderMatching.getJobIdInfo(code, type)
+          this.orderMatching.getJobIdInfo(code, type),
         );
 
         this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
@@ -330,8 +330,8 @@ export class OmEffects {
         return from(
           this.syncStatusService.saveErrorStatus(
             this.orderMatching.getJobIdInfo(code, type),
-            error
-          )
+            error,
+          ),
         ).pipe(
           map(() => {
             if (info && typeof info?.meta?.resolve === 'function') {
@@ -339,7 +339,7 @@ export class OmEffects {
               info.meta.resolve(new Nack(true));
             } else {
               this.logger.error(
-                `[${action.payload.code}|${type}] COULD NOT NACK QUEUE, NOT FOUND INFO`
+                `[${action.payload.code}|${type}] COULD NOT NACK QUEUE, NOT FOUND INFO`,
               );
             }
 
@@ -349,12 +349,12 @@ export class OmEffects {
             this.logger.error(
               `[${
                 action.payload.code
-              }|${type}] Không thể xử lý lỗi ${e?.toString()}`
+              }|${type}] Không thể xử lý lỗi ${e?.toString()}`,
             );
             return from(of(EMPTY));
-          })
+          }),
         );
-      })
+      }),
     );
   }
 }

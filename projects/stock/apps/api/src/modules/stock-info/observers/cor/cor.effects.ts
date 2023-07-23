@@ -22,7 +22,7 @@ export class CorEffects {
         return COR_LOAD_NEXT_PAGE({
           currentPage: 0,
         });
-      })
+      }),
     );
   }
 
@@ -50,9 +50,9 @@ export class CorEffects {
                 currentPage: currentPage,
               });
             }
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -63,10 +63,10 @@ export class CorEffects {
     return pipe(
       map((action: any) => {
         this.logger.error(
-          `Cor load page error page ${action?.payload?.currentPage}`
+          `Cor load page error page ${action?.payload?.currentPage}`,
         );
         return EMPTY;
-      })
+      }),
     );
   }
 }

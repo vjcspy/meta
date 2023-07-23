@@ -14,7 +14,7 @@ export class SyncOmJob {
   constructor(
     private syncOmPublisher: OrderMatchingPublisher,
     private cronScheduleModel: CronScheduleModel,
-    private slackHelper: SlackHelper
+    private slackHelper: SlackHelper,
   ) {}
 
   // * * * * * *
@@ -58,10 +58,10 @@ export class SyncOmJob {
           }
         } else {
           this.logger.error(
-            'Please return number records when publish sync om'
+            'Please return number records when publish sync om',
           );
         }
-      }
+      },
     );
   }
 

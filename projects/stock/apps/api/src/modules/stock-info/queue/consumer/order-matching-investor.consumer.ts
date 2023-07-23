@@ -25,7 +25,7 @@ export class OrderMatchingInvestorConsumer {
             type: OrderMatchingType.INVESTOR,
             force: true,
             resolve,
-          })
+          }),
         );
       }
     });

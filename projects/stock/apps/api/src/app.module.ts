@@ -1,7 +1,7 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
-import { BaseModule, isProduction } from '@nest/base';
+import { BaseModule, getNodeEnv, isProduction } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
@@ -17,14 +17,14 @@ import { AppService } from './app.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      cache: true,
       //If a variable is found in multiple files, the first one takes precedence.
       envFilePath: [
         // `${process.cwd()}/.env.production`,
         // `${process.cwd()}/.env`,
-        '.env.development.local',
+        `.env.${getNodeEnv()}.local`,
         '.env.local',
-        '.env.development',
-        '.env.production',
+        `.env.${getNodeEnv()}`,
         '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
@@ -67,7 +67,7 @@ export class AppModule
   private readonly logger = new Logger(AppModule.name);
   constructor(
     private readonly configService: ConfigService,
-    private slackHelper: SlackHelper
+    private slackHelper: SlackHelper,
   ) {
     super();
   }
@@ -77,7 +77,7 @@ export class AppModule
       await this.$connect();
       this.logger.log('Successfully connected to PostgresDB');
     } catch (e) {
-      this.logger.error('Could not connect to PostgresDB');
+      console.error(e);
       throw new Error('Could not connect to PostgresDB');
     }
   }

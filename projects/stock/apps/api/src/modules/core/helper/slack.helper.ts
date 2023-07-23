@@ -31,7 +31,7 @@ export class SlackHelper {
             if (this.isLogResponse) {
               console.log(res);
             }
-          })
+          }),
         )
         .subscribe();
     } else {

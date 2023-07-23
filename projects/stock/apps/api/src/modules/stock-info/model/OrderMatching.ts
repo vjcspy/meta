@@ -18,7 +18,7 @@ export class OrderMatching {
       const _day = res.d;
       if (typeof _day !== 'string') {
         throw new Error(
-          'Dữ liệu trả về bị lỗi, không parse được ngày hiện tại'
+          'Dữ liệu trả về bị lỗi, không parse được ngày hiện tại',
         );
       }
       syncDate = moment.utc(`${moment().year()}/${_day}`, 'YYYY/DD/MM');

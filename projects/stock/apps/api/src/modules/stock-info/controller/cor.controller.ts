@@ -7,7 +7,7 @@ import { Controller, Get } from '@nestjs/common';
 export class CorController {
   constructor(
     private readonly eventManager: EventManagerReactive,
-    private readonly omPublisher: OrderMatchingPublisher
+    private readonly omPublisher: OrderMatchingPublisher,
   ) {}
 
   @Get('sync')

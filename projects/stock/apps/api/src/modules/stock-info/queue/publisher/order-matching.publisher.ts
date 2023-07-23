@@ -18,7 +18,7 @@ export class OrderMatchingPublisher {
           SyncValues.EXCHANGE_KEY,
           SyncValues.ORDER_MATCHING_KEY,
           cor.code,
-          {}
+          {},
         );
     });
 
@@ -41,7 +41,7 @@ export class OrderMatchingPublisher {
             SyncValues.EXCHANGE_KEY,
             SyncValues.ORDER_MATCHING_KEY,
             cor.code,
-            {}
+            {},
           );
         this.logger.log(`Published sync OM code ${cor.code}`);
       }

@@ -25,7 +25,7 @@ export class OrderMatchingHistoryConsumer {
             type: OrderMatchingType.HISTORY,
             force: true,
             resolve,
-          })
+          }),
         );
       }
     });

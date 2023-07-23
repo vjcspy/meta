@@ -22,5 +22,5 @@ export function isProduction() {
 }
 
 export function getNodeEnv() {
-  return process.env.NODE_ENV;
+  return process.env.NODE_ENV ?? 'development';
 }

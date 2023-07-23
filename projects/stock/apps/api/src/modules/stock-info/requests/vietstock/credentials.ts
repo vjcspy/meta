@@ -24,7 +24,7 @@ export class VietStockCredentials {
       let usrTk = 'wAoBVyA7RUuS5D/peNITBQ==';
 
       const re = new RegExp(
-        '(.*)(ASP.NET_SessionId=.*;)(.*)(__RequestVerificationToken=.*;)(.*)(vts_usr_lg=.*;)(.*)(vst_usr_lg_token=.*;)(.*)'
+        '(.*)(ASP.NET_SessionId=.*;)(.*)(__RequestVerificationToken=.*;)(.*)(vts_usr_lg=.*;)(.*)(vst_usr_lg_token=.*;)(.*)',
       );
       const r = re.exec(loggedCrds.cookies);
       if (r.length === 10) {
@@ -39,7 +39,7 @@ export class VietStockCredentials {
 
       const csrfAfterLogin = await this.retrieveCookiesAndCsrf(
         loggedCrds.cookies,
-        false
+        false,
       );
       this._cachedCredentials = {
         sid,
@@ -119,12 +119,12 @@ export class VietStockCredentials {
           },
           body: null,
           method: 'GET',
-        }
+        },
       );
       const text = await res.text();
       const htmlParsed: any = parse(text);
       const input = htmlParsed.querySelector(
-        '[name=__RequestVerificationToken]'
+        '[name=__RequestVerificationToken]',
       );
       const csrf = input.getAttribute('value');
       let cookies;
