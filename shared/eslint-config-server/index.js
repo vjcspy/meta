@@ -22,7 +22,8 @@ module.exports = {
             // Plugin giúp mở rộng chức năng và quy tắc
             plugins: ['@typescript-eslint', 'unused-imports', 'simple-import-sort'],
             // Extends là sử dụng những quy tắc đã được thiết lập sẵn
-            extends: ['airbnb-base', 'airbnb-typescript/base'],
+            extends: ['airbnb-base', 'airbnb-typescript/base', 'eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
+            // extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
             parserOptions: {
                 project: './tsconfig.json',
             },
@@ -43,7 +44,19 @@ module.exports = {
                 '@typescript-eslint/ban-ts-comment': 'off', // Cho phep su dung ts-ignore,
                 '@typescript-eslint/no-explicit-any': 'off', // Cho phep su dung any
                 'no-prototype-builtins': 'off', // Cho phep su dung hasOwnProperty
-
+                'import/no-extraneous-dependencies': 'off', // Cho phep import tu global
+                'import/prefer-default-export': 'off', // Bo qua default export,
+                'class-methods-use-this': 'off',
+                'prefer-regex-literals': 'off',
+                '@typescript-eslint/naming-convention': 'off',
+                'no-underscore-dangle': 'off',
+                'radix': 'off',
+                'no-console': 'off',
+                'no-plusplus': 'off',
+                'no-await-in-loop': 'off',
+                'no-param-reassign': 'warn',
+                'no-nested-ternary': 'warn',
+                'consistent-return': 'warn'
             },
         },
         // Configuration for testing

@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class BarEventRx {
   private isFirstTime = true;
+
   @EventRx({
     type: 'FOO_EVENT_1',
   })
@@ -30,23 +31,20 @@ export class BarEventRx {
   })
   barEvent2(): EventRxHandler {
     return pipe(
-      map(() => {
-        return {
-          type: 'BAR_EVENT_2',
-        };
-      }),
+      map(() => ({
+        type: 'BAR_EVENT_2',
+      })),
     );
   }
+
   @EventRx({
     type: ['BAR_EVENT_1', 'BAR_EVENT_2'],
   })
   barEvent3(): EventRxHandler {
     return pipe(
-      map(() => {
-        return {
-          type: 'BAR_EVENT_3',
-        };
-      }),
+      map(() => ({
+        type: 'BAR_EVENT_3',
+      })),
     );
   }
 
@@ -55,11 +53,9 @@ export class BarEventRx {
   })
   barEvent4(): EventRxHandler {
     return pipe(
-      map(() => {
-        return {
-          type: 'BAR_EVENT_4',
-        };
-      }),
+      map(() => ({
+        type: 'BAR_EVENT_4',
+      })),
     );
   }
 }

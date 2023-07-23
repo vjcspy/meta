@@ -28,9 +28,8 @@ export class VietStockCredentials {
       );
       const r = re.exec(loggedCrds.cookies);
       if (r.length === 10) {
-        const _getValue = (cValue: string) => {
-          return cValue.slice(cValue.indexOf('=') + 1, cValue.length - 1);
-        };
+        const _getValue = (cValue: string) =>
+          cValue.slice(cValue.indexOf('=') + 1, cValue.length - 1);
         sid = _getValue(r[1]);
         rvt = _getValue(r[4]);
         vtsUsrLg = _getValue(r[6]);
@@ -83,7 +82,7 @@ export class VietStockCredentials {
       const cookiesAfterLogin = parseCookies(res);
 
       return {
-        cookies: cookies + '; ' + cookiesAfterLogin,
+        cookies: `${cookies}; ${cookiesAfterLogin}`,
       };
     } catch (e) {
       console.log(e);

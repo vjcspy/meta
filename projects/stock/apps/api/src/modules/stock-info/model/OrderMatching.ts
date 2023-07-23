@@ -11,6 +11,7 @@ export enum OrderMatchingType {
 @Injectable()
 export class OrderMatching {
   constructor(private readonly syncStatus: SyncStatus) {}
+
   async saveByCodeAndType(code: string, type: number, res: any) {
     const { data, page } = res;
     let syncDate = moment().startOf('day');
@@ -53,6 +54,7 @@ export class OrderMatching {
       throw new Error('Please check data before save');
     }
   }
+
   getJobIdInfo(code, type) {
     return `sync_om_${code}_${type}`;
   }

@@ -11,6 +11,7 @@ import * as moment from 'moment/moment';
 @Injectable()
 export class SyncOmJob {
   private readonly logger = new Logger(SyncOmJob.name);
+
   constructor(
     private syncOmPublisher: OrderMatchingPublisher,
     private cronScheduleModel: CronScheduleModel,
@@ -43,18 +44,17 @@ export class SyncOmJob {
           if (meta?.isPostSlack) {
             // do nothing
             return undefined;
-          } else {
-            // process and post slack
-            if (await this.isFinishSync(meta?.size)) {
-              this.logger.log('Sync OM fully success');
-              this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-                text: 'Sync OM fully success',
-              });
+          }
+          // process and post slack
+          if (await this.isFinishSync(meta?.size)) {
+            this.logger.log('Sync OM fully success');
+            this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+              text: 'Sync OM fully success',
+            });
 
-              return {
-                isPostSlack: true,
-              };
-            }
+            return {
+              isPostSlack: true,
+            };
           }
         } else {
           this.logger.error(
@@ -79,6 +79,6 @@ export class SyncOmJob {
         is_success: true,
       },
     });
-    return numberSyncSuccess == 2 * totalCor;
+    return numberSyncSuccess === 2 * totalCor;
   }
 }

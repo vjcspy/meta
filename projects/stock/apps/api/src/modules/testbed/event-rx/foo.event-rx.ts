@@ -7,16 +7,15 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class FooEventRx {
   private readonly logger = new Logger();
+
   @EventRx({
     type: 'EventManagerReactive_INIT',
   })
   fooEvent1(): EventRxHandler {
     return pipe(
-      map(() => {
-        return {
-          type: 'FOO_EVENT_1',
-        };
-      }),
+      map(() => ({
+        type: 'FOO_EVENT_1',
+      })),
     );
   }
 }

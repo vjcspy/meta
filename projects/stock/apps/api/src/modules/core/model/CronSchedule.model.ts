@@ -10,6 +10,7 @@ export enum CronScheduleStatus {
 @Injectable()
 export class CronScheduleModel {
   private readonly logger = new Logger(CronScheduleModel.name);
+
   private async cronStart(jobCode: string, meta?: any) {
     return prisma.cronSchedule.create({
       data: {

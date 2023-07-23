@@ -13,16 +13,17 @@ import { EMPTY, from, map, pipe, switchMap } from 'rxjs';
 @Injectable()
 export class CorEffects {
   private readonly logger = new Logger(CorEffects.name);
+
   @Effect({
     type: COR_START_SYNC_ACTION,
   })
   startSyncCor(): EffectHandler {
     return pipe(
-      map(() => {
-        return COR_LOAD_NEXT_PAGE({
+      map(() =>
+        COR_LOAD_NEXT_PAGE({
           currentPage: 0,
-        });
-      }),
+        }),
+      ),
     );
   }
 
@@ -36,7 +37,7 @@ export class CorEffects {
         this.logger.log(`Starting get cor data page ${currentPage}`);
         return from(corGetPageFn(currentPage + 1)).pipe(
           map((data) => {
-            if (data && !isNaN(data?.numOfRecords)) {
+            if (data && !Number.isNaN(data?.numOfRecords)) {
               if (data?.numOfRecords === 0 || data?.numOfRecords < 50) {
                 this.logger.log('Sync cor finish');
                 return COR_SYNC_FINISH();
@@ -45,11 +46,10 @@ export class CorEffects {
               return COR_LOAD_NEXT_PAGE({
                 currentPage: currentPage + 1,
               });
-            } else {
-              return COR_LOAD_NEXT_PAGE_ERROR({
-                currentPage: currentPage,
-              });
             }
+            return COR_LOAD_NEXT_PAGE_ERROR({
+              currentPage,
+            });
           }),
         );
       }),

@@ -31,7 +31,7 @@ export const retrieveCor = async (
       body: `catID=0&industryID=0&page=${page}&pageSize=50&type=1&code=&businessTypeID=0&orderBy=Code&orderDir=ASC&__RequestVerificationToken=${csrf}`,
       method: 'POST',
     });
-    return await r.text();
+    return r.text();
   } catch (e) {
     return null;
   }

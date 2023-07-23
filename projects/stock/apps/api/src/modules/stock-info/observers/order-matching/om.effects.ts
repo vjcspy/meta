@@ -29,12 +29,14 @@ import { catchError, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
 @Injectable()
 export class OmEffects {
   private readonly logger = new Logger(OmEffects.name);
+
   constructor(
     private syncStatusService: SyncStatus,
     private httpService: HttpService,
     private orderMatching: OrderMatching,
     private slackHelper: SlackHelper,
   ) {}
+
   @Effect({
     type: SYNC_ORDER_MATCHING,
   })
@@ -54,7 +56,7 @@ export class OmEffects {
               `_________ [${action.payload.code}|${type}] START _________`,
             );
 
-            //TODO: not appropriate
+            // TODO: not appropriate
             if (syncStatus) {
               // check current date
               const date = moment(syncStatus.date);
@@ -73,7 +75,8 @@ export class OmEffects {
                   code,
                   type,
                 });
-              } else if (
+              }
+              if (
                 syncStatus.is_success === true &&
                 date.isSame(curDate, 'day')
               ) {
@@ -104,9 +107,9 @@ export class OmEffects {
   loadPage(): EffectHandler {
     return pipe(
       mergeMap((action: any) => {
-        const code = action.payload.code;
+        const { code } = action.payload;
         const page = action.payload.page ?? 0;
-        const type = action.payload.type;
+        const { type } = action.payload;
         const headIndex = action?.payload?.data?.headIndex ?? -1;
 
         const url =
@@ -147,17 +150,16 @@ export class OmEffects {
                 type,
                 data: res.data,
               });
-            } else {
-              this.logger.error(
-                `[${action.payload.code}|${type}] Response data wrong format`,
-              );
-              return SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR({
-                code,
-                page,
-                type,
-                error: new Error('Response data wrong format'),
-              });
             }
+            this.logger.error(
+              `[${action.payload.code}|${type}] Response data wrong format`,
+            );
+            return SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR({
+              code,
+              page,
+              type,
+              error: new Error('Response data wrong format'),
+            });
           }),
         );
       }),

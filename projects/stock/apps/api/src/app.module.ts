@@ -18,7 +18,7 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      //If a variable is found in multiple files, the first one takes precedence.
+      // If a variable is found in multiple files, the first one takes precedence.
       envFilePath: [
         // `${process.cwd()}/.env.production`,
         // `${process.cwd()}/.env`,
@@ -34,7 +34,7 @@ import { AppService } from './app.service';
     BaseModule,
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
-      //Nếu không khai báo name thì mặc định là đang config cho default connection
+      // Nếu không khai báo name thì mặc định là đang config cho default connection
       // name:'default',
       exchanges: [
         {
@@ -65,12 +65,14 @@ export class AppModule
   implements OnModuleInit, OnApplicationBootstrap
 {
   private readonly logger = new Logger(AppModule.name);
+
   constructor(
     private readonly configService: ConfigService,
     private slackHelper: SlackHelper,
   ) {
     super();
   }
+
   async onModuleInit() {
     // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
     try {

@@ -17,6 +17,7 @@ export class SyncStatus {
       },
     });
   }
+
   async saveSuccessStatus(key: string, status: any, update = false) {
     if (update) {
       return prisma.syncStatus.update({
@@ -25,15 +26,14 @@ export class SyncStatus {
         },
         data: status,
       });
-    } else {
-      return prisma.syncStatus.upsert({
-        where: {
-          key,
-        },
-        update: status,
-        create: status,
-      });
     }
+    return prisma.syncStatus.upsert({
+      where: {
+        key,
+      },
+      update: status,
+      create: status,
+    });
   }
 
   async saveErrorStatus(key: string, error: any) {
@@ -60,7 +60,7 @@ export class SyncStatus {
           key,
         },
         data: {
-          number_of_try: !isNaN(status?.number_of_try)
+          number_of_try: !Number.isNaN(status?.number_of_try)
             ? ++status.number_of_try
             : 1,
           error: error?.toString(),
@@ -73,6 +73,7 @@ export class SyncStatus {
       });
     }
   }
+
   saveInfo(id: string, meta: any) {
     const info = this.getInfo(id);
 
@@ -85,6 +86,7 @@ export class SyncStatus {
       });
     }
   }
+
   getInfo(id: string) {
     return SyncStatus.INFOS.find((_i) => _i.id === id);
   }

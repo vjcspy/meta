@@ -7,8 +7,11 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class SlackHelper {
   static DEFAULT_CHANNEL_NAME = 'general-meta-bot-channel';
+
   private isLogResponse = false;
+
   private readonly logger = new Logger(SlackHelper.name);
+
   constructor(private readonly httpService: HttpService) {}
 
   postMessage(channelName: string, messageOptions: any) {

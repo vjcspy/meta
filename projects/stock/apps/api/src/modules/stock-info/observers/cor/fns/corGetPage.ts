@@ -18,7 +18,7 @@ export const corGetPageFn = async (
       for (let i = 0; i < _aData.length; i++) {
         const data = CorEntity.convertToCorObject(_aData[i]);
         await prisma.cor_entity.upsert({
-          where: { code: data['code'] },
+          where: { code: data.code },
           create: data,
           update: data,
         });

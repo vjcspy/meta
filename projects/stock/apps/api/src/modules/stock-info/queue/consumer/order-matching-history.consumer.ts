@@ -8,10 +8,11 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class OrderMatchingHistoryConsumer {
   constructor(private readonly eventManager: EventManagerReactive) {}
+
   @RabbitSubscribe({
     exchange: SyncValues.EXCHANGE_KEY,
     routingKey: SyncValues.ORDER_MATCHING_KEY,
-    queue: SyncValues.ORDER_MATCHING_KEY + '_HISTORY_QUEUE',
+    queue: `${SyncValues.ORDER_MATCHING_KEY}_HISTORY_QUEUE`,
     queueOptions: {
       durable: true,
     },

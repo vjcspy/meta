@@ -29,9 +29,9 @@ export const getPrice = async (code: string, year: number, page = 1) => {
   const data = JSON.parse(text);
   if (Array.isArray(data?.data)) {
     if (data.data.length > 0) {
-      const sortedData = data.data.sort(function (a, b) {
-        return new Date(a['date']) > new Date(b['date']) ? 1 : -1;
-      });
+      const sortedData = data.data.sort((a, b) =>
+        new Date(a.date) > new Date(b.date) ? 1 : -1,
+      );
       return {
         ...data,
         data: sortedData,
@@ -41,7 +41,6 @@ export const getPrice = async (code: string, year: number, page = 1) => {
     return {
       ...data,
     };
-  } else {
-    return null;
   }
+  return null;
 };

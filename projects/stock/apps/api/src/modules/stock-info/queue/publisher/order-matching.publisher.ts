@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class OrderMatchingPublisher {
   private readonly logger = new Logger(OrderMatchingPublisher.name);
+
   constructor(private readonly connectionManager: AmqpConnectionManager) {}
 
   async publish() {
