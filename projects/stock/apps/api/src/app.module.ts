@@ -2,6 +2,7 @@ import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { BaseModule, getNodeEnv, isProduction } from '@nest/base';
+import type { LoggerInstance } from '@nest/base/dist/util/logger/winston';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
@@ -64,7 +65,7 @@ export class AppModule
   extends PrismaClient
   implements OnModuleInit, OnApplicationBootstrap
 {
-  private readonly logger = new Logger(AppModule.name);
+  private readonly logger: LoggerInstance = new Logger(AppModule.name);
 
   constructor(
     private readonly configService: ConfigService,
@@ -79,8 +80,7 @@ export class AppModule
       await this.$connect();
       this.logger.log('Successfully connected to PostgresDB');
     } catch (e) {
-      console.error(e);
-      throw new Error('Could not connect to PostgresDB');
+      this.logger.error('Could not connect to PostgresDB', e);
     }
   }
 

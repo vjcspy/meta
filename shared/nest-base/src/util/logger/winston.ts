@@ -1,5 +1,5 @@
 import type { LoggerService } from '@nestjs/common';
-import type { Logger } from 'winston';
+import { Logger } from 'winston';
 
 export interface LogEntry {
   message: string | any[];
@@ -8,7 +8,30 @@ export interface LogEntry {
   metadata?: any;
 }
 
-export class WinstonLogger implements LoggerService {
+export interface LoggerInstance extends LoggerService {
+  /**
+   * Write a 'log' level log.
+   */
+  log(message: any, ...metadata: any[]): any;
+  /**
+   * Write an 'error' level log.
+   */
+  error(message: any, ...metadata: any[]): any;
+  /**
+   * Write a 'warn' level log.
+   */
+  warn(message: any, ...metadata: any[]): any;
+  /**
+   * Write a 'debug' level log.
+   */
+  debug?(message: any, ...metadata: any[]): any;
+  /**
+   * Write a 'verbose' level log.
+   */
+  verbose?(message: any, ...metadata: any[]): any;
+}
+
+export class WinstonLogger implements LoggerInstance {
   private context?: string;
 
   constructor(private readonly logger: Logger) {}
@@ -72,7 +95,7 @@ export class WinstonLogger implements LoggerService {
   //   return this.logger.info(message, { context });
   // }
 
-  public error(message: any, trace?: string, context?: string): any {
+  public error(message: any, trace?: any, context?: string): any {
     context = context || this.context;
 
     if (message instanceof Error) {
@@ -86,8 +109,7 @@ export class WinstonLogger implements LoggerService {
         ...meta,
       });
     }
-
-    if ('object' === typeof message) {
+    if (typeof message === 'object') {
       const { message: msg, ...meta } = message;
 
       return this.logger.error(msg as string, {
@@ -96,14 +118,26 @@ export class WinstonLogger implements LoggerService {
         ...meta,
       });
     }
+    if (trace instanceof Error) {
+      const { message: msg, name, stack, ...meta } = trace;
+      return this.logger.error(message, {
+        context,
+        metadata: {
+          stack,
+          error: msg,
+          name,
+          ...meta,
+        },
+      });
+    }
 
-    return this.logger.error(message, { context, stack: [trace] });
+    return this.logger.error(message, { context });
   }
 
   public warn(message: any, context?: string): any {
     context = context || this.context;
 
-    if ('object' === typeof message) {
+    if (typeof message === 'object') {
       const { message: msg, ...meta } = message;
 
       return this.logger.warn(msg as string, { context, ...meta });
@@ -115,7 +149,7 @@ export class WinstonLogger implements LoggerService {
   public verbose?(message: any, context?: string): any {
     context = context || this.context;
 
-    if ('object' === typeof message) {
+    if (typeof message === 'object') {
       const { message: msg, ...meta } = message;
 
       return this.logger.verbose(msg as string, { context, ...meta });

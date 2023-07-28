@@ -80,36 +80,41 @@ export class SplunkTransport extends TransportStream {
     }
   }
 
-  log(info, callback) {
-    if (!this.enable || this.maxError < this.errorCount) {
-      callback(null, true);
-      return;
-    }
+  log(info: any, callback?: any) {
+    setImmediate(() => this.emit('logged', info));
 
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
-    const level = info[Symbol.for('level')];
-    const meta = { ...info };
-    delete meta[Symbol.for('level')];
-    delete meta[Symbol.for('splat')];
-    delete meta[Symbol.for('message')];
-
-    const splunkInfo = info.splunk || {};
-
-    const payload = {
-      message: meta,
-      metadata: { ...this.defaultMetadata, ...splunkInfo },
-      severity: level,
-    };
-
-    this.server.send(payload, (error) => {
-      self.emit('logged');
-      if (error) {
-        // eslint-disable-next-line no-console
-        console.error('splunk forward error', error);
-        this.errorCount += 1;
+    try {
+      if (!this.enable || this.maxError < this.errorCount) {
+        callback(null, true);
+        return;
       }
-      callback(null, true);
-    });
+
+      const level = info[Symbol.for('level')];
+      const meta = { ...info };
+      delete meta[Symbol.for('level')];
+      delete meta[Symbol.for('splat')];
+      delete meta[Symbol.for('message')];
+
+      const splunkInfo = info.splunk || {};
+
+      const payload = {
+        message: meta,
+        metadata: { ...this.defaultMetadata, ...splunkInfo },
+        severity: level,
+      };
+
+      this.server.send(payload, (error) => {
+        if (error) {
+          // eslint-disable-next-line no-console
+          console.error('splunk forward error', error);
+          this.errorCount += 1;
+        }
+        if (callback) {
+          callback(null, true);
+        }
+      });
+    } catch (e) {
+      // shallow
+    }
   }
 }
