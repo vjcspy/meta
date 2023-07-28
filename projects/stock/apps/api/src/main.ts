@@ -1,4 +1,4 @@
-import { getAppName, getInstanceId } from '@nest/base';
+import { getAppName, getInstanceId, getNodeEnv } from '@nest/base';
 import { initLoggerInstance } from '@nest/base/dist/util/logger';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -13,7 +13,7 @@ async function bootstrap() {
       token: process.env.SPLUNK_TOKEN,
       url: process.env.SPLUNK_URL,
       index: process.env.SPLUNK_INDEX,
-      source: `${getAppName()}|${getInstanceId()}`,
+      source: `${getAppName()}|${getNodeEnv()}|${getInstanceId()}`,
     },
   });
   const app = await NestFactory.create(AppModule, {
