@@ -21,8 +21,8 @@
     "watch": "turbo run watch --parallel --no-daemon"
   },
   "dependencies": {
-    "@nestjs/common": "latest",
-    "@nestjs/core": "latest",
+    "@nestjs/common": "^10.1.2",
+    "@nestjs/core": "^10.1.2",
     "@nestjs/platform-express": "latest",
     "immutable": "latest",
     "lodash": "latest",
@@ -72,5 +72,11 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@7.27.1"
+  "packageManager": "pnpm@7.27.1",
+  "pnpm": {
+    "overrides": {
+      "@nestjs/common": "^10.1.2",
+      "@nestjs/core": "^10.1.2"
+    }
+  }
 }
