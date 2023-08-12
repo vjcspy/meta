@@ -5,8 +5,8 @@
   "types": "src/index.tsx",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development sls offline start --stage offline --reloadHandler",
-    "start": "NODE_ENV=development sls offline start --stage offline --reloadHandler",
+    "dev": "NODE_ENV=development sls offline start --stage offline --reloadHandler --disableCookieValidation",
+    "start": "NODE_ENV=development sls offline start --stage offline --reloadHandler --disableCookieValidation",
     "tail-log": "sls logs -f app -t",
     "deploy:prod": "NODE_ENV=production sls deploy --stage production --verbose --aws-s3-accelerate",
     "remove:prod": "NODE_ENV=production sls remove --stage production",
