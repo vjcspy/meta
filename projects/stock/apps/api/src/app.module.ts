@@ -1,8 +1,7 @@
-import * as process from 'process';
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
-import { TestbedModule } from "@modules/testbed/testbed.module";
+import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule, getNodeEnv, isProduction } from '@nest/base';
 import type { LoggerInstance } from '@nest/base/dist/util/logger/winston';
 import { RabbitMQModule } from '@nest/rabbitmq';
@@ -11,6 +10,7 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaClient } from '@prisma/client';
+import * as process from 'process';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';

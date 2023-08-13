@@ -1,11 +1,10 @@
 import { actionFactory } from '@nest/base/dist/util/event-manager-rx/event-rx.factory';
 import type * as moment from 'moment';
 
-const STOCK_PRICES_START = 'STOCK_PRICES_START';
-export const stockPricesStartAction = actionFactory<{
+export const STOCK_PRICE_SYNC = actionFactory<{
   code: string;
   resolve: any;
-}>(STOCK_PRICES_START);
+}>('STOCK_PRICE_SYNC');
 
 export const GET_STOCK_PRICE = actionFactory<{
   code: string;

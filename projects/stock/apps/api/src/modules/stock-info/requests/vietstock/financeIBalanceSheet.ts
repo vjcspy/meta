@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 export const retrieveBalanceSheet = async (
   code: string,
   termType: number,
-  page: number,
+  page: number
 ) => {
   const vsCreds = await VietStockCrds.retrieveCredentials();
   const { sid, rvt, vtsUsrLg, usrTk, csrf } = vsCreds;

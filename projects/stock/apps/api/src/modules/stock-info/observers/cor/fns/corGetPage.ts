@@ -6,7 +6,7 @@ import { VietStockCrds } from '@modules/stock-info/requests/vietstock/credential
 
 export const corGetPageFn = async (
   page: number,
-  vsCreds?: VietStockCredentialsInterface,
+  vsCreds?: VietStockCredentialsInterface
 ) => {
   if (typeof vsCreds === 'undefined') {
     vsCreds = await VietStockCrds.retrieveCredentials();

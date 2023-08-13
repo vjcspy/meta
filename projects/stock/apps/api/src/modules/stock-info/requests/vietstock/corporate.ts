@@ -4,7 +4,7 @@ import type { VietStockCredentialsInterface } from './credentials';
 
 export const retrieveCor = async (
   page: any,
-  vsCreds: VietStockCredentialsInterface,
+  vsCreds: VietStockCredentialsInterface
 ) => {
   const { sid, rvt, vtsUsrLg, usrTk, csrf } = vsCreds;
   try {
