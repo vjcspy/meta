@@ -1,5 +1,6 @@
 import { CoreModule } from '@modules/core/core.module';
 import { CorController } from '@modules/stock-info/controller/cor.controller';
+import { StockPriceController } from '@modules/stock-info/controller/stock-price.controller';
 import { CRONJOB_SERVICES } from '@modules/stock-info/cronjob';
 import { MODELS } from '@modules/stock-info/model';
 import { OBSERVER_SERVICES } from '@modules/stock-info/observers';
@@ -31,6 +32,6 @@ import { Module } from '@nestjs/common';
     ...STOCK_INFO_REPOS,
     StockPriceRequest,
   ],
-  controllers: [CorController],
+  controllers: [CorController, StockPriceController],
 })
 export class StockInfoModule {}

@@ -56,7 +56,7 @@ export const initLoggerInstance = (config: {
               nestLikeConsoleFormat(getInstanceId(), {
                 colors: true,
                 prettyPrint: true,
-                showMeta: true,
+                showMeta: false,
               })
             ),
           }),

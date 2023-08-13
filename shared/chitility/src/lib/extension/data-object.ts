@@ -1,9 +1,18 @@
 export class DataObject {
   private readonly _data: any = {};
 
+  private _jsonDisabled = false;
+
   constructor(initData?: any) {
     this._data = initData ?? {};
   }
+
+  setDisableToJson(disabled: boolean): DataObject {
+    this._jsonDisabled = disabled;
+
+    return this;
+  }
+
   getData(key?: string): any | undefined {
     if (typeof key === 'undefined') {
       return this._data;
@@ -33,5 +42,9 @@ export class DataObject {
       this._data[k] = v;
     });
     return this;
+  }
+
+  public toJSON() {
+    return this._jsonDisabled ? 'to_json_disabled' : this._data;
   }
 }

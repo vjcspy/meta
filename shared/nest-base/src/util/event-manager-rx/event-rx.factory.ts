@@ -1,8 +1,7 @@
 import type { ParamData } from '@nestjs/common';
 import { isObject } from 'lodash';
 
-import type { EventRxAction } from './event-rx.types';
-import {ActionFactory} from "./event-rx.types";
+import type { ActionFactory } from './event-rx.types';
 
 export class EventRxParamFactory {
   public exchangeKeyForValue(type: number, data: ParamData, args: any[]) {

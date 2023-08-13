@@ -18,6 +18,14 @@ export class SyncStatus {
     });
   }
 
+  async getStatusByKey(key: string) {
+    return prisma.syncStatus.findFirst({
+      where: {
+        key,
+      },
+    });
+  }
+
   async saveSuccessStatus(key: string, status: any, update = false) {
     if (update) {
       return prisma.syncStatus.update({

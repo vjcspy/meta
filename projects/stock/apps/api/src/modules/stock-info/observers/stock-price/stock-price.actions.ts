@@ -1,4 +1,5 @@
 import { actionFactory } from '@nest/base/dist/util/event-manager-rx/event-rx.factory';
+import type { DataObject } from 'chitility';
 import type * as moment from 'moment';
 
 export const STOCK_PRICE_SYNC = actionFactory<{
@@ -6,15 +7,22 @@ export const STOCK_PRICE_SYNC = actionFactory<{
   resolve: any;
 }>('STOCK_PRICE_SYNC');
 
-export const GET_STOCK_PRICE = actionFactory<{
+export const STOCK_PRICE_LOAD = actionFactory<{
   code: string;
-  lastDate: moment.Moment;
-  endDate: moment.Moment;
-}>('GET_STOCK_PRICES');
+  lastDate?: moment.Moment;
+  endDate?: moment.Moment;
+}>('STOCK_PRICE_LOAD');
 
-export const SAVE_STOCK_PRICE =
-  actionFactory<Record<string, any>>('SAVE_STOCK_PRICE');
+export const STOCK_PRICE_SAVE = actionFactory<{
+  code: string;
+  data: DataObject;
+}>('STOCK_PRICE_SAVE');
 
 export const STOCK_PRICE_FINISHED = actionFactory<{
   code: string;
 }>('STOCK_PRICE_FINISHED');
+
+export const STOCK_PRICE_ERROR = actionFactory<{
+  code: string;
+  error: Error;
+}>('STOCK_PRICE_ERROR');

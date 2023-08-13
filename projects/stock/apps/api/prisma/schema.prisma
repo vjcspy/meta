@@ -374,45 +374,42 @@ model sector_entity {
   level      Int    @db.SmallInt
 }
 
-model stock_price_entity {
+model StockPrice {
   id                  Int      @id @default(autoincrement())
-  code                String   @db.VarChar(10)
-  date                String   @db.VarChar(10)
-  adClose             Int      @db.Integer
-  adHigh              Int      @db.Integer
-  adLow               Int      @db.Integer
-  adOpen              Int      @db.Integer
-  adRatio             Decimal  @db.Decimal(8, 3)
-  buyAvg              Int      @db.Integer
-  buyCount            Int      @db.Integer
-  buyQuantity         BigInt   @db.BigInt
-  buyForeignQuantity  BigInt   @db.BigInt
-  buyForeignValue     BigInt   @db.BigInt
-  currentForeignRoom  Int      @default(0) @db.Integer
-  dealVolume          Int?     @default(0) @db.Integer
-  exchange            Decimal? @db.Decimal(8, 3)
-  marketCap           Int?     @default(0) @db.Integer
-  pricePreviousClose  Int      @default(0) @db.Integer
-  putThroughValue     BigInt?  @default(0) @db.BigInt
-  putThroughVolume    Int?     @default(0) @db.Integer
-  shares              Int?     @default(0) @db.Integer
-  priceAverage        Decimal  @db.Decimal(10, 3)
-  priceBasic          Int      @db.Integer
-  priceClose          Int      @db.Integer
-  priceHigh           Int      @db.Integer
-  priceLow            Int      @db.Integer
-  priceOpen           Int      @db.Integer
-  sellAvg             Int      @db.Integer
-  sellCount           Int      @db.Integer
-  sellQuantity        BigInt   @db.BigInt
-  sellForeignQuantity BigInt   @db.BigInt
-  sellForeignValue    BigInt   @db.BigInt
+  date                DateTime
+  symbol              String   @db.VarChar(10)
+  priceHigh           Int
+  priceLow            Int
+  priceOpen           Int
+  priceAverage        Int
+  priceClose          Int
+  pricePreviousClose  Int
+  priceBasic          Int
+  totalVolume         Int
+  dealVolume          Int
+  volume              Int
+  putthroughVolume    Int
   totalTrade          BigInt   @db.BigInt
   totalValue          BigInt   @db.BigInt
-  totalVolume         Int      @db.Integer
-  volume              Int      @db.Integer
+  putthroughValue     BigInt   @db.BigInt
+  buyForeignQuantity  Int
+  buyForeignValue     BigInt   @db.BigInt
+  sellForeignQuantity Int
+  sellForeignValue    BigInt   @db.BigInt
+  buyCount            Int
+  buyQuantity         Int
+  sellCount           Int
+  sellQuantity        Int
+  buyAvg              Decimal  @db.Decimal(8, 3)
+  sellAvg             Decimal  @db.Decimal(8, 3)
+  adjRatio            Decimal  @db.Decimal(8, 3)
+  adjClose            Int
+  adjOpen             Int
+  adjHigh             Int
+  adjLow              Int
+  currentForeignRoom  Int
 
-  @@unique([code, date], map: "IDX_d8a2cc44789d1df0e4e8f7c89f")
+  @@unique([symbol, date])
 }
 
 model stock_price_sync_status_entity {
