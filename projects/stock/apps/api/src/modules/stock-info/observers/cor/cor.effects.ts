@@ -22,8 +22,8 @@ export class CorEffects {
       map(() =>
         COR_LOAD_NEXT_PAGE({
           currentPage: 0,
-        }),
-      ),
+        })
+      )
     );
   }
 
@@ -32,14 +32,16 @@ export class CorEffects {
   })
   loadNextPage(): EffectHandler {
     return pipe(
-      switchMap((action) => {
+      switchMap((action: any) => {
         const currentPage = action?.payload?.currentPage ?? 0;
-        this.logger.log(`Starting get cor data page ${currentPage}`);
+        this.logger.log(`Starting get cor data page ${currentPage}`, {
+          action,
+        });
         return from(corGetPageFn(currentPage + 1)).pipe(
           map((data) => {
             if (data && !Number.isNaN(data?.numOfRecords)) {
               if (data?.numOfRecords === 0 || data?.numOfRecords < 50) {
-                this.logger.log('Sync cor finish');
+                this.logger.log('Sync cor finish', { action });
                 return COR_SYNC_FINISH();
               }
 
@@ -50,9 +52,9 @@ export class CorEffects {
             return COR_LOAD_NEXT_PAGE_ERROR({
               currentPage,
             });
-          }),
+          })
         );
-      }),
+      })
     );
   }
 
@@ -64,9 +66,10 @@ export class CorEffects {
       map((action: any) => {
         this.logger.error(
           `Cor load page error page ${action?.payload?.currentPage}`,
+          { action }
         );
         return EMPTY;
-      }),
+      })
     );
   }
 }

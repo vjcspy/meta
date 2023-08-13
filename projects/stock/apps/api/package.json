@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma": "___________________________ PRISMA ___________________________",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate": "dotenv -e .env.default prisma migrate dev",
     "prisma:deploy": "dotenv -e .env.production -- prisma migrate deploy"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "@nestjs/axios": "^3.0.0",
     "@nestjs/config": "^3.0.0",
     "@nestjs/schedule": "^3.0.1",
-    "@prisma/client": "^5.0.0",
+    "@prisma/client": "^5.1.1",
     "@web/base": "workspace:*",
     "axios": "^1.4.0",
     "chitility": "workspace:*",
@@ -47,7 +47,7 @@
     "@types/supertest": "^2.0.11",
     "eslint-config-server": "workspace:*",
     "jest": "29.6.2",
-    "prisma": "^5.0.0",
+    "prisma": "^5.1.1",
     "supertest": "^6.1.3",
     "ts-jest": "29.1.1",
     "tsconfig": "workspace:*",

@@ -10,15 +10,17 @@ import {
 import { EventRxParamFactory } from './util/event-manager-rx/event-rx.factory';
 import type { EventRxHandlerConfig } from './util/event-manager-rx/event-rx.types';
 import { EventManagerReactive } from './util/event-manager-rx/EventManager';
+import { EventRxContext } from './util/event-manager-rx/EventRxContext';
 
 @Global()
 @Module({
   imports: [DiscoveryModule],
-  providers: [EventManagerReactive, EventRxParamFactory],
-  exports: [DiscoveryModule, EventManagerReactive],
+  providers: [EventManagerReactive, EventRxParamFactory, EventRxContext],
+  exports: [DiscoveryModule, EventManagerReactive, EventRxContext],
 })
 export class BaseModule implements OnApplicationBootstrap {
   private logger = new Logger(BaseModule.name);
+
   private static bootstrapped = false;
 
   constructor(
@@ -47,7 +49,7 @@ export class BaseModule implements OnApplicationBootstrap {
 
     await Promise.all(
       eventRxMeta.map(async ({ meta, discoveredMethod }) => {
-        const handler: any = await this.externalContextCreator.create(
+        const handler: any = this.externalContextCreator.create(
           discoveredMethod.parentClass.instance,
           discoveredMethod.handler,
           discoveredMethod.methodName,

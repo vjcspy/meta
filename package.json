@@ -76,7 +76,8 @@
   "pnpm": {
     "overrides": {
       "@nestjs/common": "^10.1.2",
-      "@nestjs/core": "^10.1.2"
+      "@nestjs/core": "^10.1.2",
+      "@nestjs/platform-express":  "^10.1.2"
     }
   }
 }

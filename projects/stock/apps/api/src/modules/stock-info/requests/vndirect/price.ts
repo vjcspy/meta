@@ -1,7 +1,8 @@
-import fetch from 'node-fetch';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const axios = require('axios').default;
 
-export const getPrice = async (code: string, year: number, page = 1) => {
-  const res = await fetch(
+const getPrice = async (code: string, year: number, page = 1) => {
+  const res = await axios(
     `https://finfo-api.vndirect.com.vn/v4/stock_prices?sort=date&q=code:${code}~date:gte:${year}-01-01~date:lte:${year}-12-31&size=1000&page=${page}`,
     {
       headers: {
@@ -20,17 +21,15 @@ export const getPrice = async (code: string, year: number, page = 1) => {
         Referer: 'https://dstock.vndirect.com.vn/',
         'Referrer-Policy': 'strict-origin-when-cross-origin',
       },
-      body: null,
       method: 'GET',
-    },
+    }
   );
 
-  const text = await res.text();
-  const data = JSON.parse(text);
+  const data = res;
   if (Array.isArray(data?.data)) {
     if (data.data.length > 0) {
       const sortedData = data.data.sort((a, b) =>
-        new Date(a.date) > new Date(b.date) ? 1 : -1,
+        new Date(a.date) > new Date(b.date) ? 1 : -1
       );
       return {
         ...data,
@@ -44,3 +43,5 @@ export const getPrice = async (code: string, year: number, page = 1) => {
   }
   return null;
 };
+
+export { getPrice };

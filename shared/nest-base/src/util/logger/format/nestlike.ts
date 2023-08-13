@@ -35,7 +35,7 @@ export const nestLikeConsoleFormat = (
   }
 ): Format =>
   format.printf(({ context, level, timestamp, message, ms, ...meta }) => {
-    if ('undefined' !== typeof timestamp) {
+    if (typeof timestamp !== 'undefined') {
       // Only format the timestamp to a locale representation if it's ISO 8601 format. Any format
       // that is not a valid date string will throw, just ignore it (it will be printed as-is).
       try {
@@ -52,7 +52,6 @@ export const nestLikeConsoleFormat = (
       (options.colors && nestLikeColorScheme[level]) ||
       ((text: string): string => text);
     const yellow = options.colors ? clc.yellow : (text: string): string => text;
-
     const stringifiedMeta = safeStringify(meta);
     const formattedMeta = options.showMeta
       ? options.prettyPrint
@@ -65,13 +64,12 @@ export const nestLikeConsoleFormat = (
 
     return (
       `${color(`[${appName}]`)} ` +
-      `${yellow(level.charAt(0).toUpperCase() + level.slice(1))}\t` +
-      ('undefined' !== typeof timestamp ? `${timestamp} ` : '') +
-      ('undefined' !== typeof context
-        ? `${yellow('[' + context + ']')} `
-        : '') +
-      `${color(message)}` +
-      ('undefined' !== typeof ms ? ` ${yellow(ms)}` : '') +
-      `${options.showMeta ? `\n${formattedMeta}` : ''}`
+      `${yellow(level.charAt(0).toUpperCase() + level.slice(1))}\t${
+        typeof timestamp !== 'undefined' ? `${timestamp} ` : ''
+      }${
+        typeof context !== 'undefined' ? `${yellow(`[${context}]`)} ` : ''
+      }${color(message)}${typeof ms !== 'undefined' ? ` ${yellow(ms)}` : ''}${
+        options.showMeta ? `\n${formattedMeta}` : ''
+      }`
     );
   });

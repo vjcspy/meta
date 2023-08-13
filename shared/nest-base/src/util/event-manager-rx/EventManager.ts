@@ -1,16 +1,25 @@
 import type { DiscoveredMethod } from '@golevelup/nestjs-discovery';
 import { Injectable, Logger } from '@nestjs/common';
-import * as _ from 'lodash';
-import { EMPTY, filter, isObservable, map, Subject } from 'rxjs';
+import { ModuleRef } from '@nestjs/core';
+import { EMPTY, filter, isObservable, map, of, Subject } from 'rxjs';
+import { mergeMap } from 'rxjs/internal/operators/mergeMap';
+import { v4 as uuidv4 } from 'uuid';
 
-import type { EventRxHandler, EventRxHandlerConfig } from './event-rx.types';
-import type { EventRxAction } from './event-rx.types';
-import type { ActionFactory } from './event-rx.types';
+import type {
+  ActionFactory,
+  EventRxAction,
+  EventRxHandler,
+  EventRxHandlerConfig,
+} from './event-rx.types';
+import { EventRxContext } from './EventRxContext';
 
 @Injectable()
 export class EventManagerReactive {
   private logger = new Logger(EventManagerReactive.name);
+
   private static _eventObservable = new Subject<EventRxAction>();
+
+  public constructor(private readonly moduleRef: ModuleRef) {}
 
   static ofType(keys: string | string[]) {
     const KEYS = typeof keys === 'string' ? [keys] : keys;
@@ -19,20 +28,28 @@ export class EventManagerReactive {
       filter((value) => KEYS.includes(value.type))
     );
   }
-  dispatch(action: EventRxAction | ActionFactory<any>) {
+
+  async dispatch(action: EventRxAction | ActionFactory<any>) {
     let o: any = action;
     if (typeof action === 'function') {
-      o = {
-        type: action().type,
-      };
+      o = action();
     }
-    this.logger.log(`Dispatch action ${o.type}`);
+    if (typeof o === 'object') {
+      o.context = await this.moduleRef.create<EventRxContext>(EventRxContext);
+
+      // TODO: get correlationId from request context and set to action context
+      o.context.xCorrelationId = `${o.type}-${uuidv4()}`;
+    } else {
+      this.logger.error('Dispatch wrong action type');
+    }
+
+    this.logger.log(`Dispatch action ${o.type}`, { action: o });
     EventManagerReactive._eventObservable.next(o);
   }
 
   async createSubscriber(
     config: EventRxHandlerConfig,
-    handler: () => EventRxHandler,
+    handler: () => Promise<EventRxHandler>,
     meta: {
       discoveredMethod: DiscoveredMethod;
     }
@@ -41,63 +58,73 @@ export class EventManagerReactive {
     this.logger.log(
       `Create event subscriber ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`
     );
-    let preActionMetaChain: any;
+    // let preActionMetaChain: any;
     EventManagerReactive._eventObservable
       .pipe(
-        filter((action) => {
-          let types: string[] = [];
-          if (Array.isArray(config.type)) {
-            types = config.type
-              .map((value) => {
-                if (typeof value === 'string') {
-                  return value;
-                } else if (typeof value === 'function' && value()?.type) {
-                  return value()?.type;
-                }
+        mergeMap((a) => {
+          const context = a?.context;
+          return of(a).pipe(
+            filter((action) => {
+              let types: string[] = [];
+              if (Array.isArray(config.type)) {
+                types = config.type
+                  .map((value) => {
+                    if (typeof value === 'string') {
+                      return value;
+                    }
+                    if (typeof value === 'function' && value()?.type) {
+                      return value()?.type;
+                    }
 
-                return undefined;
-              })
-              .filter((value) => !!value) as any;
-          } else {
-            if (typeof config.type === 'string') {
-              types = [config.type];
-            } else if (typeof config.type === 'function') {
-              types = [config.type().type];
-            }
-          }
-          return types.includes(action.type);
-        }),
-        map((value) => {
-          this.logger.log(
-            `Process ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`,
-            value
-          );
-          preActionMetaChain = value?.meta?.chain;
-          return value;
-        }),
-        handlerPipe,
-        map((action) => {
-          if (isObservable(action)) {
-            return action;
-          } else {
-            if (typeof preActionMetaChain !== 'undefined') {
-              action.meta = {
-                ...action.meta,
-                chain: _.clone(preActionMetaChain),
-              };
-              action.meta?.chain.push(
-                `${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}->${action.type}`
+                    return undefined;
+                  })
+                  .filter((value) => !!value) as any;
+              } else if (typeof config.type === 'string') {
+                types = [config.type];
+              } else if (typeof config.type === 'function') {
+                types = [config.type().type];
+              }
+              return types.includes(action.type);
+            }),
+            map((action) => {
+              this.logger.log(
+                `Process ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`,
+                { action }
               );
-            } else {
-              action.meta = {
-                chain: [
-                  `${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}->${action.type}`,
-                ],
-              };
-            }
+              // preActionMetaChain = value?.meta?.chain;
+              return action;
+            }),
+            handlerPipe,
+            map((action) => {
+              if (isObservable(action)) {
+                return action;
+              }
 
-            return action;
-          }
+              // TODO: add chains
+              // if (typeof preActionMetaChain !== 'undefined') {
+              //   action.meta = {
+              //     ...action.meta,
+              //     chain: _.clone(preActionMetaChain),
+              //   };
+              //   action.meta?.chain.push(
+              //     `${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}->${action.type}`
+              //   );
+              // } else {
+              //   action.meta = {
+              //     chain: [
+              //       `${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}->${action.type}`,
+              //     ],
+              //   };
+              // }
+
+              if (context) {
+                // eslint-disable-next-line no-param-reassign
+                action.context = context;
+              }
+
+              return action;
+            })
+          );
         })
       )
       .subscribe({
@@ -107,7 +134,7 @@ export class EventManagerReactive {
               // do nothing
             } else {
               this.logger.error(
-                `Return observer not excepted ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`
+                `Return not excepted observer for ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`
               );
             }
           } else {
@@ -118,7 +145,7 @@ export class EventManagerReactive {
           console.error(err);
         },
         complete: () => {
-          console.log('WHY COMPLETE');
+          this.logger.warn('WHY COMPLETE???');
         },
       });
   }
