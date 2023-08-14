@@ -37,7 +37,7 @@ export class StockPriceEffects {
     private readonly syncStatusService: SyncStatus,
     private stockPriceRequest: StockPriceRequest,
     private readonly stockPriceRepo: StockPriceRepo,
-    private slackHelper: SlackHelper
+    private slackHelper: SlackHelper,
   ) {}
 
   @Effect({
@@ -65,9 +65,9 @@ export class StockPriceEffects {
               code,
               lastDate,
             });
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -91,9 +91,9 @@ export class StockPriceEffects {
               code,
               error: new EventRxError('Could not get data from downstream'),
             });
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -113,9 +113,9 @@ export class StockPriceEffects {
           catchError((error) => {
             console.log(error);
             return of(STOCK_PRICE_ERROR({ code, error }));
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -138,7 +138,7 @@ export class StockPriceEffects {
         }
 
         return EMPTY;
-      })
+      }),
     );
   }
 
@@ -150,7 +150,10 @@ export class StockPriceEffects {
       map((action: any) => {
         const { code, error } = action.payload;
         const info = this.syncStatusService.getInfo(getStockPriceJobId(code));
-        this.logger.error('Error save stock price', { error, action });
+        this.logger.error(`Error save stock price for ${code}`, {
+          error,
+          action,
+        });
         this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
           text: `ERROR sync stock price for ${code}`,
         });
@@ -164,7 +167,7 @@ export class StockPriceEffects {
         }
 
         return EMPTY;
-      })
+      }),
     );
   }
 }
