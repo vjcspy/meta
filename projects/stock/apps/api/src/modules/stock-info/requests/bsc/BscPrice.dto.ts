@@ -42,14 +42,14 @@ const bscPriceSchema = yup.object().shape({
   buyQuantity: yup.number().required(),
   sellCount: yup.number().required(),
   sellQuantity: yup.number().required(),
-  buyAvg: yup
-    .number()
-    .required()
-    .transform((value) => toDecimal(value)),
-  sellAvg: yup
-    .number()
-    .required()
-    .transform((value) => toDecimal(value)),
+  // buyAvg: yup
+  //   .number()
+  //   .required()
+  //   .transform((value) => toDecimal(value)),
+  // sellAvg: yup
+  //   .number()
+  //   .required()
+  //   .transform((value) => toDecimal(value)),
   adjRatio: yup
     .number()
     .required()

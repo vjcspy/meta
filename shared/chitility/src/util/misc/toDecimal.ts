@@ -7,7 +7,7 @@ export function toDecimal(number: any, total = 8, decimal = 3) {
 
     // Kiểm tra tổng số chữ số không vượt quá 8
     if (str.replace('.', '').length > total) {
-      throw new Error('Number has more than 8 digits in total.');
+      throw new Error(`Number has more than ${total} digits in total.`);
     }
 
     return Number(str);

@@ -400,8 +400,8 @@ model StockPrice {
   buyQuantity         Int
   sellCount           Int
   sellQuantity        Int
-  buyAvg              Decimal  @db.Decimal(8, 3)
-  sellAvg             Decimal  @db.Decimal(8, 3)
+  // buyAvg              Decimal  @db.Decimal(8, 3)
+  // sellAvg             Decimal  @db.Decimal(8, 3)
   adjRatio            Decimal  @db.Decimal(8, 3)
   adjClose            Int
   adjOpen             Int
@@ -410,6 +410,7 @@ model StockPrice {
   currentForeignRoom  Int
 
   @@unique([symbol, date])
+  @@map("stock_price")
 }
 
 model stock_price_sync_status_entity {
