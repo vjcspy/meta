@@ -63,4 +63,19 @@ export class StockPriceRepo {
       },
     });
   }
+
+  public async getHistory(code: string, from: Date, to: Date = new Date()) {
+    return prisma.stockPrice.findMany({
+      where: {
+        symbol: code,
+        date: {
+          lte: to,
+          gte: from,
+        },
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+  }
 }

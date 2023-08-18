@@ -1,5 +1,6 @@
 import { getAppName, getInstanceId, getNodeEnv } from '@nest/base';
 import { initLoggerInstance } from '@nest/base/dist/util/logger';
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
@@ -19,7 +20,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger,
   });
+  // validation
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
+
+  // configuration
   const configService = app.get(ConfigService);
+
+  // port listening
   const port = configService.get('APP_PORT') || 3000;
   await app.listen(port);
   logger.log(`Listening on port ${port}`, 'NestApplication');
