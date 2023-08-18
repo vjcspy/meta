@@ -24,7 +24,7 @@ export class CronScheduleModel {
   async runOneTimePerDay(
     jobCode: string,
     jobFn: () => Promise<any>,
-    whenSuccess?: (doc: CronSchedule) => Promise<any>
+    whenSuccess?: (doc: CronSchedule) => Promise<any>,
   ) {
     let schedule = await prisma.cronSchedule.findFirst({
       where: {

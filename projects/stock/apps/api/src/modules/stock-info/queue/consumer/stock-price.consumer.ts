@@ -23,7 +23,7 @@ export class StockPriceConsumer {
           STOCK_PRICE_SYNC({
             code: msg,
             resolve,
-          })
+          }),
         );
       }
     });

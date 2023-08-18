@@ -72,7 +72,7 @@ export class AppModule
 
   constructor(
     private readonly configService: ConfigService,
-    private slackHelper: SlackHelper
+    private slackHelper: SlackHelper,
   ) {
     super();
   }

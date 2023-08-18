@@ -22,7 +22,7 @@ export class StockPriceRequest {
 
     return this.httpService.get(
       `https://www.bsc.com.vn/api/Data/Companies/HistoricalQuotes?symbol=${code}&startDate=${lastDate.format(
-        'YYYY-M-D'
+        'YYYY-M-D',
       )}&endDate=${endDate.format('YYYY-M-D')}`,
       {
         headers: {
@@ -41,7 +41,7 @@ export class StockPriceRequest {
           'Referrer-Policy': 'strict-origin-when-cross-origin',
         },
         method: 'GET',
-      }
+      },
     );
   }
 }
@@ -49,7 +49,7 @@ export class StockPriceRequest {
 export const getPriceFromBSC = async (
   code: string,
   lastDate?: Moment,
-  endDate?: Moment
+  endDate?: Moment,
 ) => {
   if (typeof lastDate === 'undefined') {
     lastDate = moment(`${SyncValues.START_YEAR}-01-01`);
@@ -60,7 +60,7 @@ export const getPriceFromBSC = async (
   }
   try {
     const url = `https://www.bsc.com.vn/api/Data/Companies/HistoricalQuotes?symbol=${code}&startDate=${lastDate.format(
-      'YYYY-M-D'
+      'YYYY-M-D',
     )}&endDate=${endDate.format('YYYY-M-D')}`;
     const res = await fetch(url, {
       headers: {

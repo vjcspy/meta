@@ -11,7 +11,7 @@ export class CorController {
     private readonly eventManager: EventManagerReactive,
     private readonly omPublisher: OrderMatchingPublisher,
     private readonly stockPriceRequest: StockPriceRequest,
-    private readonly eventRxContext: EventRxContext
+    private readonly eventRxContext: EventRxContext,
   ) {}
 
   @Get('sync')

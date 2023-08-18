@@ -22,7 +22,7 @@ export class BarEventRx {
         }
 
         return EMPTY;
-      })
+      }),
     );
   }
 
@@ -33,7 +33,7 @@ export class BarEventRx {
     return pipe(
       map(() => ({
         type: 'BAR_EVENT_2',
-      }))
+      })),
     );
   }
 
@@ -44,7 +44,7 @@ export class BarEventRx {
     return pipe(
       map(() => ({
         type: 'BAR_EVENT_3',
-      }))
+      })),
     );
   }
 
@@ -55,7 +55,7 @@ export class BarEventRx {
     return pipe(
       map(() => ({
         type: 'BAR_EVENT_4',
-      }))
+      })),
     );
   }
 }

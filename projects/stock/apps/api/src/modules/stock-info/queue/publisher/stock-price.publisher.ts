@@ -19,7 +19,7 @@ export class StockPricePublisher {
           SyncValues.EXCHANGE_KEY,
           SyncValues.STOCK_PRICE_SYNC_KEY,
           cor.code,
-          {}
+          {},
         );
     });
 

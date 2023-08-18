@@ -22,8 +22,8 @@ export class CorEffects {
       map(() =>
         COR_LOAD_NEXT_PAGE({
           currentPage: 0,
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -52,9 +52,9 @@ export class CorEffects {
             return COR_LOAD_NEXT_PAGE_ERROR({
               currentPage,
             });
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -66,10 +66,10 @@ export class CorEffects {
       map((action: any) => {
         this.logger.error(
           `Cor load page error page ${action?.payload?.currentPage}`,
-          { action }
+          { action },
         );
         return EMPTY;
-      })
+      }),
     );
   }
 }

@@ -7,7 +7,7 @@ import { Controller, Get } from '@nestjs/common';
 export class StockPriceController {
   constructor(
     private readonly eventManager: EventManagerReactive,
-    private readonly stockPricePublisher: StockPricePublisher
+    private readonly stockPricePublisher: StockPricePublisher,
   ) {}
 
   @Get('test')
@@ -16,7 +16,7 @@ export class StockPriceController {
       STOCK_PRICE_SYNC({
         code: 'BFC',
         resolve: () => {},
-      })
+      }),
     );
 
     return 'ok';

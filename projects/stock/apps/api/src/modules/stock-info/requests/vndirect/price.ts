@@ -22,14 +22,14 @@ const getPrice = async (code: string, year: number, page = 1) => {
         'Referrer-Policy': 'strict-origin-when-cross-origin',
       },
       method: 'GET',
-    }
+    },
   );
 
   const data = res;
   if (Array.isArray(data?.data)) {
     if (data.data.length > 0) {
       const sortedData = data.data.sort((a, b) =>
-        new Date(a.date) > new Date(b.date) ? 1 : -1
+        new Date(a.date) > new Date(b.date) ? 1 : -1,
       );
       return {
         ...data,

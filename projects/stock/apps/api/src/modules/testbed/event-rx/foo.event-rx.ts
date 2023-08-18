@@ -15,7 +15,7 @@ export class FooEventRx {
     return pipe(
       map(() => ({
         type: 'FOO_EVENT_1',
-      }))
+      })),
     );
   }
 }
