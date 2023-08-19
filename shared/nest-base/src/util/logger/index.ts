@@ -28,7 +28,7 @@ export const initLoggerInstance = (config: {
           winston.format.json({
             space: 4,
             circularValue: null,
-          })
+          }),
         ),
         levels: winston.config.cli.levels,
         level: 'silly',
@@ -57,7 +57,7 @@ export const initLoggerInstance = (config: {
                 colors: true,
                 prettyPrint: true,
                 showMeta: false,
-              })
+              }),
             ),
           }),
           ...(config?.file === true
@@ -66,7 +66,7 @@ export const initLoggerInstance = (config: {
                   format: winston.format.combine(
                     winston.format.uncolorize(),
                     format.splat(),
-                    format.simple()
+                    format.simple(),
                   ),
                   filename: `logs/${getInstanceId()}.debug.log`,
                   level: 'debug',
@@ -75,7 +75,7 @@ export const initLoggerInstance = (config: {
                   format: winston.format.combine(
                     winston.format.uncolorize(),
                     format.splat(),
-                    format.simple()
+                    format.simple(),
                   ),
                   filename: `logs/${getInstanceId()}.info.log`,
                   level: 'info',
@@ -84,7 +84,7 @@ export const initLoggerInstance = (config: {
                   format: winston.format.combine(
                     winston.format.uncolorize(),
                     format.splat(),
-                    format.simple()
+                    format.simple(),
                   ),
                   filename: `logs/${getInstanceId()}.error.log`,
                   level: 'error',
@@ -93,7 +93,7 @@ export const initLoggerInstance = (config: {
                   format: winston.format.combine(
                     winston.format.uncolorize(),
                     format.splat(),
-                    format.simple()
+                    format.simple(),
                   ),
                   filename: 'logs/combined.log',
                 }),
@@ -108,7 +108,7 @@ export const initLoggerInstance = (config: {
             source: config?.splunk?.source,
           }) as any,
         ],
-      })
+      }),
     );
   }
 

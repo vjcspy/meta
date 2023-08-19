@@ -17,10 +17,10 @@ export function isMainProcess() {
   );
 }
 
-export function isProduction() {
-  return getNodeEnv() === 'production';
-}
-
 export function getNodeEnv() {
   return process.env.NODE_ENV ?? 'development';
+}
+
+export function isProduction() {
+  return getNodeEnv() === 'production';
 }

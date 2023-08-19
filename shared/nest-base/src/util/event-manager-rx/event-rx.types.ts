@@ -7,7 +7,7 @@ export interface EventRxHandlerConfig {
   type: EventType | EventType[];
 }
 
-export interface EventRxAction<P extends Record<string, any> = object> {
+export interface EventRxAction<P extends Record<string, any>> {
   type: string;
   payload?: P;
   meta?: {
@@ -24,5 +24,5 @@ export type EventRxHandler = UnaryFunction<
 export type EffectHandler = EventRxHandler;
 
 export type ActionFactory<P extends Record<string, any>> = (
-  payload?: P
+  payload?: P,
 ) => EventRxAction<P>;

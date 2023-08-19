@@ -32,7 +32,7 @@ export const nestLikeConsoleFormat = (
     colors: !process.env.NO_COLOR,
     prettyPrint: false,
     showMeta: false,
-  }
+  },
 ): Format =>
   format.printf(({ context, level, timestamp, message, ms, ...meta }) => {
     if (typeof timestamp !== 'undefined') {

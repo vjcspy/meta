@@ -1,5 +1,5 @@
 import type { LoggerService } from '@nestjs/common';
-import { Logger } from 'winston';
+import type { Logger } from 'winston';
 
 export interface LogEntry {
   message: string | any[];
@@ -102,6 +102,8 @@ export class WinstonLogger implements LoggerInstance {
       // eslint-disable-next-line unused-imports/no-unused-vars
       const { message: msg, name, stack, ...meta } = message;
 
+      console.error(message);
+
       return this.logger.error(msg, {
         context,
         stack: [trace || message.stack],
@@ -119,6 +121,7 @@ export class WinstonLogger implements LoggerInstance {
       });
     }
     if (trace instanceof Error) {
+      console.error(trace);
       const { message: msg, name, stack, ...meta } = trace;
       return this.logger.error(message, {
         context,

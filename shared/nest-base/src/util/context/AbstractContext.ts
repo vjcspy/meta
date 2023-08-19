@@ -1,5 +1,5 @@
 export class AbstractContext {
-  private '_x-correlation-id': string;
+  '_x-correlation-id': string;
 
   get xCorrelationId(): string {
     return this['_x-correlation-id'];

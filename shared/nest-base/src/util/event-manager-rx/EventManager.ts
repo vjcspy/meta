@@ -17,7 +17,7 @@ import { EventRxContext } from './EventRxContext';
 export class EventManagerReactive {
   private logger = new Logger(EventManagerReactive.name);
 
-  private static _eventObservable = new Subject<EventRxAction>();
+  private static _eventObservable = new Subject<EventRxAction<any>>();
 
   public constructor(private readonly moduleRef: ModuleRef) {}
 
@@ -25,11 +25,13 @@ export class EventManagerReactive {
     const KEYS = typeof keys === 'string' ? [keys] : keys;
 
     return EventManagerReactive._eventObservable.pipe(
-      filter((value) => KEYS.includes(value.type))
+      filter((value) => KEYS.includes(value.type)),
     );
   }
 
-  async dispatch(action: EventRxAction | ActionFactory<any>) {
+  async dispatch<P extends Record<string, any>>(
+    action: EventRxAction<P> | ActionFactory<P>,
+  ) {
     let o: any = action;
     if (typeof action === 'function') {
       o = action();
@@ -52,11 +54,11 @@ export class EventManagerReactive {
     handler: () => Promise<EventRxHandler>,
     meta: {
       discoveredMethod: DiscoveredMethod;
-    }
+    },
   ) {
     const handlerPipe = await handler();
     this.logger.log(
-      `Create event subscriber ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`
+      `Create event subscriber ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`,
     );
     // let preActionMetaChain: any;
     EventManagerReactive._eventObservable
@@ -89,7 +91,7 @@ export class EventManagerReactive {
             map((action) => {
               this.logger.log(
                 `Process ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`,
-                { action }
+                { action },
               );
               // preActionMetaChain = value?.meta?.chain;
               return action;
@@ -123,9 +125,9 @@ export class EventManagerReactive {
               }
 
               return action;
-            })
+            }),
           );
-        })
+        }),
       )
       .subscribe({
         next: (value) => {
@@ -134,7 +136,7 @@ export class EventManagerReactive {
               // do nothing
             } else {
               this.logger.error(
-                `Return not excepted observer for ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`
+                `Return not excepted observer for ${meta.discoveredMethod.parentClass.name}.${meta.discoveredMethod.methodName}`,
               );
             }
           } else {

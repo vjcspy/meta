@@ -3,14 +3,13 @@ import type { OnApplicationBootstrap } from '@nestjs/common';
 import { Global, Logger, Module } from '@nestjs/common';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
 
+import { EventManagerReactive, EventRxContext } from './util';
 import {
   EVENT_RX_ARGS_METADATA,
   EVENT_RX_HANDLER,
 } from './util/event-manager-rx/event-rx.constants';
 import { EventRxParamFactory } from './util/event-manager-rx/event-rx.factory';
 import type { EventRxHandlerConfig } from './util/event-manager-rx/event-rx.types';
-import { EventManagerReactive } from './util/event-manager-rx/EventManager';
-import { EventRxContext } from './util/event-manager-rx/EventRxContext';
 
 @Global()
 @Module({
@@ -27,7 +26,7 @@ export class BaseModule implements OnApplicationBootstrap {
     private readonly discover: DiscoveryService,
     private readonly externalContextCreator: ExternalContextCreator,
     private readonly eventRxParamFactory: EventRxParamFactory,
-    private readonly eventManagerReactive: EventManagerReactive
+    private readonly eventManagerReactive: EventManagerReactive,
   ) {}
 
   onApplicationBootstrap(): any {
@@ -44,7 +43,7 @@ export class BaseModule implements OnApplicationBootstrap {
     const eventRxMeta =
       await this.discover.providerMethodsWithMetaAtKey<EventRxHandlerConfig>(
         EVENT_RX_HANDLER,
-        (_item) => true
+        () => true,
       );
 
     await Promise.all(
@@ -58,12 +57,12 @@ export class BaseModule implements OnApplicationBootstrap {
           undefined, // contextId
           undefined, // inquirerId
           undefined, // options
-          'eventRx' // contextType
+          'eventRx', // contextType
         );
         await this.eventManagerReactive.createSubscriber(meta, handler, {
           discoveredMethod,
         });
-      })
+      }),
     );
 
     this.eventManagerReactive.dispatch({

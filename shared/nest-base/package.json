@@ -2,7 +2,7 @@
   "name": "@nest/base",
   "version": "1.0.0",
   "main": "dist/index",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "files": [
     "dist"
   ],

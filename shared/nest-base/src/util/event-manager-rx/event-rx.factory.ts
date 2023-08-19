@@ -1,7 +1,7 @@
 import type { ParamData } from '@nestjs/common';
 import { isObject } from 'lodash';
 
-import type { ActionFactory } from './event-rx.types';
+import type { ActionFactory, EventRxAction } from './event-rx.types';
 
 export class EventRxParamFactory {
   public exchangeKeyForValue(type: number, data: ParamData, args: any[]) {
@@ -15,9 +15,9 @@ export class EventRxParamFactory {
 
 export function actionFactory<
   P extends Record<string, any>,
-  T extends string = string
+  T extends string = string,
 >(type: T): ActionFactory<P> {
-  return (payload?: P) => ({
+  return (payload?: P): EventRxAction<P> => ({
     type,
     payload,
   });
