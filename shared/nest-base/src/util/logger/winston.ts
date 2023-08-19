@@ -1,4 +1,5 @@
 import type { LoggerService } from '@nestjs/common';
+import { without } from 'lodash';
 import type { Logger } from 'winston';
 
 export interface LogEntry {
@@ -53,7 +54,11 @@ export class WinstonLogger implements LoggerInstance {
        * NestJS luon truyen context la last param
        * */
       const context = metadata.pop();
-      this.logger.info(message, { context, metadata });
+
+      this.logger.info(message, {
+        context,
+        metadata: without(metadata, undefined),
+      });
     } else {
       this.logger.info(message, { context: 'Unknown' });
     }
@@ -65,7 +70,10 @@ export class WinstonLogger implements LoggerInstance {
        * NestJS luon truyen context la last param
        * */
       const context = metadata.pop();
-      this.logger.debug(message, { context, metadata });
+      this.logger.debug(message, {
+        context,
+        metadata,
+      });
     } else {
       this.logger.debug(message, { context: 'Unknown' });
     }
@@ -95,8 +103,8 @@ export class WinstonLogger implements LoggerInstance {
   //   return this.logger.info(message, { context });
   // }
 
-  public error(message: any, trace?: any, context?: string): any {
-    context = context || this.context;
+  public error(message: any, trace?: any, ...metadata: any[]): any {
+    const context = metadata.pop();
 
     if (message instanceof Error) {
       // eslint-disable-next-line unused-imports/no-unused-vars
@@ -121,32 +129,49 @@ export class WinstonLogger implements LoggerInstance {
       });
     }
     if (trace instanceof Error) {
-      console.error(trace);
       const { message: msg, name, stack, ...meta } = trace;
       return this.logger.error(message, {
         context,
-        metadata: {
-          stack,
-          error: msg,
-          name,
-          ...meta,
-        },
+        metadata: [
+          {
+            error: {
+              stack,
+              message: msg,
+              name,
+              ...meta,
+            },
+            ...metadata[0],
+          },
+        ],
       });
     }
 
-    return this.logger.error(message, { context });
+    return this.logger.error(message, {
+      context,
+      metadata: [
+        {
+          error: {
+            stack: trace,
+            message,
+          },
+        },
+      ],
+    });
   }
 
-  public warn(message: any, context?: string): any {
-    context = context || this.context;
-
-    if (typeof message === 'object') {
-      const { message: msg, ...meta } = message;
-
-      return this.logger.warn(msg as string, { context, ...meta });
+  public warn(message: any, ...metadata: any[]): void {
+    if (metadata.length > 0) {
+      /*
+       * NestJS luon truyen context la last param
+       * */
+      const context = metadata.pop();
+      this.logger.warn(message, {
+        context,
+        metadata,
+      });
+    } else {
+      this.logger.warn(message, { context: 'Unknown' });
     }
-
-    return this.logger.warn(message, { context });
   }
 
   public verbose?(message: any, context?: string): any {

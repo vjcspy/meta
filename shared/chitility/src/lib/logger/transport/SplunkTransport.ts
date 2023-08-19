@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Logger as SplunkLogger } from 'splunk-logging';
 import TransportStream from 'winston-transport';
 
@@ -44,7 +45,7 @@ export class SplunkTransport extends TransportStream {
     }
 
     this.name = config?.appName ?? 'SplunkStreamEvent';
-    this.level = config.level || 'info';
+    this.level = config.level || 'silly';
 
     this.defaultMetadata = {
       source: config?.source,
@@ -96,7 +97,10 @@ export class SplunkTransport extends TransportStream {
       delete meta[Symbol.for('message')];
 
       const splunkInfo = info.splunk || {};
-
+      meta.metadata =
+        Array.isArray(meta.metadata) && _.size(meta.metadata) === 1
+          ? meta.metadata[0]
+          : undefined;
       const payload = {
         message: meta,
         metadata: { ...this.defaultMetadata, ...splunkInfo },
@@ -115,6 +119,7 @@ export class SplunkTransport extends TransportStream {
       });
     } catch (e) {
       // shallow
+      console.log(e);
     }
   }
 }

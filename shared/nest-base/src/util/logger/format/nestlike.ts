@@ -1,4 +1,5 @@
 import safeStringify from 'fast-safe-stringify';
+import * as _ from 'lodash';
 import type { Format } from 'logform';
 import { inspect } from 'util';
 import { format } from 'winston';
@@ -52,15 +53,22 @@ export const nestLikeConsoleFormat = (
       (options.colors && nestLikeColorScheme[level]) ||
       ((text: string): string => text);
     const yellow = options.colors ? clc.yellow : (text: string): string => text;
-    const stringifiedMeta = safeStringify(meta);
-    const formattedMeta = options.showMeta
-      ? options.prettyPrint
+
+    const metadata =
+      _.size(meta?.metadata) === 1 ? meta.metadata[0] : undefined;
+
+    let formattedMeta;
+    const _level = meta[Symbol.for('level')];
+    const checkShowMeta = (options.showMeta || _level !== 'info') && metadata;
+    if (checkShowMeta) {
+      const stringifiedMeta = safeStringify(metadata);
+      formattedMeta = options.prettyPrint
         ? inspect(JSON.parse(stringifiedMeta), {
             colors: options.colors,
             depth: null,
           })
-        : stringifiedMeta
-      : undefined;
+        : stringifiedMeta;
+    }
 
     return (
       `${color(`[${appName}]`)} ` +
@@ -69,7 +77,7 @@ export const nestLikeConsoleFormat = (
       }${
         typeof context !== 'undefined' ? `${yellow(`[${context}]`)} ` : ''
       }${color(message)}${typeof ms !== 'undefined' ? ` ${yellow(ms)}` : ''}${
-        options.showMeta ? `\n${formattedMeta}` : ''
+        checkShowMeta ? `\n${formattedMeta}` : ''
       }`
     );
   });

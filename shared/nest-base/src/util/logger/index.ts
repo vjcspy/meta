@@ -116,3 +116,4 @@ export const initLoggerInstance = (config: {
 };
 
 export const getLoggerInstance = () => logger;
+export * from './xLogger';
