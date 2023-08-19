@@ -40,7 +40,7 @@ export class EventManagerReactive {
       o.context = await this.moduleRef.create<EventRxContext>(EventRxContext);
 
       // TODO: get correlationId from request context and set to action context
-      o.context.xCorrelationId = `${o.type}-${uuidv4()}`;
+      o.context.setXCorrelationId(`${o.type}-${uuidv4()}`);
     } else {
       this.logger.error('Dispatch wrong action type');
     }

@@ -1,5 +1,9 @@
-import { getAppName, getInstanceId, getNodeEnv } from '@nest/base';
-import { initLoggerInstance } from '@nest/base/dist/util/logger';
+import {
+  getAppName,
+  getInstanceId,
+  getNodeEnv,
+  initLoggerInstance,
+} from '@nest/base';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -7,6 +11,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  // logger
   const logger = initLoggerInstance({
     file: process.env.LOG_FILE === 'true',
     splunk: {
@@ -20,6 +25,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger,
   });
+
   // validation
   app.useGlobalPipes(
     new ValidationPipe({

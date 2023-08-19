@@ -1,9 +1,15 @@
 import { DiscoveryModule, DiscoveryService } from '@golevelup/nestjs-discovery';
-import type { OnApplicationBootstrap } from '@nestjs/common';
+import type {
+  MiddlewareConsumer,
+  NestModule,
+  OnApplicationBootstrap,
+} from '@nestjs/common';
 import { Global, Logger, Module } from '@nestjs/common';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
 
 import { EventManagerReactive, EventRxContext } from './util';
+import { UserContextMiddleware } from './util/context/user-context.middleware';
+import { XAppContext } from './util/context/XAppContext';
 import {
   EVENT_RX_ARGS_METADATA,
   EVENT_RX_HANDLER,
@@ -14,10 +20,16 @@ import type { EventRxHandlerConfig } from './util/event-manager-rx/event-rx.type
 @Global()
 @Module({
   imports: [DiscoveryModule],
-  providers: [EventManagerReactive, EventRxParamFactory, EventRxContext],
-  exports: [DiscoveryModule, EventManagerReactive, EventRxContext],
+  providers: [
+    EventManagerReactive,
+    EventRxParamFactory,
+    EventRxContext,
+    XAppContext,
+    UserContextMiddleware,
+  ],
+  exports: [DiscoveryModule, EventManagerReactive, EventRxContext, XAppContext],
 })
-export class BaseModule implements OnApplicationBootstrap {
+export class BaseModule implements OnApplicationBootstrap, NestModule {
   private logger = new Logger(BaseModule.name);
 
   private static bootstrapped = false;
@@ -28,6 +40,10 @@ export class BaseModule implements OnApplicationBootstrap {
     private readonly eventRxParamFactory: EventRxParamFactory,
     private readonly eventManagerReactive: EventManagerReactive,
   ) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(UserContextMiddleware).forRoutes('*'); // Áp dụng cho tất cả routes
+  }
 
   onApplicationBootstrap(): any {
     if (BaseModule.bootstrapped) {
