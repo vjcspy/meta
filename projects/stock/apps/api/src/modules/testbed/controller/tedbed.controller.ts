@@ -1,5 +1,5 @@
 import { TestbedService } from '@modules/testbed/service/testbed.service';
-import { XAppContext, XLogger } from '@nest/base';
+import { XAppRequestContext, XLogger } from '@nest/base';
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('testbed')
@@ -7,10 +7,10 @@ export class TedbedController {
   private readonly logger: XLogger;
 
   constructor(
-    private xAppContext: XAppContext,
+    private xAppRequestContext: XAppRequestContext,
     private testBedService: TestbedService,
   ) {
-    this.logger = new XLogger(TedbedController.name, this.xAppContext);
+    this.logger = new XLogger(TedbedController.name, this.xAppRequestContext);
   }
 
   @Get('foo')

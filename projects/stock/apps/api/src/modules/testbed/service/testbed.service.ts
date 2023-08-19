@@ -1,12 +1,12 @@
-import { XAppContext, XLogger } from '@nest/base/dist';
+import { XAppRequestContext, XLogger } from '@nest/base/dist';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class TestbedService {
   private readonly logger: XLogger;
 
-  constructor(private xAppContext: XAppContext) {
-    this.logger = new XLogger(TestbedService.name, this.xAppContext);
+  constructor(private xAppRequestContext: XAppRequestContext) {
+    this.logger = new XLogger(TestbedService.name, this.xAppRequestContext);
   }
 
   getTestbedData() {

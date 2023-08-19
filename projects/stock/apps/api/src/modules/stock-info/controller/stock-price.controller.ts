@@ -5,6 +5,7 @@ import {
 import { STOCK_PRICE_SYNC } from '@modules/stock-info/observers/stock-price/stock-price.actions';
 import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-price.publisher';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
+import { XAppRequestContext, XLogger } from '@nest/base/dist';
 import { EventManagerReactive } from '@nest/base/dist/util/event-manager-rx/EventManager';
 import { Controller, Get, Query } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
@@ -12,11 +13,19 @@ import { parse } from 'date-fns';
 
 @Controller('stock-price')
 export class StockPriceController {
+  private logger: XLogger;
+
   constructor(
     private readonly eventManager: EventManagerReactive,
     private readonly stockPricePublisher: StockPricePublisher,
     private readonly stockPriceRepo: StockPriceRepo,
-  ) {}
+    private readonly xAppRequestContext: XAppRequestContext,
+  ) {
+    this.logger = new XLogger(
+      StockPriceController.name,
+      this.xAppRequestContext,
+    );
+  }
 
   @Get('test')
   test() {
