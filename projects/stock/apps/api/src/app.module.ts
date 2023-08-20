@@ -2,7 +2,7 @@ import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { TestbedModule } from '@modules/testbed/testbed.module';
-import { BaseModule, getNodeEnv, isProduction, XLogger } from '@nest/base';
+import { BaseModule, getNodeEnv, isProduction } from '@nest/base';
 import type { LoggerInstance } from '@nest/base/dist/util/logger/winston';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
