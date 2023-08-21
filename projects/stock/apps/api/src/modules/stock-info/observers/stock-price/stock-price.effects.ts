@@ -59,6 +59,12 @@ export class StockPriceEffects {
             let lastDate: any;
             if (syncStatus) {
               lastDate = moment(syncStatus.date);
+              this.logger.log(
+                `Will sync from lastDate ${lastDate.format('YYYY-MM-DD')}`,
+                {
+                  action,
+                },
+              );
             }
 
             return STOCK_PRICE_LOAD({

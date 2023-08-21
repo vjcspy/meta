@@ -413,17 +413,6 @@ model StockPrice {
   @@map("stock_price")
 }
 
-model stock_price_sync_status_entity {
-  id             Int       @id @default(autoincrement())
-  code           String    @unique(map: "IDX_3b535f86c3be7e53a20299d4fb") @db.VarChar(10)
-  lastDate       DateTime? @db.Date
-  lastUpdateDate DateTime  @db.Date
-  lastError      String?   @db.Text
-  try            Int?      @db.SmallInt
-
-  @@unique([code, lastDate], map: "IDX_8ba3a6e51a856cff3192279c16")
-}
-
 model SyncStatus {
   id            Int      @id @default(autoincrement())
   key           String   @unique // key

@@ -51,6 +51,7 @@ export class StockPriceController {
     @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
   ): Promise<StockPriceHistoryResponse[]> {
     const { code, from, to } = stockPriceHistoryDto;
+    this.logger.log(`Get History of ${code} from ${from} to ${to}`);
     const fromDate = parse(from, 'yyyy-MM-dd', new Date());
     const toDate = to ? parse(to, 'yyyy-MM-dd', new Date()) : new Date();
 
