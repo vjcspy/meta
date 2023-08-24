@@ -54,41 +54,41 @@ export class OmEffects {
         );
         return from(this.syncStatusService.getStatus(syncStatusKey)).pipe(
           map((syncStatus) => {
-            if (syncStatus) {
-              this.logger.log(
-                `[${action.payload.code}|${type}] Found sync status`,
-              );
-              // check current date
-              const date = moment(syncStatus.date);
-              const curDate = moment();
-
-              if (
-                syncStatus.is_success === false &&
-                date.isSame(curDate, 'day') &&
-                syncStatus.number_of_try > 3
-              ) {
-                this.logger.error(
-                  `[${action.payload.code}|${type}] Sync fail quá nhiều`,
-                );
-
-                return SYNC_ORDER_MATCHING_MAX_RETRY({
-                  code,
-                  type,
-                });
-              }
-              if (
-                syncStatus.is_success === true &&
-                date.isSame(curDate, 'day')
-              ) {
-                this.logger.log(
-                  `[${action.payload.code}|${type}] ALREADY SYNCED`,
-                );
-                return SYNC_ORDER_MATCHING_FINISH({
-                  code,
-                  type,
-                });
-              }
-            }
+            // if (syncStatus) {
+            //   this.logger.log(
+            //     `[${action.payload.code}|${type}] Found sync status`,
+            //   );
+            //   // check current date
+            //   const date = moment(syncStatus.date);
+            //   const curDate = moment();
+            //
+            //   if (
+            //     syncStatus.is_success === false &&
+            //     date.isSame(curDate, 'day') &&
+            //     syncStatus.number_of_try > 3
+            //   ) {
+            //     this.logger.error(
+            //       `[${action.payload.code}|${type}] Sync fail quá nhiều`,
+            //     );
+            //
+            //     return SYNC_ORDER_MATCHING_MAX_RETRY({
+            //       code,
+            //       type,
+            //     });
+            //   }
+            //   if (
+            //     syncStatus.is_success === true &&
+            //     date.isSame(curDate, 'day')
+            //   ) {
+            //     this.logger.log(
+            //       `[${action.payload.code}|${type}] ALREADY SYNCED`,
+            //     );
+            //     return SYNC_ORDER_MATCHING_FINISH({
+            //       code,
+            //       type,
+            //     });
+            //   }
+            // }
 
             return SYNC_ORDER_MATCHING_LOAD_PAGE({
               code,
@@ -112,10 +112,15 @@ export class OmEffects {
         const { type } = action.payload;
         const headIndex = action?.payload?.data?.headIndex ?? -1;
 
+        // const url =
+        //   type === OrderMatchingType.INVESTOR
+        //     ? `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
+        //     : `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
+
         const url =
           type === OrderMatchingType.INVESTOR
-            ? `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
-            : `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
+            ? `https://api.bluestone.systems/proxy/tcbs/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
+            : `https://api.bluestone.systems/proxy/tcbs/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
 
         return this.httpService.get(url).pipe(
           map((res) => {

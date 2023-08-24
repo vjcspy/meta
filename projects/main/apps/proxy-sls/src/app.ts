@@ -5,6 +5,7 @@ import { bedkingdomStgProxy } from '@middlewares/bedkingdom-stg-proxy.middleware
 import { errorHandler } from '@middlewares/handle-error';
 import { pimProxy } from '@middlewares/pim-proxy.middleware';
 import { pimUATProxy } from '@middlewares/pim-uat-proxy.middleware';
+import { tcbsProxy } from '@middlewares/tcbs-proxy.middleware';
 import compression from 'compression';
 import cors from 'cors';
 import type { Express } from 'express';
@@ -20,6 +21,7 @@ app.use('*', bedkingdomProxy);
 app.use('*', bedkingdomStgProxy);
 app.use('*', pimProxy);
 app.use('*', pimUATProxy);
+app.use('*', tcbsProxy);
 app.use(errorHandler);
 
 /* ____________________CONTROLLERS____________________ */
