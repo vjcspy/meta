@@ -1,6 +1,7 @@
 import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { Injectable } from '@nestjs/common';
+import type { DataObject } from 'chitility';
 import * as moment from 'moment';
 
 export enum OrderMatchingType {
@@ -12,7 +13,8 @@ export enum OrderMatchingType {
 export class OrderMatching {
   constructor(private readonly syncStatus: SyncStatus) {}
 
-  async saveByCodeAndType(code: string, type: number, res: any) {
+  async saveByCodeAndType(code: string, type: number, dataObject: DataObject) {
+    const res: any = dataObject.getData();
     const { data, page } = res;
     let syncDate = moment().startOf('day');
     if (Array.isArray(data) && data.length > 0) {

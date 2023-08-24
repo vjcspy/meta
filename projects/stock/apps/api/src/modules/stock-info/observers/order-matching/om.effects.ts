@@ -28,6 +28,7 @@ import * as moment from 'moment';
 import { Simulate } from 'react-dom/test-utils';
 import { catchError, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
 import error = Simulate.error;
+import { DataObject } from 'chitility';
 
 @Injectable()
 export class OmEffects {
@@ -159,7 +160,7 @@ export class OmEffects {
                 code,
                 page,
                 type,
-                data: res.data,
+                data: new DataObject(res.data),
               });
             }
             this.logger.error(
