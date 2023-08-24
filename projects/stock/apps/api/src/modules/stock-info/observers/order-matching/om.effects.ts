@@ -49,15 +49,15 @@ export class OmEffects {
         this.syncStatusService.saveInfo(syncStatusKey, {
           resolve,
         });
-
+        this.logger.log(
+          `_________ [${action.payload.code}|${type}] START _________`,
+        );
         return from(this.syncStatusService.getStatus(syncStatusKey)).pipe(
           map((syncStatus) => {
-            this.logger.log(
-              `_________ [${action.payload.code}|${type}] START _________`,
-            );
-
-            // TODO: not appropriate
             if (syncStatus) {
+              this.logger.log(
+                `[${action.payload.code}|${type}] Found sync status`,
+              );
               // check current date
               const date = moment(syncStatus.date);
               const curDate = moment();

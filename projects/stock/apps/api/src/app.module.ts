@@ -1,5 +1,6 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
+import { HealthcheckModule } from '@modules/healthcheck/healthcheck.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule, getNodeEnv, isProduction } from '@nest/base';
@@ -17,6 +18,7 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
+    CoreModule,
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -31,9 +33,7 @@ import { AppService } from './app.service';
         '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
-    ...(process.env.CRON === 'false'
-      ? [CoreModule]
-      : [CoreModule, ScheduleModule.forRoot()]),
+    ...(process.env.CRON === 'false' ? [] : [ScheduleModule.forRoot()]),
     BaseModule,
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
@@ -58,6 +58,7 @@ import { AppService } from './app.service';
       // Muốn handler nào được chạy thì cần phải khai báo, nếu khai báo handler ở đây thì không cần redeclare ở provider nữa
       handlers: [],
     }),
+    HealthcheckModule,
     StockInfoModule,
     TestbedModule,
   ],
