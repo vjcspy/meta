@@ -18,17 +18,20 @@ import {
   SYNC_ORDER_MATCHING_MAX_RETRY,
 } from '@modules/stock-info/observers/order-matching/om.actions';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
+import { XLogger } from '@nest/base';
 import { Effect } from '@nest/base/dist/util/event-manager-rx/event-rx.decorator';
 import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
 import { Nack } from '@nest/rabbitmq/dist/model/amqp/handler-response';
 import { HttpService } from '@nestjs/axios';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as moment from 'moment';
+import { Simulate } from 'react-dom/test-utils';
 import { catchError, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
+import error = Simulate.error;
 
 @Injectable()
 export class OmEffects {
-  private readonly logger = new Logger(OmEffects.name);
+  private readonly logger = new XLogger(OmEffects.name);
 
   constructor(
     private syncStatusService: SyncStatus,
@@ -69,6 +72,9 @@ export class OmEffects {
               ) {
                 this.logger.error(
                   `[${action.payload.code}|${type}] Sync fail quá nhiều`,
+                  new Error(
+                    `[${action.payload.code}|${type}] Sync fail quá nhiều`,
+                  ),
                 );
 
                 return SYNC_ORDER_MATCHING_MAX_RETRY({
@@ -158,6 +164,9 @@ export class OmEffects {
             }
             this.logger.error(
               `[${action.payload.code}|${type}] Response data wrong format`,
+              new Error(
+                `[${action.payload.code}|${type}] Response data wrong format`,
+              ),
             );
             return SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR({
               code,
@@ -268,6 +277,7 @@ export class OmEffects {
           catchError((error: any) => {
             this.logger.error(
               `[${action.payload.code}|${type}] ${error?.toString()}`,
+              error,
             );
             return from(
               of(
@@ -321,6 +331,9 @@ export class OmEffects {
         } else {
           this.logger.error(
             `[${action.payload.code}|${type}] COULD NOT ACK QUEUE, NOT FOUND INFO`,
+            new Error(
+              `[${action.payload.code}|${type}] COULD NOT ACK QUEUE, NOT FOUND INFO`,
+            ),
           );
         }
 
@@ -361,6 +374,9 @@ export class OmEffects {
             } else {
               this.logger.error(
                 `[${action.payload.code}|${type}] COULD NOT NACK QUEUE, NOT FOUND INFO`,
+                new Error(
+                  `[${action.payload.code}|${type}] COULD NOT NACK QUEUE, NOT FOUND INFO`,
+                ),
               );
             }
 
@@ -371,6 +387,11 @@ export class OmEffects {
               `[${
                 action.payload.code
               }|${type}] Không thể xử lý lỗi ${e?.toString()}`,
+              new Error(
+                `[${
+                  action.payload.code
+                }|${type}] Không thể xử lý lỗi ${e?.toString()}`,
+              ),
             );
             return from(of(EMPTY));
           }),
