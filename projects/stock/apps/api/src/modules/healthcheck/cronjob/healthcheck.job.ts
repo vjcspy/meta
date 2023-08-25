@@ -35,7 +35,7 @@ export class HealthcheckJob {
   @Cron(CronExpression.EVERY_MINUTE)
   updateDB() {
     if (isMainProcess()) {
-      this.logger.info('health check db');
+      // this.logger.info('health check db');
       this.flagRepo.update(HEALTH_CHECK_TIME_DB, Date.now().toString());
     }
   }

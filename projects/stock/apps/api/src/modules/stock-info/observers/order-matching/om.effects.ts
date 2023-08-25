@@ -24,11 +24,9 @@ import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.ty
 import { Nack } from '@nest/rabbitmq/dist/model/amqp/handler-response';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import * as moment from 'moment';
-import { Simulate } from 'react-dom/test-utils';
-import { catchError, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
-import error = Simulate.error;
 import { DataObject } from 'chitility';
+import * as moment from 'moment';
+import { catchError, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
 
 @Injectable()
 export class OmEffects {
@@ -178,7 +176,7 @@ export class OmEffects {
           }),
           catchError((error) => {
             this.logger.error(
-              '[${action.payload.code}|${type}] Load data from tcbs error',
+              `[${action.payload.code}|${type}] Load data from tcbs error`,
               error,
             );
             return of(
