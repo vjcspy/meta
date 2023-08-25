@@ -26,7 +26,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { DataObject } from 'chitility';
 import * as moment from 'moment';
-import { catchError, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
+import { catchError, delay, EMPTY, from, map, mergeMap, of, pipe } from 'rxjs';
 
 @Injectable()
 export class OmEffects {
@@ -111,6 +111,7 @@ export class OmEffects {
   })
   loadPage(): EffectHandler {
     return pipe(
+      delay(100),
       mergeMap((action: any) => {
         const { code } = action.payload;
         const page = action.payload.page ?? 0;

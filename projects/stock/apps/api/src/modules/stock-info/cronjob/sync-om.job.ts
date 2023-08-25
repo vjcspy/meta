@@ -26,7 +26,7 @@ export class SyncOmJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('0 */15 17,23 * * *', {
+  @Cron('0 0 17,19,23 * * *', {
     name: SyncValues.JOB_SYNC_OM_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })

@@ -458,3 +458,43 @@ model Flag {
   key   String @id
   value String
 }
+
+model TradingStrategy {
+  id Int @id @default(autoincrement())
+
+  name       String
+  input      Json
+  from       DateTime
+  to         DateTime
+  hash       String // base on (name, input, from, to), for quickly query
+  meta       Json?
+  state      Int      @db.SmallInt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("trading_strategy")
+}
+
+model TradingStrategyProcessJobInfo {
+  id Int @id @default(autoincrement())
+
+  key                 String // hash by uuidv4
+  trading_strategy_id Int
+  symbol              String @db.VarChar(10)
+  meta                Json?
+  state               Int    @db.SmallInt
+
+  @@map("trading_strategy_process_job_info")
+}
+
+model TradingStrategyAction {
+  id Int @id @default(autoincrement())
+
+  trading_strategy_id Int
+  type                Int      @db.SmallInt // buy/sell
+  meta                Json?
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  @@map("trading_strategy_action")
+}
