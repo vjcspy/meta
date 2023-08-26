@@ -1,6 +1,7 @@
 import { prisma } from '@modules/core/util/prisma';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategySchema } from '@modules/stock-trading/model/trading-strategy.model';
+import type { TradingStrategy } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import { size } from 'lodash';
 
@@ -45,9 +46,16 @@ export class TradingStrategyRepo {
     });
   }
 
-  async getByHash(hash: string) {
+  async getByHash(
+    hash: string,
+    include = {
+      trading_strategy_process: false,
+      trading_strategy_action: false,
+    },
+  ): Promise<TradingStrategy> {
     return prisma.tradingStrategy.findUnique({
       where: { hash },
+      include,
     });
   }
 
@@ -65,6 +73,21 @@ export class TradingStrategyRepo {
   async delete(id: number) {
     return prisma.tradingStrategy.delete({
       where: { id },
+    });
+  }
+
+  async getProcess(hash: string, symbol: string) {
+    return prisma.tradingStrategy.findUnique({
+      where: {
+        hash,
+      },
+      include: {
+        trading_strategy_process: {
+          where: {
+            symbol,
+          },
+        },
+      },
     });
   }
 }

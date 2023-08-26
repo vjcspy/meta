@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Type } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import {
   IsDate,
   IsInt,
@@ -64,27 +64,33 @@ export class TradingStrategyProcessSchema {
   id?: number;
 
   @IsString()
+  @Expose()
   symbol: string;
 
   @IsOptional()
   @IsObject()
+  @Expose()
   meta?: any;
 
   @IsInt()
+  @Expose()
   state: number;
 
   @IsDate()
   @IsOptional()
+  @Expose()
   @Type(() => Date)
   created_at?: Date;
 
   @IsDate()
   @IsOptional()
+  @Expose()
   @Type(() => Date)
   updated_at?: Date;
 
   @Type(() => TradingStrategySchema)
   @IsOptional()
+  @Expose()
   trading_strategy?: TradingStrategySchema;
 }
 
