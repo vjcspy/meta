@@ -121,6 +121,7 @@ export class EventManagerReactive {
 
               if (context) {
                 // eslint-disable-next-line no-param-reassign
+                // @ts-ignore
                 action.context = context;
               }
 
@@ -140,7 +141,7 @@ export class EventManagerReactive {
               );
             }
           } else {
-            EventManagerReactive._eventObservable.next(value);
+            EventManagerReactive._eventObservable.next(value as any);
           }
         },
         error: (err) => {
