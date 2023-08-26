@@ -1,5 +1,10 @@
 import { TestbedService } from '@modules/testbed/service/testbed.service';
+import {
+  TESTBED_EXCHANGE_KEY,
+  TESTBED_ROUTING_KEY,
+} from '@modules/testbed/values/tedbed.value';
 import { XAppRequestContext, XLogger } from '@nest/base';
+import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('testbed')
@@ -9,6 +14,7 @@ export class TedbedController {
   constructor(
     private xAppRequestContext: XAppRequestContext,
     private testBedService: TestbedService,
+    private readonly connectionManager: AmqpConnectionManager,
   ) {
     this.logger = new XLogger(TedbedController.name, this.xAppRequestContext);
   }
@@ -31,5 +37,12 @@ export class TedbedController {
     // });
 
     return { data: this.testBedService.getTestbedData() };
+  }
+
+  @Get('test-queue')
+  testQueue() {
+    this.connectionManager
+      .getConnection()
+      .publish(TESTBED_EXCHANGE_KEY, TESTBED_ROUTING_KEY, Math.random());
   }
 }

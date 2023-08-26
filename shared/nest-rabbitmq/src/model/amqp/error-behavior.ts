@@ -11,7 +11,7 @@ export enum MessageHandlerErrorBehavior {
 export type MessageErrorHandler = (
   channel: Channel,
   msg: ConsumeMessage,
-  error: any
+  error: any,
 ) => Promise<void> | void;
 
 /**
@@ -36,7 +36,7 @@ export const defaultNackErrorHandler: MessageErrorHandler = (channel, msg) => {
 };
 
 export const getHandlerForLegacyBehavior = (
-  behavior: MessageHandlerErrorBehavior
+  behavior: MessageHandlerErrorBehavior,
 ) => {
   switch (behavior) {
     case MessageHandlerErrorBehavior.ACK:
@@ -52,7 +52,7 @@ export type AssertQueueErrorHandler = (
   channel: Channel,
   queueName: string,
   queueOptions: QueueOptions | undefined,
-  error: any
+  error: any,
 ) => Promise<string> | string;
 
 /**
@@ -62,7 +62,7 @@ export const defaultAssertQueueErrorHandler: AssertQueueErrorHandler = (
   channel: Channel,
   queueName: string,
   queueOptions: QueueOptions | undefined,
-  error: any
+  error: any,
 ) => {
   throw error;
 };
@@ -75,7 +75,7 @@ export const forceDeleteAssertQueueErrorHandler: AssertQueueErrorHandler =
     channel: Channel,
     queueName: string,
     queueOptions: QueueOptions | undefined,
-    error: any
+    error: any,
   ) => {
     if (error.code === 406) {
       // 406 == preconditions failed

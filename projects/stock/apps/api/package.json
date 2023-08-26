@@ -29,6 +29,7 @@
     "@nest/rabbitmq": "workspace:*",
     "@nestjs/axios": "^3.0.0",
     "@nestjs/config": "^3.0.0",
+    "@nestjs/mapped-types": "^2.0.2",
     "@nestjs/schedule": "^3.0.1",
     "@prisma/client": "^5.1.1",
     "@web/base": "workspace:*",

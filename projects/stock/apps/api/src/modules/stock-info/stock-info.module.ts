@@ -33,5 +33,6 @@ import { Module } from '@nestjs/common';
     StockPriceRequest,
   ],
   controllers: [CorController, StockPriceController],
+  exports: [...STOCK_INFO_REPOS],
 })
 export class StockInfoModule {}

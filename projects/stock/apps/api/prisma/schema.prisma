@@ -466,35 +466,44 @@ model TradingStrategy {
   input      Json
   from       DateTime
   to         DateTime
-  hash       String // base on (name, input, from, to), for quickly query
+  hash       String   @unique // base on (name, input, from, to), for quickly query
   meta       Json?
   state      Int      @db.SmallInt
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  trading_strategy_process TradingStrategyProcess[]
+  trading_strategy_action  TradingStrategyAction[]
+
   @@map("trading_strategy")
 }
 
-model TradingStrategyProcessJobInfo {
+model TradingStrategyProcess {
   id Int @id @default(autoincrement())
 
-  key                 String // hash by uuidv4
-  trading_strategy_id Int
-  symbol              String @db.VarChar(10)
-  meta                Json?
-  state               Int    @db.SmallInt
+  symbol     String   @db.VarChar(10)
+  meta       Json?
+  state      Int      @db.SmallInt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@map("trading_strategy_process_job_info")
+  trading_strategy    TradingStrategy @relation(fields: [trading_strategy_id], references: [id], onDelete: Cascade)
+  trading_strategy_id Int
+
+  @@map("trading_strategy_process")
 }
 
 model TradingStrategyAction {
   id Int @id @default(autoincrement())
 
+  symbol     String   @db.VarChar(10)
+  type       Int      @db.SmallInt // buy/sell
+  meta       Json?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  trading_strategy    TradingStrategy @relation(fields: [trading_strategy_id], references: [id], onDelete: Cascade)
   trading_strategy_id Int
-  type                Int      @db.SmallInt // buy/sell
-  meta                Json?
-  created_at          DateTime @default(now())
-  updated_at          DateTime @updatedAt
 
   @@map("trading_strategy_action")
 }

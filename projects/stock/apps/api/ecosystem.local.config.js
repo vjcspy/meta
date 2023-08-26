@@ -1,12 +1,16 @@
 module.exports = {
   apps: [
     {
-      name: 'meta-stock-development',
+      name: 'ms_dev',
       script: './dist/main.js',
-      instances: '8',
+      instances: '2',
       instance_var: 'INSTANCE_ID',
       exec_mode: 'cluster',
-      env: {},
+      env: {
+        APP_NAME: 'ms_dev',
+        CRON_ENABLE: false,
+        QUEUE_CONSUMER_ENABLE: true,
+      },
     },
   ],
 };

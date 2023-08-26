@@ -1,10 +1,9 @@
-import { DiscoveryService } from '@nest/base';
+import { DiscoveryService, XLogger } from '@nest/base';
 import type {
   DynamicModule,
   OnApplicationBootstrap,
   OnApplicationShutdown,
 } from '@nestjs/common';
-import { Logger } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
 import * as _ from 'lodash';
@@ -30,7 +29,7 @@ import { RabbitRpcParamsFactory } from './rabbitmq.factory';
     {
       provide: AmqpConnectionManager,
       useFactory: async (
-        config: RabbitMQConfig
+        config: RabbitMQConfig,
       ): Promise<AmqpConnectionManager> => {
         // create connection by config
         amqpConnectionManager.config(config);
@@ -46,7 +45,7 @@ export class RabbitMQModule
   extends RabbitMQConfigurableModuleClass
   implements OnApplicationBootstrap, OnApplicationShutdown
 {
-  private readonly logger = new Logger(RabbitMQModule.name);
+  private readonly logger = new XLogger(RabbitMQModule.name);
 
   private static handlers: any[] = [];
 
@@ -56,7 +55,7 @@ export class RabbitMQModule
     private readonly discover: DiscoveryService,
     private readonly externalContextCreator: ExternalContextCreator,
     private readonly connectionManager: AmqpConnectionManager,
-    private readonly rpcParamsFactory: RabbitRpcParamsFactory
+    private readonly rpcParamsFactory: RabbitRpcParamsFactory,
   ) {
     super();
   }
@@ -102,15 +101,23 @@ export class RabbitMQModule
       await connection.initialize();
     }
 
+    if (process.env.QUEUE_CONSUMER_ENABLE !== 'true') {
+      this.logger.info(
+        'The consumer will NOT be registered due to being disabled in the settings.',
+      );
+
+      return;
+    }
+
     const rabbitMeta =
       await this.discover.providerMethodsWithMetaAtKey<RabbitHandlerConfig>(
         RABBIT_HANDLER,
         (item) => {
           return _.find(
             RabbitMQModule.handlers,
-            (provider) => provider.name === item.name
+            (provider) => provider.name === item.name,
           );
-        }
+        },
       );
 
     await Promise.all(
@@ -120,7 +127,7 @@ export class RabbitMQModule
 
         if (!connection) {
           this.logger.warn(
-            `Connection ${connectionName} not found. Please register at least one configuration with uri property`
+            `Connection ${connectionName} not found. Please register at least one configuration with uri property`,
           );
 
           return undefined;
@@ -135,7 +142,7 @@ export class RabbitMQModule
           undefined, // contextId
           undefined, // inquirerId
           undefined, // options
-          'rmq' // contextType
+          'rmq', // contextType
         );
 
         const { exchange, routingKey, queue, queueOptions } = meta;
@@ -151,7 +158,7 @@ export class RabbitMQModule
           !connection.configuration.enableDirectReplyTo
         ) {
           this.logger.warn(
-            `Direct Reply-To Functionality is disabled. RPC handler ${handlerDisplayName} will not be registered`
+            `Direct Reply-To Functionality is disabled. RPC handler ${handlerDisplayName} will not be registered`,
           );
         }
 
@@ -162,18 +169,19 @@ export class RabbitMQModule
           : connection.createSubscriber(
               handler,
               meta,
-              discoveredMethod.methodName
+              discoveredMethod.methodName,
             );
-      })
+      }),
     );
   }
+
   async onApplicationShutdown() {
-    this.logger.verbose('Closing AMQP Connections');
+    this.logger.info('Closing AMQP Connections');
 
     await Promise.all(
       this.connectionManager
         .getConnections()
-        .map((connection) => connection.managedConnection.close())
+        .map((connection) => connection.managedConnection.close()),
     );
 
     this.connectionManager.clearConnections();

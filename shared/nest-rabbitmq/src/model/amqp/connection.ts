@@ -101,26 +101,26 @@ export class AmqpConnection {
     if (this.configuration.uri) {
       this._managedConnection = connect(
         this.configuration.uri,
-        this.config.connectionManagerOptions
+        this.config.connectionManagerOptions,
       );
       this._managedConnection.on('connect', ({ connection }) => {
         this._connection = connection;
         this.logger.log(
-          `Successfully connected to RabbitMQ broker (${this.config.name})`
+          `Successfully connected to RabbitMQ broker (${this.config.name})`,
         );
       });
 
       this._managedConnection.on('disconnect', ({ err }) => {
         this.logger.error(
           `Disconnected from RabbitMQ broker (${this.config.name})`,
-          err?.stack
+          err?.stack,
         );
       });
 
       this._managedConnection.on('connectFailed', (arg) => {
         this.logger.error(
           `Fail to connect RabbitMQ broker ${arg.url} with message ${arg.err.message}`,
-          arg.err
+          arg.err,
         );
       });
 
@@ -161,7 +161,7 @@ export class AmqpConnection {
 
   private async setupManagedChannel(
     name: string,
-    config: RabbitMQChannelConfig
+    config: RabbitMQChannelConfig,
   ) {
     const channel = this._managedConnection.createChannel({
       name,
@@ -175,18 +175,18 @@ export class AmqpConnection {
     }
 
     channel.on('connect', () =>
-      this.logger.log(`Successfully connected a RabbitMQ channel "${name}"`)
+      this.logger.log(`Successfully connected a RabbitMQ channel "${name}"`),
     );
 
     // eslint-disable-next-line @typescript-eslint/no-shadow
     channel.on('error', (err, { name }) =>
       this.logger.log(
-        `Failed to setup a RabbitMQ channel - name: ${name} / error: ${err.message} ${err.stack}`
-      )
+        `Failed to setup a RabbitMQ channel - name: ${name} / error: ${err.message} ${err.stack}`,
+      ),
     );
 
     channel.on('close', () =>
-      this.logger.log(`Successfully closed a RabbitMQ channel "${name}"`)
+      this.logger.log(`Successfully closed a RabbitMQ channel "${name}"`),
     );
 
     return channel.addSetup((c) => this.preConfigChannel(c, name, config));
@@ -203,12 +203,12 @@ export class AmqpConnection {
   private async preConfigChannel(
     channel: ConfirmChannel,
     name: string,
-    config: RabbitMQChannelConfig
+    config: RabbitMQChannelConfig,
   ): Promise<void> {
     this._channels[name] = channel;
 
     await channel.prefetch(
-      config.prefetchCount ?? this.config.prefetchCount ?? 1
+      config.prefetchCount ?? this.config.prefetchCount ?? 1,
     );
 
     this._channel = channel;
@@ -221,7 +221,7 @@ export class AmqpConnection {
             x.name,
             // @ts-ignore
             x.type || this.config.defaultExchangeType,
-            x.options
+            x.options,
           );
         } catch (e) {
           this.logger.error(`Failed create exchange name ${x.name}`);
@@ -241,15 +241,15 @@ export class AmqpConnection {
     handler: (
       msg: T | undefined,
       rawMessage?: ConsumeMessage,
-      headers?: any
+      headers?: any,
     ) => Promise<RpcResponse<U>>,
-    rpcOptions: MessageHandlerOptions
+    rpcOptions: MessageHandlerOptions,
   ): Promise<any> {
     // TODO: implement for RPC
     this.logger.warn(
       'Not yet implemented RPC for rabbitmq',
       handler,
-      rpcOptions
+      rpcOptions,
     );
   }
 
@@ -263,7 +263,7 @@ export class AmqpConnection {
     const channel = this._managedChannels[name];
     if (!channel) {
       this.logger.warn(
-        `Channel "${name}" does not exist, using default channel.`
+        `Channel "${name}" does not exist, using default channel.`,
       );
 
       return this._managedChannel;
@@ -282,7 +282,7 @@ export class AmqpConnection {
   public async createSubscriber<T>(
     handler: SubscriberHandler<T>,
     msgOptions: MessageHandlerOptions,
-    originalHandlerName: string
+    originalHandlerName: string,
   ): Promise<any> {
     return new Promise((res) => {
       let result: any;
@@ -292,7 +292,7 @@ export class AmqpConnection {
             handler,
             msgOptions,
             channel,
-            originalHandlerName
+            originalHandlerName,
           );
           result = { consumerTag };
         })
@@ -311,7 +311,7 @@ export class AmqpConnection {
    */
   private async setupQueue(
     subscriptionOptions: MessageHandlerOptions,
-    channel: ConfirmChannel
+    channel: ConfirmChannel,
   ): Promise<string | undefined> {
     const {
       exchange,
@@ -333,7 +333,7 @@ export class AmqpConnection {
           channel,
           queueName,
           queueOptions,
-          error
+          error,
         );
       }
     } else {
@@ -349,11 +349,11 @@ export class AmqpConnection {
     if (exchange && routingKeys && actualQueue) {
       const configuredExchange = _.find(
         this.config.exchanges,
-        (cx) => cx.name === exchange
+        (cx) => cx.name === exchange,
       );
       if (!configuredExchange) {
         this.logger.error(
-          `Error when try to bind queue due to exchange name ${exchange} has not been configured`
+          `Error when try to bind queue due to exchange name ${exchange} has not been configured`,
         );
         return undefined;
       }
@@ -364,12 +364,12 @@ export class AmqpConnection {
               actualQueue as string,
               exchange,
               _routingKey,
-              bindQueueArguments
+              bindQueueArguments,
             );
           }
 
           return undefined;
-        })
+        }),
       );
     }
 
@@ -380,10 +380,10 @@ export class AmqpConnection {
     handler: (
       msg: T | undefined,
       rawMessage?: ConsumeMessage,
-      headers?: any
+      headers?: any,
     ) => Promise<any>,
     msg: ConsumeMessage,
-    allowNonJsonMessages?: boolean
+    allowNonJsonMessages?: boolean,
   ) {
     let message: T | undefined;
     let headers: any;
@@ -411,7 +411,7 @@ export class AmqpConnection {
     handler: SubscriberHandler<T>,
     msgOptions: MessageHandlerOptions,
     channel: ConfirmChannel,
-    originalHandlerName = 'unknown'
+    originalHandlerName = 'unknown',
   ): Promise<any> {
     // Create queue and bind to exchange
     const queue = await this.setupQueue(msgOptions, channel);
@@ -429,7 +429,7 @@ export class AmqpConnection {
         const response = await this.handleMessage(
           handler,
           msg,
-          msgOptions.allowNonJsonMessages
+          msgOptions.allowNonJsonMessages,
         );
 
         if (response instanceof Nack) {
@@ -442,8 +442,8 @@ export class AmqpConnection {
         if (response) {
           this.logger.warn(
             `Received response: [${this.config.serializer?.(
-              response
-            )}] from subscribe handler [${originalHandlerName}]. Subscribe handlers should only return void`
+              response,
+            )}] from subscribe handler [${originalHandlerName}]. Subscribe handlers should only return void`,
           );
         }
 
@@ -457,7 +457,7 @@ export class AmqpConnection {
             getHandlerForLegacyBehavior(
               // @ts-ignore
               msgOptions.errorBehavior ||
-                this.config.defaultSubscribeErrorBehavior
+                this.config.defaultSubscribeErrorBehavior,
             );
 
           await errorHandler(channel, msg, e);
@@ -472,7 +472,7 @@ export class AmqpConnection {
     exchange: string,
     routingKey: string,
     message: T,
-    options?: Options.Publish
+    options?: Options.Publish,
   ): Promise<Replies.Empty> {
     // source amqplib channel is used directly to keep the behavior of throwing connection related errors
     if (!this._managedConnection.isConnected() || !this._channel) {
@@ -503,7 +503,7 @@ export class AmqpConnection {
           } else {
             resolve(ok);
           }
-        }
+        },
       );
     });
   }

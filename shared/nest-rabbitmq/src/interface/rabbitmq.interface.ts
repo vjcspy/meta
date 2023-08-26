@@ -172,5 +172,5 @@ export interface RabbitMQChannelConfig {
 export type SubscriberHandler<T = unknown> = (
   msg: T | undefined,
   rawMessage?: ConsumeMessage,
-  headers?: any
+  headers?: any,
 ) => Promise<SubscribeResponse>;

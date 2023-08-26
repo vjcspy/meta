@@ -21,6 +21,9 @@
     },
     "start": {
       "cache": false
+    },
+    "start:debug": {
+      "cache": false
     }
   }
 

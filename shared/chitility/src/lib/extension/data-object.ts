@@ -38,9 +38,10 @@ export class DataObject {
   }
 
   addData(data: any): DataObject {
-    data.forEach((v: any, k: any) => {
-      this._data[k] = v;
-    });
+    for (let i = 0; i < Object.entries(data).length; i++) {
+      const [key, value] = Object.entries(data)[i];
+      this.setData(key, value);
+    }
     return this;
   }
 

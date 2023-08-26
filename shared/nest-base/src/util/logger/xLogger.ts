@@ -2,12 +2,16 @@
 import { Logger as NestLogger } from '@nestjs/common/services/logger.service';
 
 import type { AbstractContext } from '../context/AbstractContext';
+import { xAppContext } from '../context/XAppContext';
 
 export class XLogger {
   private _logger: NestLogger;
 
   constructor(
     private context: string,
+    /**
+     * @deprecated Since version x.x.x. Please don't pass this property
+     */
     private appContext?: AbstractContext,
   ) {
     this._logger = new NestLogger(this.context);
@@ -79,15 +83,13 @@ export class XLogger {
   }
 
   private _injectContext(metadata?: Record<string, any>) {
-    if (this.appContext) {
+    if (xAppContext().isUserRequest()) {
       if (typeof metadata === 'undefined') {
         metadata = {};
       }
 
-      if (this.appContext.isUserRequest()) {
-        metadata.xCorrelationId = this.appContext.getXCorrelationId();
-        metadata.isUserRequest = this.appContext.isUserRequest();
-      }
+      metadata.xCorrelationId = xAppContext().getXCorrelationId();
+      metadata.isUserRequest = xAppContext().isUserRequest();
     }
 
     return metadata;

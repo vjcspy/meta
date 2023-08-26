@@ -2,6 +2,7 @@ import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { HealthcheckModule } from '@modules/healthcheck/healthcheck.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
+import { StockTradingModule } from '@modules/stock-trading/stock-trading.module';
 import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule, getNodeEnv, isProduction } from '@nest/base';
 import type { LoggerInstance } from '@nest/base/dist/util/logger/winston';
@@ -19,7 +20,6 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     CoreModule,
-    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
@@ -33,7 +33,7 @@ import { AppService } from './app.service';
         '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
-    ...(process.env.CRON === 'false' ? [] : [ScheduleModule.forRoot()]),
+    ...(process.env.CRON_ENABLE === 'true' ? [ScheduleModule.forRoot()] : []),
     BaseModule,
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
@@ -60,6 +60,7 @@ import { AppService } from './app.service';
     }),
     HealthcheckModule,
     StockInfoModule,
+    StockTradingModule,
     TestbedModule,
   ],
   controllers: [AppController],

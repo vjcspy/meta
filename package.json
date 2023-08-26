@@ -13,6 +13,7 @@
     "stock:build": "turbo run build --no-daemon --filter=@stock/apps-*",
     "stock:dev": "turbo run dev --no-daemon --filter=@stock/apps-*",
     "stock:start": "turbo run start --no-daemon --filter=@stock/apps-*",
+    "stock:start:debug": "turbo run start:debug --no-daemon --filter=@stock/apps-*",
     "main": "___________________________MAIN___________________________",
     "dev:api": "turbo run dev --no-daemon --filter=nestjs",
     "dev:proxy": "turbo run dev --no-daemon --filter=@main/apps-proxy-sls",

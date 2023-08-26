@@ -10,7 +10,7 @@ export class AmqpConnectionManager {
 
   getConnection(name = 'default') {
     return this.connections.find(
-      (connection) => connection.configuration.name === name
+      (connection) => connection.configuration.name === name,
     );
   }
 

@@ -9,7 +9,7 @@ export const makeRabbitDecorator =
     config: Pick<
       RabbitHandlerConfig,
       Exclude<keyof RabbitHandlerConfig, keyof T>
-    >
+    >,
   ) =>
     applyDecorators(SetMetadata(RABBIT_HANDLER, { ...input, ...config }));
 

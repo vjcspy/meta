@@ -18,8 +18,7 @@ import {
   SYNC_ORDER_MATCHING_MAX_RETRY,
 } from '@modules/stock-info/observers/order-matching/om.actions';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { XLogger } from '@nest/base';
-import { Effect } from '@nest/base/dist/util/event-manager-rx/event-rx.decorator';
+import { Effect, XLogger } from '@nest/base';
 import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
 import { Nack } from '@nest/rabbitmq/dist/model/amqp/handler-response';
 import { HttpService } from '@nestjs/axios';

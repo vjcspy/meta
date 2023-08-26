@@ -1,4 +1,6 @@
-export class AbstractContext {
+import { DataObject } from 'chitility';
+
+export class AbstractContext extends DataObject {
   '_x-correlation-id': string;
 
   isUserContext: boolean = false;

@@ -67,7 +67,8 @@ module.exports = {
         "no-param-reassign": "warn",
         "no-nested-ternary": "warn",
         "consistent-return": "warn",
-        "import/order": "off" // Conflict with simple import
+        "import/order": "off", // Conflict with simple import,
+        "max-classes-per-file": "off"
       }
     },
     // Configuration for testing
