@@ -40,12 +40,7 @@ import { AppService } from './app.service';
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
       // Nếu không khai báo name thì mặc định là đang config cho default connection
       // name:'default',
-      exchanges: [
-        {
-          name: 'testbed-exchange1',
-          type: 'topic',
-        },
-      ],
+      exchanges: [],
       // Default channel sẽ luôn được tạo và sử dụng name của connection trừ trường hợp tự khai báo 1 default channel
       channels: {
         'channel-1': {

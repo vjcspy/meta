@@ -13,7 +13,7 @@ export class TestbedConsumer {
   @RabbitSubscribe({
     exchange: TESTBED_EXCHANGE_KEY,
     routingKey: TESTBED_ROUTING_KEY,
-    queue: `${TESTBED_ROUTING_KEY}_QUEUE`,
+    queue: `testbed.queue`,
     queueOptions: {
       durable: true,
     },
