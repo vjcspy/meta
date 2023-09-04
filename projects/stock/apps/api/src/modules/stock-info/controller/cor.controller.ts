@@ -1,9 +1,9 @@
 import { prisma } from '@modules/core/util/prisma';
+import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { COR_START_SYNC_ACTION } from '@modules/stock-info/observers/cor/cor.actions';
 import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
-import { StockPriceRequest } from '@modules/stock-info/requests/bsc/price.request';
+import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { EventManagerReactive } from '@nest/base/dist/util/event-manager-rx/EventManager';
-import { EventRxContext } from '@nest/base/dist/util/event-manager-rx/EventRxContext';
 import { Controller, Get } from '@nestjs/common';
 import * as moment from 'moment/moment';
 
@@ -12,8 +12,8 @@ export class CorController {
   constructor(
     private readonly eventManager: EventManagerReactive,
     private readonly omPublisher: OrderMatchingPublisher,
-    private readonly stockPriceRequest: StockPriceRequest,
-    private readonly eventRxContext: EventRxContext,
+    private readonly syncTicksHelper: SyncTicksHelper,
+    private readonly syncTicksPublisher: SyncTicksPublisher,
   ) {}
 
   @Get('sync')
@@ -58,5 +58,19 @@ export class CorController {
         },
       },
     });
+  }
+
+  @Get('sync-ticks')
+  async syncTicks() {
+    await this.syncTicksHelper.syncTicks('ACB');
+
+    return 'ok';
+  }
+
+  @Get('sync-all-ticks')
+  async syncAllTicks() {
+    await this.syncTicksPublisher.publish();
+
+    return 'ok';
   }
 }

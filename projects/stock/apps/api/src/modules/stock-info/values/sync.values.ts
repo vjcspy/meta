@@ -14,4 +14,12 @@ export class SyncValues {
   static JOB_SYNC_OM_KEY = 'JOB_SYNC_OM_KEY';
 
   static SLACK_CHANNEL_NAME = 'general-meta-bot-channel';
+
+  static SYNC_TICKS_EXCHANGE_KEY = 'stock.info.sync.ticks';
+
+  static SYNC_TICKS_ROUTING_KEY = 'stock.info.sync.ticks';
+
+  static SYNC_TICKS_QUEUE = 'stock.info.sync.ticks.queue';
+
+  static SYNC_TICKS_JOB_KEY = 'stock.info.sync.ticks.job_key';
 }

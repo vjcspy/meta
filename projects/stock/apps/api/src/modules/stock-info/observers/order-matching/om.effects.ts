@@ -20,7 +20,7 @@ import {
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { Effect, XLogger } from '@nest/base';
 import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
-import { Nack } from '@nest/rabbitmq/dist/model/amqp/handler-response';
+import { Nack } from '@nest/rabbitmq';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { DataObject } from 'chitility';

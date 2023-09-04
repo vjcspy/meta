@@ -187,4 +187,8 @@ export class RabbitMQModule
     this.connectionManager.clearConnections();
     RabbitMQModule.bootstrapped = false;
   }
+
+  public static addHandler(handlers: any[]) {
+    RabbitMQModule.handlers.push(...handlers);
+  }
 }

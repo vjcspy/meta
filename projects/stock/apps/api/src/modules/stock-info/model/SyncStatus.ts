@@ -18,6 +18,17 @@ export class SyncStatus {
     });
   }
 
+  async getStatusByDate(key: string, date: Date) {
+    return prisma.syncStatus.findFirst({
+      where: {
+        key,
+        date: {
+          gte: date,
+        },
+      },
+    });
+  }
+
   async getStatusByKey(key: string) {
     return prisma.syncStatus.findFirst({
       where: {

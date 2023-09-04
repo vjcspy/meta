@@ -507,3 +507,12 @@ model TradingStrategyAction {
 
   @@map("trading_strategy_action")
 }
+
+model StockInfoTicks {
+  id     Int      @id @default(autoincrement())
+  symbol String   @db.VarChar(10)
+  date   DateTime @db.Date
+  meta   Json
+
+  @@map("stock_info_ticks")
+}
