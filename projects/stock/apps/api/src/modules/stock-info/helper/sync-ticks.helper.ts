@@ -1,6 +1,8 @@
+import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
+import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { XLogger } from '@nest/base/dist';
 import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
@@ -16,6 +18,7 @@ export class SyncTicksHelper {
   constructor(
     private simplizeRequest: SimplizeRequest,
     private syncStatus: SyncStatus,
+    private slackHelper: SlackHelper,
   ) {}
 
   async syncTicks(symbol: string) {
@@ -136,6 +139,9 @@ export class SyncTicksHelper {
       }
     } catch (e) {
       this.logger.error(e?.message, e);
+      this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+        text: `Error: sync ticks for symbol ${symbol}: ${e?.message} `,
+      });
       await this.syncStatus.saveErrorStatus(this.getKey(symbol), e);
 
       throw e;
