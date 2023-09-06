@@ -109,7 +109,7 @@ export class OmEffects {
   })
   loadPage(): EffectHandler {
     return pipe(
-      delay(200),
+      delay(2000),
       mergeMap((action: any) => {
         const { code } = action.payload;
         const page = action.payload.page ?? 0;
@@ -354,6 +354,15 @@ export class OmEffects {
         const info = this.syncStatusService.getInfo(
           this.orderMatching.getJobIdInfo(code, type),
         );
+
+        if (type === SYNC_ORDER_MATCHING_LOAD_PAGE_ERROR().type) {
+          // Do tcbs chan nen auto retry den duoc thi thoi
+          if (info && typeof info?.meta?.resolve === 'function') {
+            this.logger.log(`[${action.payload.code}|${type}] RETRY`);
+            info.meta.resolve(new Nack(true));
+          }
+          return of(EMPTY);
+        }
 
         this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
           text: `sync om error code|type ${code}|${type} `,

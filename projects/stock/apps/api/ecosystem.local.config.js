@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'ms_dev',
       script: './dist/main.js',
-      instances: '2',
+      instances: '4',
       instance_var: 'INSTANCE_ID',
       exec_mode: 'cluster',
       env: {
