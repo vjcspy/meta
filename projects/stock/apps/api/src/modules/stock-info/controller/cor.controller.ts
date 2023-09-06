@@ -25,7 +25,7 @@ export class CorController {
 
   @Get('sync-om')
   async syncOM() {
-    await this.omPublisher.publishOne('FPT');
+    await this.omPublisher.publishOne('ACB');
 
     return 'ok';
   }

@@ -1,3 +1,4 @@
+import safeStringify from 'fast-safe-stringify';
 import _ from 'lodash';
 import { Logger as SplunkLogger } from 'splunk-logging';
 import TransportStream from 'winston-transport';
@@ -101,11 +102,13 @@ export class SplunkTransport extends TransportStream {
         Array.isArray(meta.metadata) && _.size(meta.metadata) === 1
           ? meta.metadata[0]
           : undefined;
-      const payload = {
-        message: meta,
-        metadata: { ...this.defaultMetadata, ...splunkInfo },
-        severity: level,
-      };
+      const payload = JSON.parse(
+        safeStringify({
+          message: meta,
+          metadata: { ...this.defaultMetadata, ...splunkInfo },
+          severity: level,
+        }),
+      );
 
       this.server.send(payload, (error) => {
         if (error) {

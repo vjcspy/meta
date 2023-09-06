@@ -1,8 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { Logger as NestLogger } from '@nestjs/common/services/logger.service';
+import { AxiosError } from 'axios';
 
 import type { AbstractContext } from '../context/AbstractContext';
 import { xAppContext } from '../context/XAppContext';
+
+const { format } = require('@redtea/format-axios-error');
 
 export class XLogger {
   private _logger: NestLogger;
@@ -34,6 +37,16 @@ export class XLogger {
    */
   error(message: any, error: Error, metadata?: Record<string, any>): void {
     metadata = this._injectContext();
+
+    if (error instanceof AxiosError) {
+      const errorMeta = format(error);
+      delete error.config;
+      delete error.request;
+      delete error.response;
+
+      metadata = { ...metadata, ...errorMeta };
+    }
+
     if (metadata) {
       this._logger.error(message, error, metadata);
     } else {

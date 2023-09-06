@@ -26,14 +26,14 @@ export class SyncTicksJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('0 0 18,19,23 * * *', {
+  @Cron('0 0 18,22,23 * * *', {
     name: SyncValues.SYNC_TICKS_JOB_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   sync() {
     if (!isMainProcess()) return;
     this.cronScheduleModel.runOneTimePerDay(
-      SyncValues.JOB_SYNC_OM_KEY,
+      SyncValues.SYNC_TICKS_JOB_KEY,
       () => this.syncTicksPublisher.publish(),
       async (schedule) => {
         if (schedule?.meta) {

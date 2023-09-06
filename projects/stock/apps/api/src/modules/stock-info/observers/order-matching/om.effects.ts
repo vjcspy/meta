@@ -18,8 +18,7 @@ import {
   SYNC_ORDER_MATCHING_MAX_RETRY,
 } from '@modules/stock-info/observers/order-matching/om.actions';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { Effect, XLogger } from '@nest/base';
-import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
+import { Effect, EffectHandler, XLogger } from '@nest/base';
 import { Nack } from '@nest/rabbitmq';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
@@ -110,22 +109,22 @@ export class OmEffects {
   })
   loadPage(): EffectHandler {
     return pipe(
-      delay(100),
+      delay(200),
       mergeMap((action: any) => {
         const { code } = action.payload;
         const page = action.payload.page ?? 0;
         const { type } = action.payload;
         const headIndex = action?.payload?.data?.headIndex ?? -1;
 
-        // const url =
-        //   type === OrderMatchingType.INVESTOR
-        //     ? `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
-        //     : `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
-
         const url =
           type === OrderMatchingType.INVESTOR
-            ? `https://api.bluestone.systems/proxy/tcbs/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
-            : `https://api.bluestone.systems/proxy/tcbs/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
+            ? `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
+            : `https://apipubaws.tcbs.com.vn/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
+
+        // const url =
+        //   type === OrderMatchingType.INVESTOR
+        //     ? `https://api.bluestone.systems/proxy/tcbs/stock-insight/v1/intraday/${code}/investor/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`
+        //     : `https://api.bluestone.systems/proxy/tcbs/stock-insight/v1/intraday/${code}/his/paging?page=${page}&size=${SyncValues.PAGE_SIZE}&headIndex=${headIndex}`;
 
         return this.httpService.get(url).pipe(
           map((res) => {
