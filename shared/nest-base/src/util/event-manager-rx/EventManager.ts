@@ -37,7 +37,7 @@ export class EventManagerReactive {
       o = action();
     }
     if (typeof o === 'object') {
-      o.context = await this.moduleRef.create<EventRxContext>(EventRxContext);
+      o.context = new EventRxContext();
 
       // TODO: get correlationId from request context and set to action context
       o.context.setXCorrelationId(`${o.type}-${uuidv4()}`);

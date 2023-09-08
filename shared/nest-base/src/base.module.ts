@@ -7,11 +7,7 @@ import type {
 import { Global, Logger, Module } from '@nestjs/common';
 import { ExternalContextCreator } from '@nestjs/core/helpers/external-context-creator';
 
-import {
-  EventManagerReactive,
-  EventRxContext,
-  XAppRequestContext,
-} from './util';
+import { EventManagerReactive, XAppRequestContext } from './util';
 import { UserContextMiddleware } from './util/context/user-context.middleware';
 import {
   EVENT_RX_ARGS_METADATA,
@@ -26,16 +22,10 @@ import type { EventRxHandlerConfig } from './util/event-manager-rx/event-rx.type
   providers: [
     EventManagerReactive,
     EventRxParamFactory,
-    EventRxContext,
     XAppRequestContext,
     UserContextMiddleware,
   ],
-  exports: [
-    DiscoveryModule,
-    EventManagerReactive,
-    EventRxContext,
-    XAppRequestContext,
-  ],
+  exports: [DiscoveryModule, EventManagerReactive, XAppRequestContext],
 })
 export class BaseModule implements OnApplicationBootstrap, NestModule {
   private logger = new Logger(BaseModule.name);
