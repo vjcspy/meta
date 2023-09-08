@@ -11,10 +11,8 @@ import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import { StockPriceRequest } from '@modules/stock-info/requests/bsc/price.request';
 import { getStockPriceJobId } from '@modules/stock-info/util/stock-price/getStockPriceJobId';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { EventRxError } from '@nest/base';
-import { Effect } from '@nest/base/dist/util/event-manager-rx/event-rx.decorator';
-import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
-import { Injectable, Logger } from '@nestjs/common';
+import { Effect, EffectHandler, EventRxError, XLogger } from '@nest/base';
+import { Injectable } from '@nestjs/common';
 import { DataObject } from 'chitility';
 import * as moment from 'moment/moment';
 import {
@@ -31,7 +29,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class StockPriceEffects {
-  private readonly logger = new Logger(StockPriceEffects.name);
+  private readonly logger = new XLogger(StockPriceEffects.name);
 
   constructor(
     private readonly syncStatusService: SyncStatus,
@@ -117,7 +115,7 @@ export class StockPriceEffects {
             });
           }),
           catchError((error) => {
-            console.log(error);
+            this.logger.error('Error: save stock price', error);
             return of(STOCK_PRICE_ERROR({ code, error }));
           }),
         );

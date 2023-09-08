@@ -5,8 +5,7 @@ import {
   COR_SYNC_FINISH,
 } from '@modules/stock-info/observers/cor/cor.actions';
 import { corGetPageFn } from '@modules/stock-info/observers/cor/fns/corGetPage';
-import { Effect } from '@nest/base/dist/util/event-manager-rx/event-rx.decorator';
-import { EffectHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
+import { Effect, EffectHandler } from '@nest/base';
 import { Injectable, Logger } from '@nestjs/common';
 import { EMPTY, from, map, pipe, switchMap } from 'rxjs';
 

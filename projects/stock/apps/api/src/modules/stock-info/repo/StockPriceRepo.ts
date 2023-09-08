@@ -19,7 +19,11 @@ export class StockPriceRepo {
     if (size(records) > 100) {
       firstTime = true;
       // consider it as the first time
-      await prisma.stockPrice.deleteMany({});
+      await prisma.stockPrice.deleteMany({
+        where: {
+          symbol: code,
+        },
+      });
     }
 
     if (firstTime) {
