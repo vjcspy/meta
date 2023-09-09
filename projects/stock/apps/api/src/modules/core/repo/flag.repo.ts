@@ -10,9 +10,12 @@ export class FlagRepo {
     this.prisma = new PrismaClient();
   }
 
-  async create(data: { key: string; value: string }): Promise<Flag> {
+  async create(key: string, value: string): Promise<Flag> {
     return this.prisma.flag.create({
-      data,
+      data: {
+        key,
+        value,
+      },
     });
   }
 

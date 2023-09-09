@@ -1,5 +1,7 @@
+import { CoreModule } from '@modules/core/core.module';
 import { TedbedController } from '@modules/testbed/controller/tedbed.controller';
 import { EVENT_RX } from '@modules/testbed/event-rx';
+import { ClearChatJob } from '@modules/testbed/jobs/clear-chat.job';
 import { TestbedConsumer } from '@modules/testbed/queue/consumer/testbed.consumer';
 import { TestbedService } from '@modules/testbed/service/testbed.service';
 import { TESTBED_EXCHANGE_KEY } from '@modules/testbed/values/tedbed.value';
@@ -17,8 +19,9 @@ import { Module } from '@nestjs/common';
       ],
       handlers: [TestbedConsumer],
     }),
+    CoreModule,
   ],
-  providers: [...EVENT_RX, TestbedService],
+  providers: [...EVENT_RX, TestbedService, ClearChatJob],
   controllers: [TedbedController],
 })
 export class TestbedModule {}

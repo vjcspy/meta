@@ -31,7 +31,7 @@ export class StockPriceController {
   test() {
     this.eventManager.dispatch(
       STOCK_PRICE_SYNC({
-        code: 'BFC',
+        code: 'VCB',
         resolve: () => {},
       }),
     );
