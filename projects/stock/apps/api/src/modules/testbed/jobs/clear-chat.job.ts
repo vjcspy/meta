@@ -25,7 +25,7 @@ export class ClearChatJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('*/20 * * * * *', {
+  @Cron('*/10 * * * * *', {
     name: SyncValues.JOB_SYNC_OM_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })

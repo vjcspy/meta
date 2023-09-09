@@ -6,6 +6,7 @@ import {
 import { XAppRequestContext, XLogger } from '@nest/base';
 import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
 import { Controller, Get } from '@nestjs/common';
+import * as _ from 'lodash';
 
 @Controller('testbed')
 export class TedbedController {
@@ -44,5 +45,23 @@ export class TedbedController {
     this.connectionManager
       .getConnection()
       .publish(TESTBED_EXCHANGE_KEY, TESTBED_ROUTING_KEY, Math.random());
+  }
+
+  @Get('test-job-queue')
+  testJobQueue() {
+    const ran = _.random(1, 10);
+    const body = {
+      job_id: 'test_job_worker_1',
+      payload: {
+        ran,
+      },
+    };
+    if (ran > 5) {
+      body.job_id = 'test_job_worker_2';
+    }
+
+    this.connectionManager
+      .getConnection()
+      .publish(TESTBED_EXCHANGE_KEY, 'testbed.python.job.consumer.key', body);
   }
 }
