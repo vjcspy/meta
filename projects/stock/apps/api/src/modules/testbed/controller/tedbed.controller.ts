@@ -45,9 +45,4 @@ export class TedbedController {
       .getConnection()
       .publish(TESTBED_EXCHANGE_KEY, TESTBED_ROUTING_KEY, Math.random());
   }
-
-  @Get('test-clear-chat')
-  testClearChat() {
-    return this.testBedService.clearChat();
-  }
 }
