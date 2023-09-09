@@ -364,6 +364,11 @@ export class OmEffects {
           return of(EMPTY);
         }
 
+        this.logger.error(
+          `sync om error code|type ${code}|${type} `,
+          action?.payload?.error,
+        );
+
         this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
           text: `sync om error code|type ${code}|${type} `,
         });
