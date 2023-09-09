@@ -1,3 +1,4 @@
+import { XLogger } from '@nest/base';
 import { Logger } from '@nestjs/common';
 import type {
   AmqpConnectionManager,
@@ -9,7 +10,6 @@ import type {
   Connection,
   ConsumeMessage,
   Options,
-  Replies,
 } from 'amqplib';
 import * as _ from 'lodash';
 
@@ -48,7 +48,7 @@ const defaultConfig: RabbitMQConfig = {
   enableControllerDiscovery: false,
 };
 export class AmqpConnection {
-  private readonly logger: Logger = new Logger(AmqpConnection.name);
+  private readonly logger = new XLogger(AmqpConnection.name);
 
   private readonly config: RabbitMQConfig;
 
@@ -78,10 +78,6 @@ export class AmqpConnection {
       ...defaultConfig,
       ...config,
     };
-
-    if (config?.logger) {
-      this.logger = config.logger;
-    }
   }
 
   get configuration() {
@@ -113,7 +109,7 @@ export class AmqpConnection {
       this._managedConnection.on('disconnect', ({ err }) => {
         this.logger.error(
           `Disconnected from RabbitMQ broker (${this.config.name})`,
-          err?.stack,
+          err,
         );
       });
 
@@ -224,7 +220,7 @@ export class AmqpConnection {
             x.options,
           );
         } catch (e) {
-          this.logger.error(`Failed create exchange name ${x.name}`);
+          this.logger.error(`Failed create exchange name ${x.name}`, e as any);
         }
       }
     }
@@ -246,11 +242,7 @@ export class AmqpConnection {
     rpcOptions: MessageHandlerOptions,
   ): Promise<any> {
     // TODO: implement for RPC
-    this.logger.warn(
-      'Not yet implemented RPC for rabbitmq',
-      handler,
-      rpcOptions,
-    );
+    this.logger.warn('Not yet implemented RPC for rabbitmq', rpcOptions);
   }
 
   /**
@@ -352,7 +344,7 @@ export class AmqpConnection {
         (cx) => cx.name === exchange,
       );
       if (!configuredExchange) {
-        this.logger.error(
+        this.logger.warn(
           `Error when try to bind queue due to exchange name ${exchange} has not been configured`,
         );
         return undefined;
@@ -473,10 +465,12 @@ export class AmqpConnection {
     routingKey: string,
     message: T,
     options?: Options.Publish,
-  ): Promise<Replies.Empty> {
+  ): void {
     // source amqplib channel is used directly to keep the behavior of throwing connection related errors
     if (!this._managedConnection.isConnected() || !this._channel) {
-      throw new Error('AMQP connection is not available');
+      this.logger.warn('AMQP connection is not available');
+
+      return;
     }
 
     let buffer: Buffer;
@@ -491,20 +485,17 @@ export class AmqpConnection {
       buffer = Buffer.alloc(0);
     }
 
-    return new Promise((resolve, reject) => {
-      this._channel?.publish(
-        exchange,
-        routingKey,
-        buffer,
-        options,
-        (err, ok) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(ok);
-          }
-        },
-      );
-    });
+    this._channel?.publish(
+      exchange,
+      routingKey,
+      buffer,
+      options,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      (err, _ok) => {
+        if (err) {
+          this.logger.error('Error when publish message', err);
+        }
+      },
+    );
   }
 }

@@ -32,7 +32,7 @@ export class HealthcheckJob {
     }
   }
 
-  @Cron(CronExpression.EVERY_MINUTE)
+  @Cron(CronExpression.EVERY_SECOND)
   updateDB() {
     if (isMainProcess()) {
       // this.logger.info('health check db');
