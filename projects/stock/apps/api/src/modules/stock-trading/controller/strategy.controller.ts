@@ -26,6 +26,11 @@ export class StrategyController {
     private readonly tradingStrategyRepo: TradingStrategyRepo,
   ) {}
 
+  /**
+   * Generate strategy process
+   * @param data
+   * @returns {Promise<{message: string}>}
+   */
   @Post('process')
   async processData(@Body() data: StrategyDto) {
     this.logger.info('processData', {
@@ -36,6 +41,11 @@ export class StrategyController {
     return { message: 'Data received and validated successfully' };
   }
 
+  /**
+   * Lấy thông tin của trading process cần xử lý
+   * @param dto
+   * @returns {Promise<TradingStrategyResponse[]>}
+   */
   @Get('process')
   async getProcess(@Query() dto: StrategyProcessDto) {
     const strategy = await this.tradingStrategyRepo.getProcess(

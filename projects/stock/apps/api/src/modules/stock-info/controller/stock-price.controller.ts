@@ -9,7 +9,7 @@ import { XAppRequestContext, XLogger } from '@nest/base/dist';
 import { EventManagerReactive } from '@nest/base/dist/util/event-manager-rx/EventManager';
 import { Controller, Get, Query } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { parse } from 'date-fns';
+import * as moment from 'moment';
 
 @Controller('stock-price')
 export class StockPriceController {
@@ -52,8 +52,10 @@ export class StockPriceController {
   ): Promise<StockPriceHistoryResponse[]> {
     const { code, from, to } = stockPriceHistoryDto;
     this.logger.log(`Get History of ${code} from ${from} to ${to}`);
-    const fromDate = parse(from, 'yyyy-MM-dd', new Date());
-    const toDate = to ? parse(to, 'yyyy-MM-dd', new Date()) : new Date();
+    const fromDate = moment.utc(from, 'yyyy-MM-dd').toDate();
+    const toDate = to
+      ? moment.utc(to, 'YYYY-MM-DD').toDate()
+      : moment.utc().toDate();
 
     const histories = await this.stockPriceRepo.getHistory(
       code,

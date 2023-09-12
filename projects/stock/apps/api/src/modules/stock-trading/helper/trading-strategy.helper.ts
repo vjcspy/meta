@@ -58,14 +58,14 @@ export class TradingStrategyHelper {
           name: strategyDto.strategy_name,
           hash: strategyDto.hash_key,
           input: strategyDto.strategy_input,
-          from: moment(strategyDto.from_date).toDate(),
-          to: moment(strategyDto.to_date).toDate(),
+          from: moment.utc(strategyDto.from_date).toDate(),
+          to: moment.utc(strategyDto.to_date).toDate(),
           state: TradingStrategyState.Pending,
         },
         tradingStrategyProcess,
       );
     } catch (e) {
-      this.logger.error('Error when create strategy into DB', e);
+      this.logger.error('Error when create strategy & process into DB', e);
     }
 
     // publish job
@@ -78,6 +78,9 @@ export class TradingStrategyHelper {
     );
     const processes = (strategy as any)?.trading_strategy_process;
     const connection = this.connectionManager.getConnection();
+
+    this.logger.info(`Will publish ${size(processes)} strategy process`);
+
     if (Array.isArray(processes)) {
       forEach(processes, (process) => {
         connection.publish(

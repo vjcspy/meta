@@ -2,7 +2,7 @@ import {
   TradingStrategyActionSchema,
   TradingStrategyProcessSchema,
 } from '@modules/stock-trading/model/trading-strategy.model';
-import { Expose, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import {
   IsDate,
   IsDateString,
@@ -61,11 +61,17 @@ export class TradingStrategyResponse {
   @Type(() => Date)
   @IsDate()
   @Expose()
+  @Transform(({ value }) =>
+    value instanceof Date ? value.toISOString().split('T')[0] : value,
+  )
   from: Date;
 
   @Type(() => Date)
   @IsDate()
   @Expose()
+  @Transform(({ value }) =>
+    value instanceof Date ? value.toISOString().split('T')[0] : value,
+  )
   to: Date;
 
   @IsString()
