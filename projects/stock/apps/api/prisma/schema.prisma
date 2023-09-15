@@ -516,3 +516,16 @@ model StockInfoTicks {
 
   @@map("stock_info_ticks")
 }
+
+model StockTradingAnalysis {
+  id             Int     @id @default(autoincrement())
+  symbol         String  @unique @db.VarChar(10)
+  trade_value_7  BigInt? @default(0) @db.BigInt
+  trade_value_14 BigInt? @default(0) @db.BigInt
+  trade_value_30 BigInt? @default(0) @db.BigInt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("stock_trading_analysis")
+}

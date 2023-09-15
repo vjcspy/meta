@@ -1,10 +1,12 @@
 import { prisma } from '@modules/core/util/prisma';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategySchema } from '@modules/stock-trading/model/trading-strategy.model';
+import { Injectable } from '@nestjs/common';
 import type { TradingStrategy } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import { size } from 'lodash';
 
+@Injectable()
 export class TradingStrategyRepo {
   async create(
     data: TradingStrategySchema,
