@@ -50,20 +50,25 @@ export class StockPriceEffects {
           resolve,
         });
 
-        this.logger.log('Checking current status of price sync', { action });
+        this.logger.log(`Checking current status sync price of ${code}`, {
+          action,
+        });
 
         return from(this.syncStatusService.getStatusByKey(jobId)).pipe(
           map((syncStatus) => {
             let lastDate: any;
             if (syncStatus) {
               lastDate = moment(syncStatus.date);
-              this.logger.log(
-                `Will sync from lastDate ${lastDate.format('YYYY-MM-DD')}`,
-                {
-                  action,
-                },
-              );
             }
+
+            this.logger.log(
+              `Will sync symbol ${code} from lastDate ${
+                lastDate ? lastDate.format('YYYY-MM-DD') : 'beginning'
+              }`,
+              {
+                action,
+              },
+            );
 
             return STOCK_PRICE_LOAD({
               code,
@@ -93,8 +98,17 @@ export class StockPriceEffects {
             }
             return STOCK_PRICE_ERROR({
               code,
-              error: new EventRxError('Could not get data from downstream'),
+              error: new EventRxError(
+                `Could not get stock price from downstream for ${code}`,
+              ),
             });
+          }),
+          catchError((error) => {
+            this.logger.error(
+              `Could not get stock price from downstream for ${code}`,
+              error,
+            );
+            return of(STOCK_PRICE_ERROR({ code, error }));
           }),
         );
       }),
@@ -115,7 +129,7 @@ export class StockPriceEffects {
             });
           }),
           catchError((error) => {
-            this.logger.error('Error: save stock price', error);
+            this.logger.error(`Error: save stock price for ${code}`, error);
             return of(STOCK_PRICE_ERROR({ code, error }));
           }),
         );
