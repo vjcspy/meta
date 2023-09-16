@@ -1,3 +1,3 @@
-import { SyncOmJob } from '@modules/stock-info/cronjob/sync-om.job';
+import { SyncTicksJob } from '@modules/stock-info/cronjob/sync-ticks.job';
 
-export const CRONJOB_SERVICES = [SyncOmJob];
+export const CRONJOB_SERVICES = [SyncTicksJob];

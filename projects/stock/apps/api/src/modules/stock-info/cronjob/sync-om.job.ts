@@ -31,7 +31,7 @@ export class SyncOmJob {
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   sync() {
-    if (!isMainProcess()) return;
+    if (1 > 0 || !isMainProcess()) return;
     this.cronScheduleModel.runOneTimePerDay(
       SyncValues.JOB_SYNC_OM_KEY,
       () => this.syncOmPublisher.publish(),
