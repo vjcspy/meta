@@ -1,6 +1,7 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { HealthcheckModule } from '@modules/healthcheck/healthcheck.module';
+import { MigrationModule } from '@modules/migration/migration.module';
 import { StockModule } from '@modules/stock/stock.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { StockTradingModule } from '@modules/stock-trading/stock-trading.module';
@@ -59,6 +60,7 @@ import { AppService } from './app.service';
     StockInfoModule,
     StockTradingModule,
     TestbedModule,
+    MigrationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

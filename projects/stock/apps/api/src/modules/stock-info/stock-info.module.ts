@@ -41,10 +41,11 @@ import { Module } from '@nestjs/common';
     ...STOCK_INFO_HELPERS,
     StockPriceRequest,
     SimplizeRequest,
+    // must to manually handle cause use DI
     SyncTicksConsumer,
   ],
   controllers: [CorController, StockPriceController],
-  exports: [...STOCK_INFO_REPOS],
+  exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS],
 })
 export class StockInfoModule implements OnModuleInit {
   onModuleInit(): any {
