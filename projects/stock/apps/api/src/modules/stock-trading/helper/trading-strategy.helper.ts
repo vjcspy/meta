@@ -10,7 +10,7 @@ import {
 import { XLogger } from '@nest/base';
 import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
 import { HttpException, HttpStatus, Injectable, Scope } from '@nestjs/common';
-import { forEach, size } from 'lodash';
+import { forEach, includes, size } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable({
@@ -43,7 +43,18 @@ export class TradingStrategyHelper {
     }
 
     // init strategy and it's process
-    const symbols = await this.corRepo.getAll();
+    let symbols = await this.corRepo.getAll();
+
+    if (
+      strategyDto?.meta &&
+      strategyDto.meta.hasOwnProperty('allowable_list') &&
+      Array.isArray(strategyDto.meta.allowable_list)
+    ) {
+      symbols = symbols.filter((symbol) =>
+        includes(strategyDto.meta.allowable_list, symbol.code),
+      );
+    }
+
     const tradingStrategyProcess: TradingStrategyProcessSchema[] = [];
     forEach(symbols, (symbol) => {
       tradingStrategyProcess.push({
@@ -61,6 +72,7 @@ export class TradingStrategyHelper {
           from: moment.utc(strategyDto.from_date).toDate(),
           to: moment.utc(strategyDto.to_date).toDate(),
           state: TradingStrategyState.Pending,
+          meta: strategyDto?.meta,
         },
         tradingStrategyProcess,
       );

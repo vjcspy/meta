@@ -31,6 +31,10 @@ export class StrategyDto {
   @IsObject()
   strategy_input: any;
 
+  @IsObject()
+  @IsOptional()
+  meta: any;
+
   @IsString()
   hash_key: string;
 }

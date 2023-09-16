@@ -1,11 +1,11 @@
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
 import {
-  STOCK_TRADING_ANALYSIS_ROUTING_KEY,
   STOCK_TRADING_EXCHANGE_KEY,
+  STOCK_TRADING_JOB_KEY,
+  STOCK_TRADING_WORKER_ANALYSIS_KEY,
 } from '@modules/stock-trading/value/stock-trading-queue.value';
 import { AmqpConnectionManager } from '@nest/rabbitmq/dist';
 import { Injectable } from '@nestjs/common';
-import * as _ from 'lodash';
 
 @Injectable()
 export class StockTradingAnalysisPublisher {
@@ -16,27 +16,20 @@ export class StockTradingAnalysisPublisher {
 
   async publish() {
     const cors = await this.corRepo.getAll();
-    _.forEach(cors, (cor) => {
-      this.connectionManager
-        .getConnection()
-        .publish(
-          STOCK_TRADING_EXCHANGE_KEY,
-          STOCK_TRADING_ANALYSIS_ROUTING_KEY,
-          cor.code,
-          {},
-        );
-    });
 
     for (let i = 0; i < cors.length; i++) {
       const cor = cors[i];
-      this.connectionManager
-        .getConnection()
-        .publish(
-          STOCK_TRADING_EXCHANGE_KEY,
-          STOCK_TRADING_ANALYSIS_ROUTING_KEY,
-          cor.code,
-          {},
-        );
+      this.connectionManager.getConnection().publish(
+        STOCK_TRADING_EXCHANGE_KEY,
+        STOCK_TRADING_JOB_KEY,
+        {
+          job_id: STOCK_TRADING_WORKER_ANALYSIS_KEY,
+          payload: {
+            symbol: cor.code,
+          },
+        },
+        {},
+      );
     }
 
     return {

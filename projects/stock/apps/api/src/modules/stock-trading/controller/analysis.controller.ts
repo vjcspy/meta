@@ -3,6 +3,7 @@ import {
   StockTradingAnalysisResponse,
   UpdateStockTradingAnalysisDto,
 } from '@modules/stock-trading/controller/analysis.dto';
+import { StockTradingAnalysisPublisher } from '@modules/stock-trading/queue/publisher/stock-trading-analysis.publisher';
 import { StockTradingAnalysisRepo } from '@modules/stock-trading/repo/stock-trading-analysis.repo';
 import { XLogger } from '@nest/base/dist';
 import { Body, Controller, Get, Patch, Query } from '@nestjs/common';
@@ -14,9 +15,10 @@ export class AnalysisController {
 
   constructor(
     private readonly stockTradingAnalysisRepo: StockTradingAnalysisRepo,
+    private readonly stockTradingAnalysisPublisher: StockTradingAnalysisPublisher,
   ) {}
 
-  @Patch('update-analysis')
+  @Patch('analysis')
   async updateAnalysis(@Body() data: UpdateStockTradingAnalysisDto) {
     this.logger.info('process update analysis', { data });
 
@@ -41,5 +43,10 @@ export class AnalysisController {
     return plainToInstance(StockTradingAnalysisResponse, data, {
       excludeExtraneousValues: true,
     });
+  }
+
+  @Get('test')
+  test() {
+    this.stockTradingAnalysisPublisher.publish();
   }
 }
