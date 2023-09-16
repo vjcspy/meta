@@ -1,7 +1,6 @@
 import { FlagRepo } from '@modules/core/repo/flag.repo';
 import { XAppRequestContext, XLogger } from '@nest/base/dist';
 import { Injectable } from '@nestjs/common';
-import * as shell from 'shelljs';
 
 @Injectable()
 export class TestbedService {

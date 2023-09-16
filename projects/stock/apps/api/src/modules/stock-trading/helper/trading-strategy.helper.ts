@@ -10,7 +10,7 @@ import {
 import { XLogger } from '@nest/base';
 import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
 import { HttpException, HttpStatus, Injectable, Scope } from '@nestjs/common';
-import { forEach, size } from 'lodash';
+import { forEach, includes, size } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable({
@@ -43,7 +43,18 @@ export class TradingStrategyHelper {
     }
 
     // init strategy and it's process
-    const symbols = await this.corRepo.getAll();
+    let symbols = await this.corRepo.getAll();
+
+    if (
+      strategyDto?.meta &&
+      strategyDto.meta.hasOwnProperty('allowable_list') &&
+      Array.isArray(strategyDto.meta.allowable_list)
+    ) {
+      symbols = symbols.filter((symbol) =>
+        includes(strategyDto.meta.allowable_list, symbol.code),
+      );
+    }
+
     const tradingStrategyProcess: TradingStrategyProcessSchema[] = [];
     forEach(symbols, (symbol) => {
       tradingStrategyProcess.push({
@@ -58,14 +69,15 @@ export class TradingStrategyHelper {
           name: strategyDto.strategy_name,
           hash: strategyDto.hash_key,
           input: strategyDto.strategy_input,
-          from: moment(strategyDto.from_date).toDate(),
-          to: moment(strategyDto.to_date).toDate(),
+          from: moment.utc(strategyDto.from_date).toDate(),
+          to: moment.utc(strategyDto.to_date).toDate(),
           state: TradingStrategyState.Pending,
+          meta: strategyDto?.meta,
         },
         tradingStrategyProcess,
       );
     } catch (e) {
-      this.logger.error('Error when create strategy into DB', e);
+      this.logger.error('Error when create strategy & process into DB', e);
     }
 
     // publish job
@@ -78,6 +90,9 @@ export class TradingStrategyHelper {
     );
     const processes = (strategy as any)?.trading_strategy_process;
     const connection = this.connectionManager.getConnection();
+
+    this.logger.info(`Will publish ${size(processes)} strategy process`);
+
     if (Array.isArray(processes)) {
       forEach(processes, (process) => {
         connection.publish(

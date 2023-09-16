@@ -1,10 +1,6 @@
+import { IsDateYYYYMMDD } from '@modules/core/util/validator/IsDateYYYYMMDD';
 import { Expose, Transform } from 'class-transformer';
-import {
-  IsDateString,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { format } from 'date-fns';
 
 export class GetStockPriceHistoryDto {
@@ -13,11 +9,11 @@ export class GetStockPriceHistoryDto {
   code: string;
 
   @IsNotEmpty()
-  @IsDateString()
+  @IsDateYYYYMMDD()
   from: string;
 
   @IsOptional()
-  @IsDateString()
+  @IsDateYYYYMMDD()
   to?: string;
 }
 
@@ -32,22 +28,22 @@ export class StockPriceHistoryResponse {
   // code: string;
 
   @Expose({
-    name: 'priceHigh',
+    name: 'adjHigh',
   })
   high: number;
 
   @Expose({
-    name: 'priceLow',
+    name: 'adjLow',
   })
   low: number;
 
   @Expose({
-    name: 'priceClose',
+    name: 'adjClose',
   })
   close: number;
 
   @Expose({
-    name: 'priceOpen',
+    name: 'adjOpen',
   })
   open: number;
 

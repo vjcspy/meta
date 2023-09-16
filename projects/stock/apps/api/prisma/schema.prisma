@@ -376,7 +376,7 @@ model sector_entity {
 
 model StockPrice {
   id                  Int      @id @default(autoincrement())
-  date                DateTime
+  date                DateTime @db.Date
   symbol              String   @db.VarChar(10)
   priceHigh           Int
   priceLow            Int
@@ -464,8 +464,8 @@ model TradingStrategy {
 
   name       String
   input      Json
-  from       DateTime
-  to         DateTime
+  from       DateTime @db.Date
+  to         DateTime @db.Date
   hash       String   @unique // base on (name, input, from, to), for quickly query
   meta       Json?
   state      Int      @db.SmallInt
@@ -515,4 +515,17 @@ model StockInfoTicks {
   meta   Json
 
   @@map("stock_info_ticks")
+}
+
+model StockTradingAnalysis {
+  id             Int     @id @default(autoincrement())
+  symbol         String  @unique @db.VarChar(10)
+  trade_value_7  BigInt? @default(0) @db.BigInt
+  trade_value_14 BigInt? @default(0) @db.BigInt
+  trade_value_30 BigInt? @default(0) @db.BigInt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("stock_trading_analysis")
 }
