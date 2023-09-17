@@ -63,8 +63,16 @@ export class OmMigrationHelper {
     this.logger.info(
       `WILL migrate ${symbol} ${moment(date).format('YYYY-MM-DD')}`,
     );
-    const om1 = await this.getOMData(symbol, date, 1);
-    const om0 = await this.getOMData(symbol, date, 0);
+    let om1 = await this.getOMData(symbol, date, 1);
+    let om0 = await this.getOMData(symbol, date, 0);
+
+    if (!om0 || !om0._id) {
+      om0 = await this.getOMData(symbol, date, 0, 'v4');
+    }
+
+    if (!om1 || !om1._id) {
+      om1 = await this.getOMData(symbol, date, 1, 'v4');
+    }
 
     if (!om0 || !om0._id || !om1 || !om1._id) {
       this.logger.warn(
@@ -136,16 +144,13 @@ export class OmMigrationHelper {
       .unix();
   }
 
-  private getDatabase() {
-    if (!this._database) {
-      const client = this.oldMongoService.getClient();
-      this._database = client.db('nstock');
-    }
-    return this._database;
-  }
-
-  private async getOMData(code: string, date: string | Date, type: number) {
-    const db = this.getDatabase();
+  private async getOMData(
+    code: string,
+    date: string | Date,
+    type: number,
+    clientVersion: 'default' | 'v4' = 'default',
+  ) {
+    const db = this.oldMongoService.getDatabase(clientVersion);
     if (typeof date === 'string') {
       date = moment.utc(date).toDate();
     }
