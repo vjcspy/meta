@@ -1,6 +1,7 @@
 import { CoreModule } from '@modules/core/core.module';
 import { CorController } from '@modules/stock-info/controller/cor.controller';
 import { StockPriceController } from '@modules/stock-info/controller/stock-price.controller';
+import { TickController } from '@modules/stock-info/controller/tick.controller';
 import { CRONJOB_SERVICES } from '@modules/stock-info/cronjob';
 import { STOCK_INFO_HELPERS } from '@modules/stock-info/helper';
 import { MODELS } from '@modules/stock-info/model';
@@ -44,7 +45,7 @@ import { Module } from '@nestjs/common';
     // must to manually handle cause use DI
     SyncTicksConsumer,
   ],
-  controllers: [CorController, StockPriceController],
+  controllers: [CorController, StockPriceController, TickController],
   exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS],
 })
 export class StockInfoModule implements OnModuleInit {

@@ -26,6 +26,9 @@ async function bootstrap() {
     logger,
   });
 
+  // CORS
+  app.enableCors();
+
   // validation
   app.useGlobalPipes(
     new ValidationPipe({
