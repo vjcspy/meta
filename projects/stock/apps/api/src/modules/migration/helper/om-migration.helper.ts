@@ -76,7 +76,7 @@ export class OmMigrationHelper {
 
     if (!om0 || !om0._id || !om1 || !om1._id) {
       const error = new Error(
-        `Could not found OM for symbol ${symbol} date ${moment(date).format(
+        `Not found OM for symbol ${symbol} date ${moment(date).format(
           'YYYY-MM-DD',
         )}`,
       );
