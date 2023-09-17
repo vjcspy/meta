@@ -30,7 +30,7 @@ export class OmMigrateConsumer {
           .refreshXCorrelationId(CorrelationType.CONSUMER);
         await this.omMigrationHelper.migrate(msg.symbol, msg.date);
       } catch (e) {
-        this.logger.error('Error migrate', e);
+        this.logger.error('Error: migrate', e);
       }
     }
   }
