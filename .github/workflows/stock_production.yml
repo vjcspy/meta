@@ -12,14 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: deployment/stock/production
+          fetch-depth: 0 # Fetch all history for all branches and tags
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Merge master into deployment/stock/production"
-          title: "Auto-merge master into deployment/stock/production"
-          body: "This is an auto-generated PR to merge master into deployment/stock/production"
-          branch: "master"
+          commit-message: "Merge changes from master"
+          title: "Auto-merge: master -> deployment/stock/production"
+          body: "This is an auto-generated PR to merge changes from master into deployment/stock/production."
           base: "deployment/stock/production"
+          head: "master"
