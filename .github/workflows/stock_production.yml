@@ -17,19 +17,18 @@ jobs:
           git config --global user.email "workflows@github.com"
           git config --global user.name "workflows"
 
-      - name: Fetch latest changes from master
+      - name: Fetch all branches
         run: |
-          git fetch origin master
+          git fetch --all
 
       - name: Checkout to deployment/stock/production
         run: |
-          git fetch origin deployment/stock/production
           git checkout deployment/stock/production
 
-      - name: Pull master into deployment/stock/production
+      - name: Merge master into deployment/stock/production
         run: |
           git config pull.rebase false
-          git merge master
+          git merge master --allow-unrelated-histories
 
       - name: Push master into deployment/stock/production
         run: |
