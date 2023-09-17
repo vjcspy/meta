@@ -12,6 +12,6 @@ export class MigrationController {
 
   @Get('test1')
   test1() {
-    this.omMigrationHelper.migrate('TNG', '2022-04-14');
+    this.omMigrationHelper.migrate('TNG', '2023-01-10');
   }
 }
