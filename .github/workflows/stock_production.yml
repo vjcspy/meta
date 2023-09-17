@@ -26,7 +26,11 @@ jobs:
           git fetch origin deployment/stock/production
           git checkout deployment/stock/production
 
-      - name: Merge master into deployment/stock/production
+      - name: Pull master into deployment/stock/production
         run: |
-          git merge FETCH_HEAD --no-edit
+          git config pull.rebase false
+          git pull origin master
+
+      - name: Push master into deployment/stock/production
+        run: |
           git push origin deployment/stock/production
