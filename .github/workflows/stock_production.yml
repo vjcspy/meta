@@ -12,11 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Fetch and checkout to deployment/stock/production
+        run: |
+          git fetch origin deployment/stock/production
+          git checkout deployment/stock/production
+
+      - name: Pull the latest changes from master
+        run: |
+          git pull origin master
+
       - name: Merge master into deployment/stock/production
         run: |
           git config --global user.email "workflows@github.com"
           git config --global user.name "workflows"
-          git fetch origin deployment/stock/production
-          git checkout deployment/stock/production
-          git merge master --allow-unrelated-histories --no-edit
+          git merge master --no-edit
           git push origin deployment/stock/production
