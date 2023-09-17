@@ -1,0 +1,22 @@
+name: Auto Merge master to deployment/stock/production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  merge-to-deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Merge master into deployment/stock/production
+      run: |
+        git config --global user.email "workflows@github.com"
+        git config --global user.name "workflows"
+        git fetch origin deployment/stock/production
+        git checkout deployment/stock/production
+        git merge master --no-edit
+        git push origin deployment/stock/production
