@@ -1,3 +1,4 @@
+import { prisma } from '@modules/core/util/prisma';
 import { OldMongoHelper } from '@modules/migration/helper/old-mongo.helper';
 import {
   MIGRATE_EXCHANGE_KEY,
@@ -33,7 +34,7 @@ export class OmMigrationHelper {
     }
     const historyRefer = await this.getHistoryRefer();
     const cors = await this.corRepo.getAll();
-    const firstTrade = moment('2022-04-14');
+    const firstTrade = moment.utc('2022-04-14');
 
     for (let i = 0; i < historyRefer.length; i++) {
       const _priceDay = historyRefer[i];
@@ -44,7 +45,7 @@ export class OmMigrationHelper {
         if (
           !includes(['HOSE', 'HNX'], cor.exchange) ||
           !cor.firstTradeDate ||
-          moment(cor.firstTradeDate).isAfter(firstTrade)
+          moment.utc(cor.firstTradeDate).isAfter(firstTrade)
         ) {
           // eslint-disable-next-line no-continue
           continue;
@@ -53,7 +54,7 @@ export class OmMigrationHelper {
           .getConnection()
           .publish(MIGRATE_EXCHANGE_KEY, MIGRATION_QUEUE_ROUTING_KEY, {
             symbol: cor.code,
-            date: moment(_priceDay.date).format('YYYY-MM-DD'),
+            date: moment.utc(_priceDay.date).format('YYYY-MM-DD'),
           });
       }
     }
@@ -61,7 +62,7 @@ export class OmMigrationHelper {
 
   async migrate(symbol: string, date: string | Date) {
     this.logger.info(
-      `WILL migrate ${symbol} ${moment(date).format('YYYY-MM-DD')}`,
+      `WILL migrate ${symbol} ${moment.utc(date).format('YYYY-MM-DD')}`,
     );
     let om1 = await this.getOMData(symbol, date, 1);
     let om0 = await this.getOMData(symbol, date, 0);
@@ -74,11 +75,12 @@ export class OmMigrationHelper {
       om1 = await this.getOMData(symbol, date, 1, 'v4');
     }
 
+    const dateString = moment.utc(date).format('YYYY-MM-DD');
+    const dateObject = moment.utc(date).toDate();
+
     if (!om0 || !om0._id || !om1 || !om1._id) {
       const error = new Error(
-        `Could not found OM for symbol ${symbol} date ${moment(date).format(
-          'YYYY-MM-DD',
-        )}`,
+        `Could not found OM for symbol ${symbol} date ${dateString}`,
       );
       this.logger.error(error.message, error);
 
@@ -88,13 +90,13 @@ export class OmMigrationHelper {
     const results = [];
     let om0Data = om0?.meta?.data;
     if (Array.isArray(om0Data)) {
-      this.logger.info(`WILL migrate data OM0 ${symbol} ${date}`);
+      this.logger.info(`WILL migrate data OM0 ${symbol} ${dateString}`);
       om0Data = om0Data.filter(
         (o) => typeof o?.a === 'undefined' || o?.a === '',
       );
 
       om0Data = sortBy(om0Data, (o: any) => o.t).map((o: any) => {
-        const timestamp = this.transformTime(moment(date).toDate(), o?.t);
+        const timestamp = this.transformTime(dateObject, o?.t);
 
         return [timestamp, o?.v, o?.p, 'Undefined'];
       });
@@ -106,7 +108,7 @@ export class OmMigrationHelper {
     if (Array.isArray(om1Data)) {
       this.logger.info('WILL transform OM1Data');
       forEach(om1Data, (o: any) => {
-        const timestamp = this.transformTime(moment(date).toDate(), o?.t);
+        const timestamp = this.transformTime(dateObject, o?.t);
         let action: string;
         if (o.a === 'BU') {
           action = 'B';
@@ -125,9 +127,19 @@ export class OmMigrationHelper {
       });
     }
 
-    // const sortedResults = sortBy(results, (r: any) => r[0]).reverse();
+    const sortedResults = sortBy(results, (r: any) => r[0]).reverse();
 
-    this.logger.info('OK built tick data');
+    await prisma.stockInfoTicks.create({
+      data: {
+        symbol,
+        date: dateObject,
+        meta: sortedResults,
+      },
+    });
+
+    this.logger.info(
+      `OK migrated tick data symbol ${symbol} date ${dateString}`,
+    );
   }
 
   private transformTime(date: Date, time: string) {
@@ -138,7 +150,8 @@ export class OmMigrationHelper {
       throw error;
     }
     const [hour, minute, second] = time.split(':');
-    return moment(date)
+    return moment
+      .utc(date)
       .set({
         hours: Number(hour),
         minutes: Number(minute),
