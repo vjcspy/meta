@@ -75,11 +75,14 @@ export class OmMigrationHelper {
     }
 
     if (!om0 || !om0._id || !om1 || !om1._id) {
-      this.logger.warn(
+      const error = new Error(
         `Could not found OM for symbol ${symbol} date ${moment(date).format(
           'YYYY-MM-DD',
         )}`,
       );
+      this.logger.error(error.message, error);
+
+      throw error;
     }
 
     const results = [];
@@ -122,7 +125,7 @@ export class OmMigrationHelper {
       });
     }
 
-    const sortedResults = sortBy(results, (r: any) => r[0]).reverse();
+    // const sortedResults = sortBy(results, (r: any) => r[0]).reverse();
 
     this.logger.info('OK built tick data');
   }
