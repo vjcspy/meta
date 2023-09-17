@@ -19,7 +19,7 @@ jobs:
 
       - name: Pull the latest changes from master
         run: |
-          git pull origin master
+          git pull origin master --rebase
 
       - name: Merge master into deployment/stock/production
         run: |
