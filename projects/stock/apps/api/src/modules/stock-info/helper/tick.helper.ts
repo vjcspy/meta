@@ -17,13 +17,13 @@ export class TickHelper {
       },
     });
 
-    if (Array.isArray(data.meta)) {
+    if (Array.isArray(data?.meta)) {
       data.meta = map(data.meta, (_t: any) => {
         if (Array.isArray(_t) && _t.length === 4) {
           const _tickData: any = {
             time: moment.unix(_t[0]).format('HH:mm:ss'),
             vol: _t[1],
-            p: _t[2],
+            p: Math.round(Number(_t[2]) / 100) * 100,
             a: _t[3],
           };
 
@@ -36,6 +36,6 @@ export class TickHelper {
       });
     }
 
-    return data;
+    return data ?? {};
   }
 }
