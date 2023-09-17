@@ -1,4 +1,4 @@
-name: Auto Merge master to deployment/stock/production
+name: Auto Create Pull Request from master to deployment/stock/production
 
 on:
   push:
@@ -6,30 +6,20 @@ on:
       - master
 
 jobs:
-  merge-to-deployment:
+  create-pull-request:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: deployment/stock/production
 
-      - name: Configure Git User
-        run: |
-          git config --global user.email "workflows@github.com"
-          git config --global user.name "workflows"
-
-      - name: Fetch all branches
-        run: |
-          git fetch --all
-
-      - name: Checkout to deployment/stock/production
-        run: |
-          git checkout deployment/stock/production
-
-      - name: Merge master into deployment/stock/production
-        run: |
-          git config pull.rebase false
-          git merge master --allow-unrelated-histories
-
-      - name: Push master into deployment/stock/production
-        run: |
-          git push origin deployment/stock/production
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Merge master into deployment/stock/production"
+          title: "Auto-merge master into deployment/stock/production"
+          body: "This is an auto-generated PR to merge master into deployment/stock/production"
+          branch: "master"
+          base: "deployment/stock/production"
