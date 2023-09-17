@@ -95,7 +95,7 @@ export class XLogger {
   }
 
   private _injectContext(metadata?: Record<string, any>) {
-    if (xAppContext().isUserRequest()) {
+    if (xAppContext().getXCorrelationId()) {
       if (typeof metadata === 'undefined') {
         metadata = {};
       }
