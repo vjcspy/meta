@@ -4,7 +4,7 @@ import {
   MIGRATION_QUEUE_KEY,
   MIGRATION_QUEUE_ROUTING_KEY,
 } from '@modules/migration/values/queue.value';
-import { XLogger } from '@nest/base/dist';
+import { CorrelationType, xAppContext, XLogger } from '@nest/base';
 import { RabbitSubscribe } from '@nest/rabbitmq/dist';
 import { Injectable } from '@nestjs/common';
 
@@ -25,6 +25,9 @@ export class OmMigrateConsumer {
   async migrate(msg: any) {
     if (typeof msg === 'object') {
       try {
+        xAppContext()
+          .markAsUserContext(false)
+          .refreshXCorrelationId(CorrelationType.CONSUMER);
         await this.omMigrationHelper.migrate(msg.symbol, msg.date);
       } catch (e) {
         this.logger.error('Error migrate', e);

@@ -1,11 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { Logger as NestLogger } from '@nestjs/common/services/logger.service';
+import { format } from '@redtea/format-axios-error';
 import { AxiosError } from 'axios';
 
 import type { AbstractContext } from '../context/AbstractContext';
 import { xAppContext } from '../context/XAppContext';
-
-const { format } = require('@redtea/format-axios-error');
 
 export class XLogger {
   private _logger: NestLogger;

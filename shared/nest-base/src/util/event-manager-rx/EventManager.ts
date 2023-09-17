@@ -3,8 +3,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { EMPTY, filter, isObservable, map, of, Subject } from 'rxjs';
 import { mergeMap } from 'rxjs/internal/operators/mergeMap';
-import { v4 as uuidv4 } from 'uuid';
 
+import { CorrelationType } from '../context/AbstractContext';
 import type {
   ActionFactory,
   EventRxAction,
@@ -38,9 +38,7 @@ export class EventManagerReactive {
     }
     if (typeof o === 'object') {
       o.context = new EventRxContext();
-
-      // TODO: get correlationId from request context and set to action context
-      o.context.setXCorrelationId(`${o.type}-${uuidv4()}`);
+      o.context.refreshXCorrelationId(CorrelationType.EVENT_RX);
     } else {
       this.logger.error('Dispatch wrong action type');
     }
