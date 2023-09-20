@@ -4,8 +4,8 @@ import {
   HEALTH_CHECK_ROUTING_KEY,
   HEALTH_CHECK_TIME_DB,
 } from '@modules/healthcheck/values/healthcheck.values';
-import { isMainProcess, XLogger } from '@nest/base/dist';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
+import { isMainProcess, XLogger } from '@nest/base';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 

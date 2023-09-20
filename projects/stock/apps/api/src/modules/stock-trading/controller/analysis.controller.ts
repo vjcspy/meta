@@ -5,7 +5,7 @@ import {
 } from '@modules/stock-trading/controller/analysis.dto';
 import { StockTradingAnalysisPublisher } from '@modules/stock-trading/queue/publisher/stock-trading-analysis.publisher';
 import { StockTradingAnalysisRepo } from '@modules/stock-trading/repo/stock-trading-analysis.repo';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Body, Controller, Get, Patch, Query } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 

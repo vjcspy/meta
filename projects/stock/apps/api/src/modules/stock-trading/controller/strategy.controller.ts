@@ -5,7 +5,7 @@ import {
 } from '@modules/stock-trading/controller/strategy.dto';
 import { TradingStrategyHelper } from '@modules/stock-trading/helper/trading-strategy.helper';
 import { TradingStrategyRepo } from '@modules/stock-trading/repo/trading-strategy.repo';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import {
   Body,
   Controller,

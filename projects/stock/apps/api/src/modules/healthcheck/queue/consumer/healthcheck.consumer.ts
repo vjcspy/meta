@@ -4,8 +4,8 @@ import {
   HEALTH_CHECK_ROUTING_KEY,
   HEALTH_CHECK_TIME_QUEUE_AND_DB,
 } from '@modules/healthcheck/values/healthcheck.values';
-import { XLogger } from '@nest/base/dist';
-import { RabbitSubscribe } from '@nest/rabbitmq/dist';
+import { XLogger } from '@nest/base';
+import { RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

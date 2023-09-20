@@ -1,4 +1,4 @@
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Db } from 'mongodb';

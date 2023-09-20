@@ -8,7 +8,7 @@ import {
   STOCK_TRADING_STRATEGY_ROUTING_KEY,
 } from '@modules/stock-trading/value/stock-trading-queue.value';
 import { XLogger } from '@nest/base';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { HttpException, HttpStatus, Injectable, Scope } from '@nestjs/common';
 import { forEach, includes, size } from 'lodash';
 import * as moment from 'moment';

@@ -1,4 +1,4 @@
-import { actionFactory } from '@nest/base/dist/util/event-manager-rx/event-rx.factory';
+import { actionFactory } from '@nest/base';
 
 export const COR_START_SYNC_ACTION = actionFactory('COR_START_SYNC_ACTION');
 export const COR_LOAD_NEXT_PAGE = actionFactory('COR_LOAD_NEXT_PAGE');

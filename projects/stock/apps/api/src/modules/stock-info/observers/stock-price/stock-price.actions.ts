@@ -1,4 +1,4 @@
-import { actionFactory } from '@nest/base/dist/util/event-manager-rx/event-rx.factory';
+import { actionFactory } from '@nest/base';
 import type { DataObject } from 'chitility';
 import type * as moment from 'moment';
 

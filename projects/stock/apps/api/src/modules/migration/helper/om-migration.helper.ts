@@ -6,8 +6,8 @@ import {
 } from '@modules/migration/values/queue.value';
 import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
-import { XLogger } from '@nest/base/dist';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist';
+import { XLogger } from '@nest/base';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 import { forEach, includes, isEmpty, sortBy } from 'lodash';
 import * as moment from 'moment';

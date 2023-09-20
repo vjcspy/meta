@@ -3,7 +3,7 @@ import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
 import * as moment from 'moment/moment';

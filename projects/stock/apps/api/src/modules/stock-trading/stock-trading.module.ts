@@ -4,7 +4,7 @@ import { STOCK_TRADING_HELPERS } from '@modules/stock-trading/helper';
 import { TRADING_QUEUE } from '@modules/stock-trading/queue';
 import { STOCK_TRADING_REPO } from '@modules/stock-trading/repo';
 import { STOCK_TRADING_EXCHANGE_KEY } from '@modules/stock-trading/value/stock-trading-queue.value';
-import { RabbitMQModule } from '@nest/rabbitmq/dist';
+import { RabbitMQModule } from '@nest/rabbitmq';
 import { Module } from '@nestjs/common';
 
 @Module({

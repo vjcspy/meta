@@ -3,7 +3,7 @@ import {
   MIGRATE_EXCHANGE_KEY,
   MIGRATION_QUEUE_ROUTING_KEY,
 } from '@modules/migration/values/queue.value';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('migration')
