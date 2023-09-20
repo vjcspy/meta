@@ -7,7 +7,13 @@ import { STOCK_PRICE_SYNC } from '@modules/stock-info/observers/stock-price/stoc
 import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-price.publisher';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import { EventManagerReactive, XAppRequestContext, XLogger } from '@nest/base';
-import { Controller, Get, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 
 @Controller('stock-price')
@@ -28,10 +34,14 @@ export class StockPriceController {
   }
 
   @Get('test')
-  test() {
+  test(@Query('symbol') symbol: string) {
+    if (!symbol) {
+      throw new HttpException('Symbol not found', HttpStatus.BAD_REQUEST);
+    }
+
     this.eventManager.dispatch(
       STOCK_PRICE_SYNC({
-        code: 'ACB',
+        code: symbol,
         resolve: () => {},
       }),
     );
