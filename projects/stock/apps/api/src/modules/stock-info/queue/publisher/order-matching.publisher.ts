@@ -1,6 +1,6 @@
 import { prisma } from '@modules/core/util/prisma';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
 import * as _ from 'lodash';
 

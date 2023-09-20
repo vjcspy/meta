@@ -3,7 +3,7 @@ import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { COR_START_SYNC_ACTION } from '@modules/stock-info/observers/cor/cor.actions';
 import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
-import { EventManagerReactive } from '@nest/base/dist/util/event-manager-rx/EventManager';
+import { EventManagerReactive } from '@nest/base';
 import { Controller, Get } from '@nestjs/common';
 import * as moment from 'moment/moment';
 
@@ -19,20 +19,6 @@ export class CorController {
   @Get('sync')
   syncCor(): string {
     this.eventManager.dispatch(COR_START_SYNC_ACTION);
-
-    return 'ok';
-  }
-
-  @Get('sync-om')
-  async syncOM() {
-    await this.omPublisher.publishOne('ACB');
-
-    return 'ok';
-  }
-
-  @Get('sync-om-all')
-  async syncOMAll() {
-    await this.omPublisher.publish();
 
     return 'ok';
   }

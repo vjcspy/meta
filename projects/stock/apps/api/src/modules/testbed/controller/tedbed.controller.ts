@@ -4,7 +4,7 @@ import {
   TESTBED_ROUTING_KEY,
 } from '@modules/testbed/values/tedbed.value';
 import { XAppRequestContext, XLogger } from '@nest/base';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist/model/amqp/connection-manager';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Controller, Get } from '@nestjs/common';
 import * as _ from 'lodash';
 

@@ -4,7 +4,7 @@ import {
   STOCK_TRADING_JOB_KEY,
   STOCK_TRADING_WORKER_ANALYSIS_KEY,
 } from '@modules/stock-trading/value/stock-trading-queue.value';
-import { AmqpConnectionManager } from '@nest/rabbitmq/dist';
+import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

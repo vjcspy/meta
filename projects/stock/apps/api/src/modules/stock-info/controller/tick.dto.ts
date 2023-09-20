@@ -10,3 +10,17 @@ export class GetTickHistoryRequest {
   @IsDateYYYYMMDD()
   date: string;
 }
+
+export class GetTickHistoriesRequest {
+  @IsNotEmpty()
+  @IsString()
+  symbol: string;
+
+  @IsNotEmpty()
+  @IsDateYYYYMMDD()
+  from: string;
+
+  @IsNotEmpty()
+  @IsDateYYYYMMDD()
+  to: string;
+}

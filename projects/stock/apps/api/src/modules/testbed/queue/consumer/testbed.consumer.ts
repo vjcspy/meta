@@ -2,8 +2,8 @@ import {
   TESTBED_EXCHANGE_KEY,
   TESTBED_ROUTING_KEY,
 } from '@modules/testbed/values/tedbed.value';
-import { XLogger } from '@nest/base/dist';
-import { RabbitSubscribe } from '@nest/rabbitmq/dist';
+import { XLogger } from '@nest/base';
+import { RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

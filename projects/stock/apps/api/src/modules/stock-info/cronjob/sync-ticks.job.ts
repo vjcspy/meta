@@ -3,7 +3,7 @@ import { CronScheduleModel } from '@modules/core/model/CronSchedule.model';
 import { prisma } from '@modules/core/util/prisma';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { isMainProcess, XLogger } from '@nest/base/dist';
+import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';

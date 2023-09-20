@@ -1,5 +1,5 @@
 import { FlagRepo } from '@modules/core/repo/flag.repo';
-import { XAppRequestContext, XLogger } from '@nest/base/dist';
+import { XAppRequestContext, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

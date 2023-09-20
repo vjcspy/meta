@@ -3,7 +3,7 @@ import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import * as _ from 'lodash';
 import * as moment from 'moment/moment';
@@ -11,7 +11,7 @@ import { firstValueFrom, retry } from 'rxjs';
 
 @Injectable()
 export class SyncTicksHelper {
-  private readonly force_sync_previous_date = true;
+  private readonly force_sync_previous_date = false;
 
   private readonly logger = new XLogger(SyncTicksHelper.name);
 
@@ -76,7 +76,7 @@ export class SyncTicksHelper {
             throw new Error('Wrong data format from Simplize');
           }
 
-          dateFromData = moment.unix(tickData[0][0]).startOf('day');
+          dateFromData = moment.unix(tickData[0][0]);
 
           if (
             this.force_sync_previous_date ||
@@ -95,7 +95,7 @@ export class SyncTicksHelper {
             await prisma.stockInfoTicks.create({
               data: {
                 symbol,
-                date: syncDate.toDate(),
+                date: dateFromData.toDate(),
                 meta: tickData,
               },
             });

@@ -1,7 +1,7 @@
 import { OrderMatchingType } from '@modules/stock-info/model/OrderMatching';
 import { SYNC_ORDER_MATCHING } from '@modules/stock-info/observers/order-matching/om.actions';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { EventManagerReactive } from '@nest/base/dist/util/event-manager-rx/EventManager';
+import { EventManagerReactive } from '@nest/base';
 import { RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 

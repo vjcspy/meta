@@ -1,18 +1,16 @@
-import { getPrismaClient } from '@modules/core/util/prisma';
+import { prisma } from '@modules/core/util/prisma';
 import { UpdateStockTradingAnalysisDto } from '@modules/stock-trading/controller/analysis.dto';
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class StockTradingAnalysisRepo {
-  private readonly prisma = getPrismaClient();
-
   async findAll() {
-    return this.prisma.stockTradingAnalysis.findMany();
+    return prisma.stockTradingAnalysis.findMany();
   }
 
   async findOne(symbol: string) {
-    return this.prisma.stockTradingAnalysis.findFirst({
+    return prisma.stockTradingAnalysis.findFirst({
       where: { symbol },
     });
   }
@@ -25,7 +23,7 @@ export class StockTradingAnalysisRepo {
         exposeUnsetFields: false,
       },
     );
-    return this.prisma.stockTradingAnalysis.upsert({
+    return prisma.stockTradingAnalysis.upsert({
       where: { symbol: _data.symbol },
       update: _data,
       create: _data,

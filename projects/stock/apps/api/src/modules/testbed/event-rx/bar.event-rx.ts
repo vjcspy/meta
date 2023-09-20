@@ -1,5 +1,4 @@
-import { EventRx } from '@nest/base/dist/util/event-manager-rx/event-rx.decorator';
-import { EventRxHandler } from '@nest/base/dist/util/event-manager-rx/event-rx.types';
+import { EventRx, EventRxHandler } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { EMPTY, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';

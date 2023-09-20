@@ -1,5 +1,5 @@
 import type { OrderMatchingType } from '@modules/stock-info/model/OrderMatching';
-import { actionFactory } from '@nest/base/dist/util/event-manager-rx/event-rx.factory';
+import { actionFactory } from '@nest/base';
 
 export const SYNC_ORDER_MATCHING = actionFactory<{
   code: string;

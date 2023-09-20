@@ -1,8 +1,7 @@
 import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { XLogger } from '@nest/base/dist';
-import { RabbitSubscribe } from '@nest/rabbitmq';
-import { Nack } from '@nest/rabbitmq/dist/model/amqp/handler-response';
+import { XLogger } from '@nest/base';
+import { Nack, RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

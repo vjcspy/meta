@@ -3,7 +3,7 @@ import { HealthController } from '@modules/healthcheck/controller/health.control
 import { HealthcheckJob } from '@modules/healthcheck/cronjob/healthcheck.job';
 import { HealthcheckConsumer } from '@modules/healthcheck/queue/consumer/healthcheck.consumer';
 import { HEALTH_CHECK_EXCHANGE_KEY } from '@modules/healthcheck/values/healthcheck.values';
-import { RabbitMQModule } from '@nest/rabbitmq/dist';
+import { RabbitMQModule } from '@nest/rabbitmq';
 import { Module } from '@nestjs/common';
 
 @Module({
