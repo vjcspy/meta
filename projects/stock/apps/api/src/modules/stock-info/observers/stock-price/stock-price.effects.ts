@@ -18,6 +18,7 @@ import * as moment from 'moment/moment';
 import {
   catchError,
   concatMap,
+  delay,
   EMPTY,
   from,
   mergeMap,
@@ -85,6 +86,7 @@ export class StockPriceEffects {
   })
   loadStockPrice(): EffectHandler {
     return pipe(
+      delay(150),
       mergeMap((action) => {
         const { code, lastDate } = action.payload;
         return this.stockPriceRequest.getPrice(code, lastDate).pipe(
