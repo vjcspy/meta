@@ -63,7 +63,7 @@ export class TickHelper {
           h.meta = [];
         }
         return h;
-      });
+      }).sort((h) => h.date.getTime());
     }
     return [];
   }
