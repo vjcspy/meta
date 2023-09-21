@@ -1,7 +1,7 @@
 import { prisma } from '@modules/core/util/prisma';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { forEach, map } from 'lodash';
+import { find, forEach, map, sortBy } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable()
@@ -46,7 +46,7 @@ export class TickHelper {
       return [];
     }
 
-    const histories = await prisma.stockInfoTicks.findMany({
+    let histories = await prisma.stockInfoTicks.findMany({
       where: {
         symbol,
         date: {
@@ -56,14 +56,30 @@ export class TickHelper {
     });
 
     if (histories.length > 0) {
-      return map(histories, (h) => {
+      histories = map(histories, (h) => {
         if (Array.isArray(h?.meta)) {
           h.meta = map(h.meta, (_t) => this.mapTickData(_t));
         } else {
           h.meta = [];
         }
+        const price = find(prices, (p) =>
+          moment(p.date).isSame(moment(h.date), 'day'),
+        );
+
+        h = Object.assign(h, {
+          close: price.adjClose,
+          open: price.adjOpen,
+          low: price.adjLow,
+          high: price.adjHigh,
+          totalTrade: Number(price.totalValue),
+        });
+
         return h;
-      }).sort((h) => h.date.getTime());
+      });
+
+      histories = sortBy(histories, (h) => h.date.getTime());
+
+      return histories;
     }
     return [];
   }
