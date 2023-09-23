@@ -47,6 +47,6 @@ export class AnalysisController {
 
   @Get('test')
   test() {
-    this.stockTradingAnalysisPublisher.publish();
+    this.stockTradingAnalysisPublisher.publish('HPG');
   }
 }

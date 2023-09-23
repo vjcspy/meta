@@ -21,6 +21,21 @@ export class UpdateStockTradingAnalysisDto {
   @IsOptional()
   @Expose()
   trade_value_30: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  l16_hullma_trend: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  l16_hullma_day_in_trend: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  l16_hullma_highest_diff_percent: number;
 }
 
 export class StockTradingAnalysisResponse {
@@ -46,6 +61,24 @@ export class StockTradingAnalysisResponse {
   @Expose()
   @Transform(({ value }) => Number(value.toString()))
   trade_value_30: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => Number(value.toString()))
+  l16_hullma_trend: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => Number(value.toString()))
+  l16_hullma_day_in_trend: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => Number(value.toString()))
+  l16_hullma_highest_diff_percent: number;
 }
 
 export class GetStockTradingAnalysisRequest {
