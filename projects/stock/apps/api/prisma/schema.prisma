@@ -524,6 +524,10 @@ model StockTradingAnalysis {
   trade_value_14 BigInt? @default(0) @db.BigInt
   trade_value_30 BigInt? @default(0) @db.BigInt
 
+  l16_hullma_trend                Int @default(0) @db.SmallInt // hullma 16 trend, 0 not sure, 1 up, -1 down
+  l16_hullma_day_in_trend         Int @default(0) @db.SmallInt // how many days in current trend?
+  l16_hullma_highest_diff_percent Int @default(0) @db.SmallInt // Neu dang o downtrend, thi gia giam max tu luc up trend lan truoc la bao nhieu
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

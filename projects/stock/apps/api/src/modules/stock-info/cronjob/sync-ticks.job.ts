@@ -26,7 +26,7 @@ export class SyncTicksJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('0 0 18,22,23 * * *', {
+  @Cron('0 0 16,17,23 * * *', {
     name: SyncValues.SYNC_TICKS_JOB_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
