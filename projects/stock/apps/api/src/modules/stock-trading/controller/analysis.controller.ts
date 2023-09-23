@@ -46,7 +46,11 @@ export class AnalysisController {
   }
 
   @Get('test')
-  test() {
-    this.stockTradingAnalysisPublisher.publish('HPG');
+  test(@Query('symbol') symbol: string) {
+    if (!symbol) {
+      this.stockTradingAnalysisPublisher.publish();
+    } else {
+      this.stockTradingAnalysisPublisher.publish(symbol);
+    }
   }
 }
