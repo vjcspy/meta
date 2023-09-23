@@ -35,6 +35,10 @@ export class StockTradingAnalysisPublisher {
 
     for (let i = 0; i < cors.length; i++) {
       const cor = cors[i];
+      if (cor.exchange !== 'HOSE') {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
       this.connectionManager.getConnection().publish(
         STOCK_TRADING_ANALYSIS_EXCHANGE_KEY,
         STOCK_TRADING_ANALYSIS_JOB_KEY,
