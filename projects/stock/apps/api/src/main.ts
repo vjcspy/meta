@@ -26,6 +26,8 @@ async function bootstrap() {
     logger,
   });
 
+
+
   // CORS
   app.enableCors();
 

@@ -54,7 +54,7 @@ export class StockPriceHistoryResponse {
     name: 'totalTrade',
   })
   @Transform(({ value }) => Number(value.toString()))
-  trade: number;
+  totalTrade: number;
 
   @Expose({
     name: 'totalValue',
@@ -65,7 +65,7 @@ export class StockPriceHistoryResponse {
   @Expose({
     name: 'buyCount',
   })
-  buy: number;
+  buyCount: number;
 
   @Expose({})
   buyQuantity: number;
@@ -73,8 +73,32 @@ export class StockPriceHistoryResponse {
   @Expose({
     name: 'sellCount',
   })
-  sell: number;
+  sellCount: number;
 
   @Expose({})
   sellQuantity: number;
+
+  @Expose({
+    name: 'buyForeignValue',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fBuyVal: number;
+
+  @Expose({
+    name: 'buyForeignQuantity',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fBuyQty: number;
+
+  @Expose({
+    name: 'sellForeignValue',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fSellVal: number;
+
+  @Expose({
+    name: 'sellForeignQuantity',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fSellQty: number;
 }
