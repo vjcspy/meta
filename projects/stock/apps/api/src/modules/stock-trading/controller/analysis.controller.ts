@@ -52,5 +52,7 @@ export class AnalysisController {
     } else {
       this.stockTradingAnalysisPublisher.publish(symbol);
     }
+
+    return {};
   }
 }
