@@ -11,6 +11,8 @@
   "scripts": {
     "stock": "___________________________STOCK___________________________",
     "stock:build": "turbo run build --no-daemon --filter=@stock/apps-*",
+    "stock:web:dev": "turbo run dev --no-daemon --filter=@stock/apps-api",
+    "stock:web:build": "turbo run build --no-daemon --filter=@stock/apps-api",
     "stock:dev": "turbo run dev --no-daemon --filter=@stock/apps-*",
     "stock:start": "turbo run start --no-daemon --filter=@stock/apps-*",
     "stock:start:debug": "turbo run start:debug --no-daemon --filter=@stock/apps-*",
