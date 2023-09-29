@@ -1,19 +1,21 @@
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { toggleSidebar } from '../../store/themeConfigSlice';
-import AnimateHeight from 'react-animate-height';
-import { IRootState } from '../../store';
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { useDispatch, useSelector } from 'react-redux';
+
+import type { IRootState } from '../../store';
+import { toggleSidebar } from '../../store/themeConfigSlice';
 
 const Sidebar = () => {
     const router = useRouter();
     const [currentMenu, setCurrentMenu] = useState<string>('');
     const [errorSubMenu, setErrorSubMenu] = useState(false);
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
-    const semidark = useSelector((state: IRootState) => state.themeConfig.semidark);
+    const semidark = useSelector(
+        (state: IRootState) => state.themeConfig.semidark,
+    );
     const toggleMenu = (value: string) => {
         setCurrentMenu((oldValue) => {
             return oldValue === value ? '' : value;
@@ -21,12 +23,15 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
-        const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
+        const selector = document.querySelector(
+            '.sidebar ul a[href="' + window.location.pathname + '"]',
+        );
         if (selector) {
             selector.classList.add('active');
             const ul: any = selector.closest('ul.sub-menu');
             if (ul) {
-                let ele: any = ul.closest('li.menu').querySelectorAll('.nav-link') || [];
+                let ele: any =
+                    ul.closest('li.menu').querySelectorAll('.nav-link') || [];
                 if (ele.length) {
                     ele = ele[0];
                     setTimeout(() => {
@@ -45,28 +50,42 @@ const Sidebar = () => {
     }, [router.pathname]);
 
     const setActiveRoute = () => {
-        let allLinks = document.querySelectorAll('.sidebar ul a.active');
+        const allLinks = document.querySelectorAll('.sidebar ul a.active');
         for (let i = 0; i < allLinks.length; i++) {
             const element = allLinks[i];
             element?.classList.remove('active');
         }
-        const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
+        const selector = document.querySelector(
+            '.sidebar ul a[href="' + window.location.pathname + '"]',
+        );
         selector?.classList.add('active');
     };
 
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+
+    const t = useCallback((text: string) => text, []);
 
     return (
         <div className={semidark ? 'dark' : ''}>
             <nav
-                className={`sidebar fixed top-0 bottom-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300 ${semidark ? 'text-white-dark' : ''}`}
+                className={`sidebar fixed inset-y-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300${
+                    semidark ? 'text-white-dark' : ''
+                }`}
             >
                 <div className="h-full bg-white dark:bg-black">
                     <div className="flex items-center justify-between px-4 py-3">
-                        <Link href="/" className="main-logo flex shrink-0 items-center">
-                            <img className="ml-[5px] w-8 flex-none" src="/assets/images/logo.svg" alt="logo" />
-                            <span className="align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">{t('VRISTO')}</span>
+                        <Link
+                            href="/"
+                            className="main-logo flex shrink-0 items-center"
+                        >
+                            <img
+                                className="ml-[5px] w-8 flex-none"
+                                src="/assets/images/logo.svg"
+                                alt="logo"
+                            />
+                            <span className="align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">
+                                {t('VRISTO')}
+                            </span>
                         </Link>
 
                         <button
@@ -74,18 +93,53 @@ const Sidebar = () => {
                             className="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10"
                             onClick={() => dispatch(toggleSidebar())}
                         >
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="m-auto h-5 w-5">
-                                <path d="M13 19L7 12L13 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="m-auto h-5 w-5"
+                            >
+                                <path
+                                    d="M13 19L7 12L13 5"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                                <path
+                                    opacity="0.5"
+                                    d="M16.9998 19L10.9998 12L16.9998 5"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
                             </svg>
                         </button>
                     </div>
                     <PerfectScrollbar className="relative h-[calc(100vh-80px)]">
                         <ul className="relative space-y-0.5 p-4 py-0 font-semibold">
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'dashboard' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('dashboard')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'dashboard'
+                                            ? 'active'
+                                            : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('dashboard')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M2 12.2039C2 9.91549 2 8.77128 2.5192 7.82274C3.0384 6.87421 3.98695 6.28551 5.88403 5.10813L7.88403 3.86687C9.88939 2.62229 10.8921 2 12 2C13.1079 2 14.1106 2.62229 16.116 3.86687L18.116 5.10812C20.0131 6.28551 20.9616 6.87421 21.4808 7.82274C22 8.77128 22 9.91549 22 12.2039V13.725C22 17.6258 22 19.5763 20.8284 20.7881C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.7881C2 19.5763 2 17.6258 2 13.725V12.2039Z"
@@ -96,36 +150,75 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('dashboard')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('dashboard')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'dashboard' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'dashboard'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'dashboard' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={
+                                        currentMenu === 'dashboard' ? 'auto' : 0
+                                    }
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
                                             <Link href="/">{t('sales')}</Link>
                                         </li>
                                         <li>
-                                            <Link href="/analytics">{t('analytics')}</Link>
+                                            <Link href="/analytics">
+                                                {t('analytics')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/finance">{t('finance')}</Link>
+                                            <Link href="/finance">
+                                                {t('finance')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/crypto">{t('crypto')}</Link>
+                                            <Link href="/crypto">
+                                                {t('crypto')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
                             </li>
 
-                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 py-3 px-7 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
-                                <svg className="hidden h-5 w-4 flex-none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                                <svg
+                                    className="hidden h-5 w-4 flex-none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 <span>{t('apps')}</span>
@@ -134,9 +227,19 @@ const Sidebar = () => {
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
-                                        <Link href="/apps/chat" className="group">
+                                        <Link
+                                            href="/apps/chat"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         fillRule="evenodd"
                                                         clipRule="evenodd"
@@ -149,15 +252,30 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('chat')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('chat')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/apps/mailbox" className="group">
+                                        <Link
+                                            href="/apps/mailbox"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M24 5C24 6.65685 22.6569 8 21 8C19.3431 8 18 6.65685 18 5C18 3.34315 19.3431 2 21 2C22.6569 2 24 3.34315 24 5Z" fill="currentColor" />
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M24 5C24 6.65685 22.6569 8 21 8C19.3431 8 18 6.65685 18 5C18 3.34315 19.3431 2 21 2C22.6569 2 24 3.34315 24 5Z"
+                                                        fill="currentColor"
+                                                    />
                                                     <path
                                                         d="M17.2339 7.46394L15.6973 8.74444C14.671 9.59966 13.9585 10.1915 13.357 10.5784C12.7747 10.9529 12.3798 11.0786 12.0002 11.0786C11.6206 11.0786 11.2258 10.9529 10.6435 10.5784C10.0419 10.1915 9.32941 9.59966 8.30315 8.74444L5.92837 6.76546C5.57834 6.47377 5.05812 6.52106 4.76643 6.87109C4.47474 7.22112 4.52204 7.74133 4.87206 8.03302L7.28821 10.0465C8.2632 10.859 9.05344 11.5176 9.75091 11.9661C10.4775 12.4334 11.185 12.7286 12.0002 12.7286C12.8154 12.7286 13.523 12.4334 14.2495 11.9661C14.947 11.5176 15.7372 10.859 16.7122 10.0465L18.3785 8.65795C17.9274 8.33414 17.5388 7.92898 17.2339 7.46394Z"
                                                         fill="currentColor"
@@ -172,14 +290,26 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('mailbox')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('mailbox')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/apps/todolist" className="group">
+                                        <Link
+                                            href="/apps/todolist"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         opacity="0.5"
                                                         d="M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z"
@@ -192,14 +322,26 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('todo_list')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('todo_list')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/apps/notes" className="group">
+                                        <Link
+                                            href="/apps/notes"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         opacity="0.5"
                                                         d="M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z"
@@ -224,14 +366,26 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('notes')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('notes')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/apps/scrumboard" className="group">
+                                        <Link
+                                            href="/apps/scrumboard"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         opacity="0.5"
                                                         d="M21 15.9983V9.99826C21 7.16983 21 5.75562 20.1213 4.87694C19.3529 4.10856 18.175 4.01211 16 4H8C5.82497 4.01211 4.64706 4.10856 3.87868 4.87694C3 5.75562 3 7.16983 3 9.99826V15.9983C3 18.8267 3 20.2409 3.87868 21.1196C4.75736 21.9983 6.17157 21.9983 9 21.9983H15C17.8284 21.9983 19.2426 21.9983 20.1213 21.1196C21 20.2409 21 18.8267 21 15.9983Z"
@@ -248,14 +402,26 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('scrumboard')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('scrumboard')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/apps/contacts" className="group">
+                                        <Link
+                                            href="/apps/contacts"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         opacity="0.5"
                                                         d="M19.7165 20.3624C21.143 19.5846 22 18.5873 22 17.5C22 16.3475 21.0372 15.2961 19.4537 14.5C17.6226 13.5794 14.9617 13 12 13C9.03833 13 6.37738 13.5794 4.54631 14.5C2.96285 15.2961 2 16.3475 2 17.5C2 18.6525 2.96285 19.7039 4.54631 20.5C6.37738 21.4206 9.03833 22 12 22C15.1066 22 17.8823 21.3625 19.7165 20.3624Z"
@@ -268,15 +434,34 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('contacts')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('contacts')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
 
                                     <li className="menu nav-item">
-                                        <button type="button" className={`${currentMenu === 'invoice' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('invoice')}>
+                                        <button
+                                            type="button"
+                                            className={`${
+                                                currentMenu === 'invoice'
+                                                    ? 'active'
+                                                    : ''
+                                            } nav-link group w-full`}
+                                            onClick={() =>
+                                                toggleMenu('invoice')
+                                            }
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         opacity="0.5"
                                                         fillRule="evenodd"
@@ -291,38 +476,83 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('invoice')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('invoice')}
+                                                </span>
                                             </div>
 
-                                            <div className={currentMenu === 'invoice' ? '!rotate-90' : 'rtl:rotate-180'}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            <div
+                                                className={
+                                                    currentMenu === 'invoice'
+                                                        ? '!rotate-90'
+                                                        : 'rtl:rotate-180'
+                                                }
+                                            >
+                                                <svg
+                                                    width="16"
+                                                    height="16"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M9 5L15 12L9 19"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.5"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
                                                 </svg>
                                             </div>
                                         </button>
 
-                                        <AnimateHeight duration={300} height={currentMenu === 'invoice' ? 'auto' : 0}>
+                                        <AnimateHeight
+                                            duration={300}
+                                            height={
+                                                currentMenu === 'invoice'
+                                                    ? 'auto'
+                                                    : 0
+                                            }
+                                        >
                                             <ul className="sub-menu text-gray-500">
                                                 <li>
-                                                    <Link href="/apps/invoice/list">{t('list')}</Link>
+                                                    <Link href="/apps/invoice/list">
+                                                        {t('list')}
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/apps/invoice/preview">{t('preview')}</Link>
+                                                    <Link href="/apps/invoice/preview">
+                                                        {t('preview')}
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/apps/invoice/add">{t('add')}</Link>
+                                                    <Link href="/apps/invoice/add">
+                                                        {t('add')}
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/apps/invoice/edit">{t('edit')}</Link>
+                                                    <Link href="/apps/invoice/edit">
+                                                        {t('edit')}
+                                                    </Link>
                                                 </li>
                                             </ul>
                                         </AnimateHeight>
                                     </li>
 
                                     <li className="nav-item">
-                                        <Link href="/apps/calendar" className="group">
+                                        <Link
+                                            href="/apps/calendar"
+                                            className="group"
+                                        >
                                             <div className="flex items-center">
-                                                <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg
+                                                    className="group-hover:!text-primary"
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                     <path
                                                         d="M6.94028 2C7.35614 2 7.69326 2.32421 7.69326 2.72414V4.18487C8.36117 4.17241 9.10983 4.17241 9.95219 4.17241H13.9681C14.8104 4.17241 15.5591 4.17241 16.227 4.18487V2.72414C16.227 2.32421 16.5641 2 16.98 2C17.3958 2 17.733 2.32421 17.733 2.72414V4.24894C19.178 4.36022 20.1267 4.63333 20.8236 5.30359C21.5206 5.97385 21.8046 6.88616 21.9203 8.27586L22 9H2.92456H2V8.27586C2.11571 6.88616 2.3997 5.97385 3.09665 5.30359C3.79361 4.63333 4.74226 4.36022 6.1873 4.24894V2.72414C6.1873 2.32421 6.52442 2 6.94028 2Z"
                                                         fill="currentColor"
@@ -333,24 +563,49 @@ const Sidebar = () => {
                                                         fill="currentColor"
                                                     />
                                                 </svg>
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('calendar')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                                    {t('calendar')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
                                 </ul>
                             </li>
 
-                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 py-3 px-7 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
-                                <svg className="hidden h-5 w-4 flex-none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                                <svg
+                                    className="hidden h-5 w-4 flex-none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 <span>{t('user_interface')}</span>
                             </h2>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'component' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('component')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'component'
+                                            ? 'active'
+                                            : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('component')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 d="M8.42229 20.6181C10.1779 21.5395 11.0557 22.0001 12 22.0001V12.0001L2.63802 7.07275C2.62423 7.09491 2.6107 7.11727 2.5974 7.13986C2 8.15436 2 9.41678 2 11.9416V12.0586C2 14.5834 2 15.8459 2.5974 16.8604C3.19479 17.8749 4.27063 18.4395 6.42229 19.5686L8.42229 20.6181Z"
                                                 fill="currentColor"
@@ -366,68 +621,136 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('components')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('components')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'component' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'component'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'component' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={
+                                        currentMenu === 'component' ? 'auto' : 0
+                                    }
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/components/tabs">{t('tabs')}</Link>
+                                            <Link href="/components/tabs">
+                                                {t('tabs')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/accordions">{t('accordions')}</Link>
+                                            <Link href="/components/accordions">
+                                                {t('accordions')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/modals">{t('modals')}</Link>
+                                            <Link href="/components/modals">
+                                                {t('modals')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/cards">{t('cards')}</Link>
+                                            <Link href="/components/cards">
+                                                {t('cards')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/carousel">{t('carousel')}</Link>
+                                            <Link href="/components/carousel">
+                                                {t('carousel')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/countdown">{t('countdown')}</Link>
+                                            <Link href="/components/countdown">
+                                                {t('countdown')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/counter">{t('counter')}</Link>
+                                            <Link href="/components/counter">
+                                                {t('counter')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/sweetalert">{t('sweet_alerts')}</Link>
+                                            <Link href="/components/sweetalert">
+                                                {t('sweet_alerts')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/timeline">{t('timeline')}</Link>
+                                            <Link href="/components/timeline">
+                                                {t('timeline')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/notifications">{t('notifications')}</Link>
+                                            <Link href="/components/notifications">
+                                                {t('notifications')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/media-object">{t('media_object')}</Link>
+                                            <Link href="/components/media-object">
+                                                {t('media_object')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/list-group">{t('list_group')}</Link>
+                                            <Link href="/components/list-group">
+                                                {t('list_group')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/pricing-table">{t('pricing_tables')}</Link>
+                                            <Link href="/components/pricing-table">
+                                                {t('pricing_tables')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/components/lightbox">{t('lightbox')}</Link>
+                                            <Link href="/components/lightbox">
+                                                {t('lightbox')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'element' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('element')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'element'
+                                            ? 'active'
+                                            : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('element')}
+                                >
                                     <div className="flex items-center">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:!text-primary">
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="group-hover:!text-primary"
+                                        >
                                             <path
                                                 fillRule="evenodd"
                                                 clipRule="evenodd"
@@ -440,71 +763,132 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             ></path>
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('elements')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('elements')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'element' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'element'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'element' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={
+                                        currentMenu === 'element' ? 'auto' : 0
+                                    }
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/elements/alerts">{t('alerts')}</Link>
+                                            <Link href="/elements/alerts">
+                                                {t('alerts')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/avatar">{t('avatar')}</Link>
+                                            <Link href="/elements/avatar">
+                                                {t('avatar')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/badges">{t('badges')}</Link>
+                                            <Link href="/elements/badges">
+                                                {t('badges')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/breadcrumbs">{t('breadcrumbs')}</Link>
+                                            <Link href="/elements/breadcrumbs">
+                                                {t('breadcrumbs')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/buttons">{t('buttons')}</Link>
+                                            <Link href="/elements/buttons">
+                                                {t('buttons')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/buttons-group">{t('button_groups')}</Link>
+                                            <Link href="/elements/buttons-group">
+                                                {t('button_groups')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/color-library">{t('color_library')}</Link>
+                                            <Link href="/elements/color-library">
+                                                {t('color_library')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/dropdown">{t('dropdown')}</Link>
+                                            <Link href="/elements/dropdown">
+                                                {t('dropdown')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/infobox">{t('infobox')}</Link>
+                                            <Link href="/elements/infobox">
+                                                {t('infobox')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/jumbotron">{t('jumbotron')}</Link>
+                                            <Link href="/elements/jumbotron">
+                                                {t('jumbotron')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/loader">{t('loader')}</Link>
+                                            <Link href="/elements/loader">
+                                                {t('loader')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/pagination">{t('pagination')}</Link>
+                                            <Link href="/elements/pagination">
+                                                {t('pagination')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/popovers">{t('popovers')}</Link>
+                                            <Link href="/elements/popovers">
+                                                {t('popovers')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/progress-bar">{t('progress_bar')}</Link>
+                                            <Link href="/elements/progress-bar">
+                                                {t('progress_bar')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/search">{t('search')}</Link>
+                                            <Link href="/elements/search">
+                                                {t('search')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/tooltips">{t('tooltips')}</Link>
+                                            <Link href="/elements/tooltips">
+                                                {t('tooltips')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/treeview">{t('treeview')}</Link>
+                                            <Link href="/elements/treeview">
+                                                {t('treeview')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/elements/typography">{t('typography')}</Link>
+                                            <Link href="/elements/typography">
+                                                {t('typography')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -513,7 +897,14 @@ const Sidebar = () => {
                             <li className="menu nav-item">
                                 <Link href="/charts" className="group">
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M6.22209 4.60105C6.66665 4.304 7.13344 4.04636 7.6171 3.82976C8.98898 3.21539 9.67491 2.9082 10.5875 3.4994C11.5 4.09061 11.5 5.06041 11.5 7.00001V8.50001C11.5 10.3856 11.5 11.3284 12.0858 11.9142C12.6716 12.5 13.6144 12.5 15.5 12.5H17C18.9396 12.5 19.9094 12.5 20.5006 13.4125C21.0918 14.3251 20.7846 15.011 20.1702 16.3829C19.9536 16.8666 19.696 17.3334 19.399 17.7779C18.3551 19.3402 16.8714 20.5578 15.1355 21.2769C13.3996 21.9959 11.4895 22.184 9.64665 21.8175C7.80383 21.4509 6.11109 20.5461 4.78249 19.2175C3.45389 17.8889 2.5491 16.1962 2.18254 14.3534C1.81598 12.5105 2.00412 10.6004 2.72315 8.86451C3.44218 7.12861 4.65982 5.64492 6.22209 4.60105Z"
@@ -524,7 +915,9 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('charts')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('charts')}
+                                        </span>
                                     </div>
                                 </Link>
                             </li>
@@ -532,7 +925,14 @@ const Sidebar = () => {
                             <li className="menu nav-item">
                                 <Link href="/widgets" className="group">
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M13 15.4C13 13.3258 13 12.2887 13.659 11.6444C14.318 11 15.3787 11 17.5 11C19.6213 11 20.682 11 21.341 11.6444C22 12.2887 22 13.3258 22 15.4V17.6C22 19.6742 22 20.7113 21.341 21.3556C20.682 22 19.6213 22 17.5 22C15.3787 22 14.318 22 13.659 21.3556C13 20.7113 13 19.6742 13 17.6V15.4Z"
@@ -552,7 +952,9 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('widgets')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('widgets')}
+                                        </span>
                                     </div>
                                 </Link>
                             </li>
@@ -560,7 +962,14 @@ const Sidebar = () => {
                             <li className="menu nav-item">
                                 <Link href="/font-icons" className="group">
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12Z"
@@ -573,7 +982,9 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('font_icons')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('font_icons')}
+                                        </span>
                                     </div>
                                 </Link>
                             </li>
@@ -581,7 +992,14 @@ const Sidebar = () => {
                             <li className="menu nav-item">
                                 <Link href="/dragndrop" className="group">
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
@@ -604,13 +1022,23 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('drag_and_drop')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('drag_and_drop')}
+                                        </span>
                                     </div>
                                 </Link>
                             </li>
 
-                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 py-3 px-7 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
-                                <svg className="hidden h-5 w-4 flex-none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                                <svg
+                                    className="hidden h-5 w-4 flex-none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 <span>{t('tables_and_forms')}</span>
@@ -619,7 +1047,14 @@ const Sidebar = () => {
                             <li className="menu nav-item">
                                 <Link href="/tables" className="group">
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22Z"
@@ -638,15 +1073,32 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('tables')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('tables')}
+                                        </span>
                                     </div>
                                 </Link>
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'datalabel' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('datalabel')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'datalabel'
+                                            ? 'active'
+                                            : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('datalabel')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 d="M4.97883 9.68508C2.99294 8.89073 2 8.49355 2 8C2 7.50645 2.99294 7.10927 4.97883 6.31492L7.7873 5.19153C9.77318 4.39718 10.7661 4 12 4C13.2339 4 14.2268 4.39718 16.2127 5.19153L19.0212 6.31492C21.0071 7.10927 22 7.50645 22 8C22 8.49355 21.0071 8.89073 19.0212 9.68508L16.2127 10.8085C14.2268 11.6028 13.2339 12 12 12C10.7661 12 9.77318 11.6028 7.7873 10.8085L4.97883 9.68508Z"
                                                 fill="currentColor"
@@ -668,59 +1120,119 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('datatables')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('datatables')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'datalabel' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'datalabel'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'datalabel' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={
+                                        currentMenu === 'datalabel' ? 'auto' : 0
+                                    }
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/datatables/basic">{t('basic')}</Link>
+                                            <Link href="/datatables/basic">
+                                                {t('basic')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/advanced">{t('advanced')}</Link>
+                                            <Link href="/datatables/advanced">
+                                                {t('advanced')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/skin">{t('skin')}</Link>
+                                            <Link href="/datatables/skin">
+                                                {t('skin')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/order-sorting">{t('order_sorting')}</Link>
+                                            <Link href="/datatables/order-sorting">
+                                                {t('order_sorting')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/multi-column">{t('multi_column')}</Link>
+                                            <Link href="/datatables/multi-column">
+                                                {t('multi_column')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/multiple-tables">{t('multiple_tables')}</Link>
+                                            <Link href="/datatables/multiple-tables">
+                                                {t('multiple_tables')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/alt-pagination">{t('alt_pagination')}</Link>
+                                            <Link href="/datatables/alt-pagination">
+                                                {t('alt_pagination')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/checkbox">{t('checkbox')}</Link>
+                                            <Link href="/datatables/checkbox">
+                                                {t('checkbox')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/range-search">{t('range_search')}</Link>
+                                            <Link href="/datatables/range-search">
+                                                {t('range_search')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/export">{t('export')}</Link>
+                                            <Link href="/datatables/export">
+                                                {t('export')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/datatables/column-chooser">{t('column_chooser')}</Link>
+                                            <Link href="/datatables/column-chooser">
+                                                {t('column_chooser')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'forms' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('forms')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'forms' ? 'active' : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('forms')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z"
@@ -741,109 +1253,251 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('forms')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('forms')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'forms' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'forms'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'forms' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={
+                                        currentMenu === 'forms' ? 'auto' : 0
+                                    }
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/forms/basic">{t('basic')}</Link>
+                                            <Link href="/forms/basic">
+                                                {t('basic')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/input-group">{t('input_group')}</Link>
+                                            <Link href="/forms/input-group">
+                                                {t('input_group')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/layouts">{t('layouts')}</Link>
+                                            <Link href="/forms/layouts">
+                                                {t('layouts')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/validation">{t('validation')}</Link>
+                                            <Link href="/forms/validation">
+                                                {t('validation')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/input-mask">{t('input_mask')}</Link>
+                                            <Link href="/forms/input-mask">
+                                                {t('input_mask')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/select2">{t('select2')}</Link>
+                                            <Link href="/forms/select2">
+                                                {t('select2')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/touchspin">{t('touchspin')}</Link>
+                                            <Link href="/forms/touchspin">
+                                                {t('touchspin')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/checkbox-radio">{t('checkbox_&_radio')}</Link>
+                                            <Link href="/forms/checkbox-radio">
+                                                {t('checkbox_&_radio')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/switches">{t('switches')}</Link>
+                                            <Link href="/forms/switches">
+                                                {t('switches')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/wizards">{t('wizards')}</Link>
+                                            <Link href="/forms/wizards">
+                                                {t('wizards')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/file-upload">{t('file_upload')}</Link>
+                                            <Link href="/forms/file-upload">
+                                                {t('file_upload')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/quill-editor">{t('quill_editor')}</Link>
+                                            <Link href="/forms/quill-editor">
+                                                {t('quill_editor')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/markdown-editor">{t('markdown_editor')}</Link>
+                                            <Link href="/forms/markdown-editor">
+                                                {t('markdown_editor')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/date-picker">{t('date_&_range_picker')}</Link>
+                                            <Link href="/forms/date-picker">
+                                                {t('date_&_range_picker')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/forms/clipboard">{t('clipboard')}</Link>
+                                            <Link href="/forms/clipboard">
+                                                {t('clipboard')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
                             </li>
 
-                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 py-3 px-7 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
-                                <svg className="hidden h-5 w-4 flex-none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                                <svg
+                                    className="hidden h-5 w-4 flex-none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 <span>{t('user_and_pages')}</span>
                             </h2>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'users' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('users')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'users' ? 'active' : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('users')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.5" cx="15" cy="6" r="3" fill="currentColor" />
-                                            <ellipse opacity="0.5" cx="16" cy="17" rx="5" ry="3" fill="currentColor" />
-                                            <circle cx="9.00098" cy="6" r="4" fill="currentColor" />
-                                            <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <circle
+                                                opacity="0.5"
+                                                cx="15"
+                                                cy="6"
+                                                r="3"
+                                                fill="currentColor"
+                                            />
+                                            <ellipse
+                                                opacity="0.5"
+                                                cx="16"
+                                                cy="17"
+                                                rx="5"
+                                                ry="3"
+                                                fill="currentColor"
+                                            />
+                                            <circle
+                                                cx="9.00098"
+                                                cy="6"
+                                                r="4"
+                                                fill="currentColor"
+                                            />
+                                            <ellipse
+                                                cx="9.00098"
+                                                cy="17.001"
+                                                rx="7"
+                                                ry="4"
+                                                fill="currentColor"
+                                            />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('users')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('users')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'users' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'users'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'users' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={
+                                        currentMenu === 'users' ? 'auto' : 0
+                                    }
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/users/profile">{t('profile')}</Link>
+                                            <Link href="/users/profile">
+                                                {t('profile')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/users/user-account-settings">{t('account_settings')}</Link>
+                                            <Link href="/users/user-account-settings">
+                                                {t('account_settings')}
+                                            </Link>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'page' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('page')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'page' ? 'active' : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('page')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 fillRule="evenodd"
@@ -864,31 +1518,64 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('pages')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('pages')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'page' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'page'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'page' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={currentMenu === 'page' ? 'auto' : 0}
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/pages/knowledge-base">{t('knowledge_base')}</Link>
+                                            <Link href="/pages/knowledge-base">
+                                                {t('knowledge_base')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/pages/contact-us" target="_blank">
+                                            <Link
+                                                href="/pages/contact-us"
+                                                target="_blank"
+                                            >
                                                 {t('contact_form')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/pages/faq">{t('faq')}</Link>
+                                            <Link href="/pages/faq">
+                                                {t('faq')}
+                                            </Link>
                                         </li>
                                         <li>
-                                            <Link href="/pages/coming-soon" target="_blank">
+                                            <Link
+                                                href="/pages/coming-soon"
+                                                target="_blank"
+                                            >
                                                 {t('coming_soon')}
                                             </Link>
                                         </li>
@@ -898,11 +1585,27 @@ const Sidebar = () => {
                                                 className={`${
                                                     errorSubMenu ? 'open' : ''
                                                 } w-full before:h-[5px] before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900`}
-                                                onClick={() => setErrorSubMenu(!errorSubMenu)}
+                                                onClick={() =>
+                                                    setErrorSubMenu(
+                                                        !errorSubMenu,
+                                                    )
+                                                }
                                             >
                                                 {t('error')}
-                                                <div className={`${errorSubMenu ? '!rotate-90' : ''} ltr:ml-auto rtl:mr-auto rtl:rotate-180`}>
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <div
+                                                    className={`${
+                                                        errorSubMenu
+                                                            ? '!rotate-90'
+                                                            : ''
+                                                    } ltr:ml-auto rtl:mr-auto rtl:rotate-180`}
+                                                >
+                                                    <svg
+                                                        width="16"
+                                                        height="16"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
                                                         <path
                                                             opacity="0.5"
                                                             d="M6.25 19C6.25 19.3139 6.44543 19.5946 6.73979 19.7035C7.03415 19.8123 7.36519 19.7264 7.56944 19.4881L13.5694 12.4881C13.8102 12.2073 13.8102 11.7928 13.5694 11.5119L7.56944 4.51194C7.36519 4.27364 7.03415 4.18773 6.73979 4.29662C6.44543 4.40551 6.25 4.68618 6.25 5.00004L6.25 19Z"
@@ -917,20 +1620,34 @@ const Sidebar = () => {
                                                     </svg>
                                                 </div>
                                             </button>
-                                            <AnimateHeight duration={300} height={errorSubMenu ? 'auto' : 0}>
+                                            <AnimateHeight
+                                                duration={300}
+                                                height={
+                                                    errorSubMenu ? 'auto' : 0
+                                                }
+                                            >
                                                 <ul className="sub-menu text-gray-500">
                                                     <li>
-                                                        <a href="/pages/error404" target="_blank">
+                                                        <a
+                                                            href="/pages/error404"
+                                                            target="_blank"
+                                                        >
                                                             {t('404')}
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="/pages/error500" target="_blank">
+                                                        <a
+                                                            href="/pages/error500"
+                                                            target="_blank"
+                                                        >
                                                             {t('500')}
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="/pages/error503" target="_blank">
+                                                        <a
+                                                            href="/pages/error503"
+                                                            target="_blank"
+                                                        >
                                                             {t('503')}
                                                         </a>
                                                     </li>
@@ -939,7 +1656,10 @@ const Sidebar = () => {
                                         </li>
 
                                         <li>
-                                            <Link href="/pages/maintenence" target="_blank">
+                                            <Link
+                                                href="/pages/maintenence"
+                                                target="_blank"
+                                            >
                                                 {t('maintenence')}
                                             </Link>
                                         </li>
@@ -948,71 +1668,140 @@ const Sidebar = () => {
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'auth' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('auth')}>
+                                <button
+                                    type="button"
+                                    className={`${
+                                        currentMenu === 'auth' ? 'active' : ''
+                                    } nav-link group w-full`}
+                                    onClick={() => toggleMenu('auth')}
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 opacity="0.5"
                                                 d="M2 16C2 13.1716 2 11.7574 2.87868 10.8787C3.75736 10 5.17157 10 8 10H16C18.8284 10 20.2426 10 21.1213 10.8787C22 11.7574 22 13.1716 22 16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H8C5.17157 22 3.75736 22 2.87868 21.1213C2 20.2426 2 18.8284 2 16Z"
                                                 fill="currentColor"
                                             />
-                                            <path d="M8 17C8.55228 17 9 16.5523 9 16C9 15.4477 8.55228 15 8 15C7.44772 15 7 15.4477 7 16C7 16.5523 7.44772 17 8 17Z" fill="currentColor" />
-                                            <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="currentColor" />
-                                            <path d="M17 16C17 16.5523 16.5523 17 16 17C15.4477 17 15 16.5523 15 16C15 15.4477 15.4477 15 16 15C16.5523 15 17 15.4477 17 16Z" fill="currentColor" />
+                                            <path
+                                                d="M8 17C8.55228 17 9 16.5523 9 16C9 15.4477 8.55228 15 8 15C7.44772 15 7 15.4477 7 16C7 16.5523 7.44772 17 8 17Z"
+                                                fill="currentColor"
+                                            />
+                                            <path
+                                                d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z"
+                                                fill="currentColor"
+                                            />
+                                            <path
+                                                d="M17 16C17 16.5523 16.5523 17 16 17C15.4477 17 15 16.5523 15 16C15 15.4477 15.4477 15 16 15C16.5523 15 17 15.4477 17 16Z"
+                                                fill="currentColor"
+                                            />
                                             <path
                                                 d="M6.75 8C6.75 5.10051 9.10051 2.75 12 2.75C14.8995 2.75 17.25 5.10051 17.25 8V10.0036C17.8174 10.0089 18.3135 10.022 18.75 10.0546V8C18.75 4.27208 15.7279 1.25 12 1.25C8.27208 1.25 5.25 4.27208 5.25 8V10.0546C5.68651 10.022 6.18264 10.0089 6.75 10.0036V8Z"
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('authentication')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('authentication')}
+                                        </span>
                                     </div>
 
-                                    <div className={currentMenu === 'auth' ? 'rotate-90' : 'rtl:rotate-180'}>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <div
+                                        className={
+                                            currentMenu === 'auth'
+                                                ? 'rotate-90'
+                                                : 'rtl:rotate-180'
+                                        }
+                                    >
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M9 5L15 12L9 19"
+                                                stroke="currentColor"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'auth' ? 'auto' : 0}>
+                                <AnimateHeight
+                                    duration={300}
+                                    height={currentMenu === 'auth' ? 'auto' : 0}
+                                >
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <Link href="/auth/boxed-signin" target="_blank">
+                                            <Link
+                                                href="/auth/boxed-signin"
+                                                target="_blank"
+                                            >
                                                 {t('login_boxed')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/boxed-signup" target="_blank">
+                                            <Link
+                                                href="/auth/boxed-signup"
+                                                target="_blank"
+                                            >
                                                 {t('register_boxed')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/boxed-lockscreen" target="_blank">
+                                            <Link
+                                                href="/auth/boxed-lockscreen"
+                                                target="_blank"
+                                            >
                                                 {t('unlock_boxed')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/boxed-password-reset" target="_blank">
+                                            <Link
+                                                href="/auth/boxed-password-reset"
+                                                target="_blank"
+                                            >
                                                 {t('recover_id_boxed')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/cover-login" target="_blank">
+                                            <Link
+                                                href="/auth/cover-login"
+                                                target="_blank"
+                                            >
                                                 {t('login_cover')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/cover-register" target="_blank">
+                                            <Link
+                                                href="/auth/cover-register"
+                                                target="_blank"
+                                            >
                                                 {t('register_cover')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/cover-lockscreen" target="_blank">
+                                            <Link
+                                                href="/auth/cover-lockscreen"
+                                                target="_blank"
+                                            >
                                                 {t('unlock_cover')}
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link href="/auth/cover-password-reset" target="_blank">
+                                            <Link
+                                                href="/auth/cover-password-reset"
+                                                target="_blank"
+                                            >
                                                 {t('recover_id_cover')}
                                             </Link>
                                         </li>
@@ -1020,17 +1809,35 @@ const Sidebar = () => {
                                 </AnimateHeight>
                             </li>
 
-                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 py-3 px-7 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
-                                <svg className="hidden h-5 w-4 flex-none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                                <svg
+                                    className="hidden h-5 w-4 flex-none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 <span>{t('supports')}</span>
                             </h2>
 
                             <li className="menu nav-item">
-                                <button type="button" className="nav-link group">
+                                <button
+                                    type="button"
+                                    className="nav-link group"
+                                >
                                     <div className="flex items-center">
-                                        <svg className="group-hover:!text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg
+                                            className="group-hover:!text-primary"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
                                             <path
                                                 fillRule="evenodd"
                                                 clipRule="evenodd"
@@ -1043,7 +1850,9 @@ const Sidebar = () => {
                                                 fill="currentColor"
                                             />
                                         </svg>
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('documentation')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+                                            {t('documentation')}
+                                        </span>
                                     </div>
                                 </button>
                             </li>
