@@ -533,3 +533,11 @@ model StockTradingAnalysis {
 
   @@map("stock_trading_analysis")
 }
+
+model Result {
+  key   String @id
+  value String
+
+  // cache everything in db
+  @@map("results")
+}
