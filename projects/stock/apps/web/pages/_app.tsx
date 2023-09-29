@@ -30,7 +30,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     return (
         <Provider store={store}>
             <Head>
-                <title>Meta</title>
+                <title>Meta v0.0.1</title>
                 <meta charSet="UTF-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
