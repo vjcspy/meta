@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import CodeHighlight from '../components/Highlight';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../store';
-import { setPageTitle } from '../store/themeConfigSlice';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import CodeHighlight from '../components/Highlight';
+import type { IRootState } from '../store';
+import { setPageTitle } from '../store/themeConfigSlice';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
     ssr: false,
 });
@@ -24,8 +25,11 @@ const Charts = () => {
         }
     };
 
-    const isDark = useSelector((state: IRootState) => state.themeConfig.theme) === 'dark' ? true : false;
-    const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
+    const isDark =
+        useSelector((state: IRootState) => state.themeConfig.theme) === 'dark';
+    const isRtl =
+        useSelector((state: IRootState) => state.themeConfig.rtlClass) ===
+        'rtl';
 
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
@@ -82,7 +86,10 @@ const Charts = () => {
         series: [
             {
                 name: 'Income',
-                data: [16800, 16800, 15500, 17800, 15500, 17000, 19000, 16000, 15000, 17000, 14000, 17000],
+                data: [
+                    16800, 16800, 15500, 17800, 15500, 17000, 19000, 16000,
+                    15000, 17000, 14000, 17000,
+                ],
             },
         ],
         options: {
@@ -115,7 +122,20 @@ const Charts = () => {
                     offsetX: isRtl ? -40 : 0,
                 },
             },
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+            ],
             legend: {
                 horizontalAlign: 'left',
             },
@@ -171,7 +191,18 @@ const Charts = () => {
                 borderColor: isDark ? '#191e3a' : '#e0e6ed',
             },
             xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                ],
                 axisBorder: {
                     color: isDark ? '#191e3a' : '#e0e6ed',
                 },
@@ -237,7 +268,14 @@ const Charts = () => {
             },
             xaxis: {
                 type: 'datetime',
-                categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT', '01/05/2011 GMT', '01/06/2011 GMT'],
+                categories: [
+                    '01/01/2011 GMT',
+                    '01/02/2011 GMT',
+                    '01/03/2011 GMT',
+                    '01/04/2011 GMT',
+                    '01/05/2011 GMT',
+                    '01/06/2011 GMT',
+                ],
                 axisBorder: {
                     color: isDark ? '#191e3a' : '#e0e6ed',
                 },
@@ -362,7 +400,19 @@ const Charts = () => {
                 opacity: [1, 0.25, 1],
             },
 
-            labels: ['01/01/2022', '02/01/2022', '03/01/2022', '04/01/2022', '05/01/2022', '06/01/2022', '07/01/2022', '08/01/2022', '09/01/2022', '10/01/2022', '11/01/2022'],
+            labels: [
+                '01/01/2022',
+                '02/01/2022',
+                '03/01/2022',
+                '04/01/2022',
+                '05/01/2022',
+                '06/01/2022',
+                '07/01/2022',
+                '08/01/2022',
+                '09/01/2022',
+                '10/01/2022',
+                '11/01/2022',
+            ],
             markers: {
                 size: 0,
             },
@@ -420,7 +470,14 @@ const Charts = () => {
             },
             colors: ['#4361ee'],
             xaxis: {
-                categories: ['January', 'February', 'March', 'April', 'May', 'June'],
+                categories: [
+                    'January',
+                    'February',
+                    'March',
+                    'April',
+                    'May',
+                    'June',
+                ],
             },
             plotOptions: {
                 radar: {
@@ -520,7 +577,15 @@ const Charts = () => {
                     show: false,
                 },
             },
-            colors: ['#4361ee', '#805dca', '#00ab55', '#e7515a', '#e2a03f', '#2196f3', '#3b3f5c'],
+            colors: [
+                '#4361ee',
+                '#805dca',
+                '#00ab55',
+                '#e7515a',
+                '#e2a03f',
+                '#2196f3',
+                '#3b3f5c',
+            ],
             stroke: {
                 show: false,
             },
@@ -603,9 +668,11 @@ const Charts = () => {
         let i = 0;
         const series = [];
         while (i < count) {
-            var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
-            var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-            var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
+            const x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
+            const y =
+                Math.floor(Math.random() * (yrange.max - yrange.min + 1)) +
+                yrange.min;
+            const z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
 
             series.push([x, y, z]);
             baseval += 86400000;
@@ -692,34 +759,70 @@ const Charts = () => {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <div className="panel flex items-center overflow-x-auto whitespace-nowrap p-3 text-primary lg:col-span-2">
                     <div className="rounded-full bg-primary p-1.5 text-white ring-2 ring-primary/30 ltr:mr-3 rtl:ml-3">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
                             <path
                                 d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z"
                                 stroke="currentColor"
                                 strokeWidth="1.5"
                             />
-                            <path opacity="0.5" d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            <path
+                                opacity="0.5"
+                                d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                            />
                         </svg>
                     </div>
                     <span className="ltr:mr-3 rtl:ml-3">Documentation: </span>
-                    <a href="https://www.npmjs.com/package/react-apexcharts" target="_blank" className="block hover:underline" rel="noreferrer">
+                    <a
+                        href="https://www.npmjs.com/package/react-apexcharts"
+                        target="_blank"
+                        className="block hover:underline"
+                        rel="noreferrer"
+                    >
                         https://www.npmjs.com/package/react-apexcharts
                     </a>
                 </div>
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white-light">Simple Line</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code1')}>
+                        <h5 className="text-lg font-semibold dark:text-white-light">
+                            Simple Line
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code1')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -732,7 +835,16 @@ const Charts = () => {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={lineChart.series} options={lineChart.options} className="rounded-lg bg-white dark:bg-black" type="line" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={lineChart.series}
+                                options={lineChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="line"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code1') && (
                         <CodeHighlight>
@@ -796,17 +908,36 @@ const lineChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Simple Area</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code2')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Simple Area
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code2')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -819,7 +950,16 @@ const lineChart: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={areaChart.series} options={areaChart.options} className="rounded-lg bg-white dark:bg-black" type="area" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={areaChart.series}
+                                options={areaChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="area"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code2') && (
                         <CodeHighlight>
@@ -886,17 +1026,36 @@ const areaChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Simple Column</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code3')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Simple Column
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code3')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -909,7 +1068,16 @@ const areaChart: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={columnChart.series} options={columnChart.options} className="rounded-lg bg-white dark:bg-black" type="bar" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={columnChart.series}
+                                options={columnChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="bar"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code3') && (
                         <CodeHighlight>
@@ -990,17 +1158,36 @@ const columnChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Simple Column Stacked</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code4')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Simple Column Stacked
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code4')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1109,17 +1296,36 @@ const simpleColumnStacked: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Simple Bar</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code5')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Simple Bar
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code5')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1132,7 +1338,16 @@ const simpleColumnStacked: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={barChart.series} options={barChart.options} className="rounded-lg bg-white dark:bg-black" type="bar" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={barChart.series}
+                                options={barChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="bar"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code5') && (
                         <CodeHighlight>
@@ -1199,17 +1414,36 @@ const barChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Mixed</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code6')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Mixed
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code6')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1222,7 +1456,16 @@ const barChart: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={mixedChart.series} options={mixedChart.options} className="rounded-lg bg-white dark:bg-black" type="bar" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={mixedChart.series}
+                                options={mixedChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="bar"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code6') && (
                         <CodeHighlight>
@@ -1322,17 +1565,36 @@ const mixedChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Basic Radar</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code7')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Basic Radar
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code7')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1345,7 +1607,16 @@ const mixedChart: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={radarChart.series} options={radarChart.options} className="rounded-lg bg-white dark:bg-black" type="radar" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={radarChart.series}
+                                options={radarChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="radar"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code7') && (
                         <CodeHighlight>
@@ -1398,17 +1669,36 @@ const radarChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Basic Pie</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code8')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Basic Pie
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code8')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1421,7 +1711,16 @@ const radarChart: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={pieChart.series} options={pieChart.options} className="rounded-lg bg-white dark:bg-black" type="pie" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={pieChart.series}
+                                options={pieChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="pie"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code8') && (
                         <CodeHighlight>
@@ -1472,17 +1771,36 @@ const pieChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Basic Donut</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code9')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Basic Donut
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code9')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1495,7 +1813,16 @@ const pieChart: any = {
                         </button>
                     </div>
                     <div className="mb-5">
-                        {isMounted && <ReactApexChart series={donutChart.series} options={donutChart.options} className="rounded-lg bg-white dark:bg-black" type="donut" height={300} width={'100%'} />}
+                        {isMounted && (
+                            <ReactApexChart
+                                series={donutChart.series}
+                                options={donutChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="donut"
+                                height={300}
+                                width={'100%'}
+                            />
+                        )}
                     </div>
                     {codeArr.includes('code9') && (
                         <CodeHighlight>
@@ -1546,17 +1873,36 @@ const donutChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Basic Polar Area</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code10')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Basic Polar Area
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code10')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1641,17 +1987,36 @@ const polarAreaChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Radial Bar</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code11')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Radial Bar
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code11')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1734,17 +2099,36 @@ const radialBarChart: any = {
 
                 <div className="panel">
                     <div className="mb-5 flex items-center justify-between">
-                        <h5 className="text-lg font-semibold dark:text-white">Bubble Chart</h5>
-                        <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code12')}>
+                        <h5 className="text-lg font-semibold dark:text-white">
+                            Bubble Chart
+                        </h5>
+                        <button
+                            type="button"
+                            className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                            onClick={() => toggleCode('code12')}
+                        >
                             <span className="flex items-center">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M13.9868 5L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1758,7 +2142,14 @@ const radialBarChart: any = {
                     </div>
                     <div className="mb-5">
                         {isMounted && (
-                            <ReactApexChart series={bubbleChart.series} options={bubbleChart.options} className="rounded-lg bg-white dark:bg-black" type="bubble" height={300} width={'100%'} />
+                            <ReactApexChart
+                                series={bubbleChart.series}
+                                options={bubbleChart.options}
+                                className="rounded-lg bg-white dark:bg-black"
+                                type="bubble"
+                                height={300}
+                                width={'100%'}
+                            />
                         )}
                     </div>
                     {codeArr.includes('code12') && (

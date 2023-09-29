@@ -6,7 +6,6 @@ import type { IRootState } from './store';
 import {
     toggleAnimation,
     toggleLayout,
-    toggleLocale,
     toggleMenu,
     toggleNavbar,
     toggleRTL,
@@ -18,6 +17,7 @@ function App({ children }: PropsWithChildren) {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
     const dispatch = useDispatch();
 
+    // Default theme config
     useEffect(() => {
         dispatch(
             toggleTheme(localStorage.getItem('theme') || themeConfig.theme),
@@ -42,20 +42,13 @@ function App({ children }: PropsWithChildren) {
                 localStorage.getItem('semidark') || themeConfig.semidark,
             ),
         );
-        // locale
-        const locale = localStorage.getItem('i18nextLng') || themeConfig.locale;
-        dispatch(toggleLocale(locale));
-    }, [
-        dispatch,
-        themeConfig.theme,
-        themeConfig.menu,
-        themeConfig.layout,
-        themeConfig.rtlClass,
-        themeConfig.animation,
-        themeConfig.navbar,
-        themeConfig.locale,
-        themeConfig.semidark,
-    ]);
+
+        dispatch(
+            toggleNavbar(
+                localStorage.getItem('themeDemo') || themeConfig.themeDemo,
+            ),
+        );
+    }, []);
 
     return (
         <div
