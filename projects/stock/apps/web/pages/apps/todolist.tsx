@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import {useState, useEffect, Fragment, useMemo} from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Swal from 'sweetalert2';
 import { Dialog, Transition } from '@headlessui/react';
@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { setPageTitle } from '../../store/themeConfigSlice';
 import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(import('react-quill'), { ssr: false });
 
 const Todolist = () => {
+    const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Todolist'));

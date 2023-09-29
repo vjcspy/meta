@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,  useMemo } from 'react';
 import { Disclosure } from '@headlessui/react';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -10,9 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store';
 import { setPageTitle } from '../../store/themeConfigSlice';
 import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(import('react-quill'), { ssr: false });
 
 const Mailbox = () => {
+    const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Mailbox'));
