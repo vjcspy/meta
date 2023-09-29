@@ -31,6 +31,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      next:
+        specifier: latest
+        version: 13.5.3(@babel/core@7.22.11)(react-dom@18.2.0)(react@18.2.0)(sass@1.66.1)
       node-fetch:
         specifier: ^2.7.0
         version: 2.7.0
@@ -473,9 +476,6 @@ importers:
       mantine-datatable:
         specifier: ^1.7.35
         version: 1.8.8(@mantine/core@5.10.5)(@mantine/hooks@5.10.5)(react@18.2.0)
-      next:
-        specifier: latest
-        version: 13.5.3(@babel/core@7.22.11)(react-dom@18.2.0)(react@18.2.0)(sass@1.66.1)
       react:
         specifier: latest
         version: 18.2.0
