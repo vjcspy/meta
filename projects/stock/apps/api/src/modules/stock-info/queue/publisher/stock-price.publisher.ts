@@ -10,21 +10,30 @@ export class StockPricePublisher {
 
   constructor(private readonly connectionManager: AmqpConnectionManager) {}
 
-  async publish() {
+  async publish(exchange: string[] = [], fromBeginning: boolean = false) {
     const cors = await prisma.cor_entity.findMany();
+    let size = 0;
     _.forEach(cors, (cor) => {
-      this.connectionManager
-        .getConnection()
-        .publish(
-          SyncValues.EXCHANGE_KEY,
-          SyncValues.STOCK_PRICE_SYNC_KEY,
-          cor.code,
-          {},
-        );
+      if (Array.isArray(exchange) && exchange.length > 0) {
+        if (!_.includes(exchange, cor.exchange)) {
+          return true;
+        }
+      }
+
+      this.connectionManager.getConnection().publish(
+        SyncValues.EXCHANGE_KEY,
+        SyncValues.STOCK_PRICE_SYNC_KEY,
+        {
+          code: cor.code,
+          fromBeginning,
+        },
+        {},
+      );
+      size += 1;
     });
 
     return {
-      size: cors.length,
+      size,
     };
   }
 }
