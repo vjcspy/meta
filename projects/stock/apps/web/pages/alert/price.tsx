@@ -75,7 +75,6 @@ export default function Price() {
     }, [search, alerts]);
 
     const saveAlert = useCallback(async () => {
-        console.log(params);
         try {
             setUpdating(true);
             if (!isJSONString(params.conditions)) {
