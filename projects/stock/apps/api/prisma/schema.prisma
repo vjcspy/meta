@@ -543,10 +543,12 @@ model Result {
 }
 
 model StockAlert {
-  id        Int     @id @default(autoincrement())
-  symbol    String? @unique @db.VarChar(10)
-  condition Json
+  id         Int     @id @default(autoincrement())
+  name       String
+  symbol     String? @unique @db.VarChar(10)
+  conditions Json
+  state      Int     @db.SmallInt
 
   // cache everything in db
-  @@map("stock_alert")
+  @@map("stock_alerts")
 }

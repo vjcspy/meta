@@ -34,7 +34,7 @@ const initialState = {
 };
 
 const themeConfigSlice = createSlice({
-    name: 'auth',
+    name: 'theme',
     initialState: initialState,
     reducers: {
         toggleTheme(state, { payload }) {

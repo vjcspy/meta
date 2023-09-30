@@ -97,7 +97,7 @@ importers:
         version: 2.28.1(@typescript-eslint/parser@6.4.1)(eslint-import-resolver-typescript@3.6.0)(eslint@8.50.0)
       eslint-plugin-jest:
         specifier: latest
-        version: 27.4.0(@typescript-eslint/eslint-plugin@6.7.3)(eslint@8.50.0)(typescript@5.2.2)
+        version: 27.4.2(@typescript-eslint/eslint-plugin@6.7.3)(eslint@8.50.0)(typescript@5.2.2)
       eslint-plugin-jest-dom:
         specifier: ^5.1.0
         version: 5.1.0(eslint@8.50.0)
@@ -447,7 +447,7 @@ importers:
         specifier: ^5.10.5
         version: 5.10.5(react@18.2.0)
       '@reduxjs/toolkit':
-        specifier: ^1.9.1
+        specifier: latest
         version: 1.9.6(react-redux@8.1.2)(react@18.2.0)
       '@tippyjs/react':
         specifier: ^4.2.6
@@ -455,6 +455,9 @@ importers:
       '@x1mrdonut1x/nouislider-react':
         specifier: ^3.4.3
         version: 3.4.3(nouislider@15.7.1)(react@18.2.0)
+      ace-builds:
+        specifier: ^1.28.0
+        version: 1.28.0
       apexcharts:
         specifier: ^3.37.1
         version: 3.42.0
@@ -482,6 +485,9 @@ importers:
       react-18-image-lightbox:
         specifier: ^5.1.4
         version: 5.1.4(react-dom@18.2.0)(react@18.2.0)
+      react-ace:
+        specifier: ^10.1.0
+        version: 10.1.0(react-dom@18.2.0)(react@18.2.0)
       react-animate-height:
         specifier: ^3.1.0
         version: 3.2.2(react-dom@18.2.0)(react@18.2.0)
@@ -519,10 +525,10 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
       react-redux:
-        specifier: ^8.0.5
+        specifier: latest
         version: 8.1.2(@types/react-dom@18.2.8)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       react-select:
-        specifier: ^5.7.0
+        specifier: latest
         version: 5.7.5(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       react-simplemde-editor:
         specifier: ^5.2.0
@@ -6380,6 +6386,10 @@ packages:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
+  /ace-builds@1.28.0:
+    resolution: {integrity: sha512-wkJp+Wz8MRHtCVdt65L/jPFLAQ0iqJZ2EeD2XWOvKGbIi4mZNwHlpHRLRB8ZnQ07VoiB0TLFWwIjjm2FL9gUcQ==}
+    dev: false
+
   /acorn-import-assertions@1.9.0(acorn@8.10.0):
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
     peerDependencies:
@@ -8206,6 +8216,10 @@ packages:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
     dev: true
 
+  /diff-match-patch@1.0.5:
+    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
+    dev: false
+
   /diff-sequences@29.4.3:
     resolution: {integrity: sha512-ofrBgwpPhCD85kMKtE9RYFFq6OC1A89oW2vvgWZNCwxrUpRUILopY7lsYyMDSjc8g6U6aiO0Qubg6r4Wgt5ZnA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -8992,8 +9006,8 @@ packages:
       eslint: 8.50.0
     dev: true
 
-  /eslint-plugin-jest@27.4.0(@typescript-eslint/eslint-plugin@6.7.3)(eslint@8.50.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-ukVeKmMPAUA5SWjHenvyyXnirKfHKMdOsTZdn5tZx5EW05HGVQwBohigjFZGGj3zuv1cV6hc82FvWv6LdIbkgg==}
+  /eslint-plugin-jest@27.4.2(@typescript-eslint/eslint-plugin@6.7.3)(eslint@8.50.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-3Nfvv3wbq2+PZlRTf2oaAWXWwbdBejFRBR2O8tAO67o+P8zno+QGbcDYaAXODlreXVg+9gvWhKKmG2rgfb8GEg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^5.0.0 || ^6.0.0
@@ -11755,6 +11769,14 @@ packages:
     resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
     dev: true
 
+  /lodash.get@4.4.2:
+    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    dev: false
+
+  /lodash.isequal@4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    dev: false
+
   /lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
     dev: true
@@ -13456,6 +13478,21 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-modal: 3.16.1(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /react-ace@10.1.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VkvUjZNhdYTuKOKQpMIZi7uzZZVgzCjM7cLYu6F64V0mejY8a2XTyPUIMszC6A4trbeMIHbK5fYFcT/wkP/8VA==}
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      ace-builds: 1.28.0
+      diff-match-patch: 1.0.5
+      lodash.get: 4.4.2
+      lodash.isequal: 4.5.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-animate-height@3.2.2(react-dom@18.2.0)(react@18.2.0):
