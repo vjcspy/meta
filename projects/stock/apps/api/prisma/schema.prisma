@@ -545,7 +545,7 @@ model Result {
 model StockAlert {
   id         Int     @id @default(autoincrement())
   name       String
-  symbol     String? @unique @db.VarChar(10)
+  symbol     String? @db.VarChar(10)
   conditions Json
   state      Int     @db.SmallInt
 

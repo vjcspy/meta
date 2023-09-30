@@ -9,10 +9,20 @@ export class StockAlertRepo {
     return prisma.stockAlert.findMany({});
   }
 
-  updateAlert(data: AlertDto) {
+  async updateAlert(data: AlertDto) {
     const _data: AlertDto = plainToInstance(AlertDto, data, {
       exposeUnsetFields: false,
     });
+
+    // check symbol
+    if (_data.symbol) {
+      await prisma.cor_entity.findFirstOrThrow({
+        where: {
+          code: _data.symbol,
+        },
+      });
+    }
+
     if (_data.id) {
       return prisma.stockAlert.upsert({
         where: { id: Number(_data.id) },

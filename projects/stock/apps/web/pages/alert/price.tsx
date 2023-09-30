@@ -34,7 +34,7 @@ export default function Price() {
         id: null,
         name: '',
         symbol: '',
-        conditions: '',
+        conditions: '{}',
         state: 1,
     });
 
@@ -88,10 +88,14 @@ export default function Price() {
                 return true;
             }
 
-            await dispatch(alertPriceActions.upsertAlert(params));
+            const res: any = await dispatch(
+                alertPriceActions.upsertAlert(params),
+            );
+            if (!res?.error) {
+                showMessage('Alert has been saved successfully.');
+                setAddContactModal(false);
+            }
 
-            showMessage('Alert has been saved successfully.');
-            setAddContactModal(false);
             dispatch(alertPriceActions.getAlerts());
         } catch (e) {
             // Empty
@@ -100,6 +104,7 @@ export default function Price() {
     }, [params]);
 
     const editAlert = useCallback((alert: any = null) => {
+        setUpdating(false);
         const json = JSON.parse(JSON.stringify(defaultParams));
         setParams(json);
         if (alert) {
@@ -213,8 +218,8 @@ export default function Price() {
                     <table className="table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
                                 <th>Symbol</th>
+                                <th>Name</th>
                                 <th className="!text-center">Actions</th>
                             </tr>
                         </thead>
@@ -224,10 +229,13 @@ export default function Price() {
                                     <tr key={contact.id}>
                                         <td>
                                             <div className="flex w-max items-center">
-                                                <div>{contact.name}</div>
+                                                {contact.symbol}
                                             </div>
                                         </td>
-                                        <td>{contact.symbol}</td>
+
+                                        <td>
+                                            <div>{contact.name}</div>
+                                        </td>
                                         <td>
                                             <div className="flex items-center justify-center gap-4">
                                                 {contact.state == 1 && (
