@@ -1,6 +1,6 @@
 import { prisma } from '@modules/core/util/prisma';
 import { AlertDto } from '@modules/stock-trading/controller/alert.dto';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
@@ -16,11 +16,15 @@ export class StockAlertRepo {
 
     // check symbol
     if (_data.symbol) {
-      await prisma.cor_entity.findFirstOrThrow({
-        where: {
-          code: _data.symbol,
-        },
-      });
+      try {
+        await prisma.cor_entity.findFirstOrThrow({
+          where: {
+            code: _data.symbol,
+          },
+        });
+      } catch (e) {
+        throw new HttpException('symbol not found', HttpStatus.BAD_REQUEST);
+      }
     }
 
     if (_data.id) {
