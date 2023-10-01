@@ -16,12 +16,14 @@ export interface EventRxAction<P extends Record<string, any>> {
   context?: EventRxContext;
 }
 
-export type EventRxHandler = UnaryFunction<
-  Observable<EventRxAction<any>>,
-  Observable<Observable<any> | EventRxAction<any>>
->;
+export type EventRxHandler<T extends EventRxAction<any> = EventRxAction<any>> =
+  UnaryFunction<Observable<T>, Observable<any>>;
 
-export type EffectHandler = EventRxHandler;
+export type EffectHandler<
+  ActionFactory extends (...args: any[]) => EventRxAction<any> = (
+    ...args: any[]
+  ) => EventRxAction<any>,
+> = EventRxHandler<ReturnType<ActionFactory>>;
 
 export type ActionFactory<P extends Record<string, any>> = (
   payload?: P,

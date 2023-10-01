@@ -1,4 +1,4 @@
 module.exports = {
-  root: true,
-  extends: ['nextjs'],
+    root: true,
+    extends: ['nextjs'],
 };

@@ -24,7 +24,6 @@ import {
   mergeMap,
   of,
   pipe,
-  retry,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -42,7 +41,7 @@ export class StockPriceEffects {
   @Effect({
     type: STOCK_PRICE_SYNC,
   })
-  startSync(): EffectHandler {
+  startSync(): EffectHandler<typeof STOCK_PRICE_SYNC> {
     return pipe(
       mergeMap((action) => {
         const { code, resolve } = action.payload;
@@ -58,7 +57,7 @@ export class StockPriceEffects {
         return from(this.syncStatusService.getStatusByKey(jobId)).pipe(
           map((syncStatus) => {
             let lastDate: any;
-            if (syncStatus) {
+            if (syncStatus && action.payload?.fromBeginning !== true) {
               lastDate = moment(syncStatus.date);
             }
 
@@ -86,11 +85,10 @@ export class StockPriceEffects {
   })
   loadStockPrice(): EffectHandler {
     return pipe(
-      delay(150),
+      delay(200),
       mergeMap((action) => {
         const { code, lastDate } = action.payload;
         return this.stockPriceRequest.getPrice(code, lastDate).pipe(
-          retry(2),
           map((res) => {
             if (res?.status === 200 && Array.isArray(res.data)) {
               return STOCK_PRICE_SAVE({

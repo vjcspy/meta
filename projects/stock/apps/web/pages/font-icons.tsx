@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPageTitle } from '../store/themeConfigSlice';
+
+import { setPageTitle } from '@/store/themeConfigSlice';
 
 const FontIcons = () => {
     const dispatch = useDispatch();
@@ -11,10 +12,15 @@ const FontIcons = () => {
         <div>
             <div className="space-y-8">
                 <div className="panel">
-                    <h5 className="mb-5 text-lg font-semibold dark:text-white-light">Solar Icon</h5>
+                    <h5 className="mb-5 text-lg font-semibold dark:text-white-light">
+                        Solar Icon
+                    </h5>
                     <div className="mb-5">
                         <p className="mb-5">
-                            Solar is a collection of simply beautiful open source icons. Each icon is designed on a 24x24 grid with an emphasis on simplicity, consistency and usability.
+                            Solar is a collection of simply beautiful open
+                            source icons. Each icon is designed on a 24x24 grid
+                            with an emphasis on simplicity, consistency and
+                            usability.
                         </p>
                         <p className="mb-5">
                             Check :-
@@ -27,21 +33,47 @@ const FontIcons = () => {
                                 Solar Icon Set
                             </a>
                         </p>
-                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] py-1 px-2 text-base text-[#009688]">Line Duotone</div>
+                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] px-2 py-1 text-base text-[#009688]">
+                            Line Duotone
+                        </div>
                         <div className="mb-5 flex flex-wrap items-center gap-10">
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path opacity="0.5" d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path opacity="0.5" d="M12 6V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M12 6V10"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M20.3116 12.6473L20.8293 10.7154C21.4335 8.46034 21.7356 7.3328 21.5081 6.35703C21.3285 5.58657 20.9244 4.88668 20.347 4.34587C19.6157 3.66095 18.4881 3.35883 16.2331 2.75458C13.978 2.15033 12.8504 1.84821 11.8747 2.07573C11.1042 2.25537 10.4043 2.65945 9.86351 3.23687C9.27709 3.86298 8.97128 4.77957 8.51621 6.44561C8.43979 6.7254 8.35915 7.02633 8.27227 7.35057L8.27222 7.35077L7.75458 9.28263C7.15033 11.5377 6.84821 12.6652 7.07573 13.641C7.25537 14.4115 7.65945 15.1114 8.23687 15.6522C8.96815 16.3371 10.0957 16.6392 12.3508 17.2435L12.3508 17.2435C14.3834 17.7881 15.4999 18.0873 16.415 17.9744C16.5152 17.9621 16.6129 17.9448 16.7092 17.9223C17.4796 17.7427 18.1795 17.3386 18.7203 16.7612C19.4052 16.0299 19.7074 14.9024 20.3116 12.6473Z"
                                         stroke="currentColor"
@@ -56,16 +88,37 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M16 4.00195C18.175 4.01406 19.3529 4.11051 20.1213 4.87889C21 5.75757 21 7.17179 21 10.0002V16.0002C21 18.8286 21 20.2429 20.1213 21.1215C19.2426 22.0002 17.8284 22.0002 15 22.0002H9C6.17157 22.0002 4.75736 22.0002 3.87868 21.1215C3 20.2429 3 18.8286 3 16.0002V10.0002C3 7.17179 3 5.75757 3.87868 4.87889C4.64706 4.11051 5.82497 4.01406 8 4.00195"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M8 14H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M7 10.5H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M9 17.5H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M8 14H16"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M7 10.5H17"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M9 17.5H15"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M8 3.5C8 2.67157 8.67157 2 9.5 2H14.5C15.3284 2 16 2.67157 16 3.5V4.5C16 5.32843 15.3284 6 14.5 6H9.5C8.67157 6 8 5.32843 8 4.5V3.5Z"
                                         stroke="currentColor"
@@ -74,15 +127,44 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M20.082 3.01787L20.1081 3.76741L20.082 3.01787ZM16.5 3.48757L16.2849 2.76907V2.76907L16.5 3.48757ZM13.6738 4.80287L13.2982 4.15375L13.2982 4.15375L13.6738 4.80287ZM3.9824 3.07501L3.93639 3.8236L3.9824 3.07501ZM7 3.48757L7.19136 2.76239V2.76239L7 3.48757ZM10.2823 4.87558L9.93167 5.5386L10.2823 4.87558ZM13.6276 20.0694L13.9804 20.7312L13.6276 20.0694ZM17 18.6335L16.8086 17.9083H16.8086L17 18.6335ZM19.9851 18.2229L20.032 18.9715L19.9851 18.2229ZM10.3724 20.0694L10.0196 20.7312H10.0196L10.3724 20.0694ZM7 18.6335L7.19136 17.9083H7.19136L7 18.6335ZM4.01486 18.2229L3.96804 18.9715H3.96804L4.01486 18.2229ZM2.75 16.1437V4.99792H1.25V16.1437H2.75ZM22.75 16.1437V4.93332H21.25V16.1437H22.75ZM20.0559 2.26832C18.9175 2.30798 17.4296 2.42639 16.2849 2.76907L16.7151 4.20606C17.6643 3.92191 18.9892 3.80639 20.1081 3.76741L20.0559 2.26832ZM16.2849 2.76907C15.2899 3.06696 14.1706 3.6488 13.2982 4.15375L14.0495 5.452C14.9 4.95981 15.8949 4.45161 16.7151 4.20606L16.2849 2.76907ZM3.93639 3.8236C4.90238 3.88297 5.99643 3.99842 6.80864 4.21274L7.19136 2.76239C6.23055 2.50885 5.01517 2.38707 4.02841 2.32642L3.93639 3.8236ZM6.80864 4.21274C7.77076 4.46663 8.95486 5.02208 9.93167 5.5386L10.6328 4.21257C9.63736 3.68618 8.32766 3.06224 7.19136 2.76239L6.80864 4.21274ZM13.9804 20.7312C14.9714 20.2029 16.1988 19.6206 17.1914 19.3587L16.8086 17.9083C15.6383 18.2171 14.2827 18.8702 13.2748 19.4075L13.9804 20.7312ZM17.1914 19.3587C17.9943 19.1468 19.0732 19.0314 20.032 18.9715L19.9383 17.4744C18.9582 17.5357 17.7591 17.6575 16.8086 17.9083L17.1914 19.3587ZM10.7252 19.4075C9.71727 18.8702 8.3617 18.2171 7.19136 17.9083L6.80864 19.3587C7.8012 19.6206 9.0286 20.2029 10.0196 20.7312L10.7252 19.4075ZM7.19136 17.9083C6.24092 17.6575 5.04176 17.5357 4.06168 17.4744L3.96804 18.9715C4.9268 19.0314 6.00566 19.1468 6.80864 19.3587L7.19136 17.9083ZM21.25 16.1437C21.25 16.8295 20.6817 17.4279 19.9383 17.4744L20.032 18.9715C21.5062 18.8793 22.75 17.6799 22.75 16.1437H21.25ZM22.75 4.93332C22.75 3.47001 21.5847 2.21507 20.0559 2.26832L20.1081 3.76741C20.7229 3.746 21.25 4.25173 21.25 4.93332H22.75ZM1.25 16.1437C1.25 17.6799 2.49378 18.8793 3.96804 18.9715L4.06168 17.4744C3.31831 17.4279 2.75 16.8295 2.75 16.1437H1.25ZM13.2748 19.4075C12.4825 19.8299 11.5175 19.8299 10.7252 19.4075L10.0196 20.7312C11.2529 21.3886 12.7471 21.3886 13.9804 20.7312L13.2748 19.4075ZM13.2982 4.15375C12.4801 4.62721 11.4617 4.65083 10.6328 4.21257L9.93167 5.5386C11.2239 6.22189 12.791 6.18037 14.0495 5.452L13.2982 4.15375ZM2.75 4.99792C2.75 4.30074 3.30243 3.78463 3.93639 3.8236L4.02841 2.32642C2.47017 2.23065 1.25 3.49877 1.25 4.99792H2.75Z"
                                         fill="currentColor"
                                     />
-                                    <path opacity="0.5" d="M12 5.854V20.9999" stroke="currentColor" strokeWidth="1.5" />
-                                    <path opacity="0.5" d="M5 9L9 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path opacity="0.5" d="M5 13L9 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path opacity="0.5" d="M19 13L15 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M12 5.854V20.9999"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M5 9L9 10"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M5 13L9 14"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M19 13L15 14"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M19 5.5V9.51029C19 9.78587 19 9.92366 18.9051 9.97935C18.8103 10.035 18.6806 9.97343 18.4211 9.85018L17.1789 9.26011C17.0911 9.21842 17.0472 9.19757 17 9.19757C16.9528 9.19757 16.9089 9.21842 16.8211 9.26011L15.5789 9.85018C15.3194 9.97343 15.1897 10.035 15.0949 9.97935C15 9.92366 15 9.78587 15 9.51029V6.95002"
                                         stroke="currentColor"
@@ -92,17 +174,66 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" />
-                                    <path opacity="0.5" d="M18 9C19.6569 9 21 7.88071 21 6.5C21 5.11929 19.6569 4 18 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path opacity="0.5" d="M6 9C4.34315 9 3 7.88071 3 6.5C3 5.11929 4.34315 4 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <ellipse cx="12" cy="17" rx="6" ry="4" stroke="currentColor" strokeWidth="1.5" />
-                                    <path opacity="0.5" d="M20 19C21.7542 18.6153 23 17.6411 23 16.5C23 15.3589 21.7542 14.3847 20 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path opacity="0.5" d="M4 19C2.24575 18.6153 1 17.6411 1 16.5C1 15.3589 2.24575 14.3847 4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="6"
+                                        r="4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M18 9C19.6569 9 21 7.88071 21 6.5C21 5.11929 19.6569 4 18 4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M6 9C4.34315 9 3 7.88071 3 6.5C3 5.11929 4.34315 4 6 4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <ellipse
+                                        cx="12"
+                                        cy="17"
+                                        rx="6"
+                                        ry="4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M20 19C21.7542 18.6153 23 17.6411 23 16.5C23 15.3589 21.7542 14.3847 20 14"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M4 19C2.24575 18.6153 1 17.6411 1 16.5C1 15.3589 2.24575 14.3847 4 14"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
@@ -119,12 +250,30 @@ const FontIcons = () => {
                                         d="M2.26121 3.09184L2.50997 2.38429H2.50997L2.26121 3.09184ZM2.24876 2.29246C1.85799 2.15507 1.42984 2.36048 1.29246 2.75124C1.15507 3.14201 1.36048 3.57016 1.75124 3.70754L2.24876 2.29246ZM4.58584 4.32298L5.20507 3.89983V3.89983L4.58584 4.32298ZM5.88772 14.5862L5.34345 15.1022H5.34345L5.88772 14.5862ZM20.6578 9.88275L21.3923 10.0342L21.3933 10.0296L20.6578 9.88275ZM20.158 12.3075L20.8926 12.4589L20.158 12.3075ZM20.7345 6.69708L20.1401 7.15439L20.7345 6.69708ZM19.1336 15.0504L18.6598 14.469L19.1336 15.0504ZM5.70808 9.76V7.03836H4.20808V9.76H5.70808ZM2.50997 2.38429L2.24876 2.29246L1.75124 3.70754L2.01245 3.79938L2.50997 2.38429ZM10.9375 16.25H16.2404V14.75H10.9375V16.25ZM5.70808 7.03836C5.70808 6.3312 5.7091 5.7411 5.65719 5.26157C5.60346 4.76519 5.48705 4.31247 5.20507 3.89983L3.96661 4.74613C4.05687 4.87822 4.12657 5.05964 4.1659 5.42299C4.20706 5.8032 4.20808 6.29841 4.20808 7.03836H5.70808ZM2.01245 3.79938C2.68006 4.0341 3.11881 4.18965 3.44166 4.34806C3.74488 4.49684 3.87855 4.61727 3.96661 4.74613L5.20507 3.89983C4.92089 3.48397 4.54304 3.21763 4.10241 3.00143C3.68139 2.79485 3.14395 2.60719 2.50997 2.38429L2.01245 3.79938ZM4.20808 9.76C4.20808 11.2125 4.22171 12.2599 4.35876 13.0601C4.50508 13.9144 4.79722 14.5261 5.34345 15.1022L6.43198 14.0702C6.11182 13.7325 5.93913 13.4018 5.83723 12.8069C5.72607 12.1578 5.70808 11.249 5.70808 9.76H4.20808ZM10.9375 14.75C9.52069 14.75 8.53763 14.7482 7.79696 14.6432C7.08215 14.5418 6.70452 14.3576 6.43198 14.0702L5.34345 15.1022C5.93731 15.7286 6.69012 16.0013 7.58636 16.1283C8.45674 16.2518 9.56535 16.25 10.9375 16.25V14.75ZM4.95808 6.87H17.0888V5.37H4.95808V6.87ZM19.9232 9.73135L19.4235 12.1561L20.8926 12.4589L21.3923 10.0342L19.9232 9.73135ZM17.0888 6.87C17.9452 6.87 18.6989 6.871 19.2937 6.93749C19.5893 6.97053 19.8105 7.01643 19.9659 7.07105C20.1273 7.12776 20.153 7.17127 20.1401 7.15439L21.329 6.23978C21.094 5.93436 20.7636 5.76145 20.4632 5.65587C20.1567 5.54818 19.8101 5.48587 19.4604 5.44678C18.7646 5.369 17.9174 5.37 17.0888 5.37V6.87ZM21.3933 10.0296C21.5625 9.18167 21.7062 8.47024 21.7414 7.90038C21.7775 7.31418 21.7108 6.73617 21.329 6.23978L20.1401 7.15439C20.2021 7.23508 20.2706 7.38037 20.2442 7.80797C20.2168 8.25191 20.1002 8.84478 19.9223 9.73595L21.3933 10.0296ZM16.2404 16.25C17.0021 16.25 17.6413 16.2513 18.1566 16.1882C18.6923 16.1227 19.1809 15.9794 19.6074 15.6318L18.6598 14.469C18.5346 14.571 18.3571 14.6525 17.9744 14.6994C17.5712 14.7487 17.0397 14.75 16.2404 14.75V16.25ZM19.4235 12.1561C19.2621 12.9389 19.1535 13.4593 19.0238 13.8442C18.9007 14.2095 18.785 14.367 18.6598 14.469L19.6074 15.6318C20.0339 15.2842 20.2729 14.8346 20.4453 14.3232C20.6111 13.8312 20.7388 13.2049 20.8926 12.4589L19.4235 12.1561Z"
                                         fill="currentColor"
                                     />
-                                    <path opacity="0.5" d="M9.5 9L10.0282 12.1179" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path opacity="0.5" d="M15.5283 9L15.0001 12.1179" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M9.5 9L10.0282 12.1179"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        opacity="0.5"
+                                        d="M15.5283 9L15.0001 12.1179"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M20 15.5524C18.8263 19.2893 15.3351 22 11.2108 22C6.12383 22 2 17.8762 2 12.7892C2 8.66488 4.71065 5.1737 8.44759 4"
@@ -140,7 +289,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M14 9H12C8.68629 9 6 11.6863 6 15C6 18.3137 8.68629 21 12 21H16C19.3137 21 22 18.3137 22 15C22 13.4633 21.4223 12.0615 20.4722 11"
@@ -157,9 +312,25 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22 22L2 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M2 11L10.1259 4.49931C11.2216 3.62279 12.7784 3.62279 13.8741 4.49931L22 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M22 22L2 22"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M2 11L10.1259 4.49931C11.2216 3.62279 12.7784 3.62279 13.8741 4.49931L22 11"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         opacity="0.5"
                                         d="M15.5 5.5V3.5C15.5 3.22386 15.7239 3 16 3H18.5C18.7761 3 19 3.22386 19 3.5V8.5"
@@ -167,8 +338,18 @@ const FontIcons = () => {
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path d="M4 22V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M20 22V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M4 22V9.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M20 22V9.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         opacity="0.5"
                                         d="M15 22V17C15 15.5858 15 14.8787 14.5607 14.4393C14.1213 14 13.4142 14 12 14C10.5858 14 9.87868 14 9.43934 14.4393C9 14.8787 9 15.5858 9 17V22"
@@ -184,7 +365,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M2.5 6.5C2.5 4.29086 4.29086 2.5 6.5 2.5C8.70914 2.5 10.5 4.29086 10.5 6.5V9.16667C10.5 9.47666 10.5 9.63165 10.4659 9.75882C10.3735 10.1039 10.1039 10.3735 9.75882 10.4659C9.63165 10.5 9.47666 10.5 9.16667 10.5H6.5C4.29086 10.5 2.5 8.70914 2.5 6.5Z"
@@ -210,15 +397,30 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M7 6C7 6.55228 6.55228 7 6 7C5.44772 7 5 6.55228 5 6C5 5.44772 5.44772 5 6 5C6.55228 5 7 5.44772 7 6Z" fill="currentColor" />
-                                    <path d="M10 6C10 6.55228 9.55228 7 9 7C8.44772 7 8 6.55228 8 6C8 5.44772 8.44772 5 9 5C9.55228 5 10 5.44772 10 6Z" fill="currentColor" />
-                                    <path d="M13 6C13 6.55228 12.5523 7 12 7C11.4477 7 11 6.55228 11 6C11 5.44772 11.4477 5 12 5C12.5523 5 13 5.44772 13 6Z" fill="currentColor" />
+                                    <path
+                                        d="M7 6C7 6.55228 6.55228 7 6 7C5.44772 7 5 6.55228 5 6C5 5.44772 5.44772 5 6 5C6.55228 5 7 5.44772 7 6Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M10 6C10 6.55228 9.55228 7 9 7C8.44772 7 8 6.55228 8 6C8 5.44772 8.44772 5 9 5C9.55228 5 10 5.44772 10 6Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M13 6C13 6.55228 12.5523 7 12 7C11.4477 7 11 6.55228 11 6C11 5.44772 11.4477 5 12 5C12.5523 5 13 5.44772 13 6Z"
+                                        fill="currentColor"
+                                    />
                                     <path
                                         opacity="0.5"
                                         d="M2 8.75C1.58579 8.75 1.25 9.08579 1.25 9.5C1.25 9.91421 1.58579 10.25 2 10.25V8.75ZM22 10.25C22.4142 10.25 22.75 9.91421 22.75 9.5C22.75 9.08579 22.4142 8.75 22 8.75V10.25ZM8.25 21C8.25 21.4142 8.58579 21.75 9 21.75C9.41421 21.75 9.75 21.4142 9.75 21H8.25ZM9.75 10C9.75 9.58579 9.41421 9.25 9 9.25C8.58579 9.25 8.25 9.58579 8.25 10L9.75 10ZM2 10.25H22V8.75H2V10.25ZM9.75 21L9.75 10L8.25 10L8.25 21H9.75Z"
@@ -227,7 +429,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M3 10.4167C3 7.21907 3 5.62028 3.37752 5.08241C3.75503 4.54454 5.25832 4.02996 8.26491 3.00079L8.83772 2.80472C10.405 2.26824 11.1886 2 12 2C12.8114 2 13.595 2.26824 15.1623 2.80472L15.7351 3.00079C18.7417 4.02996 20.245 4.54454 20.6225 5.08241C21 5.62028 21 7.21907 21 10.4167C21 10.8996 21 11.4234 21 11.9914C21 17.6294 16.761 20.3655 14.1014 21.5273C13.38 21.8424 13.0193 22 12 22C10.9807 22 10.62 21.8424 9.89856 21.5273C7.23896 20.3655 3 17.6294 3 11.9914C3 11.4234 3 10.8996 3 10.4167Z"
@@ -242,33 +450,87 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M18.3408 8.40579L15.5942 5.65917C13.7012 3.76619 12.7547 2.8197 11.721 3.02845C10.6873 3.23719 10.1823 4.4768 9.17226 6.95602L8.22498 9.28115C7.9464 9.96495 7.80711 10.3068 7.56701 10.5678C7.48527 10.6567 7.39552 10.7378 7.2989 10.8102C7.01509 11.0228 6.66091 11.1269 5.95255 11.3353C4.2781 11.8278 3.44088 12.074 3.15416 12.65C3.06084 12.8374 3.00852 13.0426 3.00068 13.2519C2.97659 13.8948 3.59367 14.5119 4.82783 15.7461L8.25394 19.1722C9.4881 20.4063 10.1052 21.0234 10.7481 20.9993C10.9574 20.9915 11.1626 20.9392 11.35 20.8458C11.926 20.5591 12.1722 19.7219 12.6647 18.0475C12.8731 17.3391 12.9772 16.9849 13.1898 16.7011C13.2622 16.6045 13.3433 16.5147 13.4322 16.433C13.6932 16.1929 14.0351 16.0536 14.7188 15.775L17.044 14.8277C19.5232 13.8177 20.7628 13.3127 20.9716 12.279C21.1803 11.2453 20.2338 10.2988 18.3408 8.40579Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path opacity="0.5" d="M3.00008 20.9336L6.55908 17.3721" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        opacity="0.5"
+                                        d="M3.00008 20.9336L6.55908 17.3721"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M16.755 2H7.24502C6.08614 2 5.50671 2 5.03939 2.16261C4.15322 2.47096 3.45748 3.18719 3.15795 4.09946C3 4.58055 3 5.17705 3 6.37006V20.3742C3 21.2324 3.985 21.6878 4.6081 21.1176C4.97417 20.7826 5.52583 20.7826 5.8919 21.1176L6.375 21.5597C7.01659 22.1468 7.98341 22.1468 8.625 21.5597C9.26659 20.9726 10.2334 20.9726 10.875 21.5597C11.5166 22.1468 12.4834 22.1468 13.125 21.5597C13.7666 20.9726 14.7334 20.9726 15.375 21.5597C16.0166 22.1468 16.9834 22.1468 17.625 21.5597L18.1081 21.1176C18.4742 20.7826 19.0258 20.7826 19.3919 21.1176C20.015 21.6878 21 21.2324 21 20.3742V6.37006C21 5.17705 21 4.58055 20.842 4.09946C20.5425 3.18719 19.8468 2.47096 18.9606 2.16261C18.4933 2 17.9139 2 16.755 2Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M10.5 11L17 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M7 11H7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M7 7.5H7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M7 14.5H7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M10.5 7.5H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M10.5 14.5H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M10.5 11L17 11"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M7 11H7.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M7 7.5H7.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M7 14.5H7.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M10.5 7.5H17"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M10.5 14.5H17"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M2.97631 2.87868L3.47803 3.43615L3.47803 3.43615L2.97631 2.87868ZM2.97631 19.1213L3.47803 18.5639L2.97631 19.1213ZM6.25 20C6.25 20.4142 6.58579 20.75 7 20.75C7.41421 20.75 7.75 20.4142 7.75 20H6.25ZM7.75 2C7.75 1.58579 7.41422 1.25 7 1.25C6.58579 1.25 6.25 1.58579 6.25 2H7.75ZM2 6.25C1.58579 6.25 1.25 6.58579 1.25 7C1.25 7.41421 1.58579 7.75 2 7.75V6.25ZM2 15.25C1.58579 15.25 1.25 15.5858 1.25 16C1.25 16.4142 1.58579 16.75 2 16.75V15.25ZM21.0237 4.87868L20.522 5.43615L21.0237 4.87868ZM21.0237 21.1213L20.522 20.5639L21.0237 21.1213ZM16.25 22C16.25 22.4142 16.5858 22.75 17 22.75C17.4142 22.75 17.75 22.4142 17.75 22H16.25ZM17.75 4C17.75 3.58579 17.4142 3.25 17 3.25C16.5858 3.25 16.25 3.58579 16.25 4H17.75ZM22 9.75C22.4142 9.75 22.75 9.41421 22.75 9C22.75 8.58579 22.4142 8.25 22 8.25V9.75ZM22 18.75C22.4142 18.75 22.75 18.4142 22.75 18C22.75 17.5858 22.4142 17.25 22 17.25V18.75ZM2.75 14V8H1.25V14H2.75ZM2.75 8C2.75 7.64443 2.75 7.31409 2.75192 7.00464L1.25195 6.99536C1.25 7.31032 1.25 7.6455 1.25 8H2.75ZM2.75192 7.00464C2.75868 5.91065 2.79037 5.14239 2.90886 4.56183C3.02163 4.00928 3.20202 3.68456 3.47803 3.43615L2.47459 2.32121C1.89684 2.84118 1.59677 3.48961 1.43915 4.26187C1.28726 5.00611 1.25863 5.91433 1.25195 6.99536L2.75192 7.00464ZM8.66667 1.25C8.05506 1.25 7.4967 1.24999 6.99024 1.25658L7.00977 2.75645C7.50454 2.75001 8.05246 2.75 8.66667 2.75V1.25ZM6.99024 1.25658C5.95477 1.27006 5.08619 1.31098 4.36486 1.45123C3.62845 1.59441 2.99885 1.84937 2.47459 2.32121L3.47803 3.43615C3.73967 3.20068 4.08877 3.033 4.65115 2.92366C5.22862 2.81138 5.97893 2.76988 7.00977 2.75645L6.99024 1.25658ZM8.66667 19.25C8.05246 19.25 7.50453 19.25 7.00976 19.2435L6.99024 20.7434C7.4967 20.75 8.05506 20.75 8.66667 20.75V19.25ZM7.00977 19.2435C5.97893 19.2301 5.22862 19.1886 4.65115 19.0763C4.08877 18.967 3.73967 18.7993 3.47803 18.5639L2.47459 19.6788C2.99885 20.1506 3.62845 20.4056 4.36486 20.5488C5.08619 20.689 5.95476 20.7299 6.99024 20.7434L7.00977 19.2435ZM1.25 14C1.25 14.7603 1.24991 15.4349 1.26967 16.0251L2.76883 15.9749C2.75009 15.4151 2.75 14.7679 2.75 14H1.25ZM1.26967 16.0251C1.32166 17.5781 1.50653 18.8075 2.47459 19.6788L3.47803 18.5639C3.02098 18.1525 2.82085 17.5288 2.76883 15.9749L1.26967 16.0251ZM6.25 19.9935V20H7.75V19.9935H6.25ZM6.25 2V2.00652H7.75V2H6.25ZM2.00193 6.25H2V7.75H2.00193V6.25ZM2.01925 15.25H2V16.75H2.01925V15.25ZM11 19.25H8.66667V20.75H11V19.25ZM8.66667 2.75H11V1.25H8.66667V2.75ZM22.75 16V10H21.25V16H22.75ZM22.75 10C22.75 9.6455 22.75 9.31032 22.7481 8.99536L21.2481 9.00464C21.25 9.31409 21.25 9.64443 21.25 10H22.75ZM22.7481 8.99536C22.7414 7.91433 22.7127 7.00611 22.5608 6.26187C22.4032 5.48961 22.1032 4.84118 21.5254 4.32121L20.522 5.43615C20.798 5.68456 20.9784 6.00928 21.0911 6.56183C21.2096 7.14239 21.2413 7.91065 21.2481 9.00464L22.7481 8.99536ZM15.3333 4.75C15.9475 4.75 16.4955 4.75001 16.9902 4.75645L17.0098 3.25658C16.5033 3.24999 15.9449 3.25 15.3333 3.25V4.75ZM16.9902 4.75645C18.0211 4.76988 18.7714 4.81138 19.3489 4.92366C19.9112 5.033 20.2603 5.20068 20.522 5.43615L21.5254 4.32121C21.0011 3.84937 20.3716 3.59441 19.6351 3.45123C18.9138 3.31098 18.0452 3.27006 17.0098 3.25658L16.9902 4.75645ZM15.3333 22.75C15.9449 22.75 16.5033 22.75 17.0098 22.7434L16.9902 21.2435C16.4955 21.25 15.9475 21.25 15.3333 21.25V22.75ZM17.0098 22.7434C18.0452 22.7299 18.9138 22.689 19.6351 22.5488C20.3716 22.4056 21.0011 22.1506 21.5254 21.6788L20.522 20.5639C20.2603 20.7993 19.9112 20.967 19.3489 21.0763C18.7714 21.1886 18.0211 21.2301 16.9902 21.2435L17.0098 22.7434ZM21.25 16C21.25 16.7679 21.2499 17.4151 21.2312 17.9749L22.7303 18.0251C22.7501 17.4349 22.75 16.7603 22.75 16H21.25ZM21.2312 17.9749C21.1792 19.5288 20.979 20.1525 20.522 20.5639L21.5254 21.6788C22.4935 20.8075 22.6783 19.5781 22.7303 18.0251L21.2312 17.9749ZM16.25 21.9935V22H17.75V21.9935H16.25ZM16.25 4V4.00652H17.75V4H16.25ZM21.9981 9.75H22V8.25H21.9981V9.75ZM21.9808 18.75H22V17.25H21.9808V18.75ZM13 22.75H15.3333V21.25H13V22.75ZM15.3333 3.25H13V4.75H15.3333V3.25ZM11.25 21C11.25 21.9665 12.0335 22.75 13 22.75V21.25C12.8619 21.25 12.75 21.1381 12.75 21H11.25ZM12.75 3C12.75 2.0335 11.9665 1.25 11 1.25V2.75C11.1381 2.75 11.25 2.86193 11.25 3L12.75 3ZM13 3.25C12.8619 3.25 12.75 3.13807 12.75 3L11.25 3C11.25 3.9665 12.0335 4.75 13 4.75V3.25ZM11 20.75C11.1381 20.75 11.25 20.8619 11.25 21H12.75C12.75 20.0335 11.9665 19.25 11 19.25V20.75Z"
                                         fill="currentColor"
@@ -281,7 +543,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M12 5.52689C11.7501 5.52689 11.5002 5.4656 11.2706 5.34302L5.36689 2.19099C3.97914 1.45006 2.49789 3.00163 3.16496 4.49746L10.5275 21.0072C10.8226 21.6691 11.4113 22 12 22"
                                         stroke="currentColor"
@@ -298,10 +566,18 @@ const FontIcons = () => {
                             </div>
                         </div>
 
-                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] py-1 px-2 text-base text-[#009688]">Bold Duotone</div>
+                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] px-2 py-1 text-base text-[#009688]">
+                            Bold Duotone
+                        </div>
                         <div className="mb-5 flex flex-wrap items-center gap-10">
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -316,7 +592,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M5.00004 17.75C4.68618 17.75 4.40551 17.5546 4.29662 17.2602C4.18773 16.9658 4.27364 16.6348 4.51194 16.4306L11.5119 10.4306C11.7928 10.1898 12.2073 10.1898 12.4881 10.4306L19.4881 16.4306C19.7264 16.6348 19.8123 16.9658 19.7035 17.2602C19.5946 17.5546 19.3139 17.75 19 17.75H5.00004Z"
@@ -331,7 +613,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M19.7165 20.3624C21.143 19.5846 22 18.5873 22 17.5C22 16.3475 21.0372 15.2961 19.4537 14.5C17.6226 13.5794 14.9617 13 12 13C9.03833 13 6.37738 13.5794 4.54631 14.5C2.96285 15.2961 2 16.3475 2 17.5C2 18.6525 2.96285 19.7039 4.54631 20.5C6.37738 21.4206 9.03833 22 12 22C15.1066 22 17.8823 21.3625 19.7165 20.3624Z"
@@ -346,7 +634,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -370,7 +664,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M3.77772 18.3259C4.78661 19 6.19108 19 9 19L15 19C17.8089 19 19.2134 19 20.2223 18.3259C20.659 18.034 21.034 17.659 21.3259 17.2223C22 16.2134 22 14.8089 22 12C22 9.19107 22 7.78661 21.3259 6.77772C21.034 6.34096 20.659 5.96595 20.2223 5.67412C19.2134 5 17.8089 5 15 5H9C6.19108 5 4.78661 5 3.77772 5.67412C3.34096 5.96596 2.96596 6.34096 2.67412 6.77772C2 7.78661 2 9.19108 2 12C2 14.8089 2 16.2134 2.67412 17.2223C2.96596 17.659 3.34096 18.034 3.77772 18.3259Z"
@@ -393,7 +693,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M2 14C2 10.2288 2 8.34315 3.17157 7.17157C4.34315 6 6.22876 6 10 6H14C17.7712 6 19.6569 6 20.8284 7.17157C22 8.34315 22 10.2288 22 14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14Z"
@@ -430,7 +736,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -447,7 +759,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M16.9456 2.84731C18.3542 2.14979 19.0585 1.80104 19.5345 2.11769C20.0104 2.43435 19.9427 3.20671 19.8074 4.75143L19.7724 5.15106C19.7339 5.59003 19.7147 5.80951 19.7834 6.00845C19.852 6.2074 20.0008 6.36329 20.2984 6.67507L20.5694 6.95892C21.6166 8.05609 22.1402 8.60468 21.9676 9.16677C21.795 9.72887 21.0405 9.93221 19.5315 10.3389L19.1411 10.4441C18.7123 10.5597 18.4979 10.6175 18.3269 10.7517C18.156 10.8859 18.0478 11.0814 17.8314 11.4723L17.6344 11.8281C16.873 13.2038 16.4924 13.8916 15.9098 13.9223C15.3272 13.953 14.9285 13.3063 14.1312 12.013L13.925 11.6784C13.6984 11.3108 13.5851 11.1271 13.4108 11.0111C13.2365 10.8951 13.0208 10.86 12.5895 10.7898L12.1968 10.7259C10.6791 10.4789 9.92016 10.3554 9.7327 9.81228C9.54524 9.26918 10.0534 8.66616 11.0696 7.46012L11.3325 7.14811C11.6213 6.80539 11.7657 6.63403 11.8289 6.42812C11.8921 6.22222 11.867 6.00508 11.8168 5.57079L11.7711 5.17542C11.5945 3.64716 11.5062 2.88303 11.9729 2.51664C12.4396 2.15025 13.1523 2.42425 14.5776 2.97224L14.9464 3.11402C15.3514 3.26974 15.554 3.3476 15.7674 3.33634C15.9808 3.32508 16.1809 3.22598 16.5812 3.02776L16.9456 2.84731Z"
                                         fill="currentColor"
@@ -469,7 +787,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M22 14V11.7979C22 11.4227 21.9978 10.75 21.9978 10.75L22 10H2V10.75V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14Z"
                                         fill="currentColor"
@@ -482,24 +806,48 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M21.9982 12.193C21.9994 12.1288 22 12.0645 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 12.1294 2.00246 12.2582 2.00733 12.3864L6.98724 14.1969L9.8645 13.046C11.2354 12.4977 12.7646 12.4977 14.1355 13.046L17 14.1918L21.9982 12.193Z"
                                         fill="currentColor"
                                     />
-                                    <path d="M10 10.5C10 11.3284 9.55228 12 9 12C8.44772 12 8 11.3284 8 10.5C8 9.67157 8.44772 9 9 9C9.55228 9 10 9.67157 10 10.5Z" fill="currentColor" />
-                                    <path d="M16 10.5C16 11.3284 15.5523 12 15 12C14.4477 12 14 11.3284 14 10.5C14 9.67157 14.4477 9 15 9C15.5523 9 16 9.67157 16 10.5Z" fill="currentColor" />
+                                    <path
+                                        d="M10 10.5C10 11.3284 9.55228 12 9 12C8.44772 12 8 11.3284 8 10.5C8 9.67157 8.44772 9 9 9C9.55228 9 10 9.67157 10 10.5Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M16 10.5C16 11.3284 15.5523 12 15 12C14.4477 12 14 11.3284 14 10.5C14 9.67157 14.4477 9 15 9C15.5523 9 16 9.67157 16 10.5Z"
+                                        fill="currentColor"
+                                    />
                                     <path
                                         d="M15.7657 21.2667L16.21 15.4914L13.5784 14.4387C12.5652 14.0334 11.4348 14.0334 10.4216 14.4387L7.79004 15.4914L8.23427 21.2667C9.39657 21.7395 10.6679 22 12 22C13.3321 22 14.6034 21.7395 15.7657 21.2667Z"
                                         fill="currentColor"
                                     />
-                                    <path d="M21.8241 13.8779L17.7122 15.5224L17.3323 20.4611C19.6317 19.009 21.2982 16.6455 21.8241 13.8779Z" fill="currentColor" />
-                                    <path d="M6.66807 20.4611L6.28947 15.539L2.21191 14.0565C2.77441 16.7471 4.41824 19.0404 6.66807 20.4611Z" fill="currentColor" />
+                                    <path
+                                        d="M21.8241 13.8779L17.7122 15.5224L17.3323 20.4611C19.6317 19.009 21.2982 16.6455 21.8241 13.8779Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M6.66807 20.4611L6.28947 15.539L2.21191 14.0565C2.77441 16.7471 4.41824 19.0404 6.66807 20.4611Z"
+                                        fill="currentColor"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M13.4525 8.39737C15.1812 6.92813 16.5396 5.18645 17.1247 3.44812L17.1351 3.41699C18.5508 4.26236 19.7768 5.47026 20.6598 6.99965C21.5426 8.52866 21.9757 10.1939 22.0001 11.8422C20.0045 11.4109 17.8139 11.7412 15.7443 12.5213C15.4235 11.6576 15.0594 10.8344 14.6498 10.125C14.3136 9.54268 13.9035 8.96187 13.4525 8.39737Z"
                                         fill="currentColor"
@@ -531,7 +879,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M20.3133 11.1566C20.3133 16.2137 16.2137 20.3133 11.1566 20.3133C6.09956 20.3133 2 16.2137 2 11.1566C2 6.09956 6.09956 2 11.1566 2C16.2137 2 20.3133 6.09956 20.3133 11.1566Z"
@@ -544,7 +898,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M12.7915 2H11.2089C9.67059 2 8.90146 2 8.35306 2.43992C7.80465 2.87983 7.6378 3.63065 7.30411 5.13228L7.23936 5.42365C8.21852 5 9.59408 5 12.0001 5C14.4062 5 15.7818 5 16.761 5.42373L16.6962 5.13228C16.3625 3.63065 16.1957 2.87983 15.6473 2.43992C15.0989 2 14.3297 2 12.7915 2Z"
                                         fill="currentColor"
@@ -567,7 +927,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M16.6312 4.76853C16.3898 4.75049 16.0785 4.75 15.6088 4.75H14.381C13.9667 4.75 13.631 4.41421 13.631 4C13.631 3.58579 13.9667 3.25 14.381 3.25H15.6357H15.6357C16.0714 3.24999 16.4391 3.24998 16.743 3.2727C17.0624 3.29657 17.365 3.34825 17.6605 3.47926C18.1166 3.68148 18.5069 4.00766 18.7852 4.42132C18.966 4.69002 19.0682 4.979 19.1449 5.28811C19.2178 5.58157 19.2784 5.94079 19.3499 6.36477L19.3499 6.36484L20.3586 12.3459C20.3953 12.5635 20.3343 12.7863 20.1918 12.9548C20.0493 13.1234 19.8398 13.2206 19.619 13.2206C17.1319 13.2206 15.131 15.2107 15.131 17.6471C15.131 18.0613 14.7952 18.3971 14.381 18.3971H7.42003C7.08088 19.7531 5.84304 20.75 4.38095 20.75C2.66017 20.75 1.25 19.3691 1.25 17.6471C1.25 15.925 2.66017 14.5441 4.38095 14.5441C5.84304 14.5441 7.08088 15.541 7.42003 16.8971H13.6784C14.0147 14.2579 16.1026 12.1673 18.7426 11.7837L17.8754 6.64136C17.7981 6.18308 17.7466 5.8808 17.6892 5.64959C17.6341 5.42779 17.5857 5.32551 17.5407 5.25874C17.4211 5.08096 17.2522 4.93904 17.0526 4.85054C16.9761 4.81665 16.8634 4.78588 16.6312 4.76853Z"
                                         fill="currentColor"
@@ -582,7 +948,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         fillRule="evenodd"
@@ -605,7 +977,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         opacity="0.5"
                                         d="M11.5956 22.0001H12.4044C15.1871 22.0001 16.5785 22.0001 17.4831 21.1142C18.3878 20.2283 18.4803 18.7751 18.6654 15.8686L18.9321 11.6807C19.0326 10.1037 19.0828 9.31524 18.6289 8.81558C18.1751 8.31592 17.4087 8.31592 15.876 8.31592H8.12405C6.59127 8.31592 5.82488 8.31592 5.37105 8.81558C4.91722 9.31524 4.96744 10.1037 5.06788 11.6807L5.33459 15.8686C5.5197 18.7751 5.61225 20.2283 6.51689 21.1142C7.42153 22.0001 8.81289 22.0001 11.5956 22.0001Z"
@@ -631,13 +1009,37 @@ const FontIcons = () => {
                             </div>
                         </div>
 
-                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] py-1 px-2 text-base text-[#009688]">Broken</div>
+                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] px-2 py-1 text-base text-[#009688]">
+                            Broken
+                        </div>
                         <div className="mb-5 flex flex-wrap items-center gap-10">
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="19" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" />
-                                    <path d="M7 14H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M7 17.5H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <circle
+                                        cx="19"
+                                        cy="5"
+                                        r="3"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        d="M7 14H16"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M7 17.5H13"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M2 12C2 16.714 2 19.0711 3.46447 20.5355C4.92893 22 7.28595 22 12 22C16.714 22 19.0711 22 20.5355 20.5355C22 19.0711 22 16.714 22 12V10.5M13.5 2H12C7.28595 2 4.92893 2 3.46447 3.46447C2.49073 4.43821 2.16444 5.80655 2.0551 8"
                                         stroke="currentColor"
@@ -647,34 +1049,88 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M21 16C21 18.8284 21 20.2426 20.1213 21.1213C19.2426 22 17.8284 22 15 22H9C6.17157 22 4.75736 22 3.87868 21.1213C3 20.2426 3 18.8284 3 16V8C3 5.17157 3 3.75736 3.87868 2.87868C4.75736 2 6.17157 2 9 2H15C17.8284 2 19.2426 2 20.1213 2.87868C21 3.75736 21 5.17157 21 8V12"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path d="M8 2V6M8 22V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M2 12H4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M2 16H4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M2 8H4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M11.5 6.5H16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M11.5 10H16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M8 2V6M8 22V10"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M2 12H4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M2 16H4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M2 8H4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M11.5 6.5H16.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M11.5 10H16.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M8 22.0002H16C18.8284 22.0002 20.2426 22.0002 21.1213 21.1215C22 20.2429 22 18.8286 22 16.0002V15.0002C22 12.1718 22 10.7576 21.1213 9.8789C20.3529 9.11051 19.175 9.01406 17 9.00195M7 9.00195C4.82497 9.01406 3.64706 9.11051 2.87868 9.87889C2 10.7576 2 12.1718 2 15.0002L2 16.0002C2 18.8286 2 20.2429 2.87868 21.1215C3.17848 21.4213 3.54062 21.6188 4 21.749"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path
+                                        d="M12 2L12 15M12 15L9 11.5M12 15L15 11.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M6.03954 7.77203C3.57986 8.32856 2.35002 8.60682 2.05742 9.54773C1.76482 10.4886 2.60325 11.4691 4.2801 13.4299L4.71392 13.9372C5.19043 14.4944 5.42868 14.773 5.53586 15.1177C5.64305 15.4624 5.60703 15.8341 5.53498 16.5776L5.4694 17.2544C5.21588 19.8706 5.08912 21.1787 5.85515 21.7602C6.62118 22.3417 7.77268 21.8115 10.0757 20.7512L10.6715 20.4768C11.3259 20.1755 11.6531 20.0248 12 20.0248C12.3469 20.0248 12.6741 20.1755 13.3285 20.4768L13.9243 20.7512C16.2273 21.8115 17.3788 22.3417 18.1449 21.7602C18.9109 21.1787 18.7841 19.8706 18.5306 17.2544M19.7199 13.4299C21.3968 11.4691 22.2352 10.4886 21.9426 9.54773C21.65 8.60682 20.4201 8.32856 17.9605 7.77203L17.3241 7.62805C16.6251 7.4699 16.2757 7.39083 15.9951 7.17781C15.7144 6.96479 15.5345 6.64193 15.1745 5.99623L14.8468 5.40837C13.5802 3.13612 12.9469 2 12 2C11.0531 2 10.4198 3.13613 9.15316 5.40838"
                                         stroke="currentColor"
@@ -684,17 +1140,39 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M20.9202 5.73051C20.7891 5.3376 20.3642 5.12537 19.9713 5.25648C19.5784 5.38759 19.3662 5.8124 19.4973 6.20531L20.9202 5.73051ZM3.79139 5.96791L4.50283 6.20531L3.79139 5.96791ZM3.82722 5.86056L3.11578 5.62316H3.11578L3.82722 5.86056ZM6.99927 18.5795L6.25718 18.6881L6.99927 18.5795ZM17.0009 18.5794L17.7429 18.6881L17.0009 18.5794ZM16.0793 21.5132L16.5697 22.0806L16.0793 21.5132ZM3.48163 7.76195L4.16138 7.44501L4.16138 7.44501L3.48163 7.76195ZM3.70022 8.06533L4.21602 7.52086L4.21602 7.52086L3.70022 8.06533ZM20.5185 7.76195L21.1982 8.0789L21.1982 8.07889L20.5185 7.76195ZM20.2999 8.06533L19.7841 7.52085L19.7841 7.52086L20.2999 8.06533ZM17.9015 3.08324C18.2544 3.30017 18.7163 3.18997 18.9332 2.83711C19.1501 2.48424 19.0399 2.02233 18.6871 1.8054L17.9015 3.08324ZM7.9208 21.5132L7.43038 22.0806L7.9208 21.5132ZM5.70585 2.44432L5.31306 1.8054L5.31306 1.8054L5.70585 2.44432ZM5.35004 2.70069L5.83178 3.27551L5.83178 3.27551L5.35004 2.70069ZM10 21.9951L9.98714 22.7451H10V21.9951ZM14.0001 21.9951V22.7452L14.013 22.745L14.0001 21.9951ZM9.18527 2.75H14.8149V1.25H9.18527V2.75ZM4.50283 6.20531L4.53865 6.09796L3.11578 5.62316L3.07996 5.73051L4.50283 6.20531ZM18.5001 7.58937H5.50006V9.08937H18.5001V7.58937ZM4.75797 8.44801L6.25718 18.6881L7.74136 18.4708L6.24215 8.23072L4.75797 8.44801ZM17.7429 18.6881L19.2422 8.44801L17.758 8.23072L16.2588 18.4708L17.7429 18.6881ZM16.2588 18.4708C16.1365 19.3057 16.0536 19.8623 15.9391 20.2749C15.8302 20.6671 15.7161 20.8358 15.5889 20.9457L16.5697 22.0806C17.0058 21.7038 17.2331 21.2212 17.3844 20.6761C17.5301 20.1513 17.6264 19.4844 17.7429 18.6881L16.2588 18.4708ZM3.07996 5.73051C2.92663 6.19001 2.78912 6.59809 2.71933 6.93604C2.64775 7.28264 2.61745 7.68331 2.80189 8.07889L4.16138 7.44501C4.17744 7.47945 4.14263 7.46074 4.18833 7.23942C4.23583 7.00945 4.3374 6.70108 4.50283 6.20531L3.07996 5.73051ZM5.50006 7.58937C4.97742 7.58937 4.65276 7.58811 4.41958 7.56036C4.19517 7.53366 4.18844 7.49472 4.21602 7.52086L3.18442 8.6098C3.50128 8.90997 3.89094 9.00805 4.24237 9.04986C4.58503 9.09063 5.01565 9.08937 5.50006 9.08937V7.58937ZM2.80189 8.07889C2.89489 8.27834 3.02466 8.45845 3.18442 8.6098L4.21602 7.52086C4.1932 7.49924 4.17466 7.47351 4.16138 7.44501L2.80189 8.07889ZM19.4973 6.20531C19.6627 6.70108 19.7643 7.00945 19.8118 7.23942C19.8575 7.46074 19.8227 7.47946 19.8387 7.44501L21.1982 8.07889C21.3827 7.68331 21.3524 7.28264 21.2808 6.93604C21.211 6.59809 21.0735 6.19001 20.9202 5.73051L19.4973 6.20531ZM18.5001 9.08937C18.9845 9.08937 19.4151 9.09063 19.7578 9.04986C20.1092 9.00805 20.4988 8.90997 20.8157 8.6098L19.7841 7.52086C19.8117 7.49472 19.805 7.53367 19.5805 7.56036C19.3474 7.58811 19.0227 7.58937 18.5001 7.58937V9.08937ZM19.8388 7.44501C19.8255 7.47351 19.8069 7.49924 19.7841 7.52085L20.8157 8.6098C20.9755 8.45845 21.1052 8.27833 21.1982 8.0789L19.8388 7.44501ZM14.8149 2.75C15.7489 2.75 16.3939 2.75089 16.8973 2.80174C17.385 2.851 17.6719 2.9421 17.9015 3.08324L18.6871 1.8054C18.1939 1.50222 17.66 1.37116 17.0481 1.30934C16.4519 1.24911 15.7186 1.25 14.8149 1.25V2.75ZM6.25718 18.6881C6.37377 19.4844 6.47001 20.1513 6.6157 20.6761C6.76704 21.2212 6.99431 21.7038 7.43038 22.0806L8.41121 20.9457C8.284 20.8358 8.16993 20.6671 8.06103 20.2749C7.94649 19.8623 7.8636 19.3057 7.74136 18.4708L6.25718 18.6881ZM9.18527 1.25C8.28152 1.25 7.54819 1.24911 6.95204 1.30934C6.3401 1.37116 5.80623 1.50222 5.31306 1.8054L6.09863 3.08324C6.32821 2.9421 6.61516 2.851 7.1028 2.80174C7.60623 2.75089 8.25124 2.75 9.18527 2.75V1.25ZM4.53865 6.09796C4.8343 5.21195 5.03931 4.60039 5.2469 4.13895C5.44799 3.69197 5.62523 3.44861 5.83178 3.27551L4.8683 2.12586C4.42461 2.4977 4.13129 2.96264 3.87896 3.52354C3.63313 4.06997 3.40185 4.76588 3.11578 5.62316L4.53865 6.09796ZM5.31306 1.8054C5.15719 1.90122 5.00854 2.00833 4.8683 2.12586L5.83178 3.27551C5.91592 3.205 6.00511 3.14073 6.09863 3.08324L5.31306 1.8054ZM10.0129 21.2452C8.9504 21.227 8.62137 21.1274 8.41121 20.9457L7.43038 22.0806C8.10389 22.6627 8.97976 22.7277 9.98714 22.745L10.0129 21.2452ZM14.013 22.745C15.0204 22.7277 15.8962 22.6627 16.5697 22.0806L15.5889 20.9457C15.3788 21.1274 15.0497 21.227 13.9872 21.2452L14.013 22.745ZM10 22.7451H14.0001V21.2451H10V22.7451Z"
                                         fill="currentColor"
                                     />
-                                    <path d="M6.5 12H12M17.5 12H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M7 17H17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M6.5 12H12M17.5 12H16"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M7 17H17"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M13.2535 19.4243C12.9606 19.1314 12.4857 19.1314 12.1928 19.4243C11.8999 19.7172 11.8999 20.1921 12.1928 20.485L13.2535 19.4243ZM15.6157 22V21.25V22ZM4.04537 5.49167L4.5757 6.022H4.5757L4.04537 5.49167ZM3.51504 11.8072C3.80794 12.1001 4.28281 12.1001 4.5757 11.8072C4.8686 11.5143 4.8686 11.0394 4.5757 10.7465L3.51504 11.8072ZM11.2769 4.04537L11.8072 4.5757C11.9478 4.43505 12.0269 4.24428 12.0269 4.04537C12.0269 3.84646 11.9478 3.65569 11.8072 3.51504L11.2769 4.04537ZM5.49167 4.04537L4.96134 3.51504L4.96134 3.51504L5.49167 4.04537ZM19.9546 12.7231L20.485 12.1928C20.3443 12.0522 20.1535 11.9731 19.9546 11.9731C19.7557 11.9731 19.565 12.0522 19.4243 12.1928L19.9546 12.7231ZM22 15.6157H22.75H22ZM8.33603 5.92553C8.04314 6.21843 8.04314 6.6933 8.33603 6.98619C8.62892 7.27909 9.1038 7.27909 9.39669 6.98619L8.33603 5.92553ZM17.0138 14.6033C16.7209 14.8962 16.7209 15.3711 17.0138 15.664C17.3067 15.9569 17.7816 15.9569 18.0745 15.664L17.0138 14.6033ZM18.4868 21.0343C18.7819 20.7435 18.7854 20.2687 18.4947 19.9736C18.204 19.6786 17.7291 19.675 17.4341 19.9657L18.4868 21.0343ZM19.9274 17.473C19.6363 17.7677 19.6393 18.2426 19.934 18.5336C20.2287 18.8247 20.7036 18.8217 20.9946 18.527L19.9274 17.473ZM4.96134 3.51504L3.51504 4.96134L4.5757 6.022L6.022 4.5757L4.96134 3.51504ZM12.1928 20.485C12.8596 21.1518 13.4119 21.7063 13.9081 22.0849C14.4217 22.4767 14.9622 22.75 15.6157 22.75V21.25C15.422 21.25 15.1981 21.1824 14.818 20.8924C14.4206 20.5892 13.9503 20.1211 13.2535 19.4243L12.1928 20.485ZM3.51504 4.96134C2.84824 5.62814 2.29367 6.18046 1.91508 6.67666C1.52328 7.19018 1.25 7.73073 1.25 8.38426H2.75C2.75 8.19057 2.81761 7.96662 3.10761 7.58654C3.41081 7.18914 3.87892 6.71878 4.5757 6.022L3.51504 4.96134ZM4.5757 10.7465C3.87892 10.0497 3.41081 9.57937 3.10761 9.18198C2.81761 8.8019 2.75 8.57795 2.75 8.38426H1.25C1.25 9.03779 1.52328 9.57835 1.91508 10.0919C2.29367 10.5881 2.84824 11.1404 3.51504 11.8072L4.5757 10.7465ZM11.8072 3.51504C11.1404 2.84824 10.5881 2.29367 10.0919 1.91508C9.57835 1.52328 9.03779 1.25 8.38426 1.25V2.75C8.57795 2.75 8.8019 2.81761 9.18199 3.10761C9.57938 3.41081 10.0497 3.87892 10.7465 4.5757L11.8072 3.51504ZM6.022 4.5757C6.71878 3.87892 7.18914 3.41081 7.58654 3.10761C7.96662 2.81762 8.19057 2.75 8.38426 2.75V1.25C7.73073 1.25 7.19018 1.52328 6.67666 1.91508C6.18046 2.29367 5.62814 2.84824 4.96134 3.51504L6.022 4.5757ZM19.4243 13.2535C20.1211 13.9503 20.5892 14.4206 20.8924 14.818C21.1824 15.1981 21.25 15.422 21.25 15.6157H22.75C22.75 14.9622 22.4767 14.4217 22.0849 13.9081C21.7063 13.4119 21.1518 12.8596 20.485 12.1928L19.4243 13.2535ZM10.7465 3.51504L8.33603 5.92553L9.39669 6.98619L11.8072 4.5757L10.7465 3.51504ZM19.4243 12.1928L17.0138 14.6033L18.0745 15.664L20.485 13.2535L19.4243 12.1928ZM17.4341 19.9657C16.9239 20.4684 16.5635 20.7975 16.2586 21.0043C15.9715 21.199 15.784 21.25 15.6157 21.25V22.75C16.173 22.75 16.6504 22.551 17.1005 22.2457C17.5329 21.9525 17.982 21.5316 18.4868 21.0343L17.4341 19.9657ZM20.9946 18.527C21.504 18.0112 21.9345 17.5549 22.2339 17.1178C22.5457 16.6628 22.75 16.1805 22.75 15.6157H21.25C21.25 15.7859 21.1978 15.9762 20.9966 16.2699C20.783 16.5815 20.4439 16.9499 19.9274 17.473L20.9946 18.527Z"
                                         fill="currentColor"
@@ -708,7 +1186,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M21 12C21 16.714 21 19.0711 19.682 20.5355C18.364 22 16.2426 22 12 22C7.75736 22 5.63604 22 4.31802 20.5355C3 19.0711 3 16.714 3 12C3 7.28595 3 4.92893 4.31802 3.46447C5.63604 2 7.75736 2 12 2C16.2426 2 18.364 2 19.682 3.46447C20.5583 4.43821 20.852 5.80655 20.9504 8"
                                         stroke="currentColor"
@@ -720,16 +1204,52 @@ const FontIcons = () => {
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <circle cx="8" cy="13" r="1" fill="currentColor" />
-                                    <circle cx="8" cy="17" r="1" fill="currentColor" />
-                                    <circle cx="12" cy="13" r="1" fill="currentColor" />
-                                    <circle cx="12" cy="17" r="1" fill="currentColor" />
-                                    <circle cx="16" cy="13" r="1" fill="currentColor" />
-                                    <circle cx="16" cy="17" r="1" fill="currentColor" />
+                                    <circle
+                                        cx="8"
+                                        cy="13"
+                                        r="1"
+                                        fill="currentColor"
+                                    />
+                                    <circle
+                                        cx="8"
+                                        cy="17"
+                                        r="1"
+                                        fill="currentColor"
+                                    />
+                                    <circle
+                                        cx="12"
+                                        cy="13"
+                                        r="1"
+                                        fill="currentColor"
+                                    />
+                                    <circle
+                                        cx="12"
+                                        cy="17"
+                                        r="1"
+                                        fill="currentColor"
+                                    />
+                                    <circle
+                                        cx="16"
+                                        cy="13"
+                                        r="1"
+                                        fill="currentColor"
+                                    />
+                                    <circle
+                                        cx="16"
+                                        cy="17"
+                                        r="1"
+                                        fill="currentColor"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M2 14C2 10.2288 2 8.34315 3.17157 7.17157C4.34315 6 6.22876 6 10 6H14C17.7712 6 19.6569 6 20.8284 7.17157C21.4816 7.82475 21.7706 8.69989 21.8985 10M22 14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22878 22 4.34314 22 3.17157 20.8284C2.51839 20.1752 2.22937 19.3001 2.10149 18"
                                         stroke="currentColor"
@@ -741,13 +1261,31 @@ const FontIcons = () => {
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M17 9C17 9.55228 16.5523 10 16 10C15.4477 10 15 9.55228 15 9C15 8.44772 15.4477 8 16 8C16.5523 8 17 8.44772 17 9Z" fill="currentColor" />
-                                    <path d="M9 9C9 9.55228 8.55228 10 8 10C7.44772 10 7 9.55228 7 9C7 8.44772 7.44772 8 8 8C8.55228 8 9 8.44772 9 9Z" fill="currentColor" />
+                                    <path
+                                        d="M17 9C17 9.55228 16.5523 10 16 10C15.4477 10 15 9.55228 15 9C15 8.44772 15.4477 8 16 8C16.5523 8 17 8.44772 17 9Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M9 9C9 9.55228 8.55228 10 8 10C7.44772 10 7 9.55228 7 9C7 8.44772 7.44772 8 8 8C8.55228 8 9 8.44772 9 9Z"
+                                        fill="currentColor"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="6"
+                                        r="4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
                                     <path
                                         d="M15 20.6151C14.0907 20.8619 13.0736 21 12 21C8.13401 21 5 19.2091 5 17C5 14.7909 8.13401 13 12 13C15.866 13 19 14.7909 19 17C19 17.3453 18.9234 17.6804 18.7795 18"
                                         stroke="currentColor"
@@ -757,16 +1295,37 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M9.5 21.5V18.5C9.5 17.5654 9.5 17.0981 9.70096 16.75C9.83261 16.522 10.022 16.3326 10.25 16.201C10.5981 16 11.0654 16 12 16C12.9346 16 13.4019 16 13.75 16.201C13.978 16.3326 14.1674 16.522 14.299 16.75C14.5 17.0981 14.5 17.5654 14.5 18.5V21.5"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path d="M21 22H9M3 22H5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M19 22V15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M5 22V15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M21 22H9M3 22H5.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M19 22V15"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M5 22V15"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M11.9999 2H7.47214C6.26932 2 5.66791 2 5.18461 2.2987C4.7013 2.5974 4.43234 3.13531 3.89443 4.21114L2.49081 7.75929C2.16652 8.57905 1.88279 9.54525 2.42867 10.2375C2.79489 10.7019 3.36257 11 3.99991 11C5.10448 11 5.99991 10.1046 5.99991 9C5.99991 10.1046 6.89534 11 7.99991 11C9.10448 11 9.99991 10.1046 9.99991 9C9.99991 10.1046 10.8953 11 11.9999 11C13.1045 11 13.9999 10.1046 13.9999 9C13.9999 10.1046 14.8953 11 15.9999 11C17.1045 11 17.9999 10.1046 17.9999 9C17.9999 10.1046 18.8953 11 19.9999 11C20.6373 11 21.205 10.7019 21.5712 10.2375C22.1171 9.54525 21.8334 8.57905 21.5091 7.75929L20.1055 4.21114C19.5676 3.13531 19.2986 2.5974 18.8153 2.2987C18.332 2 17.7306 2 16.5278 2H16"
                                         stroke="currentColor"
@@ -777,7 +1336,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M15.197 3.35462C16.8703 1.67483 19.4476 1.53865 20.9536 3.05046C22.4596 4.56228 22.3239 7.14956 20.6506 8.82935L18.2268 11.2626M10.0464 14C8.54044 12.4882 8.67609 9.90087 10.3494 8.22108L12.5 6.06212"
                                         stroke="currentColor"
@@ -793,8 +1358,20 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="3"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
                                     <path
                                         d="M3.66122 10.6392C4.13377 10.9361 4.43782 11.4419 4.43782 11.9999C4.43781 12.558 4.13376 13.0638 3.66122 13.3607C3.33966 13.5627 3.13248 13.7242 2.98508 13.9163C2.66217 14.3372 2.51966 14.869 2.5889 15.3949C2.64082 15.7893 2.87379 16.1928 3.33973 16.9999C3.80568 17.8069 4.03865 18.2104 4.35426 18.4526C4.77508 18.7755 5.30694 18.918 5.83284 18.8488C6.07287 18.8172 6.31628 18.7185 6.65196 18.5411C7.14544 18.2803 7.73558 18.2699 8.21895 18.549C8.70227 18.8281 8.98827 19.3443 9.00912 19.902C9.02332 20.2815 9.05958 20.5417 9.15224 20.7654C9.35523 21.2554 9.74458 21.6448 10.2346 21.8478C10.6022 22 11.0681 22 12 22C12.9319 22 13.3978 22 13.7654 21.8478C14.2554 21.6448 14.6448 21.2554 14.8478 20.7654C14.9404 20.5417 14.9767 20.2815 14.9909 19.9021C15.0117 19.3443 15.2977 18.8281 15.7811 18.549C16.2644 18.27 16.8545 18.2804 17.3479 18.5412C17.6837 18.7186 17.9271 18.8173 18.1671 18.8489C18.693 18.9182 19.2249 18.7756 19.6457 18.4527C19.9613 18.2106 20.1943 17.807 20.6603 17C20.8677 16.6407 21.029 16.3614 21.1486 16.1272M20.3387 13.3608C19.8662 13.0639 19.5622 12.5581 19.5621 12.0001C19.5621 11.442 19.8662 10.9361 20.3387 10.6392C20.6603 10.4372 20.8674 10.2757 21.0148 10.0836C21.3377 9.66278 21.4802 9.13092 21.411 8.60502C21.3591 8.2106 21.1261 7.80708 20.6601 7.00005C20.1942 6.19301 19.9612 5.7895 19.6456 5.54732C19.2248 5.22441 18.6929 5.0819 18.167 5.15113C17.927 5.18274 17.6836 5.2814 17.3479 5.45883C16.8544 5.71964 16.2643 5.73004 15.781 5.45096C15.2977 5.1719 15.0117 4.6557 14.9909 4.09803C14.9767 3.71852 14.9404 3.45835 14.8478 3.23463C14.6448 2.74458 14.2554 2.35523 13.7654 2.15224C13.3978 2 12.9319 2 12 2C11.0681 2 10.6022 2 10.2346 2.15224C9.74458 2.35523 9.35523 2.74458 9.15224 3.23463C9.05958 3.45833 9.02332 3.71848 9.00912 4.09794C8.98826 4.65566 8.70225 5.17191 8.21891 5.45096C7.73557 5.73002 7.14548 5.71959 6.65205 5.4588C6.31633 5.28136 6.0729 5.18269 5.83285 5.15108C5.30695 5.08185 4.77509 5.22436 4.35427 5.54727C4.03866 5.78945 3.80569 6.19297 3.33974 7C3.13231 7.35929 2.97105 7.63859 2.85138 7.87273"
                                         stroke="currentColor"
@@ -804,7 +1381,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M4.00655 7.93309C3.93421 9.84122 4.41713 13.0817 7.6677 16.3323C8.45191 17.1165 9.23553 17.7396 10 18.2327M5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C15.2529 20.0243 14.1963 19.9541 13 19.6111"
                                         stroke="currentColor"
@@ -814,10 +1397,25 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 16C9 16.5523 8.55228 17 8 17C7.44772 17 7 16.5523 7 16C7 15.4477 7.44772 15 8 15C8.55228 15 9 15.4477 9 16Z" fill="currentColor" />
-                                    <path d="M13 16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16C11 15.4477 11.4477 15 12 15C12.5523 15 13 15.4477 13 16Z" fill="currentColor" />
-                                    <path d="M17 16C17 16.5523 16.5523 17 16 17C15.4477 17 15 16.5523 15 16C15 15.4477 15.4477 15 16 15C16.5523 15 17 15.4477 17 16Z" fill="currentColor" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9 16C9 16.5523 8.55228 17 8 17C7.44772 17 7 16.5523 7 16C7 15.4477 7.44772 15 8 15C8.55228 15 9 15.4477 9 16Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M13 16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16C11 15.4477 11.4477 15 12 15C12.5523 15 13 15.4477 13 16Z"
+                                        fill="currentColor"
+                                    />
+                                    <path
+                                        d="M17 16C17 16.5523 16.5523 17 16 17C15.4477 17 15 16.5523 15 16C15 15.4477 15.4477 15 16 15C16.5523 15 17 15.4477 17 16Z"
+                                        fill="currentColor"
+                                    />
                                     <path
                                         d="M11 22H8C5.17157 22 3.75736 22 2.87868 21.1213C2 20.2426 2 18.8284 2 16C2 13.1716 2 11.7574 2.87868 10.8787C3.75736 10 5.17157 10 8 10H16C18.8284 10 20.2426 10 21.1213 10.8787C22 11.7574 22 13.1716 22 16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15"
                                         stroke="currentColor"
@@ -833,8 +1431,19 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 16V19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M12 16V19"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M15.5 22H8.5L8.83922 20.3039C8.93271 19.8365 9.34312 19.5 9.8198 19.5H14.1802C14.6569 19.5 15.0673 19.8365 15.1608 20.3039L15.5 22Z"
                                         stroke="currentColor"
@@ -857,7 +1466,12 @@ const FontIcons = () => {
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M18 22H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M18 22H6"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M17 2.45597C17.7415 2.59747 18.1811 2.75299 18.5609 3.22083C19.0367 3.80673 19.0115 4.43998 18.9612 5.70647C18.7805 10.2595 17.7601 16 12.0002 16C6.24021 16 5.21983 10.2595 5.03907 5.70647C4.98879 4.43998 4.96365 3.80673 5.43937 3.22083C5.91508 2.63494 6.48445 2.53887 7.62318 2.34674C8.74724 2.15709 10.2166 2 12.0002 2C12.7184 2 13.3857 2.02548 14 2.06829"
                                         stroke="currentColor"
@@ -867,7 +1481,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M13.3057 18.2975L8.23724 19.987C5.47183 20.9088 4.08912 21.3697 3.35924 20.6398C2.62936 19.9099 3.09026 18.5272 4.01207 15.7618L5.70156 10.6933C6.46758 8.39525 6.85059 7.24623 7.75684 7.03229C8.6631 6.81835 9.51953 7.67478 11.2324 9.38764L14.6114 12.7666C16.3242 14.4795 17.1807 15.3359 16.9667 16.2422"
                                         stroke="currentColor"
@@ -922,10 +1542,18 @@ const FontIcons = () => {
                             </div>
                         </div>
 
-                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] py-1 px-2 text-base text-[#009688]">Outline</div>
+                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] px-2 py-1 text-base text-[#009688]">
+                            Outline
+                        </div>
                         <div className="mb-5 flex flex-wrap items-center gap-10">
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M20.3116 12.6473L20.8293 10.7154C21.4335 8.46034 21.7356 7.3328 21.5081 6.35703C21.3285 5.58657 20.9244 4.88668 20.347 4.34587C19.6157 3.66095 18.4881 3.35883 16.2331 2.75458C13.978 2.15033 12.8504 1.84821 11.8747 2.07573C11.1042 2.25537 10.4043 2.65945 9.86351 3.23687C9.27709 3.86298 8.97128 4.77957 8.51621 6.44561C8.43979 6.7254 8.35915 7.02633 8.27227 7.35057L8.27222 7.35077L7.75458 9.28263C7.15033 11.5377 6.84821 12.6652 7.07573 13.641C7.25537 14.4115 7.65945 15.1114 8.23687 15.6522C8.96815 16.3371 10.0957 16.6392 12.3508 17.2435L12.3508 17.2435C14.3834 17.7881 15.4999 18.0873 16.415 17.9744C16.5152 17.9621 16.6129 17.9448 16.7092 17.9223C17.4796 17.7427 18.1795 17.3386 18.7203 16.7612C19.4052 16.0299 19.7074 14.9024 20.3116 12.6473Z"
                                         stroke="currentColor"
@@ -936,12 +1564,28 @@ const FontIcons = () => {
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M11.7769 10L16.6065 11.2941" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M11 12.8975L13.8978 13.6739" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M11.7769 10L16.6065 11.2941"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M11 12.8975L13.8978 13.6739"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
                                         stroke="currentColor"
@@ -949,17 +1593,33 @@ const FontIcons = () => {
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                     />
-                                    <path d="M12 16V3M12 3L16 7.375M12 3L8 7.375" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path
+                                        d="M12 16V3M12 3L16 7.375M12 3L8 7.375"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M11.1459 7.02251C11.5259 6.34084 11.7159 6 12 6C12.2841 6 12.4741 6.34084 12.8541 7.02251L12.9524 7.19887C13.0603 7.39258 13.1143 7.48944 13.1985 7.55334C13.2827 7.61725 13.3875 7.64097 13.5972 7.68841L13.7881 7.73161C14.526 7.89857 14.895 7.98205 14.9828 8.26432C15.0706 8.54659 14.819 8.84072 14.316 9.42898L14.1858 9.58117C14.0429 9.74833 13.9714 9.83191 13.9392 9.93531C13.9071 10.0387 13.9179 10.1502 13.9395 10.3733L13.9592 10.5763C14.0352 11.3612 14.0733 11.7536 13.8435 11.9281C13.6136 12.1025 13.2682 11.9435 12.5773 11.6254L12.3986 11.5431C12.2022 11.4527 12.1041 11.4075 12 11.4075C11.8959 11.4075 11.7978 11.4527 11.6014 11.5431L11.4227 11.6254C10.7318 11.9435 10.3864 12.1025 10.1565 11.9281C9.92674 11.7536 9.96476 11.3612 10.0408 10.5763L10.0605 10.3733C10.0821 10.1502 10.0929 10.0387 10.0608 9.93531C10.0286 9.83191 9.95713 9.74833 9.81418 9.58117L9.68403 9.42898C9.18097 8.84072 8.92945 8.54659 9.01723 8.26432C9.10501 7.98205 9.47396 7.89857 10.2119 7.73161L10.4028 7.68841C10.6125 7.64097 10.7173 7.61725 10.8015 7.55334C10.8857 7.48944 10.9397 7.39258 11.0476 7.19887L11.1459 7.02251Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M19 9C19 12.866 15.866 16 12 16C8.13401 16 5 12.866 5 9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9Z" stroke="currentColor" strokeWidth="1.5" />
+                                    <path
+                                        d="M19 9C19 12.866 15.866 16 12 16C8.13401 16 5 12.866 5 9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9Z"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
                                     <path
                                         d="M12 16.0678L8.22855 19.9728C7.68843 20.5321 7.41837 20.8117 7.18967 20.9084C6.66852 21.1289 6.09042 20.9402 5.81628 20.4602C5.69597 20.2495 5.65848 19.8695 5.5835 19.1095C5.54117 18.6804 5.52 18.4658 5.45575 18.2861C5.31191 17.8838 5.00966 17.5708 4.6211 17.4219C4.44754 17.3554 4.24033 17.3335 3.82589 17.2896C3.09187 17.212 2.72486 17.1732 2.52138 17.0486C2.05772 16.7648 1.87548 16.1662 2.08843 15.6266C2.18188 15.3898 2.45194 15.1102 2.99206 14.5509L5.45575 12"
                                         stroke="currentColor"
@@ -973,13 +1633,23 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M2.3153 12.6978C2.26536 12.2706 2.2404 12.057 2.2509 11.8809C2.30599 10.9577 2.98677 10.1928 3.89725 10.0309C4.07094 10 4.286 10 4.71612 10H15.2838C15.7139 10 15.929 10 16.1027 10.0309C17.0132 10.1928 17.694 10.9577 17.749 11.8809C17.7595 12.057 17.7346 12.2706 17.6846 12.6978L17.284 16.1258C17.1031 17.6729 16.2764 19.0714 15.0081 19.9757C14.0736 20.6419 12.9546 21 11.8069 21H8.19303C7.04537 21 5.9263 20.6419 4.99182 19.9757C3.72352 19.0714 2.89681 17.6729 2.71598 16.1258L2.3153 12.6978Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M17 17H19C20.6569 17 22 15.6569 22 14C22 12.3431 20.6569 11 19 11H17.5" stroke="currentColor" strokeWidth="1.5" />
+                                    <path
+                                        d="M17 17H19C20.6569 17 22 15.6569 22 14C22 12.3431 20.6569 11 19 11H17.5"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
                                     <path
                                         d="M10.0002 2C9.44787 2.55228 9.44787 3.44772 10.0002 4C10.5524 4.55228 10.5524 5.44772 10.0002 6"
                                         stroke="currentColor"
@@ -1004,7 +1674,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M4.97883 9.68508C2.99294 8.89073 2 8.49355 2 8C2 7.50645 2.99294 7.10927 4.97883 6.31492L7.7873 5.19153C9.77318 4.39718 10.7661 4 12 4C13.2339 4 14.2268 4.39718 16.2127 5.19153L19.0212 6.31492C21.0071 7.10927 22 7.50645 22 8C22 8.49355 21.0071 8.89073 19.0212 9.68508L16.2127 10.8085C14.2268 11.6028 13.2339 12 12 12C10.7661 12 9.77318 11.6028 7.7873 10.8085L4.97883 9.68508Z"
                                         stroke="currentColor"
@@ -1025,7 +1701,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M3 12C3 15.7712 3 19.6569 4.31802 20.8284C5.63604 22 7.75736 22 12 22C16.2426 22 18.364 22 19.682 20.8284C21 19.6569 21 15.7712 21 12"
                                         stroke="currentColor"
@@ -1050,19 +1732,46 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M18 8.80745C18 13.7615 13.7333 15 11.6 15C9.73333 15 6 13.7615 6 8.80745C6 6.71017 7.20839 5.35826 8.26099 4.65274C8.79638 4.29388 9.48354 4.55201 9.57296 5.17624C9.75127 6.421 10.8777 7.34944 11.5596 6.27998C12.1424 5.36614 12.3529 4.13169 12.3529 3.38896C12.3529 2.28965 13.503 1.59108 14.4009 2.2646C16.1512 3.5774 18 5.776 18 8.80745Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M20 15L4 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M4 15L9 17.1875M20 22L14.5 19.5938" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M15 10C14.8 10.6667 13.92 12 12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M20 15L4 22"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M4 15L9 17.1875M20 22L14.5 19.5938"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M15 10C14.8 10.6667 13.92 12 12 12"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M2 3L2.26491 3.0883C3.58495 3.52832 4.24497 3.74832 4.62248 4.2721C5 4.79587 5 5.49159 5 6.88304V9.5C5 12.3284 5 13.7426 5.87868 14.6213C6.75736 15.5 8.17157 15.5 11 15.5H19"
                                         stroke="currentColor"
@@ -1079,7 +1788,12 @@ const FontIcons = () => {
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M11 9H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M11 9H8"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M5 6H16.4504C18.5054 6 19.5328 6 19.9775 6.67426C20.4221 7.34853 20.0173 8.29294 19.2078 10.1818L18.7792 11.1818C18.4013 12.0636 18.2123 12.5045 17.8366 12.7523C17.4609 13 16.9812 13 16.0218 13H5"
                                         stroke="currentColor"
@@ -1088,7 +1802,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M22 7L14.6203 14.3347C13.6227 15.3263 13.1238 15.822 12.5051 15.822C11.8864 15.8219 11.3876 15.326 10.3902 14.3342L10.1509 14.0962C9.15254 13.1035 8.65338 12.6071 8.03422 12.6074C7.41506 12.6076 6.91626 13.1043 5.91867 14.0977L2 18M22 7V12.5458M22 7H16.4179"
                                         stroke="currentColor"
@@ -1099,16 +1819,33 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M5.50506 11.4096L6.03539 11.9399L5.50506 11.4096ZM3 14.9522H2.25H3ZM9.04776 21V21.75V21ZM11.4096 5.50506L10.8792 4.97473L11.4096 5.50506ZM13.241 17.8444C13.5339 18.1373 14.0088 18.1373 14.3017 17.8444C14.5946 17.5515 14.5946 17.0766 14.3017 16.7837L13.241 17.8444ZM7.21629 9.69832C6.9234 9.40543 6.44852 9.40543 6.15563 9.69832C5.86274 9.99122 5.86274 10.4661 6.15563 10.759L7.21629 9.69832ZM17.9646 12.0601L12.0601 17.9646L13.1208 19.0253L19.0253 13.1208L17.9646 12.0601ZM6.03539 11.9399L11.9399 6.03539L10.8792 4.97473L4.97473 10.8792L6.03539 11.9399ZM6.03539 17.9646C5.18538 17.1146 4.60235 16.5293 4.22253 16.0315C3.85592 15.551 3.75 15.2411 3.75 14.9522H2.25C2.25 15.701 2.56159 16.3274 3.03 16.9414C3.48521 17.538 4.1547 18.2052 4.97473 19.0253L6.03539 17.9646ZM4.97473 10.8792C4.1547 11.6993 3.48521 12.3665 3.03 12.9631C2.56159 13.577 2.25 14.2035 2.25 14.9522H3.75C3.75 14.6633 3.85592 14.3535 4.22253 13.873C4.60235 13.3752 5.18538 12.7899 6.03539 11.9399L4.97473 10.8792ZM12.0601 17.9646C11.2101 18.8146 10.6248 19.3977 10.127 19.7775C9.64651 20.1441 9.33665 20.25 9.04776 20.25V21.75C9.79649 21.75 10.423 21.4384 11.0369 20.97C11.6335 20.5148 12.3008 19.8453 13.1208 19.0253L12.0601 17.9646ZM4.97473 19.0253C5.79476 19.8453 6.46201 20.5148 7.05863 20.97C7.67256 21.4384 8.29902 21.75 9.04776 21.75V20.25C8.75886 20.25 8.449 20.1441 7.9685 19.7775C7.47069 19.3977 6.88541 18.8146 6.03539 17.9646L4.97473 19.0253ZM17.9646 6.03539C18.8146 6.88541 19.3977 7.47069 19.7775 7.9685C20.1441 8.449 20.25 8.75886 20.25 9.04776H21.75C21.75 8.29902 21.4384 7.67256 20.97 7.05863C20.5148 6.46201 19.8453 5.79476 19.0253 4.97473L17.9646 6.03539ZM19.0253 13.1208C19.8453 12.3008 20.5148 11.6335 20.97 11.0369C21.4384 10.423 21.75 9.79649 21.75 9.04776H20.25C20.25 9.33665 20.1441 9.64651 19.7775 10.127C19.3977 10.6248 18.8146 11.2101 17.9646 12.0601L19.0253 13.1208ZM19.0253 4.97473C18.2052 4.1547 17.538 3.48521 16.9414 3.03C16.3274 2.56159 15.701 2.25 14.9522 2.25V3.75C15.2411 3.75 15.551 3.85592 16.0315 4.22253C16.5293 4.60235 17.1146 5.18538 17.9646 6.03539L19.0253 4.97473ZM11.9399 6.03539C12.7899 5.18538 13.3752 4.60235 13.873 4.22253C14.3535 3.85592 14.6633 3.75 14.9522 3.75V2.25C14.2035 2.25 13.577 2.56159 12.9631 3.03C12.3665 3.48521 11.6993 4.1547 10.8792 4.97473L11.9399 6.03539ZM14.3017 16.7837L7.21629 9.69832L6.15563 10.759L13.241 17.8444L14.3017 16.7837Z"
                                         fill="currentColor"
                                     />
-                                    <path d="M9 21H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M9 21H21"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M3 22V12C3 10.1144 3 9.17157 3.58579 8.58579C4.17157 8 5.11438 8 7 8C8.88562 8 9.82843 8 10.4142 8.58579C11 9.17157 11 10.1144 11 12"
                                         stroke="currentColor"
@@ -1130,14 +1867,40 @@ const FontIcons = () => {
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path d="M7 4V2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M22 22L2 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M10 15H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M10 18H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M7 4V2"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M22 22L2 22"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M10 15H14"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M10 18H14"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M2.5 6.5C2.5 4.29086 4.29086 2.5 6.5 2.5C8.70914 2.5 10.5 4.29086 10.5 6.5C10.5 8.70914 8.70914 10.5 6.5 10.5C4.29086 10.5 2.5 8.70914 2.5 6.5Z"
                                         stroke="currentColor"
@@ -1161,14 +1924,25 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <path d="M13.9868 5L12 12.4149L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M13.9868 5L12 12.4149L10.0132 19.8297"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                         stroke="currentColor"
@@ -1178,15 +1952,36 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M3 13.0827C3 13.0059 3 12.9675 3.00211 12.9351C3.0347 12.4339 3.43395 12.0347 3.93511 12.0021C3.96752 12 4.00591 12 4.08268 12H19.9173C19.9941 12 20.0325 12 20.0649 12.0021C20.5661 12.0347 20.9653 12.4339 20.9979 12.9351C21 12.9675 21 13.0059 21 13.0827C21 13.4784 21 13.6762 20.9859 13.8977C20.7773 17.1854 17.983 20.0867 14.7053 20.4186C14.4845 20.441 14.3558 20.4458 14.0982 20.4555C13.364 20.4831 12.6493 20.5 12 20.5C11.3507 20.5 10.636 20.4831 9.90183 20.4555C9.64425 20.4458 9.51545 20.441 9.29467 20.4186C6.01705 20.0867 3.22272 17.1854 3.01406 13.8977C3 13.6762 3 13.4784 3 13.0827Z"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                     />
-                                    <path d="M6 20L5 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M18 20L19 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M2 12H22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path
+                                        d="M6 20L5 22"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M18 20L19 22"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M2 12H22"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                     <path
                                         d="M2.25 13C2.25 13.4142 2.58579 13.75 3 13.75C3.41421 13.75 3.75 13.4142 3.75 13H2.25ZM7.59973 3.49934L8.29609 3.22079L8.29609 3.22079L7.59973 3.49934ZM7.97885 4.44713L8.30713 5.12147L7.97885 4.44713ZM6.36212 6.19232L7.05701 6.47451L6.36212 6.19232ZM10.577 4.37783L10.2824 5.06753L10.577 4.37783ZM6.34559 8.74156L5.6478 9.01651C5.72221 9.20535 5.86997 9.35596 6.05735 9.43396C6.24473 9.51197 6.45572 9.51069 6.64215 9.43044L6.34559 8.74156ZM12.3063 6.17548L12.6029 6.86436C12.975 6.70417 13.1526 6.27744 13.0041 5.90053L12.3063 6.17548ZM3.75 13V4.38516H2.25V13H3.75ZM5.38516 2.75C6.05379 2.75 6.65506 3.15708 6.90338 3.77788L8.29609 3.22079C7.81998 2.0305 6.66715 1.25 5.38516 1.25V2.75ZM3.75 4.38516C3.75 3.48209 4.48209 2.75 5.38516 2.75V1.25C3.65366 1.25 2.25 2.65366 2.25 4.38516H3.75ZM6.90338 3.77788L7.2825 4.72568L8.67521 4.16859L8.29609 3.22079L6.90338 3.77788ZM7.04337 8.46661C6.80167 7.85321 6.78638 7.14092 7.05701 6.47451L5.66723 5.91014C5.24692 6.94515 5.26959 8.05665 5.6478 9.01651L7.04337 8.46661ZM12.0098 5.4866L6.04903 8.05268L6.64215 9.43044L12.6029 6.86436L12.0098 5.4866ZM10.2824 5.06753C10.9039 5.33307 11.367 5.83741 11.6086 6.45043L13.0041 5.90053C12.6258 4.94029 11.887 4.12189 10.8717 3.68813L10.2824 5.06753ZM7.05701 6.47451C7.31118 5.8486 7.76827 5.3838 8.30713 5.12147L7.65058 3.77279C6.78337 4.19496 6.06253 4.93671 5.66723 5.91014L7.05701 6.47451ZM8.30713 5.12147C8.91452 4.82579 9.62506 4.78672 10.2824 5.06753L10.8717 3.68813C9.79386 3.22768 8.62874 3.29661 7.65058 3.77279L8.30713 5.12147Z"
                                         fill="currentColor"
@@ -1194,21 +1989,53 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 14.2354V17.0001C9 19.7615 11.2386 22.0001 14 22.0001H14.8824C16.7691 22.0001 18.3595 20.7311 18.8465 19.0001" stroke="currentColor" strokeWidth="1.5" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9 14.2354V17.0001C9 19.7615 11.2386 22.0001 14 22.0001H14.8824C16.7691 22.0001 18.3595 20.7311 18.8465 19.0001"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
                                     <path
                                         d="M5.42857 3H5.3369C5.02404 3 4.86761 3 4.73574 3.01166C3.28763 3.13972 2.13972 4.28763 2.01166 5.73574C2 5.86761 2 6.02404 2 6.3369V7.23529C2 11.1013 5.13401 14.2353 9 14.2353C12.7082 14.2353 15.7143 11.2292 15.7143 7.521V6.3369C15.7143 6.02404 15.7143 5.86761 15.7026 5.73574C15.5746 4.28763 14.4267 3.13972 12.9785 3.01166C12.8467 3 12.6902 3 12.3774 3H12.2857"
                                         stroke="currentColor"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                     />
-                                    <circle cx="19" cy="16" r="3" stroke="currentColor" strokeWidth="1.5" />
-                                    <path d="M12 2V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    <path d="M6 2V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <circle
+                                        cx="19"
+                                        cy="16"
+                                        r="3"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        d="M12 2V4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M6 2V4"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                    />
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M15.6807 14.5869C19.1708 14.5869 22 11.7692 22 8.29344C22 4.81767 19.1708 2 15.6807 2C12.1907 2 9.3615 4.81767 9.3615 8.29344C9.3615 9.90338 10.0963 11.0743 10.0963 11.0743L2.45441 18.6849C2.1115 19.0264 1.63143 19.9143 2.45441 20.7339L3.33616 21.6121C3.67905 21.9048 4.54119 22.3146 5.2466 21.6121L6.27531 20.5876C7.30403 21.6121 8.4797 21.0267 8.92058 20.4412C9.65538 19.4167 8.77362 18.3922 8.77362 18.3922L9.06754 18.0995C10.4783 19.5045 11.7128 18.6849 12.1537 18.0995C12.8885 17.075 12.1537 16.0505 12.1537 16.0505C11.8598 15.465 11.272 15.465 12.0067 14.7333L12.8885 13.8551C13.5939 14.4405 15.0439 14.5869 15.6807 14.5869Z"
                                         stroke="currentColor"
@@ -1224,10 +2051,18 @@ const FontIcons = () => {
                             </div>
                         </div>
 
-                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] py-1 px-2 text-base text-[#009688]">Bold</div>
+                        <div className="mb-5 inline-block rounded bg-[#009688]/[.26] px-2 py-1 text-base text-[#009688]">
+                            Bold
+                        </div>
                         <div className="flex flex-wrap items-center gap-10">
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1237,7 +2072,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M6.65376 1.63257C6.45076 1.27151 5.99349 1.14338 5.63244 1.34638C5.27138 1.54938 5.14324 2.00664 5.34624 2.3677L11.1396 12.6718L8.43226 17.4871C7.85064 16.1697 6.5327 15.2501 5 15.2501C2.92893 15.2501 1.25 16.9291 1.25 19.0001C1.25 21.0712 2.92893 22.7501 5 22.7501C6.42286 22.7501 7.66063 21.9577 8.29606 20.7901L12 14.2022L15.7039 20.79C16.3393 21.9577 17.5771 22.7501 19 22.7501C21.0711 22.7501 22.75 21.0712 22.75 19.0001C22.75 16.9291 21.0711 15.2501 19 15.2501C17.4673 15.2501 16.1494 16.1696 15.5677 17.4871L12.8604 12.6718L18.6538 2.3677C18.8568 2.00664 18.7286 1.54938 18.3676 1.34638C18.0065 1.14338 17.5492 1.27151 17.3462 1.63257L12 11.1415L6.65376 1.63257Z"
                                         fill="currentColor"
@@ -1245,7 +2086,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1255,7 +2102,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1265,7 +2118,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M7.75 2.5C7.75 2.08579 7.41421 1.75 7 1.75C6.58579 1.75 6.25 2.08579 6.25 2.5V4.07926C4.81067 4.19451 3.86577 4.47737 3.17157 5.17157C2.47737 5.86577 2.19451 6.81067 2.07926 8.25H21.9207C21.8055 6.81067 21.5226 5.86577 20.8284 5.17157C20.1342 4.47737 19.1893 4.19451 17.75 4.07926V2.5C17.75 2.08579 17.4142 1.75 17 1.75C16.5858 1.75 16.25 2.08579 16.25 2.5V4.0129C15.5847 4 14.839 4 14 4H10C9.16097 4 8.41527 4 7.75 4.0129V2.5Z"
                                         fill="currentColor"
@@ -1279,7 +2138,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M16.3445 8.93024L16.6889 6.09016L16.6889 6.09014C16.7692 5.4285 16.8093 5.09767 16.74 4.82267C16.6477 4.456 16.4231 4.14364 16.1158 3.95431C15.8853 3.81231 15.5764 3.76933 14.9587 3.68338C14.341 3.59742 14.0321 3.55444 13.7754 3.62863C13.433 3.72756 13.1414 3.96809 12.9647 4.29732C12.8321 4.54424 12.7489 5.23007 12.6687 5.89173L6.53714 5.03851C6.61739 4.37686 6.70057 3.69102 6.6313 3.41601C6.53895 3.04934 6.31439 2.73698 6.00703 2.54765C5.77651 2.40565 5.46765 2.36268 4.84993 2.27672C4.23222 2.19076 3.92336 2.14778 3.66662 2.22198C3.32429 2.3209 3.03268 2.56143 2.85592 2.89066C2.72336 3.13758 2.68323 3.46841 2.60299 4.13006L2.25853 6.97015C2.17828 7.6318 2.13816 7.96263 2.20742 8.23764C2.29978 8.60431 2.52433 8.91667 2.8317 9.106C3.06222 9.248 3.37107 9.29097 3.98878 9.37693L3.98879 9.37693L3.9888 9.37693C4.60651 9.46289 4.91537 9.50587 5.17211 9.43167C5.51443 9.33275 5.80605 9.09222 5.9828 8.76299C6.11537 8.51607 6.19855 7.83023 6.2788 7.16858L12.4103 8.0218C12.3301 8.68345 12.2469 9.36929 12.3162 9.6443C12.4085 10.011 12.6331 10.3233 12.9404 10.5127C13.171 10.6547 13.4798 10.6976 14.0975 10.7836L14.0975 10.7836L14.0975 10.7836C14.7153 10.8695 15.0241 10.9125 15.2809 10.8383C15.6232 10.7394 15.9148 10.4989 16.0915 10.1696C16.2241 9.92273 16.2642 9.59191 16.3445 8.93026L16.3445 8.93024Z"
                                         fill="currentColor"
@@ -1291,7 +2156,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1301,7 +2172,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M19.3517 7.61665L15.3929 4.05375C14.2651 3.03868 13.7012 2.53114 13.0092 2.26562L13 5.00011C13 7.35713 13 8.53564 13.7322 9.26787C14.4645 10.0001 15.643 10.0001 18 10.0001H21.5801C21.2175 9.29588 20.5684 8.71164 19.3517 7.61665Z"
                                         fill="currentColor"
@@ -1315,7 +2192,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M18.2857 22C20.3371 22 22 20.4198 22 18.4706C22 16.9257 20.9554 15.6126 19.5008 15.1344C19.2941 13.3711 17.7203 12 15.8095 12C13.7582 12 12.0952 13.5802 12.0952 15.5294C12.0952 15.9605 12.1766 16.3736 12.3255 16.7555C12.1509 16.723 11.9704 16.7059 11.7857 16.7059C10.2472 16.7059 9 17.891 9 19.3529C9 20.8149 10.2472 22 11.7857 22H18.2857Z"
                                         fill="currentColor"
@@ -1327,7 +2210,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1337,7 +2226,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1347,7 +2242,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M14.8412 8.09511L18.2487 7.18208C18.4731 7.12195 18.5853 7.09188 18.6736 7.04832C19.0364 6.86943 19.2557 6.48964 19.2292 6.08604C19.2228 5.98776 19.1927 5.87556 19.1326 5.65114C18.9522 4.97791 18.862 4.64129 18.7313 4.37629C18.1946 3.28804 17.0553 2.63022 15.8445 2.70958C15.7213 2.71766 15.5907 2.73811 15.4314 2.77235C15.4505 2.85465 15.4558 2.94159 15.4452 3.0303L14.8412 8.09511Z"
                                         fill="currentColor"
@@ -1369,7 +2270,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1395,7 +2302,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1405,7 +2318,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -1419,7 +2338,13 @@ const FontIcons = () => {
                                 </svg>
                             </div>
                             <div className="grid h-14 w-14 place-content-center rounded-md border border-white-dark/20 dark:border-[#191e3a]">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                         d="M11.4001 18.1612L11.4001 18.1612L18.796 10.7653C17.7894 10.3464 16.5972 9.6582 15.4697 8.53068C14.342 7.40298 13.6537 6.21058 13.2348 5.2039L5.83882 12.5999L5.83879 12.5999C5.26166 13.1771 4.97307 13.4657 4.7249 13.7838C4.43213 14.1592 4.18114 14.5653 3.97634 14.995C3.80273 15.3593 3.67368 15.7465 3.41556 16.5208L2.05445 20.6042C1.92743 20.9852 2.0266 21.4053 2.31063 21.6894C2.59466 21.9734 3.01478 22.0726 3.39584 21.9456L7.47918 20.5844C8.25351 20.3263 8.6407 20.1973 9.00498 20.0237C9.43469 19.8189 9.84082 19.5679 10.2162 19.2751C10.5343 19.0269 10.823 18.7383 11.4001 18.1612Z"
                                         fill="currentColor"

@@ -78,7 +78,7 @@ export const postMessage: any = async (options: any) => {
     const registeredChannels = await getRegisteredChannel(true);
     const channel = find(
       registeredChannels,
-      (_rc) => _rc?.name === options?.channel_name
+      (_rc) => _rc?.name === options?.channel_name,
     );
 
     if (channel?.id) {
@@ -111,6 +111,7 @@ export const postMessage: any = async (options: any) => {
         ...messageOptions,
       });
     } catch (e) {
+      console.error(e);
       throw new Error(`Error Post message to channel ${channelId}`);
     }
   } else {

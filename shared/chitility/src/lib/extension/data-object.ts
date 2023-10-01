@@ -1,7 +1,7 @@
 export class DataObject {
   private readonly _data: any = {};
 
-  private _jsonDisabled = false;
+  private _jsonDisabled = true;
 
   constructor(initData?: any) {
     this._data = initData ?? {};

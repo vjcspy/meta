@@ -17,6 +17,8 @@ export class SyncValues {
 
   static SLACK_CHANNEL_NAME = 'general-meta-bot-channel';
 
+  static SLACK_ALERT_CHANNEL_NAME = 'meta-bot-alert-channel';
+
   static SYNC_TICKS_EXCHANGE_KEY = 'stock.info.sync.ticks';
 
   static SYNC_TICKS_ROUTING_KEY = 'stock.info.sync.ticks';

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import themeConfig from '../theme.config';
 
 const initialState = {
@@ -29,10 +30,11 @@ const initialState = {
         { code: 'sv', name: 'Swedish' },
         { code: 'tr', name: 'Turkish' },
     ],
+    themeDemo: '1',
 };
 
 const themeConfigSlice = createSlice({
-    name: 'auth',
+    name: 'theme',
     initialState: initialState,
     reducers: {
         toggleTheme(state, { payload }) {
@@ -44,7 +46,10 @@ const themeConfigSlice = createSlice({
             } else if (payload === 'dark') {
                 state.isDarkMode = true;
             } else if (payload === 'system') {
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                if (
+                    window.matchMedia &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches
+                ) {
                     state.isDarkMode = true;
                 } else {
                     state.isDarkMode = false;
@@ -72,7 +77,9 @@ const themeConfigSlice = createSlice({
             payload = payload || state.rtlClass; // rtl, ltr
             localStorage.setItem('rtlClass', payload);
             state.rtlClass = payload;
-            document.querySelector('html')?.setAttribute('dir', state.rtlClass || 'ltr');
+            document
+                .querySelector('html')
+                ?.setAttribute('dir', state.rtlClass || 'ltr');
         },
         toggleAnimation(state, { payload }) {
             payload = payload || state.animation; // animate__fadeIn, animate__fadeInDown, animate__fadeInUp, animate__fadeInLeft, animate__fadeInRight, animate__slideInDown, animate__slideInLeft, animate__slideInRight, animate__zoomIn
@@ -102,9 +109,35 @@ const themeConfigSlice = createSlice({
         setPageTitle(state, { payload }) {
             document.title = `${payload} | VRISTO - Multipurpose Tailwind Dashboard Template`;
         },
+
+        toggleThemeDemo(
+            state,
+            {
+                payload,
+            }: {
+                payload: {
+                    enable: '1' | '0';
+                };
+            },
+        ) {
+            const isEnable = payload.enable || '0';
+            localStorage.setItem('themeDemo', isEnable);
+            state.themeDemo = isEnable;
+        },
     },
 });
 
-export const { toggleTheme, toggleMenu, toggleLayout, toggleRTL, toggleAnimation, toggleNavbar, toggleSemidark, toggleLocale, toggleSidebar, setPageTitle } = themeConfigSlice.actions;
+export const {
+    toggleTheme,
+    toggleMenu,
+    toggleLayout,
+    toggleRTL,
+    toggleAnimation,
+    toggleNavbar,
+    toggleSemidark,
+    toggleSidebar,
+    setPageTitle,
+    toggleThemeDemo,
+} = themeConfigSlice.actions;
 
 export default themeConfigSlice.reducer;

@@ -1,5 +1,7 @@
+import { CoreModule } from '@modules/core/core.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { STOCK_TRADING_CONTROLLERS } from '@modules/stock-trading/controller';
+import { STOCK_TRADING_CRONS } from '@modules/stock-trading/cron';
 import { STOCK_TRADING_HELPERS } from '@modules/stock-trading/helper';
 import { TRADING_QUEUE } from '@modules/stock-trading/queue';
 import { STOCK_TRADING_REPO } from '@modules/stock-trading/repo';
@@ -9,6 +11,7 @@ import { Module } from '@nestjs/common';
 
 @Module({
   imports: [
+    CoreModule,
     RabbitMQModule.register({
       exchanges: [
         {
@@ -25,6 +28,7 @@ import { Module } from '@nestjs/common';
     ...STOCK_TRADING_HELPERS,
     ...STOCK_TRADING_REPO,
     ...TRADING_QUEUE,
+    ...STOCK_TRADING_CRONS,
   ],
   exports: [...STOCK_TRADING_HELPERS, ...STOCK_TRADING_REPO],
 })

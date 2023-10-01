@@ -91,7 +91,6 @@ export const serverlessSimpleConfiguration: (config: {
         concurrency: 10,
         packager: 'pnpm',
         keepNames: true,
-        disableIncremental: true,
       },
       ...customs,
     },

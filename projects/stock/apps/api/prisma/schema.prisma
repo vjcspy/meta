@@ -541,3 +541,14 @@ model Result {
   // cache everything in db
   @@map("results")
 }
+
+model StockAlert {
+  id         Int     @id @default(autoincrement())
+  name       String
+  symbol     String? @db.VarChar(10)
+  conditions Json
+  state      Int     @db.SmallInt
+
+  // cache everything in db
+  @@map("stock_alerts")
+}

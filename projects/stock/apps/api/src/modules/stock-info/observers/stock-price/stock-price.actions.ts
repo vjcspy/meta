@@ -5,6 +5,7 @@ import type * as moment from 'moment';
 export const STOCK_PRICE_SYNC = actionFactory<{
   code: string;
   resolve: any;
+  fromBeginning?: boolean;
 }>('STOCK_PRICE_SYNC');
 
 export const STOCK_PRICE_LOAD = actionFactory<{
