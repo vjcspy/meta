@@ -62,4 +62,15 @@ export class StockAlertRepo {
       },
     });
   }
+
+  disableAlert(id: number) {
+    return prisma.stockAlert.update({
+      where: {
+        id,
+      },
+      data: {
+        state: 0,
+      },
+    });
+  }
 }

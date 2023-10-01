@@ -34,7 +34,28 @@ export default function Price() {
         id: null,
         name: '',
         symbol: '',
-        conditions: '{}',
+        conditions: JSON.stringify(
+            {
+                conditions: {
+                    all: [
+                        {
+                            fact: 'price',
+                            operator: 'gte',
+                            value: 19000,
+                            path: '$.close',
+                        },
+                    ],
+                },
+                event: {
+                    type: 'price_alert',
+                    params: {
+                        message: 'alert message',
+                    },
+                },
+            },
+            null,
+            2,
+        ),
         state: 1,
     });
 

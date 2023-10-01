@@ -6,6 +6,7 @@ import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import { find, forEach } from 'lodash';
 import * as moment from 'moment/moment';
 
 @Injectable()
@@ -60,7 +61,7 @@ export class SyncPricesJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('0 */5 9-14 * * 1-6', {
+  @Cron('0 */5 9-14 * * 1-5', {
     name: SyncValues.JOB_SYNC_PRICE_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
@@ -70,5 +71,28 @@ export class SyncPricesJob {
     this.logger.info(
       `Published sync stock price current day with size ${size.size}`,
     );
+  }
+
+  // * * * * * *
+  // | | | | | |
+  // | | | | | day of week
+  // | | | | months
+  // | | | day of month
+  // | | hours
+  // | minutes
+  // seconds (optional)
+  @Cron('*/20 * 9-14 * * 1-5', {
+    name: SyncValues.JOB_SYNC_PRICE_KEY,
+    timeZone: 'Asia/Ho_Chi_Minh',
+  })
+  async syncAlertPrice() {
+    if (!isMainProcess()) return;
+    const alerts = await prisma.stockAlert.findMany({});
+    const cors = await prisma.cor_entity.findMany({});
+    forEach(alerts, (a) => {
+      if (a.symbol && find(cors, (c) => c.code === a.symbol)) {
+        this.syncPricePublisher.publishOne(a.symbol);
+      }
+    });
   }
 }

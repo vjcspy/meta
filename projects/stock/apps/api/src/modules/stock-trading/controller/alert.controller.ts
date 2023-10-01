@@ -40,4 +40,16 @@ export class AlertController {
       success: true,
     };
   }
+
+  @Get('alert-disable/:id') // Sử dụng Param để lấy id từ URL
+  async disableAlert(@Param('id') id: string) {
+    this.logger.info('process disableAlert alert', { id });
+
+    // Thực hiện xóa alert dựa trên id ở đây, bạn có thể gọi phương thức từ stockAlertRepo hoặc một tương tự.
+    await this.stockAlertRepo.disableAlert(Number(id));
+
+    return {
+      success: true,
+    };
+  }
 }

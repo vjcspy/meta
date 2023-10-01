@@ -39,6 +39,7 @@ const thunkActions = {
             // Trả về dữ liệu từ API
             return { data };
         } catch (error) {
+            showMessage('getAlerts: Network response was not ok', 'error');
             throw error;
         }
     }),
@@ -65,6 +66,7 @@ const thunkActions = {
             // Trả về dữ liệu từ API
             return { data };
         } catch (error) {
+            showMessage('upsertAlert: Network response was not ok', 'error');
             throw error;
         }
     }),
@@ -90,6 +92,7 @@ const thunkActions = {
             // Trả về dữ liệu từ API
             return { data };
         } catch (error) {
+            showMessage('deleteAlert: Network response was not ok', 'error');
             throw error;
         }
     }),

@@ -36,4 +36,16 @@ export class StockPricePublisher {
       size,
     };
   }
+
+  async publishOne(code: string) {
+    this.connectionManager.getConnection().publish(
+      SyncValues.EXCHANGE_KEY,
+      SyncValues.STOCK_PRICE_SYNC_KEY,
+      {
+        code,
+        fromBeginning: false,
+      },
+      {},
+    );
+  }
 }

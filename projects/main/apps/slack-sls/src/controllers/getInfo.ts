@@ -5,6 +5,6 @@ export const getInfoController = (_req: Request, res: Response) => {
   res.json({
     repo: 'meta',
     branch: 'master',
-    created_at: '15:38 20230301',
+    created_at: '20231001_1',
   });
 };
