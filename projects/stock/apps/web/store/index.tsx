@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import alertPrice from '@/store/alertPrice';
+import alertPriceSlice from '@/store/alertPrice.slice';
+import analysisSlice from '@/store/analysis.slice';
 import themeConfigSlice from '@/store/themeConfigSlice';
 
 const rootReducer = combineReducers({
     themeConfig: themeConfigSlice,
-    alertPrice: alertPrice,
+    alertPrice: alertPriceSlice,
+    analysis: analysisSlice,
 });
 
 export default configureStore({

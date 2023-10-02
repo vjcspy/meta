@@ -455,6 +455,9 @@ importers:
       '@tippyjs/react':
         specifier: ^4.2.6
         version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
+      '@web/ui-extension':
+        specifier: workspace:*
+        version: link:../../../../shared/ui-extension
       '@x1mrdonut1x/nouislider-react':
         specifier: ^3.4.3
         version: 3.4.3(nouislider@15.7.1)(react@18.2.0)
@@ -532,7 +535,7 @@ importers:
         version: 8.1.3(@types/react-dom@18.2.8)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       react-select:
         specifier: latest
-        version: 5.7.5(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.7.7(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
       react-simplemde-editor:
         specifier: ^5.2.0
         version: 5.2.0(easymde@2.18.0)(react-dom@18.2.0)(react@18.2.0)
@@ -13716,8 +13719,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /react-select@5.7.5(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-jgYZa2xgKP0DVn5GZk7tZwbRx7kaVz1VqU41S8z1KWmshRDhlrpKS0w80aS1RaK5bVIXpttgSou7XCjWw1ncKA==}
+  /react-select@5.7.7(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-HhashZZJDRlfF/AKj0a0Lnfs3sRdw/46VJIRd8IbB9/Ovr74+ZIwkAdSBjSPXsFMG+u72c5xShqwLSKIJllzqw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
