@@ -68,11 +68,17 @@ export class SyncPricesJob {
   async syncPrice() {
     if (!isMainProcess()) return;
     const size = await this.syncPricePublisher.publish(['HOSE']);
+
+    // VNINDEX
+    await this.syncPricePublisher.publishOne('HOSTC');
     this.logger.info(
       `Published sync stock price current day with size ${size.size}`,
     );
   }
 
+  /*
+   * Sync price for alerting every 20 seconds
+   * */
   // * * * * * *
   // | | | | | |
   // | | | | | day of week
