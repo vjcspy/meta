@@ -11,6 +11,7 @@ import {
     toggleRTL,
     toggleSemidark,
     toggleTheme,
+    toggleThemeDemo,
 } from './store/themeConfigSlice';
 
 function App({ children }: PropsWithChildren) {
@@ -44,9 +45,10 @@ function App({ children }: PropsWithChildren) {
         );
 
         dispatch(
-            toggleNavbar(
-                localStorage.getItem('themeDemo') || themeConfig.themeDemo,
-            ),
+            toggleThemeDemo({
+                enable: (localStorage.getItem('themeDemo') ||
+                    themeConfig.themeDemo) as any,
+            }),
         );
     }, []);
 

@@ -30,7 +30,7 @@ const initialState = {
         { code: 'sv', name: 'Swedish' },
         { code: 'tr', name: 'Turkish' },
     ],
-    themeDemo: '1',
+    themeDemo: '0',
 };
 
 const themeConfigSlice = createSlice({
@@ -107,7 +107,7 @@ const themeConfigSlice = createSlice({
         },
 
         setPageTitle(state, { payload }) {
-            document.title = `${payload} | VRISTO - Multipurpose Tailwind Dashboard Template`;
+            document.title = `${payload} | Meta`;
         },
 
         toggleThemeDemo(
