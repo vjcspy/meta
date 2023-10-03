@@ -48,6 +48,7 @@ export class StockPriceHistoryResponse {
   open: number;
 
   @Expose({})
+  @Transform(({ value }) => Number(value.toString()))
   volume: number;
 
   @Expose({
@@ -68,6 +69,7 @@ export class StockPriceHistoryResponse {
   buyCount: number;
 
   @Expose({})
+  @Transform(({ value }) => Number(value.toString()))
   buyQuantity: number;
 
   @Expose({
@@ -76,6 +78,7 @@ export class StockPriceHistoryResponse {
   sellCount: number;
 
   @Expose({})
+  @Transform(({ value }) => Number(value.toString()))
   sellQuantity: number;
 
   @Expose({

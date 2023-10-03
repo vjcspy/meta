@@ -387,7 +387,7 @@ model StockPrice {
   priceBasic          Int
   totalVolume         Int
   dealVolume          Int
-  volume              Int
+  volume              BigInt   @db.BigInt
   putthroughVolume    Int
   totalTrade          BigInt   @db.BigInt
   totalValue          BigInt   @db.BigInt
@@ -397,9 +397,9 @@ model StockPrice {
   sellForeignQuantity Int
   sellForeignValue    BigInt   @db.BigInt
   buyCount            Int
-  buyQuantity         Int
+  buyQuantity         BigInt   @db.BigInt
   sellCount           Int
-  sellQuantity        Int
+  sellQuantity        BigInt   @db.BigInt
   // buyAvg              Decimal  @db.Decimal(8, 3)
   // sellAvg             Decimal  @db.Decimal(8, 3)
   adjRatio            Decimal  @db.Decimal(8, 3)

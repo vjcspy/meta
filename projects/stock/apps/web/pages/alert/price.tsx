@@ -42,7 +42,7 @@ export default function Price() {
                             fact: 'price',
                             operator: 'gte',
                             value: 19000,
-                            path: '$.close',
+                            path: '$.priceClose',
                         },
                     ],
                 },
