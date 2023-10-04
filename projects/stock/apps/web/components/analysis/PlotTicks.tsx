@@ -125,7 +125,11 @@ const PlotTicks = combineHOC(withSymbolTicks)((props) => {
 
     return (
         <>
-            <Row title="Ticks Chart" containerClassname="grid grid-cols-1">
+            <Row
+                title="Ticks Chart"
+                containerClassname="grid grid-cols-1"
+                showExpanded={false}
+            >
                 <div className="w-screen" ref={containerRef} />
             </Row>
         </>

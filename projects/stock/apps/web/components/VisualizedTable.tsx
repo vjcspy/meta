@@ -24,7 +24,7 @@ const VisualizedTable: FC<{
     title: string;
     height: number;
 }> = (props) => {
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
     const RowItem = memo(({ data, index, style }: any) => {
         // Data passed to List as "itemData" is available as props.data
