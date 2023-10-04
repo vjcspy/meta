@@ -145,7 +145,7 @@ const SweetAlert = () => {
                     }, 100);
                 },
                 willClose: () => {
-                    clearInterval(timerInterval);
+                    clearInterval(timerInterval as any);
                 },
             }).then((result) => {
                 if (result.dismiss === Swal.DismissReason.timer) {
