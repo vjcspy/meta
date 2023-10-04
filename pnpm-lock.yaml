@@ -31,9 +31,6 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      next:
-        specifier: latest
-        version: 13.5.4(@babel/core@7.22.11)(react-dom@18.2.0)(react@18.2.0)(sass@1.66.1)
       node-fetch:
         specifier: ^2.7.0
         version: 2.7.0
@@ -58,7 +55,7 @@ importers:
         version: 18.2.24
       '@types/react-dom':
         specifier: latest
-        version: 18.2.8
+        version: 18.2.9
       '@typescript-eslint/eslint-plugin':
         specifier: latest
         version: 6.7.4(@typescript-eslint/parser@6.4.1)(eslint@8.50.0)(typescript@5.2.2)
@@ -491,6 +488,9 @@ importers:
       moment:
         specifier: ^2.29.4
         version: 2.29.4
+      next:
+        specifier: latest
+        version: 13.5.4(@babel/core@7.22.11)(react-dom@18.2.0)(react@18.2.0)(sass@1.66.1)
       react:
         specifier: latest
         version: 18.2.0
@@ -538,7 +538,7 @@ importers:
         version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
       react-redux:
         specifier: latest
-        version: 8.1.3(@types/react-dom@18.2.8)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+        version: 8.1.3(@types/react-dom@18.2.9)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       react-select:
         specifier: latest
         version: 5.7.7(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
@@ -4713,7 +4713,7 @@ packages:
     dependencies:
       immer: 9.0.21
       react: 18.2.0
-      react-redux: 8.1.3(@types/react-dom@18.2.8)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+      react-redux: 8.1.3(@types/react-dom@18.2.9)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       redux: 4.2.1
       redux-thunk: 2.4.2(redux@4.2.1)
       reselect: 4.1.8
@@ -5896,8 +5896,8 @@ packages:
       '@types/react': 18.2.24
     dev: true
 
-  /@types/react-dom@18.2.8:
-    resolution: {integrity: sha512-bAIvO5lN/U8sPGvs1Xm61rlRHHaq5rp5N3kp9C+NJ/Q41P8iqjkXSu0+/qu8POsjH9pNWb0OYabFez7taP7omw==}
+  /@types/react-dom@18.2.9:
+    resolution: {integrity: sha512-6nNhVzZ9joQ6F7lozrASuQKC0Kf6ArYMU+DqA2ZrUbB+d+9lC6ZLn1GxiEBI1edmAwvTULtuJ6uPZpv3XudwUg==}
     dependencies:
       '@types/react': 18.2.24
 
@@ -9655,6 +9655,7 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
+    dev: true
 
   /fast-glob@3.3.1:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
@@ -10226,7 +10227,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.12
+      fast-glob: 3.3.1
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
@@ -13695,7 +13696,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-redux@8.1.3(@types/react-dom@18.2.8)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1):
+  /react-redux@8.1.3(@types/react-dom@18.2.9)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1):
     resolution: {integrity: sha512-n0ZrutD7DaX/j9VscF+uTALI3oUPa/pO4Z3soOBIjuRn/FzVu6aehhysxZCLi6y7duMf52WNZGMl7CtuK5EnRw==}
     peerDependencies:
       '@types/react': ^16.8 || ^17.0 || ^18.0
@@ -13719,7 +13720,7 @@ packages:
       '@babel/runtime': 7.22.11
       '@types/hoist-non-react-statics': 3.3.2
       '@types/react': 18.2.24
-      '@types/react-dom': 18.2.8
+      '@types/react-dom': 18.2.9
       '@types/use-sync-external-store': 0.0.3
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
