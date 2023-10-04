@@ -198,7 +198,10 @@ const Sidebar = () => {
                             </h2>
 
                             <li className="nav-item">
-                                <Link href="/apps/chat" className="group">
+                                <Link
+                                    href="/analysis/tick/dates"
+                                    className="group"
+                                >
                                     <div className="flex items-center">
                                         <svg
                                             className="group-hover:!text-primary"
@@ -221,7 +224,7 @@ const Sidebar = () => {
                                             />
                                         </svg>
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-                                            {t('chat')}
+                                            Tick Dates
                                         </span>
                                     </div>
                                 </Link>

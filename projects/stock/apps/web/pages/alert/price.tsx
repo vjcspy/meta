@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import type { IRootState } from '@/store';
-import { alertPriceActions } from '@/store/alertPrice';
+import { alertPriceActions } from '@/store/alertPrice.slice';
 import { isJSONString } from '@/util/isJSONString';
 import { showMessage } from '@/util/showMessage';
 
@@ -42,7 +42,7 @@ export default function Price() {
                             fact: 'price',
                             operator: 'gte',
                             value: 19000,
-                            path: '$.close',
+                            path: '$.priceClose',
                         },
                     ],
                 },
