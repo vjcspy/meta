@@ -4,6 +4,19 @@ import { memo, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { areEqual, FixedSizeList as List } from 'react-window';
 
+const classname: any = {
+    grid: {
+        'grid-cols-3': 'grid-cols-3',
+        'grid-cols-4': 'grid-cols-4',
+        'grid-cols-5': 'grid-cols-5',
+        'grid-cols-6': 'grid-cols-6',
+        'grid-cols-7': 'grid-cols-7',
+        'grid-cols-8': 'grid-cols-8',
+        'grid-cols-9': 'grid-cols-9',
+        'grid-cols-10': 'grid-cols-10',
+    },
+};
+
 const VisualizedTable: FC<{
     data: any[];
     picks: string[];
@@ -28,36 +41,6 @@ const VisualizedTable: FC<{
             </div>
         );
     }, areEqual);
-
-    const ListItems = memo(() => {
-        return (
-            <div style={{ height: props.height }}>
-                <AutoSizer>
-                    {({ height, width }) => (
-                        <div>
-                            <div
-                                style={{ width }}
-                                className={`grid-cols-${props.picks.length} grid gap-4 p-2 font-bold`}
-                            >
-                                {props.picks.map((p) => (
-                                    <div key={p}>{p.toUpperCase()}</div>
-                                ))}
-                            </div>
-                            <List
-                                height={height - 35}
-                                itemCount={props?.data?.length || 0}
-                                itemData={props?.data || []}
-                                itemSize={35}
-                                width={width}
-                            >
-                                {RowItem}
-                            </List>
-                        </div>
-                    )}
-                </AutoSizer>
-            </div>
-        );
-    });
 
     return (
         <>
@@ -110,7 +93,38 @@ const VisualizedTable: FC<{
                                 </span>
                             </button>
                         </div>
-                        {expanded && <ListItems />}
+                        <div style={{ height: props.height }}>
+                            <AutoSizer>
+                                {({ height, width }) => (
+                                    <div>
+                                        <div
+                                            style={{ width }}
+                                            className={`${
+                                                classname.grid[
+                                                    'grid-cols-' +
+                                                        props.picks.length
+                                                ]
+                                            } grid gap-4 p-2 font-bold`}
+                                        >
+                                            {props.picks.map((p) => (
+                                                <div key={p}>
+                                                    {p.toUpperCase()}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <List
+                                            height={height - 35}
+                                            itemCount={props?.data?.length || 0}
+                                            itemData={props?.data || []}
+                                            itemSize={35}
+                                            width={width}
+                                        >
+                                            {RowItem}
+                                        </List>
+                                    </div>
+                                )}
+                            </AutoSizer>
+                        </div>
                     </div>
                 </div>
             </div>
