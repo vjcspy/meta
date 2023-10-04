@@ -1,8 +1,9 @@
+import clsx from 'clsx';
 import type { PropsWithChildren } from 'react';
 import { useCallback, useState } from 'react';
-
-export default function Row(props: PropsWithChildren<{ title?: string }>) {
+const Row = (props: PropsWithChildren<{ title?: string }>) => {
     const [expanded, setExpanded] = useState(true);
+
     const toggleCode = useCallback(() => {
         setExpanded(!expanded);
     }, [expanded]);
@@ -11,7 +12,12 @@ export default function Row(props: PropsWithChildren<{ title?: string }>) {
         <div className="space-y-8 pt-5">
             <div className="grid grid-cols-1 gap-6 pt-5 lg:grid-cols-1">
                 <div className="panel">
-                    <div className="mb-5 flex items-center justify-between">
+                    <div
+                        className={clsx(
+                            'flex items-center justify-between',
+                            expanded && 'mb-5',
+                        )}
+                    >
                         <h5 className="text-lg font-semibold dark:text-white-light">
                             {props?.title}
                         </h5>
@@ -61,4 +67,5 @@ export default function Row(props: PropsWithChildren<{ title?: string }>) {
             </div>
         </div>
     );
-}
+};
+export default Row;

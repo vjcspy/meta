@@ -9,7 +9,7 @@ export default function TickDates() {
             <Symbol />
             <FromDate />
             <ToDate />
-            <SymbolPrices></SymbolPrices>
+            <SymbolPrices />
         </>
     );
 }

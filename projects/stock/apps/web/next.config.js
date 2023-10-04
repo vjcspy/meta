@@ -5,7 +5,7 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-    transpilePackages: ['ace-builds'],
+    transpilePackages: ['ace-builds', 'clsx'],
 };
 
 module.exports = nextConfig;
