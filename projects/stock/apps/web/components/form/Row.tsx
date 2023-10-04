@@ -1,7 +1,12 @@
 import clsx from 'clsx';
 import type { PropsWithChildren } from 'react';
 import { useCallback, useState } from 'react';
-const Row = (props: PropsWithChildren<{ title?: string }>) => {
+const Row = (
+    props: PropsWithChildren<{ title?: string; containerClassname?: string }>,
+) => {
+    const containerClassname =
+        props?.containerClassname ??
+        'grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6';
     const [expanded, setExpanded] = useState(true);
 
     const toggleCode = useCallback(() => {
@@ -59,7 +64,7 @@ const Row = (props: PropsWithChildren<{ title?: string }>) => {
                         </button>
                     </div>
                     {expanded && (
-                        <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+                        <div className={containerClassname}>
                             <div className="mb-5">{props.children}</div>
                         </div>
                     )}
