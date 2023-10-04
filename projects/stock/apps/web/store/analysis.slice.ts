@@ -12,12 +12,14 @@ const initialState: {
     fromDate: string;
     toDate: string;
     prices: any[];
+    ticks: any[];
 } = {
     symbol: '',
     fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
     toDate: moment().utc().format('YYYY-MM-DD'),
     cors: [],
     prices: [],
+    ticks: [],
 };
 
 const analysisSlice = createSlice({
@@ -59,6 +61,16 @@ const analysisSlice = createSlice({
                 return state;
             },
         );
+        builder.addCase(
+            thunkActions.getSymbolTicks.fulfilled,
+            (state, action) => {
+                // Xử lý dữ liệu sau khi lấy được thông tin từ API thành công
+                // action.payload chứa dữ liệu trả về từ API
+                state.ticks = action.payload.ticks;
+
+                return state;
+            },
+        );
     },
 });
 
@@ -94,6 +106,21 @@ const thunkActions = {
 
             return {
                 prices: data.data,
+            };
+        },
+    ),
+    getSymbolTicks: createAsyncThunk(
+        'analysis/getSymbolTicks',
+        async (arg, { getState }) => {
+            // @ts-ignore
+            const state: IRootState = getState();
+            console.log(state);
+            const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/tick/histories?symbol=${state.analysis.symbol}&from=${state.analysis.fromDate}&to=${state.analysis.toDate}`;
+
+            const data = await fetchJsonData(url);
+
+            return {
+                ticks: data.data,
             };
         },
     ),
