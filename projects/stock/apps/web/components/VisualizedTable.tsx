@@ -6,6 +6,7 @@ import { areEqual, FixedSizeList as List } from 'react-window';
 
 const classname: any = {
     grid: {
+        'grid-cols-1': 'grid-cols-1',
         'grid-cols-3': 'grid-cols-3',
         'grid-cols-4': 'grid-cols-4',
         'grid-cols-5': 'grid-cols-5',
@@ -23,7 +24,7 @@ const VisualizedTable: FC<{
     title: string;
     height: number;
 }> = (props) => {
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
     const RowItem = memo(({ data, index, style }: any) => {
         // Data passed to List as "itemData" is available as props.data
@@ -93,38 +94,42 @@ const VisualizedTable: FC<{
                                 </span>
                             </button>
                         </div>
-                        <div style={{ height: props.height }}>
-                            <AutoSizer>
-                                {({ height, width }) => (
-                                    <div>
-                                        <div
-                                            style={{ width }}
-                                            className={`${
-                                                classname.grid[
-                                                    'grid-cols-' +
-                                                        props.picks.length
-                                                ]
-                                            } grid gap-4 p-2 font-bold`}
-                                        >
-                                            {props.picks.map((p) => (
-                                                <div key={p}>
-                                                    {p.toUpperCase()}
-                                                </div>
-                                            ))}
+                        {expanded && (
+                            <div style={{ height: props.height }}>
+                                <AutoSizer>
+                                    {({ height, width }) => (
+                                        <div>
+                                            <div
+                                                style={{ width }}
+                                                className={`${
+                                                    classname.grid[
+                                                        'grid-cols-' +
+                                                            props.picks.length
+                                                    ]
+                                                } grid gap-4 p-2 font-bold`}
+                                            >
+                                                {props.picks.map((p) => (
+                                                    <div key={p}>
+                                                        {p.toUpperCase()}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <List
+                                                height={height - 35}
+                                                itemCount={
+                                                    props?.data?.length || 0
+                                                }
+                                                itemData={props?.data || []}
+                                                itemSize={35}
+                                                width={width}
+                                            >
+                                                {RowItem}
+                                            </List>
                                         </div>
-                                        <List
-                                            height={height - 35}
-                                            itemCount={props?.data?.length || 0}
-                                            itemData={props?.data || []}
-                                            itemSize={35}
-                                            width={width}
-                                        >
-                                            {RowItem}
-                                        </List>
-                                    </div>
-                                )}
-                            </AutoSizer>
-                        </div>
+                                    )}
+                                </AutoSizer>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

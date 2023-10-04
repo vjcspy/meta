@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import CodeHighlight from '../../components/Highlight';
-import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+
+import CodeHighlight from '../../components/Highlight';
 import { setPageTitle } from '../../store/themeConfigSlice';
 
 const SweetAlert = () => {
@@ -87,7 +88,10 @@ const SweetAlert = () => {
             for (currentStep = 0; currentStep < steps.length; ) {
                 const result = await swalQueueStep.fire({
                     title: `Question ${steps[currentStep]}`,
-                    text: currentStep === 0 ? 'Chaining swal modals is easy.' : '',
+                    text:
+                        currentStep === 0
+                            ? 'Chaining swal modals is easy.'
+                            : '',
                     inputValue: values[currentStep],
                     showCancelButton: currentStep > 0,
                     currentProgressStep: currentStep,
@@ -106,7 +110,10 @@ const SweetAlert = () => {
                 Swal.fire({
                     title: 'All done!',
                     padding: '2em',
-                    html: 'Your answers: <pre>' + JSON.stringify(values) + '</pre>',
+                    html:
+                        'Your answers: <pre>' +
+                        JSON.stringify(values) +
+                        '</pre>',
                     confirmButtonText: 'Lovely!',
                     customClass: 'sweet-alerts',
                 });
@@ -138,7 +145,7 @@ const SweetAlert = () => {
                     }, 100);
                 },
                 willClose: () => {
-                    clearInterval(timerInterval);
+                    clearInterval(timerInterval as any);
                 },
             }).then((result) => {
                 if (result.dismiss === Swal.DismissReason.timer) {
@@ -164,9 +171,11 @@ const SweetAlert = () => {
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: false,
-                confirmButtonText: '<i className="flaticon-checked-1"></i> Great!',
+                confirmButtonText:
+                    '<i className="flaticon-checked-1"></i> Great!',
                 confirmButtonAriaLabel: 'Thumbs up, great!',
-                cancelButtonText: '<i className="flaticon-cancel-circle"></i> Cancel',
+                cancelButtonText:
+                    '<i className="flaticon-cancel-circle"></i> Cancel',
                 cancelButtonAriaLabel: 'Thumbs down',
                 padding: '2em',
                 customClass: 'sweet-alerts',
@@ -182,7 +191,12 @@ const SweetAlert = () => {
                 customClass: 'sweet-alerts',
             }).then((result) => {
                 if (result.value) {
-                    Swal.fire({ title: 'Deleted!', text: 'Your file has been deleted.', icon: 'success', customClass: 'sweet-alerts' });
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        icon: 'success',
+                        customClass: 'sweet-alerts',
+                    });
                 }
             });
         } else if (type === 11) {
@@ -207,9 +221,17 @@ const SweetAlert = () => {
                 })
                 .then((result) => {
                     if (result.value) {
-                        swalWithBootstrapButtons.fire('Deleted!', 'Your file has been deleted.', 'success');
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success',
+                        );
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        swalWithBootstrapButtons.fire('Cancelled', 'Your imaginary file is safe :)', 'error');
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            'Your imaginary file is safe :)',
+                            'error',
+                        );
                     }
                 });
         } else if (type === 12) {
@@ -218,7 +240,8 @@ const SweetAlert = () => {
                 width: 600,
                 padding: '7em',
                 customClass: 'background-modal sweet-alerts',
-                background: '#fff url(/assets/images/sweet-bg.jpg) no-repeat 100% 100%',
+                background:
+                    '#fff url(/assets/images/sweet-bg.jpg) no-repeat 100% 100%',
             });
         } else if (type === 13) {
             Swal.fire({
@@ -269,17 +292,34 @@ const SweetAlert = () => {
             <div className="sweet-alerts space-y-8 pt-5">
                 <div className="panel flex items-center overflow-x-auto whitespace-nowrap p-3 text-primary">
                     <div className="rounded-full bg-primary p-1.5 text-white ring-2 ring-primary/30 ltr:mr-3 rtl:ml-3">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
                             <path
                                 d="M19.0001 9.7041V9C19.0001 5.13401 15.8661 2 12.0001 2C8.13407 2 5.00006 5.13401 5.00006 9V9.7041C5.00006 10.5491 4.74995 11.3752 4.28123 12.0783L3.13263 13.8012C2.08349 15.3749 2.88442 17.5139 4.70913 18.0116C9.48258 19.3134 14.5175 19.3134 19.291 18.0116C21.1157 17.5139 21.9166 15.3749 20.8675 13.8012L19.7189 12.0783C19.2502 11.3752 19.0001 10.5491 19.0001 9.7041Z"
                                 stroke="currentColor"
                                 strokeWidth="1.5"
                             />
-                            <path opacity="0.5" d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            <path
+                                opacity="0.5"
+                                d="M7.5 19C8.15503 20.7478 9.92246 22 12 22C14.0775 22 15.845 20.7478 16.5 19"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                            />
                         </svg>
                     </div>
                     <span className="ltr:mr-3 rtl:ml-3">Documentation: </span>
-                    <a href="https://www.npmjs.com/package/sweetalert2" target="_blank" className="block hover:underline" rel="noreferrer">
+                    <a
+                        href="https://www.npmjs.com/package/sweetalert2"
+                        target="_blank"
+                        className="block hover:underline"
+                        rel="noreferrer"
+                    >
                         https://www.npmjs.com/package/sweetalert2
                     </a>
                 </div>
@@ -287,17 +327,36 @@ const SweetAlert = () => {
                     {/* basic */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Basic message</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code1')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Basic message
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code1')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -311,7 +370,11 @@ const SweetAlert = () => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-primary" onClick={() => showAlert(1)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => showAlert(1)}
+                                >
                                     Basic message
                                 </button>
                             </div>
@@ -346,17 +409,36 @@ const showAlert = async (type: number) => {
                     {/* message  */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Success message</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code2')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Success message
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code2')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -370,7 +452,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-secondary" onClick={() => showAlert(2)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => showAlert(2)}
+                                >
                                     Success message!
                                 </button>
                             </div>
@@ -407,17 +493,36 @@ const showAlert = async (type: number) => {
                     {/* Dynamic */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Dynamic queue</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code3')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Dynamic queue
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code3')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -431,7 +536,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-success" onClick={() => showAlert(3)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-success"
+                                    onClick={() => showAlert(3)}
+                                >
                                     Dynamic queue
                                 </button>
                             </div>
@@ -485,17 +594,36 @@ const showAlert = async (type: number) => {
                     {/* A title with text */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">A title with a text under</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code4')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                A title with a text under
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code4')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -509,7 +637,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-danger" onClick={() => showAlert(4)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => showAlert(4)}
+                                >
                                     Title & text
                                 </button>
                             </div>
@@ -546,17 +678,36 @@ const showAlert = async (type: number) => {
                     {/* Chaining modals */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Chaining modals (queue)</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code5')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Chaining modals (queue)
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code5')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -570,7 +721,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-warning" onClick={() => showAlert(5)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-warning"
+                                    onClick={() => showAlert(5)}
+                                >
                                     Chaining modals (queue)
                                 </button>
                             </div>
@@ -640,17 +795,36 @@ if (type === 5) {
                     {/* Animation */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Custom animation</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code6')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Custom animation
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code6')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -664,14 +838,23 @@ if (type === 5) {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-info" onClick={() => showAlert(6)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-info"
+                                    onClick={() => showAlert(6)}
+                                >
                                     Custom animation
                                 </button>
                             </div>
                             <div className="fixed inset-0 z-[999] hidden bg-[black]/60 px-4 transition-all duration-300">
                                 <div className="panel absolute left-1/2 top-1/2 w-11/12 -translate-x-1/2 -translate-y-1/2 text-center sm:w-[480px]">
-                                    <h3 className="mb-5 text-2xl font-bold text-[#3b3f5c] dark:text-white-light">Custom animation with Animate.css</h3>
-                                    <button type="button" className="btn btn-info">
+                                    <h3 className="mb-5 text-2xl font-bold text-[#3b3f5c] dark:text-white-light">
+                                        Custom animation with Animate.css
+                                    </h3>
+                                    <button
+                                        type="button"
+                                        className="btn btn-info"
+                                    >
                                         Ok
                                     </button>
                                 </div>
@@ -721,17 +904,36 @@ const showAlert = async (type: number) => {
                     {/* Auto close timer */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Message with auto close timer</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code7')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Message with auto close timer
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code7')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -745,7 +947,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-primary" onClick={() => showAlert(7)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => showAlert(7)}
+                                >
                                     Message timer
                                 </button>
                             </div>
@@ -796,17 +1002,36 @@ const showAlert = async (type: number) => {
                     {/* Custom image */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Message with custom image</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code8')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Message with custom image
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code8')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -820,7 +1045,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-secondary" onClick={() => showAlert(8)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => showAlert(8)}
+                                >
                                     Message with custom image
                                 </button>
                             </div>
@@ -860,17 +1089,36 @@ const showAlert = async (type: number) => {
                     {/*  Custom HTML */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Custom HTML description and buttons</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code9')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Custom HTML description and buttons
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code9')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -884,7 +1132,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-danger" onClick={() => showAlert(9)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => showAlert(9)}
+                                >
                                     Custom Description & buttons
                                 </button>
                             </div>
@@ -929,16 +1181,33 @@ const showAlert = async (type: number) => {
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
                             <h5 className="text-lg font-semibold dark:text-white-light">{`Warning message, with "Confirm" button`}</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code10')}>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code10')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -952,7 +1221,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-success" onClick={() => showAlert(10)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-success"
+                                    onClick={() => showAlert(10)}
+                                >
                                     Confirm
                                 </button>
                             </div>
@@ -996,16 +1269,33 @@ const showAlert = async (type: number) => {
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
                             <h5 className="text-lg font-semibold dark:text-white-light">{`Execute something else for "Cancel".`}</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code11')}>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code11')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -1019,7 +1309,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-warning" onClick={() => showAlert(11)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-warning"
+                                    onClick={() => showAlert(11)}
+                                >
                                     {`Addition else for "Cancel".`}
                                 </button>
                             </div>
@@ -1075,17 +1369,37 @@ const showAlert = async (type: number) => {
                     {/* Custom Style */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">A message with custom width, padding and background</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code12')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                A message with custom width, padding and
+                                background
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code12')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -1099,7 +1413,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-info" onClick={() => showAlert(12)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-info"
+                                    onClick={() => showAlert(12)}
+                                >
                                     Custom Message
                                 </button>
                             </div>
@@ -1136,17 +1454,36 @@ const showAlert = async (type: number) => {
                     {/* Footer */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">With Footer</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code13')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                With Footer
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code13')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -1160,7 +1497,11 @@ const showAlert = async (type: number) => {
                         </div>
                         <div className="mb-5">
                             <div className="flex items-center justify-center">
-                                <button type="button" className="btn btn-dark" onClick={() => showAlert(13)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-dark"
+                                    onClick={() => showAlert(13)}
+                                >
                                     With Footer
                                 </button>
                             </div>
@@ -1198,17 +1539,36 @@ const showAlert = async (type: number) => {
                     {/* RTL */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">RTL support</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code14')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                RTL support
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code14')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -1221,8 +1581,15 @@ const showAlert = async (type: number) => {
                             </button>
                         </div>
                         <div className="mb-5">
-                            <div className="flex items-center justify-center" id="rtl-container">
-                                <button type="button" className="btn btn-primary" onClick={() => showAlert(14)}>
+                            <div
+                                className="flex items-center justify-center"
+                                id="rtl-container"
+                            >
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => showAlert(14)}
+                                >
                                     RTL
                                 </button>
                             </div>
@@ -1261,17 +1628,36 @@ const showAlert = async (type: number) => {
                     {/* Mixin */}
                     <div className="panel">
                         <div className="mb-5 flex items-center justify-between">
-                            <h5 className="text-lg font-semibold dark:text-white-light">Mixin</h5>
-                            <button type="button" className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600" onClick={() => toggleCode('code15')}>
+                            <h5 className="text-lg font-semibold dark:text-white-light">
+                                Mixin
+                            </h5>
+                            <button
+                                type="button"
+                                className="font-semibold hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-600"
+                                onClick={() => toggleCode('code15')}
+                            >
                                 <span className="flex items-center">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ltr:mr-2 rtl:ml-2"
+                                    >
                                         <path
                                             d="M17 7.82959L18.6965 9.35641C20.239 10.7447 21.0103 11.4389 21.0103 12.3296C21.0103 13.2203 20.239 13.9145 18.6965 15.3028L17 16.8296"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
                                             strokeLinecap="round"
                                         />
-                                        <path opacity="0.5" d="M13.9868 5L10.0132 19.8297" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                        <path
+                                            opacity="0.5"
+                                            d="M13.9868 5L10.0132 19.8297"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                        />
                                         <path
                                             d="M7.00005 7.82959L5.30358 9.35641C3.76102 10.7447 2.98975 11.4389 2.98975 12.3296C2.98975 13.2203 3.76102 13.9145 5.30358 15.3028L7.00005 16.8296"
                                             stroke="currentColor"
@@ -1284,8 +1670,15 @@ const showAlert = async (type: number) => {
                             </button>
                         </div>
                         <div className="mb-5">
-                            <div className="flex items-center justify-center" id="rtl-container">
-                                <button type="button" className="btn btn-secondary" onClick={() => showAlert(15)}>
+                            <div
+                                className="flex items-center justify-center"
+                                id="rtl-container"
+                            >
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => showAlert(15)}
+                                >
                                     Mixin
                                 </button>
                             </div>
