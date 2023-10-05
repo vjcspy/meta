@@ -33,6 +33,7 @@ export class SyncPricesJob {
   })
   sync() {
     if (!isMainProcess()) return;
+    this.logger.info(`Published sync stock price for all symbols`);
     this.syncPricePublisher.publish([], true);
   }
 
@@ -62,7 +63,7 @@ export class SyncPricesJob {
   // | minutes
   // seconds (optional)
   @Cron('0 */5 9-14 * * 1-5', {
-    name: SyncValues.JOB_SYNC_PRICE_KEY,
+    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_5_MINS`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncPrice() {
@@ -88,7 +89,7 @@ export class SyncPricesJob {
   // | minutes
   // seconds (optional)
   @Cron('*/20 * 9-14 * * 1-5', {
-    name: SyncValues.JOB_SYNC_PRICE_KEY,
+    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_FOR_ALERT`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncAlertPrice() {
