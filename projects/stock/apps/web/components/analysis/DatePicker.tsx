@@ -19,6 +19,7 @@ const DatePicker = (
         <>
             <Row title={`${props?.preTitle} ${props.value}`}>
                 <Flatpickr
+                    style={{ background: '#1b2e4b' }}
                     value={value}
                     options={{
                         dateFormat: 'Y-m-d',
