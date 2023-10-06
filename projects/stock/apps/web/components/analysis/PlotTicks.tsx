@@ -32,12 +32,24 @@ const PlotTicks = combineHOC(
     useEffect(() => {
         if (data === undefined) return;
 
+        const _data: any[] = [];
+        forEach(data, (_d) => {
+            if (_d.a == 'Undefined') {
+                _data.push({ ..._d, a: 'ATC_S' });
+                _data.push({ ..._d, a: 'ATC_B' });
+            } else if (_d.a == 'B' || _d.a == 'S') {
+                _data.push(_d);
+            } else {
+                console.warn('ticks data invalid');
+            }
+        });
+
         const plot = Plot.plot({
             grid: true,
             height: 600,
             color: {
                 legend: true,
-                domain: ['S', 'B'],
+                domain: ['S', 'B', 'ATC_S', 'ATC_B'],
                 scheme: 'RdBu',
             },
             x: {
@@ -50,7 +62,7 @@ const PlotTicks = combineHOC(
             style: { background: 'transparent' },
             marks: [
                 Plot.barX(
-                    data.filter((_d) => _d.a != 'Undefined'),
+                    _data,
                     Plot.groupY(
                         {
                             x: (d: any) => {
@@ -77,18 +89,18 @@ const PlotTicks = combineHOC(
                                     if (barXTypeValue.value === 'vol') {
                                         return (
                                             i +
-                                            (c.a == 'B'
+                                            (c.a == 'B' || c.a == 'ATC_B'
                                                 ? c.vol
-                                                : c.a == 'S'
+                                                : c.a == 'S' || c.a == 'ATC_S'
                                                 ? -c.vol
                                                 : 0)
                                         );
                                     } else {
                                         return (
                                             i +
-                                            (c.a == 'B'
+                                            (c.a == 'B' || c.a == 'ATC_B'
                                                 ? value
-                                                : c.a == 'S'
+                                                : c.a == 'S' || c.a == 'ATC_S'
                                                 ? -value
                                                 : 0) /
                                                 10 ** 9
