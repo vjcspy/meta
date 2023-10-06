@@ -1,3 +1,4 @@
+import FilterTradeValue from '@/components/analysis/FilterTradeValue';
 import FromDate from '@/components/analysis/FromDate';
 import PlotTicks from '@/components/analysis/PlotTicks';
 import Symbol from '@/components/analysis/Symbol';
@@ -13,6 +14,7 @@ export default function TickDates() {
             <ToDate />
             <SymbolPrices />
             <SymbolTicks />
+            <FilterTradeValue />
             <PlotTicks />
         </>
     );

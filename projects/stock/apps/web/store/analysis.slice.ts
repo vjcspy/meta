@@ -13,6 +13,7 @@ const initialState: {
     toDate: string;
     prices: any[];
     ticks: any[];
+    filterTradeValue: number; // Trade value for each lenh mua hoac ban
 } = {
     symbol: '',
     fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
@@ -20,6 +21,7 @@ const initialState: {
     cors: [],
     prices: [],
     ticks: [],
+    filterTradeValue: 0,
 };
 
 const analysisSlice = createSlice({
@@ -39,6 +41,11 @@ const analysisSlice = createSlice({
         },
         setToDate(state, action) {
             state.toDate = action.payload.toDate;
+
+            return state;
+        },
+        setFilterTradeValue(state, action) {
+            state.filterTradeValue = action.payload?.filterTradeValue;
 
             return state;
         },
