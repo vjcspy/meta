@@ -17,7 +17,7 @@ const FilterTradeValue = combineHOC(withFilterTradeValue)((props) => {
     const debouncedSetFilterTradeValue = useRef(
         debounce((newValue) => {
             props.actions.setFilterTradeValue(newValue);
-        }, 300),
+        }, 50),
     );
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const FilterTradeValue = combineHOC(withFilterTradeValue)((props) => {
 
     return (
         <>
-            <Row title={`Trade value: `}>
+            <Row title={`Trade value: ${value} triệu VND`}>
                 <div>
                     <div className="font-bold">
                         <span className="inline-block rounded border border-white-light px-2 py-1 text-primary dark:border-dark">
