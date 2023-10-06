@@ -24,7 +24,7 @@ export class AlertsJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('*/20 * * * * *', {
+  @Cron('0 * * * * *', {
     name: SyncValues.JOB_SYNC_PRICE_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
