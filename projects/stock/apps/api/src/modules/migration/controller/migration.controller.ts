@@ -15,7 +15,7 @@ export class MigrationController {
 
   @Get('test')
   test() {
-    this.omMigrationHelper.doMigrate();
+    this.omMigrationHelper.doMigrationOM();
   }
 
   @Get('test1')

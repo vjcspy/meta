@@ -26,6 +26,129 @@ export class OmMigrationHelper {
     private readonly connectionManager: AmqpConnectionManager,
   ) {}
 
+  async doMigrationOM() {
+    const historyRefer = await this.getHistoryReferOM();
+    const cors = await this.corRepo.getAll();
+
+    for (let i = 0; i < historyRefer.length; i++) {
+      const _priceDay = historyRefer[i];
+
+      for (let j = 0; j < cors.length; j++) {
+        const cor = cors[j];
+
+        if (!includes(['HOSE', 'HNX'], cor.exchange) || !cor.firstTradeDate) {
+          // eslint-disable-next-line no-continue
+          continue;
+        }
+        this.connectionManager
+          .getConnection()
+          .publish(MIGRATE_EXCHANGE_KEY, `${MIGRATION_QUEUE_ROUTING_KEY}_OM`, {
+            symbol: cor.code,
+            date: moment.utc(_priceDay.date).format('YYYY-MM-DD'),
+          });
+      }
+    }
+  }
+
+  async migrateOM(symbol: string, date: string | Date) {
+    const dateString = moment.utc(date).format('YYYY-MM-DD');
+    const dateObject = moment.utc(date).toDate();
+    this.logger.info(`WILL migrate ${symbol} ${dateString}`);
+
+    const om1 = await prisma.orderMatching.findMany({
+      where: {
+        code: symbol,
+        type: 1,
+        date: dateObject,
+      },
+    });
+    const om0 = await prisma.orderMatching.findMany({
+      where: {
+        code: symbol,
+        type: 0,
+        date: dateObject,
+      },
+    });
+
+    if (
+      !Array.isArray(om1) ||
+      om1.length === 0 ||
+      !Array.isArray(om0) ||
+      om0.length === 0
+    ) {
+      const error = new Error(
+        `Could not found OM for symbol ${symbol} date ${dateString}`,
+      );
+      this.logger.error(error.message, error);
+
+      throw error;
+    }
+
+    const results = [];
+    let om0Data = [];
+    forEach(om0, (o: any) => {
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      om0Data.push(...o?.meta?.data);
+    });
+
+    if (Array.isArray(om0Data)) {
+      this.logger.info(`WILL migrate data OM0 ${symbol} ${dateString}`);
+      om0Data = om0Data.filter(
+        (o) => typeof o?.a === 'undefined' || o?.a === '',
+      );
+
+      om0Data = sortBy(om0Data, (o: any) => o.t).map((o: any) => {
+        const timestamp = this.transformTime(dateObject, o?.t);
+
+        return [timestamp, o?.v, o?.p, 'Undefined'];
+      });
+
+      results.push(...om0Data);
+    }
+
+    const om1Data = [];
+    forEach(om1, (o: any) => {
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      om1Data.push(...o?.meta?.data);
+    });
+
+    if (Array.isArray(om1Data)) {
+      this.logger.info('WILL transform OM1Data');
+      forEach(om1Data, (o: any) => {
+        const timestamp = this.transformTime(dateObject, o?.t);
+        let action: string;
+        if (o.a === 'BU') {
+          action = 'B';
+        } else if (o.a === 'SD') {
+          action = 'S';
+        }
+
+        if (typeof action === 'undefined') {
+          const error = new Error('Dữ liệu action bị sai');
+          this.logger.error(error.message, error);
+
+          throw error;
+        }
+
+        results.push([timestamp, o.v, o.ap, action]);
+      });
+    }
+
+    const sortedResults = sortBy(results, (r: any) => r[0]).reverse();
+
+    // await prisma.stockInfoTicks.create({
+    //   data: {
+    //     symbol,
+    //     date: dateObject,
+    //     meta: sortedResults,
+    //   },
+    // });
+
+    this.logger.info(
+      `OK migrated tick data symbol ${symbol} date ${dateString}`,
+    );
+  }
+
   async doMigrate() {
     const client = this.oldMongoService.getClient();
 
@@ -183,6 +306,24 @@ export class OmMigrationHelper {
       'BFC',
       '2022-04-14',
       '2023-04-21',
+    );
+
+    if (Array.isArray(histories) && histories.length > 0) {
+      histories = sortBy(histories, (item) => item.date);
+      this.logger.info('Success got history reference');
+    } else {
+      throw new Error('Could not get history price');
+    }
+
+    return histories;
+  }
+
+  private async getHistoryReferOM() {
+    this.logger.info('Will get history reference');
+    let histories = await this.stockPriceHelper.getHistory(
+      'BFC',
+      '2023-07-28',
+      '2023-09-01',
     );
 
     if (Array.isArray(histories) && histories.length > 0) {

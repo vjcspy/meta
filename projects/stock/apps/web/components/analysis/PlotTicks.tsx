@@ -1,11 +1,13 @@
 import * as Plot from '@observablehq/plot';
 import { combineHOC } from '@web/ui-extension';
 import { forEach } from 'lodash';
+import moment from 'moment/moment';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Select from 'react-select';
 
 import Row from '@/components/form/Row';
 import { withFilterTradeValue } from '@/hoc/analysis/withFilterTradeValue';
+import { withFromToDate } from '@/hoc/analysis/withFromToDate';
 import { withSymbolTicks } from '@/hoc/analysis/withSymbolTicks';
 
 const barXTypeOptions = [
@@ -16,7 +18,14 @@ const barXTypeOptions = [
 const PlotTicks = combineHOC(
     withSymbolTicks,
     withFilterTradeValue,
+    withFromToDate,
 )((props) => {
+    useEffect(() => {
+        props.actions.setFromDate(
+            moment().subtract(1, 'months').utc().format('YYYY-MM-DD'),
+        );
+    }, [props.actions.setFromDate]);
+
     const [barXTypeValue, setBarXTypeValue] = useState(barXTypeOptions[1]);
     const containerRef = useRef<any>();
     const data = useMemo(() => {
