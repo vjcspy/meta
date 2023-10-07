@@ -34,4 +34,25 @@ export class OmMigrateConsumer {
       }
     }
   }
+
+  @RabbitSubscribe({
+    exchange: MIGRATE_EXCHANGE_KEY,
+    routingKey: `${MIGRATION_QUEUE_ROUTING_KEY}_OM`,
+    queue: MIGRATION_QUEUE_KEY,
+    queueOptions: {
+      durable: true,
+    },
+  })
+  async migrateOM(msg: any) {
+    if (typeof msg === 'object') {
+      try {
+        xAppContext()
+          .markAsUserContext(false)
+          .refreshXCorrelationId(CorrelationType.CONSUMER);
+        await this.omMigrationHelper.migrateOM(msg.symbol, msg.date);
+      } catch (e) {
+        this.logger.error('Error  migrate', e);
+      }
+    }
+  }
 }
