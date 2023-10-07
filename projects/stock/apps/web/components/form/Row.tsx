@@ -11,7 +11,7 @@ const Row = (
 ) => {
     const containerClassname =
         props?.containerClassname ??
-        'grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6';
+        'grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6 custom-select';
     const { showExpanded = true, defaultExpanded = true } = props;
     const [expanded, setExpanded] = useState(defaultExpanded);
 

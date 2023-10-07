@@ -21,6 +21,7 @@
         "@observablehq/plot": "^0.6.11",
         "@reduxjs/toolkit": "latest",
         "@tippyjs/react": "^4.2.6",
+        "@types/d3": "^7.4.1",
         "@web/ui-extension": "workspace:*",
         "@x1mrdonut1x/nouislider-react": "^3.4.3",
         "ace-builds": "^1.28.0",
