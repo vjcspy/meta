@@ -1,21 +1,19 @@
-import FilterTradeValue from '@/components/analysis/FilterTradeValue';
 import FromDate from '@/components/analysis/FromDate';
-import PlotTicks from '@/components/analysis/PlotTicks';
+import PlotHullma from '@/components/analysis/PlotHullma';
 import Symbol from '@/components/analysis/Symbol';
 import SymbolPrices from '@/components/analysis/SymbolPrices';
-import SymbolTicks from '@/components/analysis/SymbolTicks';
 import ToDate from '@/components/analysis/ToDate';
 
-export default function TickDates() {
+const Hullma = () => {
     return (
         <>
             <Symbol />
             <FromDate />
             <ToDate />
             <SymbolPrices />
-            <SymbolTicks />
-            <FilterTradeValue />
-            <PlotTicks />
+            <PlotHullma />
         </>
     );
-}
+};
+
+export default Hullma;
