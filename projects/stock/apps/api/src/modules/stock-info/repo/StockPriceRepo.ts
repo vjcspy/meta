@@ -16,7 +16,7 @@ export class StockPriceRepo {
       return transformAndValidateBscPrice(value);
     });
     let firstTime = false;
-    if (size(records) > 100) {
+    if (size(records) > 20) {
       firstTime = true;
       // consider it as the first time
       await prisma.stockPrice.deleteMany({

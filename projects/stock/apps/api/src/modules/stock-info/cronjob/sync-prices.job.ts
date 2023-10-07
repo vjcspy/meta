@@ -62,7 +62,7 @@ export class SyncPricesJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('0 */5 9-14 * * 1-5', {
+  @Cron('0 */15 9-14 * * 1-5', {
     name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_5_MINS`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
