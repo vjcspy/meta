@@ -139,7 +139,7 @@ const PlotTicks = combineHOC(
                         onChange={(o: any) => setBarXTypeValue(o)}
                     />
                 </div>
-                <div className="w-screen" ref={containerRef} />
+                <div ref={containerRef} />
             </Row>
         </>
     );
