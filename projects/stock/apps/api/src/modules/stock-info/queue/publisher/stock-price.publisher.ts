@@ -37,13 +37,13 @@ export class StockPricePublisher {
     };
   }
 
-  async publishOne(code: string) {
+  async publishOne(code: string, fromBeginning = false) {
     this.connectionManager.getConnection().publish(
       SyncValues.EXCHANGE_KEY,
       SyncValues.STOCK_PRICE_SYNC_KEY,
       {
         code,
-        fromBeginning: false,
+        fromBeginning,
       },
       {},
     );
