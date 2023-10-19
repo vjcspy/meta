@@ -5,7 +5,7 @@ import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-p
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { find, forEach } from 'lodash';
 import * as moment from 'moment/moment';
 
@@ -27,7 +27,7 @@ export class SyncPricesJob {
   // | | hours
   // | minutes
   // seconds (optional)
-  @Cron('0 30 16,17 * * *', {
+  @Cron('0 30 17 * * *', {
     name: SyncValues.JOB_SYNC_PRICE_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
@@ -35,6 +35,7 @@ export class SyncPricesJob {
     if (!isMainProcess()) return;
     this.logger.info(`Published sync stock price for all symbols`);
     this.syncPricePublisher.publish([], true);
+    this.syncPricePublisher.publishOne('HOSTC', true);
   }
 
   private async isFinishSync(totalCor: number) {
@@ -54,15 +55,7 @@ export class SyncPricesJob {
     return numberSyncSuccess === totalCor;
   }
 
-  // * * * * * *
-  // | | | | | |
-  // | | | | | day of week
-  // | | | | months
-  // | | | day of month
-  // | | hours
-  // | minutes
-  // seconds (optional)
-  @Cron('0 */15 9-14 * * 1-5', {
+  @Cron('0 */30 9-14 * * 1-5', {
     name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_5_MINS`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
@@ -78,17 +71,9 @@ export class SyncPricesJob {
   }
 
   /*
-   * Sync price for alerting every 20 seconds
+   * Sync price for alerting every 1 min
    * */
-  // * * * * * *
-  // | | | | | |
-  // | | | | | day of week
-  // | | | | months
-  // | | | day of month
-  // | | hours
-  // | minutes
-  // seconds (optional)
-  @Cron('0 * 9-14 * * 1-5', {
+  @Cron(CronExpression.EVERY_MINUTE, {
     name: `${SyncValues.JOB_SYNC_PRICE_KEY}_FOR_ALERT`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
