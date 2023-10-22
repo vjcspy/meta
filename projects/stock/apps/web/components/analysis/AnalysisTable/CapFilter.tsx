@@ -66,7 +66,7 @@ const CapFilter = combineHOC(withAnalysisData)((props) => {
                         type="range"
                         className="w-full py-2.5"
                         value={cap}
-                        min={capFilterInfo.min}
+                        min={0}
                         max={capFilterInfo.max}
                         onChange={onChange}
                     />

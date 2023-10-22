@@ -19,8 +19,8 @@ export const withAnalysisData = createUiHOC(() => {
     const getAnalysis = useCallback(() => {
         dispatch(analysisActions.getAnalysis());
     }, []);
-    const setCapFilter = useCallback((cap: number) => {
-        dispatch(analysisActions.setCapFilter(cap));
+    const setCapFilter = useCallback((capFilter: number) => {
+        dispatch(analysisActions.setCapFilter({ capFilter }));
     }, []);
 
     return {
