@@ -14,6 +14,7 @@ const initialState: {
     prices: any[];
     ticks: any[];
     filterTradeValue: number; // Trade value for each lenh mua hoac ban
+    capFilter: 0;
     analysis: any[];
 } = {
     symbol: '',
@@ -23,6 +24,7 @@ const initialState: {
     prices: [],
     ticks: [],
     filterTradeValue: 0,
+    capFilter: 0,
     analysis: [],
 };
 
@@ -50,6 +52,9 @@ const analysisSlice = createSlice({
             state.filterTradeValue = action.payload?.filterTradeValue;
 
             return state;
+        },
+        setCapFilter(state, action) {
+            state.capFilter = action.payload?.capFilter;
         },
     },
     extraReducers: (builder) => {
