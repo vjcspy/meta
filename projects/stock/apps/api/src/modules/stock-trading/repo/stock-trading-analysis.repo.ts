@@ -21,6 +21,7 @@ export class StockTradingAnalysisRepo {
       data,
       {
         exposeUnsetFields: false,
+        excludeExtraneousValues: true,
       },
     );
     return prisma.stockTradingAnalysis.upsert({

@@ -36,6 +36,16 @@ export class UpdateStockTradingAnalysisDto {
   @IsOptional()
   @Expose()
   l16_hullma_highest_diff_percent: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  l16_hullma_cap_percent: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  cap: number;
 }
 
 export class StockTradingAnalysisResponse {
