@@ -14,6 +14,7 @@ const initialState: {
     prices: any[];
     ticks: any[];
     filterTradeValue: number; // Trade value for each lenh mua hoac ban
+    analysis: any[];
 } = {
     symbol: '',
     fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
@@ -22,6 +23,7 @@ const initialState: {
     prices: [],
     ticks: [],
     filterTradeValue: 0,
+    analysis: [],
 };
 
 const analysisSlice = createSlice({
@@ -78,6 +80,13 @@ const analysisSlice = createSlice({
                 return state;
             },
         );
+        builder.addCase(thunkActions.getAnalysis.fulfilled, (state, action) => {
+            // Xử lý dữ liệu sau khi lấy được thông tin từ API thành công
+            // action.payload chứa dữ liệu trả về từ API
+            state.analysis = action.payload.analysis;
+
+            return state;
+        });
     },
 });
 
@@ -106,7 +115,6 @@ const thunkActions = {
         async (arg, { getState }) => {
             // @ts-ignore
             const state: IRootState = getState();
-            console.log(state);
             const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/stock-price/history?code=${state.analysis.symbol}&from=${state.analysis.fromDate}&to=${state.analysis.toDate}`;
 
             const data = await fetchJsonData(url);
@@ -121,7 +129,6 @@ const thunkActions = {
         async (arg, { getState }) => {
             // @ts-ignore
             const state: IRootState = getState();
-            console.log(state);
             const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/tick/histories?symbol=${state.analysis.symbol}&from=${state.analysis.fromDate}&to=${state.analysis.toDate}`;
 
             const data = await fetchJsonData(url);
@@ -131,6 +138,16 @@ const thunkActions = {
             };
         },
     ),
+    getAnalysis: createAsyncThunk('analysis/analysis', async () => {
+        // @ts-ignore
+        const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/stock-trading/analysis`;
+
+        const data = await fetchJsonData(url);
+
+        return {
+            analysis: data.data,
+        };
+    }),
 };
 
 export const analysisActions = {

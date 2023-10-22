@@ -1,12 +1,22 @@
 import { prisma } from '@modules/core/util/prisma';
-import { CorResponse } from '@modules/stock-info/controller/cor.dto';
+import {
+  CorResponse,
+  GetSymbolInfoQuery,
+  SymbolInfoResponse,
+} from '@modules/stock-info/controller/cor.dto';
 import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { COR_START_SYNC_ACTION } from '@modules/stock-info/observers/cor/cor.actions';
 import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
 import { EventManagerReactive } from '@nest/base';
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import * as moment from 'moment/moment';
 
@@ -25,6 +35,19 @@ export class CorController {
     this.eventManager.dispatch(COR_START_SYNC_ACTION);
 
     return 'ok';
+  }
+
+  @Get('info')
+  async getInfo(@Query() infoQuery: GetSymbolInfoQuery) {
+    const info = await this.corRepo.getOne(infoQuery.symbol);
+
+    if (!info) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
+
+    return plainToInstance(SymbolInfoResponse, info, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @Get('test')

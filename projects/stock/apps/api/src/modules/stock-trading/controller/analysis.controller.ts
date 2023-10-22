@@ -6,7 +6,15 @@ import {
 import { StockTradingAnalysisPublisher } from '@modules/stock-trading/queue/publisher/stock-trading-analysis.publisher';
 import { StockTradingAnalysisRepo } from '@modules/stock-trading/repo/stock-trading-analysis.repo';
 import { XLogger } from '@nest/base';
-import { Body, Controller, Get, Patch, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Patch,
+  Query,
+} from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 
 @Controller('stock-trading')
@@ -36,16 +44,24 @@ export class AnalysisController {
     const { symbol } = request;
     let data: any;
     if (symbol) {
-      data = this.stockTradingAnalysisRepo.findOne(symbol);
+      data = await this.stockTradingAnalysisRepo.findOne(symbol);
     } else {
-      data = this.stockTradingAnalysisRepo.findAll();
+      data = await this.stockTradingAnalysisRepo.findAll();
     }
+
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      throw new HttpException(
+        'Not found. Check symbol or run job to analyze',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     return plainToInstance(StockTradingAnalysisResponse, data, {
       excludeExtraneousValues: true,
     });
   }
 
-  @Get('test')
+  @Get('analyze-test')
   test(@Query('symbol') symbol: string) {
     if (!symbol) {
       this.stockTradingAnalysisPublisher.publish();

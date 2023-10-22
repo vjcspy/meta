@@ -1,4 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CorResponse {
   @Expose()
@@ -32,4 +33,24 @@ export class CorResponse {
   @Expose()
   @Transform(({ value }) => new Date(value), { toClassOnly: true })
   firstTradeDate: Date;
+}
+
+export class GetSymbolInfoQuery {
+  @IsNotEmpty()
+  @IsString()
+  symbol: string;
+}
+
+export class SymbolInfoResponse {
+  @Expose({
+    name: 'code',
+  })
+  symbol: number;
+
+  @Expose()
+  exchange: string;
+
+  @Expose()
+  @Transform(({ value }) => Number(value), { toClassOnly: true })
+  totalShares: number;
 }
