@@ -40,7 +40,7 @@ export class UpdateStockTradingAnalysisDto {
   @IsInt()
   @IsOptional()
   @Expose()
-  l16_hullma_cap_percent: number;
+  cur_gap_percent: number;
 
   @IsInt()
   @IsOptional()
@@ -89,6 +89,18 @@ export class StockTradingAnalysisResponse {
   @Expose()
   @Transform(({ value }) => Number(value.toString()))
   l16_hullma_highest_diff_percent: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => Number(value.toString()))
+  cur_gap_percent: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => Number(value.toString()))
+  cap: number;
 }
 
 export class GetStockTradingAnalysisRequest {
