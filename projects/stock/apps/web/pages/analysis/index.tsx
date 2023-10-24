@@ -5,7 +5,7 @@ import FilterTradeValue from '@/components/analysis/FilterTradeValue';
 export default function Analysis() {
     return (
         <>
-            <FilterTradeValue />
+            <FilterTradeValue valueTitle="tỷ" />
             <CapFilter />
             <AnalysisTable />
         </>

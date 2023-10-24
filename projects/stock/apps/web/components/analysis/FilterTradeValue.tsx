@@ -1,6 +1,6 @@
 import { combineHOC } from '@web/ui-extension';
 import { debounce } from 'lodash';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Row from '@/components/form/Row';
 import { withFilterTradeValue } from '@/hoc/analysis/withFilterTradeValue';
@@ -29,15 +29,17 @@ const FilterTradeValue = combineHOC(withFilterTradeValue)((props) => {
         };
     }, [value]);
 
+    const valueTitle = useMemo(() => props?.valueTitle ?? 'triệu', []);
+
     return (
         <>
-            <Row title={`Trade value: ${value} triệu VND`}>
+            <Row title={`Trade value: ${value} ${valueTitle} VND`}>
                 <div>
                     <div className="font-bold">
                         <span className="inline-block rounded border border-white-light px-2 py-1 text-primary dark:border-dark">
                             {value}
                         </span>
-                        <span> triệu VND</span>
+                        <span> {valueTitle} VND</span>
                     </div>
                     <input
                         type="range"
