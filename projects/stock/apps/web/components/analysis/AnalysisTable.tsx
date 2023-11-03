@@ -1,11 +1,14 @@
 import { combineHOC } from '@web/ui-extension';
+import { max } from 'lodash';
 import sortBy from 'lodash/sortBy';
 import type { DataTableSortStatus } from 'mantine-datatable';
 import { DataTable } from 'mantine-datatable';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Dropdown from '@/components/Dropdown';
+import Row from '@/components/form/Row';
 import { withAnalysisData } from '@/hoc/analysis/withAnalysisData';
+import { withFilterTradeValue } from '@/hoc/analysis/withFilterTradeValue';
 
 const cols = [
     { accessor: 'symbol', title: 'Symbol' },
@@ -24,7 +27,22 @@ const trendState = [
     { accessor: 'down', title: 'Down' },
 ];
 
-const AnalysisTable = combineHOC(withAnalysisData)((props) => {
+const AnalysisTable = combineHOC(
+    withAnalysisData,
+    withFilterTradeValue,
+)((props) => {
+    useEffect(() => {
+        props.actions.getAnalysis();
+    }, []);
+
+    const [gap, setGap] = useState(0);
+
+    const onGapChange = useCallback((e: any) => {
+        if (Number.isNaN(e?.target?.value)) {
+            return;
+        }
+        setGap(e.target.value as any);
+    }, []);
     const [page, setPage] = useState(1);
     const PAGE_SIZES = [10, 20, 30, 50, 100];
     const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
@@ -39,10 +57,7 @@ const AnalysisTable = combineHOC(withAnalysisData)((props) => {
         direction: 'asc',
     });
 
-    const [hideCols, setHideCols] = useState<any>([
-        'trade_value_7',
-        'trade_value_30',
-    ]);
+    const [hideCols, setHideCols] = useState<any>([]);
     const [trendFilter, setTrendFilter] = useState(['down']);
 
     const toggleTrendFilter = useCallback(
@@ -66,6 +81,7 @@ const AnalysisTable = combineHOC(withAnalysisData)((props) => {
             };
         });
     }, [hideCols]);
+
     const toggleHideColumn = useCallback(
         (col: any, _value: any) => {
             if (hideCols.includes(col)) {
@@ -95,9 +111,30 @@ const AnalysisTable = combineHOC(withAnalysisData)((props) => {
                     item.l16_hullma_trend === 1
                 ) {
                     return false;
-                } else if (
+                }
+                if (
                     !trendFilter.includes('down') &&
                     item.l16_hullma_trend === -1
+                ) {
+                    return false;
+                }
+
+                if (item.cur_gap_percent < gap) {
+                    return false;
+                }
+
+                if (item.cap < props.state.capFilter) {
+                    return false;
+                }
+
+                const tradeValue = max([
+                    item.trade_value_7,
+                    item.trade_value_14,
+                    item.trade_value_30,
+                ]);
+                if (
+                    props.state.filterTradeValue > 0 &&
+                    tradeValue < props.state.filterTradeValue
                 ) {
                     return false;
                 }
@@ -105,7 +142,14 @@ const AnalysisTable = combineHOC(withAnalysisData)((props) => {
                 return item.symbol.toString().includes(search);
             });
         });
-    }, [search, trendFilter, props.state.analysis]);
+    }, [
+        search,
+        trendFilter,
+        gap,
+        props.state.capFilter,
+        props.state.filterTradeValue,
+        props.state.analysis,
+    ]);
 
     useEffect(() => {
         const data = sortBy(initialRecords, sortStatus.columnAccessor);
@@ -118,192 +162,222 @@ const AnalysisTable = combineHOC(withAnalysisData)((props) => {
     return (
         <>
             {props.state.analysis.length > 0 && (
-                <div>
-                    <div className="panel">
-                        <div className="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
-                            <h5 className="text-lg font-semibold dark:text-white-light">
-                                Analysis Table
-                            </h5>
-                            <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
-                                <div className="flex flex-col gap-5 md:flex-row md:items-center">
-                                    <div className="dropdown">
-                                        <Dropdown
-                                            placement="bottom-start"
-                                            btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
-                                            button={
-                                                <>
-                                                    <span className="ltr:mr-1 rtl:ml-1">
-                                                        Columns
-                                                    </span>
-                                                    <svg
-                                                        className="h-5 w-5"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            d="M19 9L12 15L5 9"
-                                                            stroke="currentColor"
-                                                            strokeWidth="1.5"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        />
-                                                    </svg>
-                                                </>
-                                            }
-                                        >
-                                            <ul className="!min-w-[140px]">
-                                                {cols.map((col, i) => {
-                                                    return (
-                                                        <li
-                                                            key={i}
-                                                            className="flex flex-col"
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                            }}
-                                                        >
-                                                            <div className="flex items-center px-4 py-1">
-                                                                <label className="mb-0 cursor-pointer">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        checked={
-                                                                            !hideCols.includes(
-                                                                                col.accessor,
-                                                                            )
-                                                                        }
-                                                                        className="form-checkbox"
-                                                                        defaultValue={
-                                                                            col.accessor
-                                                                        }
-                                                                        onChange={(
-                                                                            event: any,
-                                                                        ) => {
-                                                                            toggleHideColumn(
-                                                                                col.accessor,
-                                                                                event
-                                                                                    .target
-                                                                                    .checked,
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                                    <span className="ltr:ml-2 rtl:mr-2">
-                                                                        {
-                                                                            col.title
-                                                                        }
-                                                                    </span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        </Dropdown>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col gap-5 md:flex-row md:items-center">
-                                    <div className="dropdown">
-                                        <Dropdown
-                                            placement="bottom-start"
-                                            btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
-                                            button={
-                                                <>
-                                                    <span className="ltr:mr-1 rtl:ml-1">
-                                                        Trend State
-                                                    </span>
-                                                    <svg
-                                                        className="h-5 w-5"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            d="M19 9L12 15L5 9"
-                                                            stroke="currentColor"
-                                                            strokeWidth="1.5"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        />
-                                                    </svg>
-                                                </>
-                                            }
-                                        >
-                                            <ul className="!min-w-[140px]">
-                                                {trendState.map((col, i) => {
-                                                    return (
-                                                        <li
-                                                            key={i}
-                                                            className="flex flex-col"
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                            }}
-                                                        >
-                                                            <div className="flex items-center px-4 py-1">
-                                                                <label className="mb-0 cursor-pointer">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        checked={trendFilter.includes(
-                                                                            col.accessor,
-                                                                        )}
-                                                                        className="form-checkbox"
-                                                                        defaultValue={
-                                                                            col.accessor
-                                                                        }
-                                                                        onChange={() => {
-                                                                            toggleTrendFilter(
-                                                                                col.accessor,
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                                    <span className="ltr:ml-2 rtl:mr-2">
-                                                                        {
-                                                                            col.title
-                                                                        }
-                                                                    </span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        </Dropdown>
-                                    </div>
-                                </div>
-                                <div className="text-right">
-                                    <input
-                                        type="text"
-                                        className="form-input"
-                                        placeholder="Search Symbol..."
-                                        value={search}
-                                        onChange={(e) =>
-                                            setSearch(e.target.value)
-                                        }
-                                    />
-                                </div>
+                <>
+                    <Row title={`Gap: ${gap} %`}>
+                        <div>
+                            <div className="font-bold">
+                                <span className="inline-block rounded border border-white-light px-2 py-1 text-primary dark:border-dark">
+                                    {gap}
+                                </span>
+                                <span> triệu VND</span>
                             </div>
-                        </div>
-                        <div className="datatables">
-                            <DataTable
-                                className="table-hover whitespace-nowrap"
-                                idAccessor="symbol"
-                                records={recordsData}
-                                columns={dtColumns}
-                                highlightOnHover
-                                totalRecords={initialRecords.length}
-                                recordsPerPage={pageSize}
-                                page={page}
-                                onPageChange={(p) => setPage(p)}
-                                recordsPerPageOptions={PAGE_SIZES}
-                                onRecordsPerPageChange={setPageSize}
-                                sortStatus={sortStatus}
-                                onSortStatusChange={setSortStatus}
-                                minHeight={200}
-                                paginationText={({ from, to, totalRecords }) =>
-                                    `Showing  ${from} to ${to} of ${totalRecords} entries`
-                                }
+                            <input
+                                type="range"
+                                className="w-full py-2.5"
+                                value={gap}
+                                min={0}
+                                max={100}
+                                onChange={onGapChange}
                             />
                         </div>
+                    </Row>
+                    <div className="mt-5">
+                        <div className="panel">
+                            <div className="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
+                                <h5 className="text-lg font-semibold dark:text-white-light">
+                                    Analysis Table
+                                </h5>
+                                <div className="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
+                                    <div className="flex flex-col gap-5 md:flex-row md:items-center">
+                                        <div className="dropdown">
+                                            <Dropdown
+                                                placement="bottom-start"
+                                                btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
+                                                button={
+                                                    <>
+                                                        <span className="ltr:mr-1 rtl:ml-1">
+                                                            Columns
+                                                        </span>
+                                                        <svg
+                                                            className="h-5 w-5"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M19 9L12 15L5 9"
+                                                                stroke="currentColor"
+                                                                strokeWidth="1.5"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                            />
+                                                        </svg>
+                                                    </>
+                                                }
+                                            >
+                                                <ul className="!min-w-[140px]">
+                                                    {cols.map((col, i) => {
+                                                        return (
+                                                            <li
+                                                                key={i}
+                                                                className="flex flex-col"
+                                                                onClick={(
+                                                                    e,
+                                                                ) => {
+                                                                    e.stopPropagation();
+                                                                }}
+                                                            >
+                                                                <div className="flex items-center px-4 py-1">
+                                                                    <label className="mb-0 cursor-pointer">
+                                                                        <input
+                                                                            type="checkbox"
+                                                                            checked={
+                                                                                !hideCols.includes(
+                                                                                    col.accessor,
+                                                                                )
+                                                                            }
+                                                                            className="form-checkbox"
+                                                                            defaultValue={
+                                                                                col.accessor
+                                                                            }
+                                                                            onChange={(
+                                                                                event: any,
+                                                                            ) => {
+                                                                                toggleHideColumn(
+                                                                                    col.accessor,
+                                                                                    event
+                                                                                        .target
+                                                                                        .checked,
+                                                                                );
+                                                                            }}
+                                                                        />
+                                                                        <span className="ltr:ml-2 rtl:mr-2">
+                                                                            {
+                                                                                col.title
+                                                                            }
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            </Dropdown>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-5 md:flex-row md:items-center">
+                                        <div className="dropdown">
+                                            <Dropdown
+                                                placement="bottom-start"
+                                                btnClassName="!flex items-center border font-semibold border-white-light dark:border-[#253b5c] rounded-md px-4 py-2 text-sm dark:bg-[#1b2e4b] dark:text-white-dark"
+                                                button={
+                                                    <>
+                                                        <span className="ltr:mr-1 rtl:ml-1">
+                                                            Trend State
+                                                        </span>
+                                                        <svg
+                                                            className="h-5 w-5"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M19 9L12 15L5 9"
+                                                                stroke="currentColor"
+                                                                strokeWidth="1.5"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                            />
+                                                        </svg>
+                                                    </>
+                                                }
+                                            >
+                                                <ul className="!min-w-[140px]">
+                                                    {trendState.map(
+                                                        (col, i) => {
+                                                            return (
+                                                                <li
+                                                                    key={i}
+                                                                    className="flex flex-col"
+                                                                    onClick={(
+                                                                        e,
+                                                                    ) => {
+                                                                        e.stopPropagation();
+                                                                    }}
+                                                                >
+                                                                    <div className="flex items-center px-4 py-1">
+                                                                        <label className="mb-0 cursor-pointer">
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                checked={trendFilter.includes(
+                                                                                    col.accessor,
+                                                                                )}
+                                                                                className="form-checkbox"
+                                                                                defaultValue={
+                                                                                    col.accessor
+                                                                                }
+                                                                                onChange={() => {
+                                                                                    toggleTrendFilter(
+                                                                                        col.accessor,
+                                                                                    );
+                                                                                }}
+                                                                            />
+                                                                            <span className="ltr:ml-2 rtl:mr-2">
+                                                                                {
+                                                                                    col.title
+                                                                                }
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        },
+                                                    )}
+                                                </ul>
+                                            </Dropdown>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <input
+                                            type="text"
+                                            className="form-input"
+                                            placeholder="Search Symbol..."
+                                            value={search}
+                                            onChange={(e) =>
+                                                setSearch(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="datatables">
+                                <DataTable
+                                    className="table-hover whitespace-nowrap"
+                                    idAccessor="symbol"
+                                    records={recordsData}
+                                    columns={dtColumns}
+                                    highlightOnHover
+                                    totalRecords={initialRecords.length}
+                                    recordsPerPage={pageSize}
+                                    page={page}
+                                    onPageChange={(p) => setPage(p)}
+                                    recordsPerPageOptions={PAGE_SIZES}
+                                    onRecordsPerPageChange={setPageSize}
+                                    sortStatus={sortStatus}
+                                    onSortStatusChange={setSortStatus}
+                                    minHeight={200}
+                                    paginationText={({
+                                        from,
+                                        to,
+                                        totalRecords,
+                                    }) =>
+                                        `Showing  ${from} to ${to} of ${totalRecords} entries`
+                                    }
+                                />
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </>
             )}
         </>
     );
