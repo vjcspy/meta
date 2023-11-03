@@ -74,8 +74,8 @@ export class CorController {
   }
 
   @Get('sync-ticks')
-  async syncTicks() {
-    await this.syncTicksHelper.syncTicks('ACB');
+  async syncTicks(@Query() infoQuery: GetSymbolInfoQuery) {
+    await this.syncTicksHelper.syncTicks(infoQuery.symbol);
 
     return 'ok';
   }
