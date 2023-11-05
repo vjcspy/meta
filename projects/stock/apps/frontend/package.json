@@ -1,0 +1,31 @@
+{
+  "name": "@stock/apps-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "latest",
+    "@stock/packages-redux": "workspace:*",
+    "sweetalert2": "^11.7.1",
+    "sweetalert2-react-content": "^5.0.7",
+    "moment": "^2.29.4",
+    "react-popper": "^2.3.0",
+    "react-animate-height": "^3.1.0",
+    "react-perfect-scrollbar": "^1.5.8"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "eslint-config-nextjs": "workspace:*",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.8"
+  }
+}
