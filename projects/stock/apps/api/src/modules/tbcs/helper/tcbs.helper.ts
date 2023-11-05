@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { pick } from 'lodash';
 
 @Injectable()
-export class TcbsHelper {
+export class TCBSHelper {
   constructor(
     private readonly http: HttpService,
     private readonly configEnv: ConfigService,

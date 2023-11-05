@@ -5,6 +5,7 @@ import { MigrationModule } from '@modules/migration/migration.module';
 import { StockModule } from '@modules/stock/stock.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { StockTradingModule } from '@modules/stock-trading/stock-trading.module';
+import { TCBSModule } from '@modules/tbcs/tcbs.module';
 import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule, getNodeEnv, isProduction, XLogger } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
@@ -60,6 +61,7 @@ import { AppService } from './app.service';
     StockTradingModule,
     TestbedModule,
     MigrationModule,
+    TCBSModule,
   ],
   controllers: [AppController],
   providers: [AppService],
