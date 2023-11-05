@@ -14,8 +14,15 @@ const initialState: {
     prices: any[];
     ticks: any[];
     filterTradeValue: number; // Trade value for each lenh mua hoac ban
-    capFilter: 0;
+    capFilter: number;
     analysis: any[];
+    hullma_intra_day?: {
+        fromDate: string;
+        toDate: string;
+        hullma5?: any[];
+        hullma15?: any[];
+        hullma30?: any[];
+    };
 } = {
     symbol: '',
     fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
@@ -26,6 +33,7 @@ const initialState: {
     filterTradeValue: 0,
     capFilter: 0,
     analysis: [],
+    hullma_intra_day: undefined,
 };
 
 const analysisSlice = createSlice({
@@ -55,6 +63,16 @@ const analysisSlice = createSlice({
         },
         setCapFilter(state, action) {
             state.capFilter = action.payload?.capFilter;
+        },
+        setHullmaDate(state, action) {
+            const { fromDate, toDate } = action.payload;
+
+            state.hullma_intra_day = {
+                fromDate,
+                toDate,
+            };
+
+            return state;
         },
     },
     extraReducers: (builder) => {
@@ -89,6 +107,28 @@ const analysisSlice = createSlice({
             // Xử lý dữ liệu sau khi lấy được thông tin từ API thành công
             // action.payload chứa dữ liệu trả về từ API
             state.analysis = action.payload.analysis;
+
+            return state;
+        });
+
+        builder.addCase(thunkActions.getHullma5.fulfilled, (state, action) => {
+            // Xử lý dữ liệu sau khi lấy được thông tin từ API thành công
+            // action.payload chứa dữ liệu trả về từ API
+            state.hullma_intra_day!.hullma5 = action.payload.hullma_intra_day;
+
+            return state;
+        });
+        builder.addCase(thunkActions.getHullma15.fulfilled, (state, action) => {
+            // Xử lý dữ liệu sau khi lấy được thông tin từ API thành công
+            // action.payload chứa dữ liệu trả về từ API
+            state.hullma_intra_day!.hullma15 = action.payload.hullma_intra_day;
+
+            return state;
+        });
+        builder.addCase(thunkActions.getHullma30.fulfilled, (state, action) => {
+            // Xử lý dữ liệu sau khi lấy được thông tin từ API thành công
+            // action.payload chứa dữ liệu trả về từ API
+            state.hullma_intra_day!.hullma30 = action.payload.hullma_intra_day;
 
             return state;
         });
@@ -153,6 +193,69 @@ const thunkActions = {
             analysis: data.data,
         };
     }),
+
+    getHullma5: createAsyncThunk(
+        'analysis/hullma5',
+        async (arg, { getState }) => {
+            // @ts-ignore
+            const state: IRootState = getState();
+            const symbol = state.analysis.symbol;
+            const { fromDate, toDate } = state.analysis.hullma_intra_day!;
+            // @ts-ignore
+            const url = `${process.env.NEXT_PUBLIC_ENDPOINT_METASTOCK_URL}/stock-trading/analysis/hullma-intra-day?symbol=${symbol}&resolution=5&from_date=${fromDate}&to_date=${toDate}`;
+
+            const data: any = await fetchJsonData(url);
+
+            if (!data.data.success) {
+                throw new Error('Network response was not ok');
+            }
+            return {
+                hullma_intra_day: data.data.data.grouped_ticks,
+            };
+        },
+    ),
+
+    getHullma15: createAsyncThunk(
+        'analysis/hullma15',
+        async (arg, { getState }) => {
+            // @ts-ignore
+            const state: IRootState = getState();
+            const symbol = state.analysis.symbol;
+            const { fromDate, toDate } = state.analysis.hullma_intra_day!;
+            // @ts-ignore
+            const url = `${process.env.NEXT_PUBLIC_ENDPOINT_METASTOCK_URL}/stock-trading/analysis/hullma-intra-day?symbol=${symbol}&resolution=15&from_date=${fromDate}&to_date=${toDate}`;
+
+            const data: any = await fetchJsonData(url);
+
+            if (!data.data.success) {
+                throw new Error('Network response was not ok');
+            }
+            return {
+                hullma_intra_day: data.data.data.grouped_ticks,
+            };
+        },
+    ),
+
+    getHullma30: createAsyncThunk(
+        'analysis/hullma30',
+        async (arg, { getState }) => {
+            // @ts-ignore
+            const state: IRootState = getState();
+            const symbol = state.analysis.symbol;
+            const { fromDate, toDate } = state.analysis.hullma_intra_day!;
+            // @ts-ignore
+            const url = `${process.env.NEXT_PUBLIC_ENDPOINT_METASTOCK_URL}/stock-trading/analysis/hullma-intra-day?symbol=${symbol}&resolution=30&from_date=${fromDate}&to_date=${toDate}`;
+
+            const data: any = await fetchJsonData(url);
+
+            if (!data.data.success) {
+                throw new Error('Network response was not ok');
+            }
+            return {
+                hullma_intra_day: data.data.data.grouped_ticks,
+            };
+        },
+    ),
 };
 
 export const analysisActions = {

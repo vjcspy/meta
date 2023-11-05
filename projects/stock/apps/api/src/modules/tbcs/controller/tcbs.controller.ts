@@ -2,13 +2,13 @@ import {
   GetTokenRequest,
   TcbsBaseRequest,
   TcbsFilterRequest,
-} from '@modules/stock-info/controller/tcbs.dto';
-import { TcbsHelper } from '@modules/stock-info/helper/tcbs.helper';
+} from '@modules/tbcs/controller/tcbs.dto';
+import { TCBSHelper } from '@modules/tbcs/helper/tcbs.helper';
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 
 @Controller('tcbs')
 export class TcbsController {
-  constructor(private readonly tcbsHelper: TcbsHelper) {}
+  constructor(private readonly tcbsHelper: TCBSHelper) {}
 
   @Post('token')
   @HttpCode(200)

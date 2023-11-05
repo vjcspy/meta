@@ -11,7 +11,7 @@ import { firstValueFrom, retry } from 'rxjs';
 
 @Injectable()
 export class SyncTicksHelper {
-  private readonly force_sync_previous_date = false;
+  private readonly force_sync_previous_date = true;
 
   private readonly logger = new XLogger(SyncTicksHelper.name);
 
