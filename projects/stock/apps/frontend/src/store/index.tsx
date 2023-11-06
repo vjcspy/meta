@@ -1,16 +1,14 @@
 import alertPriceSlice from '@src/store/alertPrice.slice';
 import analysisSlice from '@src/store/analysis.slice';
 import themeConfigSlice from '@src/store/themeConfigSlice';
-import { combineReducers, configureStore } from '@stock/packages-redux';
+import { createStoreManager } from '@stock/packages-redux';
 
-const rootReducer = combineReducers({
+const storeManager = createStoreManager({
   themeConfig: themeConfigSlice,
   alertPrice: alertPriceSlice,
   analysis: analysisSlice,
 });
 
-export default configureStore({
-  reducer: rootReducer,
-});
+export default storeManager;
 
-export type IRootState = ReturnType<typeof rootReducer>;
+export type IRootState = ReturnType<typeof storeManager.getStateType>;

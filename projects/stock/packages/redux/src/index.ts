@@ -1,3 +1,4 @@
+export * from './createStoreManager';
 export {
   combineReducers,
   configureStore,

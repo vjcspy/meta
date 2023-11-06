@@ -9,10 +9,12 @@
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "chitility": "workspace:*"
   },
   "dependencies": {
     "@reduxjs/toolkit": "latest",
-    "react-redux": "latest"
+    "react-redux": "latest",
+    "redux-observable": "^2.0.0"
   }
 }
