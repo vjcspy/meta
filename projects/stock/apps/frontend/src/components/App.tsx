@@ -2,15 +2,18 @@
 
 import ThemeConfig from '@src/components/Layouts/ThemeConfig';
 import storeManager from '@src/store';
-import { Provider } from '@stock/packages-redux';
+import { withReduxAdapter } from '@stock/packages-redux/src/redux-adapter';
+import { withAdapter } from '@web/base/dist/lib/adapter/withAdapters';
 import type { PropsWithChildren } from 'react';
 
 function App({ children }: PropsWithChildren) {
-  return (
-    <Provider store={storeManager.getStore()}>
-      <ThemeConfig>{children}</ThemeConfig>
-    </Provider>
-  );
+  return <ThemeConfig>{children}</ThemeConfig>;
 }
 
-export default App;
+export default withAdapter(
+  App,
+  {
+    store: storeManager.getStore(),
+  },
+  [withReduxAdapter],
+);

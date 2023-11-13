@@ -10,7 +10,8 @@
   "devDependencies": {
     "eslint-config-server": "workspace:*",
     "tsconfig": "workspace:*",
-    "chitility": "workspace:*"
+    "chitility": "workspace:*",
+    "@web/base": "workspace:*"
   },
   "dependencies": {
     "@reduxjs/toolkit": "latest",
