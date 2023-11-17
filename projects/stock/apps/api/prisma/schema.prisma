@@ -498,6 +498,7 @@ model TradingStrategyAction {
 
   symbol     String   @db.VarChar(10)
   type       Int      @db.SmallInt // buy/sell
+  date       DateTime @db.Date
   meta       Json?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -505,6 +506,7 @@ model TradingStrategyAction {
   trading_strategy    TradingStrategy @relation(fields: [trading_strategy_id], references: [id], onDelete: Cascade)
   trading_strategy_id Int
 
+  @@unique([symbol, type, date, trading_strategy_id])
   @@map("trading_strategy_action")
 }
 

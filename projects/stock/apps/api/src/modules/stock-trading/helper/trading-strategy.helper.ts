@@ -1,5 +1,9 @@
+import { prisma } from '@modules/core/util/prisma';
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
-import type { StrategyDto } from '@modules/stock-trading/controller/strategy.dto';
+import type {
+  BulkSubmitActionDto,
+  StrategyDto,
+} from '@modules/stock-trading/controller/strategy.dto';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategyState } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategyRepo } from '@modules/stock-trading/repo/trading-strategy.repo';
@@ -107,6 +111,40 @@ export class TradingStrategyHelper {
         );
       });
       this.logger.info(`Published ${size(processes)} strategy process`);
+    }
+  }
+
+  async bulkSubmitAction(bulkSubmitData: BulkSubmitActionDto) {
+    const strategy = await this.tradingStrategyRepo.getByHash(
+      bulkSubmitData.hash,
+      {
+        trading_strategy_process: false,
+        trading_strategy_action: false,
+      },
+    );
+
+    if (!strategy) {
+      throw new HttpException('hash data incorrect', HttpStatus.BAD_REQUEST);
+    }
+
+    const buyDataToInsert = bulkSubmitData.buy.map((d) => ({
+      symbol: bulkSubmitData.symbol,
+      trading_strategy_id: strategy.id,
+      type: 1,
+      date: moment(d.date).toDate(),
+      meta: { price: d.price },
+    }));
+    try {
+      await prisma.tradingStrategyAction.createMany({
+        data: [...buyDataToInsert],
+      });
+    } catch (e) {
+      this.logger.error('could not insert strategy action data', e);
+
+      throw new HttpException(
+        'could not insert strategy action data',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 }

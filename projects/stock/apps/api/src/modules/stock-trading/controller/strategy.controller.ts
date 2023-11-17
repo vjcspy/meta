@@ -1,4 +1,6 @@
+import { OkResponse } from '@modules/core/model/ok-response';
 import {
+  BulkSubmitActionDto,
   StrategyDto,
   StrategyProcessDto,
   TradingStrategyResponse,
@@ -60,5 +62,14 @@ export class StrategyController {
       });
     }
     throw new HttpException('Strategy not found', HttpStatus.NOT_FOUND);
+  }
+
+  @Post('bulk-submit-action')
+  async bulkSubmitAction(@Body() data: BulkSubmitActionDto) {
+    this.logger.info('process bulk submit action');
+
+    await this.tradingStrategyHelper.bulkSubmitAction(data);
+
+    return new OkResponse('submit strategy action successfully');
   }
 }
