@@ -16,7 +16,7 @@ import {
 import { XLogger } from '@nest/base';
 import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { HttpException, HttpStatus, Injectable, Scope } from '@nestjs/common';
-import { forEach, includes, size } from 'lodash';
+import { forEach, includes, map, size } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable({
@@ -213,6 +213,16 @@ export class TradingStrategyHelper {
       },
       data: {
         state: TradingStrategyState.Pending,
+      },
+    });
+
+    // remove existed actions
+    await prisma.tradingStrategyAction.deleteMany({
+      where: {
+        trading_strategy_id: strategy.id,
+        symbol: {
+          in: map(errorProcesses, (d) => d.symbol),
+        },
       },
     });
 
