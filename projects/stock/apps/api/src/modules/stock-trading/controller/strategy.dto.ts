@@ -1,9 +1,9 @@
 import {
   TradingStrategyActionSchema,
   TradingStrategyProcessSchema,
-  TradingStrategyState
-} from "@modules/stock-trading/model/trading-strategy.model";
-import { Expose, Transform, Type } from "class-transformer";
+  TradingStrategyState,
+} from '@modules/stock-trading/model/trading-strategy.model';
+import { Expose, Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsDate,
@@ -16,8 +16,8 @@ import {
   IsObject,
   IsOptional,
   IsString,
-  ValidateNested
-} from "class-validator";
+  ValidateNested,
+} from 'class-validator';
 
 export class StrategyDto {
   @IsString()
@@ -75,7 +75,7 @@ export class TradingStrategyResponse {
   @IsDate()
   @Expose()
   @Transform(({ value }) =>
-    value instanceof Date ? value.toISOString().split("T")[0] : value
+    value instanceof Date ? value.toISOString().split('T')[0] : value,
   )
   from: Date;
 
@@ -83,7 +83,7 @@ export class TradingStrategyResponse {
   @IsDate()
   @Expose()
   @Transform(({ value }) =>
-    value instanceof Date ? value.toISOString().split("T")[0] : value
+    value instanceof Date ? value.toISOString().split('T')[0] : value,
   )
   to: Date;
 

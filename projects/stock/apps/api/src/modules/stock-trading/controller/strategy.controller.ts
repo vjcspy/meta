@@ -88,7 +88,7 @@ export class StrategyController {
   async retryPublishProcess(@Query() rq: StrategyProcessRetryRequest) {
     this.logger.info(`retryPublishProcess for hash ${rq.hash}`);
 
-    await this.tradingStrategyHelper.retryUnCompletedProcess(rq);
+    await this.tradingStrategyHelper.retryErrorProcess(rq);
 
     return new OkResponse('retry successfully');
   }

@@ -149,7 +149,10 @@ export class TradingStrategyHelper {
         `bulkSubmitAction created many actions for ${strategy.id}`,
       );
     } catch (e) {
-      this.logger.error('could not insert strategy action data', e);
+      this.logger.error(
+        `could not insert strategy '${strategy.id}' action data for symbol '${bulkSubmitData.symbol}'`,
+        e,
+      );
 
       throw new HttpException(
         'could not insert strategy action data',
@@ -192,7 +195,7 @@ export class TradingStrategyHelper {
     });
   }
 
-  async retryUnCompletedProcess(data: StrategyProcessRetryRequest) {
+  async retryErrorProcess(data: StrategyProcessRetryRequest) {
     const strategy = await this.tradingStrategyRepo.getByHash(data.hash, {
       trading_strategy_process: true,
       trading_strategy_action: false,
@@ -202,10 +205,20 @@ export class TradingStrategyHelper {
       (_d) => _d.state === TradingStrategyState.Error,
     );
 
+    this.logger.info('Will change error process to pending state');
+    await prisma.tradingStrategyProcess.updateMany({
+      where: {
+        trading_strategy_id: strategy.id,
+        state: TradingStrategyState.Error,
+      },
+      data: {
+        state: TradingStrategyState.Pending,
+      },
+    });
+
     const connection = this.connectionManager.getConnection();
 
     this.logger.info(`Will publish ${size(errorProcesses)} strategy process`);
-
     if (Array.isArray(errorProcesses)) {
       forEach(errorProcesses, (process) => {
         connection.publish(
