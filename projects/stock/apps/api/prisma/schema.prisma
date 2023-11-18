@@ -554,6 +554,5 @@ model StockAlert {
   conditions Json
   state      Int     @db.SmallInt
 
-  // cache everything in db
   @@map("stock_alerts")
 }

@@ -3,6 +3,7 @@ import { CorRepo } from '@modules/stock-info/repo/cor.repo';
 import type {
   BulkSubmitActionDto,
   StrategyDto,
+  StrategyProcessUpdateDto,
 } from '@modules/stock-trading/controller/strategy.dto';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategyState } from '@modules/stock-trading/model/trading-strategy.model';
@@ -115,6 +116,7 @@ export class TradingStrategyHelper {
   }
 
   async bulkSubmitAction(bulkSubmitData: BulkSubmitActionDto) {
+    this.logger.info('bulkSubmitAction');
     const strategy = await this.tradingStrategyRepo.getByHash(
       bulkSubmitData.hash,
       {
@@ -126,7 +128,7 @@ export class TradingStrategyHelper {
     if (!strategy) {
       throw new HttpException('hash data incorrect', HttpStatus.BAD_REQUEST);
     }
-
+    this.logger.info(`bulkSubmitAction strategy ${strategy.id}`);
     const buyDataToInsert = bulkSubmitData.buy.map((d) => ({
       symbol: bulkSubmitData.symbol,
       trading_strategy_id: strategy.id,
@@ -135,9 +137,16 @@ export class TradingStrategyHelper {
       meta: { price: d.price },
     }));
     try {
+      this.logger.info(
+        `bulkSubmitAction create many actions for ${strategy.id}`,
+      );
       await prisma.tradingStrategyAction.createMany({
         data: [...buyDataToInsert],
       });
+
+      this.logger.info(
+        `bulkSubmitAction created many actions for ${strategy.id}`,
+      );
     } catch (e) {
       this.logger.error('could not insert strategy action data', e);
 
@@ -146,5 +155,39 @@ export class TradingStrategyHelper {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  async updateProcessState(data: StrategyProcessUpdateDto) {
+    this.logger.info(`updateProcessState`);
+    const strategy = await this.tradingStrategyRepo.getByHash(data.hash, {
+      trading_strategy_process: false,
+      trading_strategy_action: false,
+    });
+
+    if (!strategy) {
+      throw new HttpException('hash data incorrect', HttpStatus.BAD_REQUEST);
+    }
+
+    const process = await prisma.tradingStrategyProcess.findFirst({
+      where: {
+        trading_strategy_id: strategy.id,
+        symbol: data.symbol,
+      },
+    });
+
+    if (!process) {
+      throw new HttpException('not found process', HttpStatus.BAD_REQUEST);
+    }
+    this.logger.info(
+      `updateProcessState update state for process ${process.id} with state ${data.state}`,
+    );
+    await prisma.tradingStrategyProcess.update({
+      where: {
+        id: process.id,
+      },
+      data: {
+        state: data.state,
+      },
+    });
   }
 }

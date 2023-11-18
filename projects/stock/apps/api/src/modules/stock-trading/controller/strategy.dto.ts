@@ -1,6 +1,7 @@
 import {
   TradingStrategyActionSchema,
   TradingStrategyProcessSchema,
+  TradingStrategyState,
 } from '@modules/stock-trading/model/trading-strategy.model';
 import { Expose, Transform, Type } from 'class-transformer';
 import {
@@ -141,4 +142,18 @@ export class BulkSubmitActionDto {
   @ValidateNested({ each: true })
   @Type(() => BulkActionItem)
   buy: BulkActionItem[];
+}
+
+export class StrategyProcessUpdateDto {
+  @IsString()
+  @Expose()
+  hash: string;
+
+  @IsString()
+  @IsNotEmpty()
+  symbol: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  state: TradingStrategyState;
 }

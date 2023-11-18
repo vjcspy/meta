@@ -3,6 +3,7 @@ import {
   BulkSubmitActionDto,
   StrategyDto,
   StrategyProcessDto,
+  StrategyProcessUpdateDto,
   TradingStrategyResponse,
 } from '@modules/stock-trading/controller/strategy.dto';
 import { TradingStrategyHelper } from '@modules/stock-trading/helper/trading-strategy.helper';
@@ -14,6 +15,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -64,9 +66,17 @@ export class StrategyController {
     throw new HttpException('Strategy not found', HttpStatus.NOT_FOUND);
   }
 
+  @Patch('process')
+  async updateProcess(@Body() data: StrategyProcessUpdateDto) {
+    this.logger.info('trading strategy update process state');
+    await this.tradingStrategyHelper.updateProcessState(data);
+
+    return new OkResponse('update successfully');
+  }
+
   @Post('bulk-submit-action')
   async bulkSubmitAction(@Body() data: BulkSubmitActionDto) {
-    this.logger.info('process bulk submit action');
+    this.logger.info('trading strategy process bulk submit action');
 
     await this.tradingStrategyHelper.bulkSubmitAction(data);
 
