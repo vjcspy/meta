@@ -3,6 +3,7 @@ import {
   BulkSubmitActionDto,
   StrategyDto,
   StrategyProcessDto,
+  StrategyProcessRetryRequest,
   StrategyProcessUpdateDto,
   TradingStrategyResponse,
 } from '@modules/stock-trading/controller/strategy.dto';
@@ -81,5 +82,14 @@ export class StrategyController {
     await this.tradingStrategyHelper.bulkSubmitAction(data);
 
     return new OkResponse('submit strategy action successfully');
+  }
+
+  @Get('retry-error-process')
+  async retryPublishProcess(@Query() rq: StrategyProcessRetryRequest) {
+    this.logger.info(`retryPublishProcess for hash ${rq.hash}`);
+
+    await this.tradingStrategyHelper.retryUnCompletedProcess(rq);
+
+    return new OkResponse('retry successfully');
   }
 }
