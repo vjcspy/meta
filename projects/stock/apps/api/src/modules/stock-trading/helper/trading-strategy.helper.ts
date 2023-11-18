@@ -3,6 +3,7 @@ import { CorRepo } from '@modules/stock-info/repo/cor.repo';
 import type {
   BulkSubmitActionDto,
   StrategyDto,
+  StrategyProcessRetryRequest,
   StrategyProcessUpdateDto,
 } from '@modules/stock-trading/controller/strategy.dto';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
@@ -189,5 +190,36 @@ export class TradingStrategyHelper {
         state: data.state,
       },
     });
+  }
+
+  async retryUnCompletedProcess(data: StrategyProcessRetryRequest) {
+    const strategy = await this.tradingStrategyRepo.getByHash(data.hash, {
+      trading_strategy_process: true,
+      trading_strategy_action: false,
+    });
+
+    const errorProcesses = (strategy as any)?.trading_strategy_process.filter(
+      (_d) => _d.state === TradingStrategyState.Error,
+    );
+
+    const connection = this.connectionManager.getConnection();
+
+    this.logger.info(`Will publish ${size(errorProcesses)} strategy process`);
+
+    if (Array.isArray(errorProcesses)) {
+      forEach(errorProcesses, (process) => {
+        connection.publish(
+          STOCK_TRADING_EXCHANGE_KEY,
+          STOCK_TRADING_STRATEGY_ROUTING_KEY,
+          {
+            hash: data.hash,
+            symbol: process.symbol,
+            meta: process.meta,
+            state: process.state,
+          },
+        );
+      });
+      this.logger.info(`Published ${size(errorProcesses)} strategy process`);
+    }
   }
 }
