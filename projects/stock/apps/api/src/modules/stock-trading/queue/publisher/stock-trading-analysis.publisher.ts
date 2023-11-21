@@ -35,7 +35,7 @@ export class StockTradingAnalysisPublisher {
 
     for (let i = 0; i < cors.length; i++) {
       const cor = cors[i];
-      if (cor.exchange !== 'HOSE') {
+      if (cor.exchange !== 'HOSE' && cor.exchange !== 'HNX') {
         // eslint-disable-next-line no-continue
         continue;
       }
