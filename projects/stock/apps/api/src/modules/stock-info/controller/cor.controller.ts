@@ -1,3 +1,4 @@
+import { OkResponse } from '@modules/core/model/ok-response';
 import { prisma } from '@modules/core/util/prisma';
 import {
   CorResponse,
@@ -9,7 +10,7 @@ import { COR_START_SYNC_ACTION } from '@modules/stock-info/observers/cor/cor.act
 import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
-import { EventManagerReactive } from '@nest/base';
+import { EventManagerReactive, XLogger } from '@nest/base';
 import {
   Controller,
   Get,
@@ -22,6 +23,8 @@ import * as moment from 'moment/moment';
 
 @Controller('cor')
 export class CorController {
+  private readonly logger = new XLogger(CorController.name);
+
   constructor(
     private readonly eventManager: EventManagerReactive,
     private readonly omPublisher: OrderMatchingPublisher,
@@ -31,10 +34,12 @@ export class CorController {
   ) {}
 
   @Get('sync')
-  syncCor(): string {
+  async syncCor() {
+    this.logger.info('Remove all cor before sync');
+    await prisma.cor_entity.deleteMany();
     this.eventManager.dispatch(COR_START_SYNC_ACTION);
 
-    return 'ok';
+    return new OkResponse();
   }
 
   @Get('info')
