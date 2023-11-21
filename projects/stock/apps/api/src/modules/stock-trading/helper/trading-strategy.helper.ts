@@ -3,7 +3,7 @@ import { CorRepo } from '@modules/stock-info/repo/cor.repo';
 import type {
   BulkSubmitActionDto,
   StrategyDto,
-  StrategyProcessRetryRequest,
+  StrategyProcessRequest,
   StrategyProcessUpdateDto,
 } from '@modules/stock-trading/controller/strategy.dto';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
@@ -195,7 +195,7 @@ export class TradingStrategyHelper {
     });
   }
 
-  async retryErrorProcess(data: StrategyProcessRetryRequest) {
+  async retryErrorProcess(data: StrategyProcessRequest) {
     const strategy = await this.tradingStrategyRepo.getByHash(data.hash, {
       trading_strategy_process: true,
       trading_strategy_action: false,

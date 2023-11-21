@@ -13,12 +13,11 @@ export class AppResponseInterceptor<T> implements NestInterceptor<T, Response> {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data) => {
-        const response = context.switchToHttp().getResponse();
-        if (response.statusCode === 201) {
-          response.status(200); // Thay đổi mã trạng thái từ 201 thành 200
-        }
-
         if (data instanceof OkResponse) {
+          const response = context.switchToHttp().getResponse();
+          if (response.statusCode === 201) {
+            response.status(200); // Thay đổi mã trạng thái từ 201 thành 200
+          }
           return data.output();
         }
         return data;

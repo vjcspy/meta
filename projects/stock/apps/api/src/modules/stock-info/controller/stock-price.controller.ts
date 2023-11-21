@@ -51,7 +51,7 @@ export class StockPriceController {
 
   @Get('sync-all')
   syncAll() {
-    this.stockPricePublisher.publish();
+    this.stockPricePublisher.publish([], true);
 
     return 'ok';
   }

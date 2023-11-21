@@ -92,4 +92,31 @@ export class TradingStrategyRepo {
       },
     });
   }
+
+  async getProcesses(hash: string) {
+    return prisma.tradingStrategy.findUnique({
+      where: {
+        hash,
+      },
+      include: {
+        trading_strategy_process: true,
+      },
+    });
+  }
+
+  async getProcessActions(hash: string, symbol: string) {
+    return prisma.tradingStrategy.findUnique({
+      where: {
+        hash,
+      },
+      include: {
+        trading_strategy_process: false,
+        trading_strategy_action: {
+          where: {
+            symbol,
+          },
+        },
+      },
+    });
+  }
 }

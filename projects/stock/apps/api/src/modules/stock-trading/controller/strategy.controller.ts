@@ -3,7 +3,7 @@ import {
   BulkSubmitActionDto,
   StrategyDto,
   StrategyProcessDto,
-  StrategyProcessRetryRequest,
+  StrategyProcessRequest,
   StrategyProcessUpdateDto,
   TradingStrategyResponse,
 } from '@modules/stock-trading/controller/strategy.dto';
@@ -53,6 +53,9 @@ export class StrategyController {
    */
   @Get('process')
   async getProcess(@Query() dto: StrategyProcessDto) {
+    this.logger.info(
+      `getProcess for hash ${dto.hash} and symbol ${dto.symbol}`,
+    );
     const strategy = await this.tradingStrategyRepo.getProcess(
       dto.hash,
       dto.symbol,
@@ -85,11 +88,44 @@ export class StrategyController {
   }
 
   @Get('retry-error-process')
-  async retryPublishProcess(@Query() rq: StrategyProcessRetryRequest) {
+  async retryPublishProcess(@Query() rq: StrategyProcessRequest) {
     this.logger.info(`retryPublishProcess for hash ${rq.hash}`);
 
     await this.tradingStrategyHelper.retryErrorProcess(rq);
 
     return new OkResponse('retry successfully');
+  }
+
+  @Get('strategy-processes')
+  async getStrategyProcesses(@Query() rq: StrategyProcessRequest) {
+    this.logger.info(`getStrategyProcesses for hash ${rq.hash}`);
+    const strategy = await this.tradingStrategyRepo.getProcesses(rq.hash);
+
+    if (strategy && strategy.id) {
+      return plainToInstance(TradingStrategyResponse, strategy, {
+        excludeExtraneousValues: true,
+        exposeUnsetFields: false,
+      });
+    }
+    throw new HttpException('Strategy not found', HttpStatus.NOT_FOUND);
+  }
+
+  @Get('strategy-process-actions')
+  async getStrategyProcessActions(@Query() rq: StrategyProcessDto) {
+    this.logger.info(
+      `getStrategyProcessActions for hash ${rq.hash} symbol ${rq.symbol}`,
+    );
+    const strategy = await this.tradingStrategyRepo.getProcessActions(
+      rq.hash,
+      rq.symbol,
+    );
+
+    if (strategy && strategy.id) {
+      return plainToInstance(TradingStrategyResponse, strategy, {
+        excludeExtraneousValues: true,
+        exposeUnsetFields: false,
+      });
+    }
+    throw new HttpException('Strategy not found', HttpStatus.NOT_FOUND);
   }
 }

@@ -1,12 +1,15 @@
 import { prisma } from '@modules/core/util/prisma';
 import { transformAndValidateBscPrice } from '@modules/stock-info/requests/bsc/BscPrice.dto';
 import { getStockPriceJobId } from '@modules/stock-info/util/stock-price/getStockPriceJobId';
+import { XLogger } from '@nest/base/dist';
 import { Injectable } from '@nestjs/common';
 import type { DataObject } from 'chitility';
 import { map, size } from 'lodash';
 
 @Injectable()
 export class StockPriceRepo {
+  private readonly logger = new XLogger(StockPriceRepo.name);
+
   public async saveMany(code: string, data: DataObject) {
     let lastDate: any;
     const records = map(data.getData(), (value: any) => {
@@ -17,6 +20,9 @@ export class StockPriceRepo {
     });
     let firstTime = false;
     if (size(records) > 20) {
+      this.logger.info(
+        `Consider it as the first time because has ${size(records)} records`,
+      );
       firstTime = true;
       // consider it as the first time
       await prisma.stockPrice.deleteMany({

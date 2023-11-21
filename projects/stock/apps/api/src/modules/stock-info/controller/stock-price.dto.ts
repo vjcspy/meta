@@ -47,6 +47,27 @@ export class StockPriceHistoryResponse {
   })
   open: number;
 
+  // Gia chua dieu chinh, su dung trong 1 so truong hop phan tich
+  @Expose({
+    name: 'priceHigh',
+  })
+  rHigh: number;
+
+  @Expose({
+    name: 'priceLow',
+  })
+  rLow: number;
+
+  @Expose({
+    name: 'priceClose',
+  })
+  rClose: number;
+
+  @Expose({
+    name: 'priceOpen',
+  })
+  rOpen: number;
+
   @Expose({})
   @Transform(({ value }) => Number(value.toString()))
   volume: number;

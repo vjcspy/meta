@@ -52,7 +52,7 @@ export class StrategyProcessDto {
   symbol: string;
 }
 
-export class StrategyProcessRetryRequest {
+export class StrategyProcessRequest {
   @IsString()
   @IsNotEmpty()
   hash: string;
