@@ -1,9 +1,11 @@
 import {
   TradingStrategyActionSchema,
   TradingStrategyProcessSchema,
+  TradingStrategyState,
 } from '@modules/stock-trading/model/trading-strategy.model';
 import { Expose, Transform, Type } from 'class-transformer';
 import {
+  IsArray,
   IsDate,
   IsDateString,
   IsDefined,
@@ -14,6 +16,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 
 export class StrategyDto {
@@ -47,6 +50,12 @@ export class StrategyProcessDto {
   @IsString()
   @IsNotEmpty()
   symbol: string;
+}
+
+export class StrategyProcessRequest {
+  @IsString()
+  @IsNotEmpty()
+  hash: string;
 }
 
 export class TradingStrategyResponse {
@@ -113,4 +122,44 @@ export class TradingStrategyResponse {
   @Type(() => TradingStrategyActionSchema)
   @Expose()
   trading_strategy_action?: TradingStrategyActionSchema[];
+}
+
+export class BulkActionItem {
+  @IsNotEmpty()
+  @IsDateString()
+  date: string;
+
+  @IsNotEmpty()
+  @IsInt()
+  price: number;
+}
+
+export class BulkSubmitActionDto {
+  @IsString()
+  @Expose()
+  hash: string;
+
+  @IsString()
+  @IsNotEmpty()
+  symbol: string;
+
+  @IsArray()
+  // @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => BulkActionItem)
+  buy: BulkActionItem[];
+}
+
+export class StrategyProcessUpdateDto {
+  @IsString()
+  @Expose()
+  hash: string;
+
+  @IsString()
+  @IsNotEmpty()
+  symbol: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  state: TradingStrategyState;
 }

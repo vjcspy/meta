@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Expose, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import {
   IsDate,
+  IsDateString,
   IsInt,
   IsJSON,
   IsObject,
@@ -100,14 +101,24 @@ export class TradingStrategyActionSchema {
   id: number;
 
   @IsString()
+  @Expose()
   symbol: string;
 
   @IsInt()
+  @Expose()
   type: ActionType;
 
   @IsOptional()
   @IsObject()
+  @Expose()
   meta?: any;
+
+  @IsDateString()
+  @Expose()
+  @Transform(({ value }) =>
+    value instanceof Date ? value.toISOString().split('T')[0] : value,
+  )
+  date: string;
 
   @IsDate()
   @IsOptional()

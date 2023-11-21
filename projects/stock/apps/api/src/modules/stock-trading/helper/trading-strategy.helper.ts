@@ -1,5 +1,11 @@
+import { prisma } from '@modules/core/util/prisma';
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
-import type { StrategyDto } from '@modules/stock-trading/controller/strategy.dto';
+import type {
+  BulkSubmitActionDto,
+  StrategyDto,
+  StrategyProcessRequest,
+  StrategyProcessUpdateDto,
+} from '@modules/stock-trading/controller/strategy.dto';
 import type { TradingStrategyProcessSchema } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategyState } from '@modules/stock-trading/model/trading-strategy.model';
 import { TradingStrategyRepo } from '@modules/stock-trading/repo/trading-strategy.repo';
@@ -10,7 +16,7 @@ import {
 import { XLogger } from '@nest/base';
 import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { HttpException, HttpStatus, Injectable, Scope } from '@nestjs/common';
-import { forEach, includes, size } from 'lodash';
+import { forEach, includes, map, size } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable({
@@ -107,6 +113,136 @@ export class TradingStrategyHelper {
         );
       });
       this.logger.info(`Published ${size(processes)} strategy process`);
+    }
+  }
+
+  async bulkSubmitAction(bulkSubmitData: BulkSubmitActionDto) {
+    this.logger.info('bulkSubmitAction');
+    const strategy = await this.tradingStrategyRepo.getByHash(
+      bulkSubmitData.hash,
+      {
+        trading_strategy_process: false,
+        trading_strategy_action: false,
+      },
+    );
+
+    if (!strategy) {
+      throw new HttpException('hash data incorrect', HttpStatus.BAD_REQUEST);
+    }
+    this.logger.info(`bulkSubmitAction strategy ${strategy.id}`);
+    const buyDataToInsert = bulkSubmitData.buy.map((d) => ({
+      symbol: bulkSubmitData.symbol,
+      trading_strategy_id: strategy.id,
+      type: 1,
+      date: moment(d.date).toDate(),
+      meta: { price: d.price },
+    }));
+    try {
+      this.logger.info(
+        `bulkSubmitAction create many actions for ${strategy.id}`,
+      );
+      await prisma.tradingStrategyAction.createMany({
+        data: [...buyDataToInsert],
+      });
+
+      this.logger.info(
+        `bulkSubmitAction created many actions for ${strategy.id}`,
+      );
+    } catch (e) {
+      this.logger.error(
+        `could not insert strategy '${strategy.id}' action data for symbol '${bulkSubmitData.symbol}'`,
+        e,
+      );
+
+      throw new HttpException(
+        'could not insert strategy action data',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async updateProcessState(data: StrategyProcessUpdateDto) {
+    this.logger.info(`updateProcessState`);
+    const strategy = await this.tradingStrategyRepo.getByHash(data.hash, {
+      trading_strategy_process: false,
+      trading_strategy_action: false,
+    });
+
+    if (!strategy) {
+      throw new HttpException('hash data incorrect', HttpStatus.BAD_REQUEST);
+    }
+
+    const process = await prisma.tradingStrategyProcess.findFirst({
+      where: {
+        trading_strategy_id: strategy.id,
+        symbol: data.symbol,
+      },
+    });
+
+    if (!process) {
+      throw new HttpException('not found process', HttpStatus.BAD_REQUEST);
+    }
+    this.logger.info(
+      `updateProcessState update state for process ${process.id} with state ${data.state}`,
+    );
+    await prisma.tradingStrategyProcess.update({
+      where: {
+        id: process.id,
+      },
+      data: {
+        state: data.state,
+      },
+    });
+  }
+
+  async retryErrorProcess(data: StrategyProcessRequest) {
+    const strategy = await this.tradingStrategyRepo.getByHash(data.hash, {
+      trading_strategy_process: true,
+      trading_strategy_action: false,
+    });
+
+    const errorProcesses = (strategy as any)?.trading_strategy_process.filter(
+      (_d) => _d.state === TradingStrategyState.Error,
+    );
+
+    this.logger.info('Will change error process to pending state');
+    await prisma.tradingStrategyProcess.updateMany({
+      where: {
+        trading_strategy_id: strategy.id,
+        state: TradingStrategyState.Error,
+      },
+      data: {
+        state: TradingStrategyState.Pending,
+      },
+    });
+
+    // remove existed actions
+    await prisma.tradingStrategyAction.deleteMany({
+      where: {
+        trading_strategy_id: strategy.id,
+        symbol: {
+          in: map(errorProcesses, (d) => d.symbol),
+        },
+      },
+    });
+
+    const connection = this.connectionManager.getConnection();
+
+    this.logger.info(`Will publish ${size(errorProcesses)} strategy process`);
+    if (Array.isArray(errorProcesses)) {
+      forEach(errorProcesses, (process) => {
+        connection.publish(
+          STOCK_TRADING_EXCHANGE_KEY,
+          STOCK_TRADING_STRATEGY_ROUTING_KEY,
+          {
+            hash: data.hash,
+            symbol: process.symbol,
+            meta: process.meta,
+            state: process.state,
+          },
+        );
+      });
+      this.logger.info(`Published ${size(errorProcesses)} strategy process`);
     }
   }
 }
