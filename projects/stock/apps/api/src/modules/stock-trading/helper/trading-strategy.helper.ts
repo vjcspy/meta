@@ -114,6 +114,8 @@ export class TradingStrategyHelper {
       });
       this.logger.info(`Published ${size(processes)} strategy process`);
     }
+
+    return strategy;
   }
 
   async bulkSubmitAction(bulkSubmitData: BulkSubmitActionDto) {
