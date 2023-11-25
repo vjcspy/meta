@@ -1,5 +1,6 @@
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/tailwind.css';
+import 'flatpickr/dist/flatpickr.css';
 
 import App from '@src/components/App';
 import type { Metadata } from 'next';

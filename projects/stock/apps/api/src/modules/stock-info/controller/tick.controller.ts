@@ -1,3 +1,4 @@
+import { OkResponse } from '@modules/core/model/ok-response';
 import {
   GetTickHistoriesRequest,
   GetTickHistoryRequest,
@@ -20,6 +21,17 @@ export class TickController {
       date,
     });
     return this.tickHelper.getHistory(symbol, date);
+  }
+
+  @Get('intra-day')
+  async getTickIntraDay(@Query() request: GetTickHistoryRequest) {
+    const { date, symbol } = request;
+    this.logger.info('prcoess get tick  for symbol', {
+      symbol,
+      date,
+    });
+    const tick = await this.tickHelper.getHistory(symbol, date);
+    return new OkResponse(undefined, tick);
   }
 
   @Get('histories')

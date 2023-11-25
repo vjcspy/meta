@@ -7,6 +7,7 @@ export interface AnalysisState {
   toDate: string;
   prices?: any[];
   ticks?: any[];
+  tickIntraDay?: any;
   filterTradeValue: number; // Trade value for each lenh mua hoac ban
   capFilter?: number;
   analysis?: any[];
