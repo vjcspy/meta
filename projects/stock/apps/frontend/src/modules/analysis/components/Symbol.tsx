@@ -8,7 +8,6 @@ import { useAppDispatch } from '@src/store/useAppDispatch';
 import { combineHOC } from '@web/ui-extension';
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useState } from 'react';
-import { createFilter } from 'react-select';
 
 const AsyncSelect = dynamic(() => import('react-windowed-select'), {
   ssr: false,
@@ -44,7 +43,6 @@ const Symbol = combineHOC(
         windowThreshold={100}
         placeholder="Select an symbol"
         options={corOptions}
-        filterOption={createFilter({ ignoreAccents: false })}
         onChange={(choice: any) => {
           dispatch(
             ANALYSIS_ACTIONS.setSymbol({

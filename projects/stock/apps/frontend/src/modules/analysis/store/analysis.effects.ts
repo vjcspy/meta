@@ -1,5 +1,5 @@
+import type { ApiResponse } from '@modules/app/type/api-response';
 import { ANALYSIS_ACTIONS } from '@src/modules/analysis/store/analysis.actions';
-import type { ApiResponseDto } from '@src/modules/app/dto/api-response.dto';
 import { APP_ACTIONS } from '@src/modules/app/store/app.actions';
 import { validateApiResponsePipe } from '@src/modules/app/util/validateApiResponseRx';
 import type { IRootState } from '@src/store';
@@ -22,7 +22,7 @@ const loadCorsEffect = createEffect((action$, state$) =>
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),
         validateApiResponsePipe(),
-        map((data: ApiResponseDto) => {
+        map((data: ApiResponse) => {
           if (data?.success === true) {
             return ANALYSIS_ACTIONS.loadCorsSuccess(data);
           } else {

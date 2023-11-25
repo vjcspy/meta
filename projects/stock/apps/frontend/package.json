@@ -9,11 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/cache": "latest",
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
     "@stock/packages-redux": "workspace:*",
     "@web/base": "workspace:*",
     "@web/ui-extension": "workspace:*",
@@ -26,8 +21,6 @@
     "react-dom": "^18",
     "react-perfect-scrollbar": "^1.5.8",
     "react-popper": "^2.3.0",
-    "react-select": "latest",
-    "react-window": "^1.8.10",
     "react-windowed-select": "^5.1.1",
     "sweetalert2": "^11.7.1",
     "sweetalert2-react-content": "^5.0.7"
@@ -39,10 +32,5 @@
     "eslint-config-nextjs": "workspace:*",
     "postcss": "^8",
     "tailwindcss": "^3.3.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@emotion/react": "11.11.1"
-    }
   }
 }
