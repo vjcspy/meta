@@ -2,6 +2,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/tailwind.css';
 
 import App from '@src/components/App';
+import ThemeRegistry from '@src/components/ThemeRegistry/ThemeRegistry';
 import type { Metadata } from 'next';
 
 // const inter = Nunito({
@@ -31,7 +32,9 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <App> {children}</App>
+        <ThemeRegistry>
+          <App> {children}</App>
+        </ThemeRegistry>
       </body>
     </html>
   );

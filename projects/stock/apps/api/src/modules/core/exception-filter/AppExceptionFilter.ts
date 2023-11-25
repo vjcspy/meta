@@ -5,7 +5,7 @@ export class AppExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-    // const request = ctx.getRequest();
+    const request = ctx.getRequest();
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
@@ -35,7 +35,7 @@ export class AppExceptionFilter implements ExceptionFilter {
     response.status(status).json({
       success: false,
       timestamp: new Date().toISOString(),
-      // path: request.url,
+      path: request.url,
       message,
       error: errorName,
       ...messageRes,

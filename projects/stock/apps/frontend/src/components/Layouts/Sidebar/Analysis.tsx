@@ -20,17 +20,10 @@ const SidebarAnalysis = () => {
       </h2>
 
       <li className="nav-item">
-        <Link href="/analysis" className="group">
+        <Link href="/analysis/tick/intraday" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Table
-            </span>
-          </div>
-        </Link>
-        <Link href="/analysis/price/hullma" className="group">
-          <div className="flex items-center">
-            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Chart
+              Tick Intraday
             </span>
           </div>
         </Link>
