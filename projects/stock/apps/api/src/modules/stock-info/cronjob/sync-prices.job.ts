@@ -6,7 +6,7 @@ import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { find, forEach } from 'lodash';
+import { filter, find, forEach } from 'lodash';
 import * as moment from 'moment/moment';
 
 @Injectable()
@@ -81,7 +81,10 @@ export class SyncPricesJob {
     if (!isMainProcess()) return;
     const alerts = await prisma.stockAlert.findMany({});
     const cors = await prisma.cor_entity.findMany({});
-    forEach(alerts, (a) => {
+
+    const activatedAlerts = filter(alerts, (a) => a.state !== 0);
+
+    forEach(activatedAlerts, (a) => {
       if (a.symbol && find(cors, (c) => c.code === a.symbol)) {
         this.syncPricePublisher.publishOne(a.symbol);
       }

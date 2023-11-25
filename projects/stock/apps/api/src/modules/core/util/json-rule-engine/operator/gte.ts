@@ -3,6 +3,6 @@ import { Operator } from 'json-rules-engine';
 
 export const gte = new Operator(
   'gte',
-  (factValue, jsonValue) => jsonValue >= factValue,
+  (factValue, jsonValue) => jsonValue <= factValue,
   numberValidator,
 );
