@@ -1,0 +1,23 @@
+{
+  "name": "@stock/com",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "types": "src/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint --fix --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+  }
+}

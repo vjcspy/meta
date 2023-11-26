@@ -94,10 +94,21 @@ export class CorController {
 
   @Get('get-all')
   async getAllCors() {
-    const cors = this.corRepo.getAll();
+    const cors = await this.corRepo.getAll();
 
     return plainToInstance(CorResponse, cors, {
       excludeExtraneousValues: true,
+    });
+  }
+
+  @Get('get-all-v1')
+  async getAllCorsV1() {
+    const cors = await this.corRepo.getAll();
+
+    return new OkResponse(undefined, {
+      cors: plainToInstance(CorResponse, cors, {
+        excludeExtraneousValues: true,
+      }),
     });
   }
 }

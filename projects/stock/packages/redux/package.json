@@ -1,0 +1,21 @@
+{
+  "name": "@stock/packages-redux",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx ."
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*",
+    "chitility": "workspace:*",
+    "@web/base": "workspace:*"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "latest",
+    "react-redux": "latest",
+    "redux-observable": "^2.0.0"
+  }
+}

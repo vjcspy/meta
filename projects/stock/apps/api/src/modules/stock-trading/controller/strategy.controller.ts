@@ -41,9 +41,11 @@ export class StrategyController {
     this.logger.info('processData', {
       data,
     });
-    await this.tradingStrategyHelper.processStrategy(data);
+    const strategy = await this.tradingStrategyHelper.processStrategy(data);
 
-    return { message: 'Data received and validated successfully' };
+    return new OkResponse('Data received and validated successfully', {
+      hash: strategy.hash,
+    });
   }
 
   /**
