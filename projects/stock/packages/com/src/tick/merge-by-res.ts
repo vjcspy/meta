@@ -20,6 +20,7 @@ const group_by_time_period = (
     parseInt(`${timeMinute / timeResolution}`) * timeResolution;
   time.set({
     minute: roundedMinute,
+    second: 0,
   });
   return time;
 };

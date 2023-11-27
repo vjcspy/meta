@@ -2,7 +2,6 @@
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
-import * as Plot from '@observablehq/plot';
 import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
 import {
@@ -10,16 +9,20 @@ import {
   TimeResolution,
 } from '@stock/packages-com/dist/tick/merge-by-res';
 import { combineHOC } from '@web/ui-extension';
+import Chart from 'chart.js/auto';
+import zoomPlugin from 'chartjs-plugin-zoom';
 import moment from 'moment/moment';
 import momentTimezone from 'moment-timezone';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flatpickr from 'react-flatpickr';
 
+Chart.register(zoomPlugin);
+
 const TickIntraDay = combineHOC(
   withTickIntraDay,
   withFromToDate,
 )((props) => {
-  const containerRef = useRef<any>();
+  const chartRef = useRef<any>();
   const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
   const onChange = useCallback(
     (dates: any) => {
@@ -59,42 +62,70 @@ const TickIntraDay = combineHOC(
   }, [props.state.tickIntraDay, timeRes]);
 
   useEffect(() => {
-    const plot = Plot.plot({
-      inset: 6,
-      grid: true,
-      style: { width: '100%', background: 'transparent', padding: '5px' },
-      y: {
-        label: `Mua bán theo thời gian`,
+    if (!chartRef.current) {
+      return;
+    }
+
+    const ctx = chartRef.current.getContext('2d');
+
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: mergedByTimeStamp.map((d: any) =>
+          momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss'),
+        ),
+        datasets: [
+          {
+            label: 'Buy Vol',
+            data: mergedByTimeStamp.map((d: any) => d.buy),
+            fill: false,
+            borderColor: 'rgb(46,60,208)',
+            tension: 0,
+          },
+          {
+            label: 'Sell Vol',
+            data: mergedByTimeStamp.map((d: any) => d.sell),
+            fill: false,
+            borderColor: 'rgb(203,52,52)',
+            tension: 0,
+          },
+          // {
+          //   label: 'OC',
+          //   data: mergedByTimeStamp.map((d: any) => d.oc),
+          //   fill: false,
+          //   borderColor: 'rgb(255,255,255)',
+          //   tension: 0,
+          // },
+        ],
       },
-      // x: {
-      //     tickFormat: 'm/d',
-      //     label: null,
-      // },
-      // color,
-      marks: [
-        // Plot.ruleY(
-        //     chartData,
-        //     Plot.selectFirst({
-        //         y: (d) => d.close,
-        //         stroke: 'grey',
-        //         strokeDasharray: '1,2',
-        //     }),
-        // ),
-        Plot.lineY(mergedByTimeStamp, {
-          x: {
-            value: (d: any, _i: number) => {
-              const mm = momentTimezone.unix(d.ts).tz(TIMEZONE);
-              return mm.toDate();
+      options: {
+        plugins: {
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: false,
+              },
+              mode: 'x',
+              // scaleMode: 'y',
+              overScaleMode: 'x',
+            },
+            pan: {
+              enabled: true,
+              mode: 'x',
             },
           },
-          y: 'buy',
-          stroke: '#4e79a7',
-          strokeWidth: 0.5,
-        }),
-      ],
+        },
+      },
     });
-    containerRef.current.append(plot);
-    return () => plot.remove();
+
+    return () => {
+      if (chartRef.current) {
+        myChart.destroy();
+      }
+    };
   }, [mergedByTimeStamp]);
 
   return (
@@ -140,7 +171,8 @@ const TickIntraDay = combineHOC(
         {/*</div>*/}
       </div>
       <div className="grid grid-cols-1 gap-6 pt-2">
-        <div ref={containerRef} />
+        <label className="pt-6">Mua bán theo thời gian</label>
+        <canvas ref={chartRef}></canvas>
       </div>
     </Row>
   );
