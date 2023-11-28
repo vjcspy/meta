@@ -14,14 +14,30 @@ const group_by_time_period = (
   time: Moment,
   timeResolution: TimeResolution,
 ): Moment => {
-  const timeMinute = time.minutes();
-  // eslint-disable-next-line no-bitwise
-  const roundedMinute =
-    parseInt(`${timeMinute / timeResolution}`) * timeResolution;
+  let timeMinute = time.minute();
+  let timeHour = time.hour();
+  const roundedMinute = Math.ceil(timeMinute / timeResolution) * timeResolution;
+
+  if (roundedMinute >= 60) {
+    // Tăng giờ lên một đơn vị và đặt phút về 0
+    timeHour += 1;
+    timeMinute = 0;
+
+    // Nếu giờ vượt qua 23, chuyển sang ngày hôm sau
+    if (timeHour > 23) {
+      timeHour = 0;
+      time.add(1, 'days');
+    }
+  } else {
+    timeMinute = roundedMinute;
+  }
+
   time.set({
-    minute: roundedMinute,
+    hour: timeHour,
+    minute: timeMinute,
     second: 0,
   });
+
   return time;
 };
 
@@ -46,7 +62,7 @@ export const mergeByRes = (
     const roundedTime = group_by_time_period(date, res);
     const ts = roundedTime.unix();
     if (mergedRes[ts]) {
-      if (isValidTradeValue(tick, tradeValue)) {
+      if (!isValidTradeValue(tick, tradeValue)) {
         return;
       }
 

@@ -20,17 +20,18 @@ export const analysisSlice = createSlice({
     loadTickIntraDaySuccess: (state, action: PayloadAction<ApiResponse>) => {
       const tickIntraDay = action.payload.data;
       if (Array.isArray(tickIntraDay['meta'])) {
-        const date = moment().utc(tickIntraDay['date']);
+        const date = moment(tickIntraDay['date']);
+        state.tickDayFromData = date.format('YYYY-MM-DD');
         tickIntraDay.meta = map(tickIntraDay.meta, (d) => {
           const timeString = d['time'];
-          date.set({
+          date.utc().set({
             hour: moment(timeString, 'HH:mm:ss').hour(),
             minute: moment(timeString, 'HH:mm:ss').minute(),
             second: moment(timeString, 'HH:mm:ss').second(),
           });
-          return { ...d, ts: date.unix() };
+          return { ...d, ts: date.utc().unix() };
         });
-        tickIntraDay.meta = sortBy(tickIntraDay.meta, (d) => -d.tsz);
+        tickIntraDay.meta = sortBy(tickIntraDay.meta, (d) => -d.ts);
       }
       state.tickIntraDay = tickIntraDay;
 

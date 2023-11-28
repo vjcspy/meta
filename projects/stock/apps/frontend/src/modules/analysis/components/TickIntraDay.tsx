@@ -2,6 +2,7 @@
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
+import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
 import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
 import {
@@ -16,12 +17,15 @@ import momentTimezone from 'moment-timezone';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flatpickr from 'react-flatpickr';
 
-Chart.register(zoomPlugin);
-
 const TickIntraDay = combineHOC(
   withTickIntraDay,
   withFromToDate,
 )((props) => {
+  useEffect(() => {
+    // @ts-ignore
+    Chart?.register(zoomPlugin);
+  }, []);
+
   const chartRef = useRef<any>();
   const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
   const onChange = useCallback(
@@ -39,9 +43,9 @@ const TickIntraDay = combineHOC(
       const meta = props.state.tickIntraDay.meta;
 
       if (Array.isArray(meta)) {
-        const time = moment.unix(meta[0]['ts']);
-        momentTimezone.tz(time, 'Asia/Ho_Chi_Minh');
-
+        console.log(meta[0]['ts']);
+        const time = momentTimezone.unix(meta[0]['ts']).tz(TIMEZONE);
+        console.log(time);
         return time;
       }
     }
@@ -71,9 +75,9 @@ const TickIntraDay = combineHOC(
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: mergedByTimeStamp.map((d: any) =>
-          momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss'),
-        ),
+        labels: mergedByTimeStamp.map((d: any) => {
+          return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+        }),
         datasets: [
           {
             label: 'Buy Vol',
@@ -128,6 +132,12 @@ const TickIntraDay = combineHOC(
     };
   }, [mergedByTimeStamp]);
 
+  const onTimeResChange = useCallback((e: any) => {
+    setTimeRes(e.target.value);
+  }, []);
+
+  console.log(lastTickMoment);
+
   return (
     <Row
       title={`Tick intra day. Last tick: ${
@@ -154,11 +164,16 @@ const TickIntraDay = combineHOC(
       <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
         <div>
           <label>Time Resolution</label>
-          <select className="form-select text-white-dark">
-            <option>Open this select menu</option>
-            <option>One</option>
-            <option>Two</option>
-            <option>Three</option>
+          <select
+            value={timeRes}
+            className="form-select text-white-dark"
+            onChange={onTimeResChange}
+          >
+            {getTimeResolutionOptions().map((d) => (
+              <option key={d.value} value={d.value}>
+                {d.label}
+              </option>
+            ))}
           </select>
         </div>
         {/*<div>*/}

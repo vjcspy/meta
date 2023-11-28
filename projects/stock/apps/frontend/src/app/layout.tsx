@@ -3,13 +3,12 @@ import '../styles/tailwind.css';
 import 'flatpickr/dist/flatpickr.css';
 
 import App from '@src/components/App';
-import type { Metadata } from 'next';
-
 // const inter = Nunito({
 //   subsets: ['latin'],
 //   weight: ['400', '500', '600', '700'],
 //   display: 'swap',
 // });
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Meta',
