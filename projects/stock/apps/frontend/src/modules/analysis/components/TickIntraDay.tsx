@@ -3,6 +3,7 @@
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
 import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
+import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
 import {
@@ -10,27 +11,19 @@ import {
   TimeResolution,
 } from '@stock/packages-com/dist/tick/merge-by-res';
 import { combineHOC } from '@web/ui-extension';
-import Chart from 'chart.js/auto';
-import zoomPlugin from 'chartjs-plugin-zoom';
 import moment from 'moment/moment';
 import momentTimezone from 'moment-timezone';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { Line } from 'react-chartjs-2';
 import Flatpickr from 'react-flatpickr';
 
 const TickIntraDay = combineHOC(
   withTickIntraDay,
   withFromToDate,
 )((props) => {
-  useEffect(() => {
-    // @ts-ignore
-    Chart?.register(zoomPlugin);
-  }, []);
-
-  const chartRef = useRef<any>();
   const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
   const onChange = useCallback(
     (dates: any) => {
-      // props.actions.setFromDate
       if (Array.isArray(dates) && dates.length == 1) {
         props.actions.setToDate(moment(dates[0]).format('YYYY-MM-DD'));
       }
@@ -65,15 +58,8 @@ const TickIntraDay = combineHOC(
     return [];
   }, [props.state.tickIntraDay, timeRes]);
 
-  useEffect(() => {
-    if (!chartRef.current) {
-      return;
-    }
-
-    const ctx = chartRef.current.getContext('2d');
-
-    const myChart = new Chart(ctx, {
-      type: 'line',
+  const chartJsConfig: any = useMemo(() => {
+    return {
       data: {
         labels: mergedByTimeStamp.map((d: any) => {
           return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
@@ -123,20 +109,12 @@ const TickIntraDay = combineHOC(
           },
         },
       },
-    });
-
-    return () => {
-      if (chartRef.current) {
-        myChart.destroy();
-      }
     };
   }, [mergedByTimeStamp]);
 
   const onTimeResChange = useCallback((e: any) => {
     setTimeRes(e.target.value);
   }, []);
-
-  console.log(lastTickMoment);
 
   return (
     <Row
@@ -187,7 +165,9 @@ const TickIntraDay = combineHOC(
       </div>
       <div className="grid grid-cols-1 gap-6 pt-2">
         <label className="pt-6">Mua bán theo thời gian</label>
-        <canvas ref={chartRef}></canvas>
+        <ChartJSPlugins plugins={['zoom']}>
+          <Line {...chartJsConfig} />
+        </ChartJSPlugins>
       </div>
     </Row>
   );
