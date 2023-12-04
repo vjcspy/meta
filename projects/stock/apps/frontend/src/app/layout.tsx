@@ -2,6 +2,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../styles/tailwind.css';
 import 'flatpickr/dist/flatpickr.css';
 
+import StyledComponentsRegistry from '@src/components/AntdRegistry';
 import App from '@src/components/App';
 // const inter = Nunito({
 //   subsets: ['latin'],
@@ -31,7 +32,9 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <App> {children}</App>
+        <StyledComponentsRegistry>
+          <App> {children}</App>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

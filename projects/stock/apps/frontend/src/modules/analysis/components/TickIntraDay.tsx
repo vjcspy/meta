@@ -3,6 +3,7 @@
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
 import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
+import { withThemState } from '@modules/app/hoc/withThemState';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
@@ -11,6 +12,7 @@ import {
   TimeResolution,
 } from '@stock/packages-com/dist/tick/merge-by-res';
 import { combineHOC } from '@web/ui-extension';
+import Slider from 'antd/es/slider';
 import moment from 'moment/moment';
 import momentTimezone from 'moment-timezone';
 import { useCallback, useMemo, useState } from 'react';
@@ -20,7 +22,10 @@ import Flatpickr from 'react-flatpickr';
 const TickIntraDay = combineHOC(
   withTickIntraDay,
   withFromToDate,
+  withThemState,
 )((props) => {
+  const [showChartType, setShowChartType] = useState('3');
+  const [tradeVal, setTradeVal] = useState([0, 350, 1000]);
   const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
   const onChange = useCallback(
     (dates: any) => {
@@ -46,47 +51,113 @@ const TickIntraDay = combineHOC(
     return undefined;
   }, [props.state.tickIntraDay]);
 
-  const mergedByTimeStamp = useMemo(() => {
-    if (props.state.tickIntraDay) {
-      const date = moment().utc(props.state.tickIntraDay['date']);
-      const meta = props.state.tickIntraDay.meta;
-      if (Array.isArray(meta)) {
-        return mergeByRes(meta, date, timeRes);
-      }
+  const chartJsConfig: any = useMemo(() => {
+    if (
+      !Array.isArray(props.state?.tickIntraDay?.meta) ||
+      props.state?.tickIntraDay.meta.length === 0
+    ) {
+      return undefined;
+    }
+    const date = moment().utc(props.state.tickIntraDay['date']);
+    const meta = props.state.tickIntraDay.meta;
+    let datasets = [];
+    let labels: any;
+    if (showChartType === '1') {
+      const mergedByTimeStamp = mergeByRes(meta, date, timeRes, {
+        min: Number(tradeVal[0]),
+        max: Number(tradeVal[1]),
+      });
+      datasets = [
+        {
+          label: `Buy Vol < ${Number(tradeVal[1])}`,
+          data: mergedByTimeStamp.map((d: any) => d.buy),
+          fill: false,
+          borderColor: 'rgb(45,61,202)',
+          tension: 0,
+        },
+        {
+          label: `Sell Vol < ${Number(tradeVal[1])}`,
+          data: mergedByTimeStamp.map((d: any) => d.sell),
+          fill: false,
+          borderColor: 'rgb(203,52,52)',
+          tension: 0,
+        },
+      ];
+      labels = mergedByTimeStamp.map((d: any) => {
+        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+      });
+    } else if (showChartType === '2') {
+      const mergedByTimeStamp = mergeByRes(meta, date, timeRes, {
+        min: Number(tradeVal[1]),
+        max: Number(tradeVal[2]),
+      });
+      datasets = [
+        {
+          label: `Buy Vol > ${Number(tradeVal[1])}`,
+          data: mergedByTimeStamp.map((d: any) => d.buy),
+          fill: false,
+          borderColor: 'rgb(45,202,48)',
+          tension: 0,
+        },
+        {
+          label: `Sell Vol > ${Number(tradeVal[1])}`,
+          data: mergedByTimeStamp.map((d: any) => d.sell),
+          fill: false,
+          borderColor: 'rgb(203,122,52)',
+          tension: 0,
+        },
+      ];
+      labels = mergedByTimeStamp.map((d: any) => {
+        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+      });
+    } else {
+      const mergedByTimeStamp1 = mergeByRes(meta, date, timeRes, {
+        min: Number(tradeVal[0]),
+        max: Number(tradeVal[1]),
+      });
+      const mergedByTimeStamp2 = mergeByRes(meta, date, timeRes, {
+        min: Number(tradeVal[1]),
+        max: Number(tradeVal[2]),
+      });
+      labels = mergedByTimeStamp2.map((d: any) => {
+        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+      });
+      datasets = [
+        {
+          label: `Buy Vol ${Number(tradeVal[1])}`,
+          data: mergedByTimeStamp1.map((d: any) => d.buy),
+          fill: false,
+          borderColor: 'rgb(45,61,202)',
+          tension: 0,
+        },
+        {
+          label: `Sell Vol ${Number(tradeVal[1])}`,
+          data: mergedByTimeStamp1.map((d: any) => d.sell),
+          fill: false,
+          borderColor: 'rgb(203,52,52)',
+          tension: 0,
+        },
+        {
+          label: 'Buy Vol 2',
+          data: mergedByTimeStamp2.map((d: any) => d.buy),
+          fill: false,
+          borderColor: 'rgb(45,202,48)',
+          tension: 0,
+        },
+        {
+          label: 'Sell Vol 2',
+          data: mergedByTimeStamp2.map((d: any) => d.sell),
+          fill: false,
+          borderColor: 'rgb(203,122,52)',
+          tension: 0,
+        },
+      ];
     }
 
-    return [];
-  }, [props.state.tickIntraDay, timeRes]);
-
-  const chartJsConfig: any = useMemo(() => {
     return {
       data: {
-        labels: mergedByTimeStamp.map((d: any) => {
-          return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
-        }),
-        datasets: [
-          {
-            label: 'Buy Vol',
-            data: mergedByTimeStamp.map((d: any) => d.buy),
-            fill: false,
-            borderColor: 'rgb(46,60,208)',
-            tension: 0,
-          },
-          {
-            label: 'Sell Vol',
-            data: mergedByTimeStamp.map((d: any) => d.sell),
-            fill: false,
-            borderColor: 'rgb(203,52,52)',
-            tension: 0,
-          },
-          // {
-          //   label: 'OC',
-          //   data: mergedByTimeStamp.map((d: any) => d.oc),
-          //   fill: false,
-          //   borderColor: 'rgb(255,255,255)',
-          //   tension: 0,
-          // },
-        ],
+        labels,
+        datasets,
       },
       options: {
         plugins: {
@@ -110,7 +181,7 @@ const TickIntraDay = combineHOC(
         },
       },
     };
-  }, [mergedByTimeStamp]);
+  }, [props.state.tickIntraDay, timeRes, showChartType, tradeVal]);
 
   const onTimeResChange = useCallback((e: any) => {
     setTimeRes(e.target.value);
@@ -138,6 +209,20 @@ const TickIntraDay = combineHOC(
             onChange={onChange}
           />
         </div>
+        <div>
+          <label>Number of type</label>
+          <select
+            value={showChartType}
+            className="form-select text-white-dark"
+            onChange={(e) => {
+              setShowChartType(e?.target.value);
+            }}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">All</option>
+          </select>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
         <div>
@@ -162,11 +247,29 @@ const TickIntraDay = combineHOC(
         {/*    className="form-input"*/}
         {/*  />*/}
         {/*</div>*/}
+        <div>
+          <label>Trade Value</label>
+          <div className="mt-5">
+            <Slider
+              range
+              max={1000}
+              defaultValue={tradeVal}
+              onChange={setTradeVal}
+              styles={{
+                rail: {
+                  backgroundColor: props?.state.themeState.isDarkMode
+                    ? 'white'
+                    : 'rgba(0, 0, 0, 0.04)',
+                },
+              }}
+            />
+          </div>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-6 pt-2">
         <label className="pt-6">Mua bán theo thời gian</label>
         <ChartJSPlugins plugins={['zoom']}>
-          <Line {...chartJsConfig} />
+          {chartJsConfig && <Line {...chartJsConfig} />}
         </ChartJSPlugins>
       </div>
     </Row>

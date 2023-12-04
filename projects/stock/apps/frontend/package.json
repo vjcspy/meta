@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^1.18.0",
     "@observablehq/plot": "^0.6.11",
     "@stock/packages-com": "workspace:*",
     "@stock/packages-redux": "workspace:*",
     "@web/base": "workspace:*",
     "@web/ui-extension": "workspace:*",
+    "antd": "^5.11.5",
     "chart.js": "^4.4.0",
     "chartjs-plugin-zoom": "^2.0.1",
     "clsx": "latest",
@@ -21,6 +23,7 @@
     "next": "latest",
     "react": "^18",
     "react-animate-height": "^3.1.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-flatpickr": "^3.10.13",
     "react-perfect-scrollbar": "^1.5.8",

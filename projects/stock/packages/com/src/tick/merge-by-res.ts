@@ -41,15 +41,37 @@ const group_by_time_period = (
   return time;
 };
 
-const isValidTradeValue = (tick: any, tradeValue?: number) => {
-  return !tradeValue || tick.p * tick.vol * 10 ** 6 >= tradeValue;
+const isValidTradeValue = (
+  tick: any,
+  tradeValue?: number | { min: number; max: number },
+) => {
+  if (!tradeValue) {
+    return true;
+  }
+
+  if (typeof tradeValue === 'number') {
+    return tick.p * tick.vol * 10 ** 6 >= tradeValue;
+  }
+
+  if (typeof tradeValue === 'object') {
+    if (tradeValue.max >= 1000) {
+      // eslint-disable-next-line no-param-reassign
+      tradeValue.max = Infinity;
+    }
+    return (
+      tick.p * tick.vol >= tradeValue.min * 10 ** 6 &&
+      tick.p * tick.vol <= tradeValue.max * 10 ** 6
+    );
+  }
+
+  return true;
 };
 
 export const mergeByRes = (
   ticks,
   date: Moment,
   res: TimeResolution = TimeResolution['1M'],
-  tradeValue?: number,
+  tradeValue?: number | { min: number; max: number },
 ): any[] => {
   const mergedRes = {};
   forEach(ticks, (tick: any) => {
