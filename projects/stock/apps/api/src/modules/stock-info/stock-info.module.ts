@@ -1,4 +1,5 @@
 import { CoreModule } from '@modules/core/core.module';
+import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CorController } from '@modules/stock-info/controller/cor.controller';
 import { StockPriceController } from '@modules/stock-info/controller/stock-price.controller';
 import { TickController } from '@modules/stock-info/controller/tick.controller';
@@ -7,11 +8,13 @@ import { STOCK_INFO_HELPERS } from '@modules/stock-info/helper';
 import { MODELS } from '@modules/stock-info/model';
 import { OBSERVER_SERVICES } from '@modules/stock-info/observers';
 import { QUEUE_CONSUMERS, QUEUE_PUBLISHER } from '@modules/stock-info/queue';
+import { RefreshTickConsumer } from '@modules/stock-info/queue/consumer/refresh-tick.consumer';
 import { SyncTicksConsumer } from '@modules/stock-info/queue/consumer/sync-ticks.consumer';
 import { STOCK_INFO_REPOS } from '@modules/stock-info/repo';
 import { StockPriceRequest } from '@modules/stock-info/requests/bsc/price.request';
 import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
+import { isMainProcess } from '@nest/base/dist';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnModuleInit } from '@nestjs/common';
 import { Module } from '@nestjs/common';
@@ -29,6 +32,10 @@ import { Module } from '@nestjs/common';
           name: SyncValues.SYNC_TICKS_EXCHANGE_KEY,
           type: 'topic',
         },
+        {
+          name: SyncValues.REFRESH_TICK_EXCHANGE,
+          type: 'topic',
+        },
       ],
       handlers: [...QUEUE_CONSUMERS],
     }),
@@ -44,15 +51,23 @@ import { Module } from '@nestjs/common';
     SimplizeRequest,
     // must to manually handle cause use DI
     SyncTicksConsumer,
+    RefreshTickConsumer,
   ],
   controllers: [CorController, StockPriceController, TickController],
   exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS],
 })
 export class StockInfoModule implements OnModuleInit {
+  constructor(private slackHelper: SlackHelper) {}
+
   onModuleInit(): any {
     /*
      * TODO: temporary add consumer related to DI issue
      * */
     RabbitMQModule.addHandler([SyncTicksConsumer]);
+
+    if (isMainProcess()) {
+      // only run 1 consumer for refresh tick
+      RabbitMQModule.addHandler([RefreshTickConsumer]);
+    }
   }
 }

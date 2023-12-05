@@ -28,4 +28,15 @@ export class SyncTicksPublisher {
       size: cors.length,
     };
   }
+
+  async publishRefreshTick(symbol: string) {
+    this.connectionManager
+      .getConnection()
+      .publish(
+        SyncValues.REFRESH_TICK_EXCHANGE,
+        SyncValues.REFRESH_TICK_ROUTING_KEY,
+        symbol,
+        {},
+      );
+  }
 }
