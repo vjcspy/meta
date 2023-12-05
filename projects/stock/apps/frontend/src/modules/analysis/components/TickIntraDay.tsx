@@ -1,6 +1,7 @@
 'use client';
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
+import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
 import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
 import { withThemState } from '@modules/app/hoc/withThemState';
@@ -23,6 +24,7 @@ const TickIntraDay = combineHOC(
   withTickIntraDay,
   withFromToDate,
   withThemState,
+  withRefreshTicks,
 )((props) => {
   const [showChartType, setShowChartType] = useState('3');
   const [tradeVal, setTradeVal] = useState([0, 350, 1000]);
@@ -41,10 +43,7 @@ const TickIntraDay = combineHOC(
       const meta = props.state.tickIntraDay.meta;
 
       if (Array.isArray(meta)) {
-        console.log(meta[0]['ts']);
-        const time = momentTimezone.unix(meta[0]['ts']).tz(TIMEZONE);
-        console.log(time);
-        return time;
+        return momentTimezone.unix(meta[0]['ts']).tz(TIMEZONE);
       }
     }
 
