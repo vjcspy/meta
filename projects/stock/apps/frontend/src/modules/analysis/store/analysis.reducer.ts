@@ -10,12 +10,15 @@ export const analysisSlice = createSlice({
   name: 'analysis',
   initialState: analysisInitialState,
   reducers: {
+    /* Load Cors*/
     loadCors: () => undefined,
     loadCorsSuccess: (state, action: PayloadAction<ApiResponse>) => {
       state.cors = action.payload.data.cors;
 
       return state;
     },
+
+    /* Load tick intra-day*/
     loadTickIntraDay: (_, __: PayloadAction<{ toDate?: string }>) => undefined,
     loadTickIntraDaySuccess: (state, action: PayloadAction<ApiResponse>) => {
       const tickIntraDay = action.payload.data;
@@ -37,6 +40,15 @@ export const analysisSlice = createSlice({
 
       return state;
     },
+
+    /* load tick multiple days*/
+    loadTicks: () => undefined,
+    loadTicksSuccess: (state, action: PayloadAction<ApiResponse>) => {
+      if (Array.isArray(action.payload.data)) {
+        state.ticks = action.payload.data;
+      }
+    },
+    /* -------------- */
     setSymbol(state, { payload }) {
       const { symbol } = payload;
       localStorage.setItem(SYMBOL_CACHE_KEY, symbol);
