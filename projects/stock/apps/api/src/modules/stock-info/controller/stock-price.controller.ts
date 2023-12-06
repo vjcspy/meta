@@ -1,3 +1,4 @@
+import { OkResponse } from '@modules/core/model/ok-response';
 import {
   GetStockPriceHistoryDto,
   StockPriceHistoryResponse,
@@ -69,5 +70,23 @@ export class StockPriceController {
     return plainToInstance(StockPriceHistoryResponse, histories, {
       excludeExtraneousValues: true,
     });
+  }
+
+  @Get('histories')
+  async histories(
+    @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
+  ): Promise<StockPriceHistoryResponse[]> {
+    const { code, from, to } = stockPriceHistoryDto;
+    this.logger.log(`Get History of ${code} from ${from} to ${to}`);
+
+    const histories = await this.stockPriceHelper.getHistory(code, from, to);
+
+    // @ts-ignore
+    return new OkResponse(
+      undefined,
+      plainToInstance(StockPriceHistoryResponse, histories, {
+        excludeExtraneousValues: true,
+      }),
+    );
   }
 }
