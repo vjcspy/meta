@@ -54,7 +54,7 @@ export function createStoreManager<S>(
       }
       toolkitStore = configureStore({
         reducer: combinedReducer,
-        middleware: rootMiddleware,
+        middleware: rootMiddleware as any,
         devTools: isDevelopment()
           ? {
               maxAge: 50,
