@@ -38,7 +38,7 @@ const TickAtPrices = combineHOC(
       <Row title="Summary" oneCol={false}>
         <div className="grid grid-cols-1 gap-6 pt-2">
           <div>
-            <TickAtPricesSummary />
+            <TickAtPricesSummary ticks={props?.state?.ticks ?? []} />
           </div>
         </div>
       </Row>
