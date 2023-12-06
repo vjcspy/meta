@@ -2,7 +2,7 @@ import themeValue from '@src/value/theme.value';
 import { createSlice } from '@stock/packages-redux';
 
 const initialState = {
-  isDarkMode: false,
+  isDarkMode: true,
   sidebar: false,
   theme: themeValue.theme,
   menu: themeValue.menu,

@@ -6,12 +6,13 @@ import { validateApiResponsePipe } from '@src/modules/app/util/validateApiRespon
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { from, map } from 'rxjs';
+import { debounceTime, from, map } from 'rxjs';
 import { filter, switchMap, withLatestFrom } from 'rxjs/operators';
 
 const loadCorsEffect$ = createEffect((action$, state$) =>
   action$.pipe(
     ofType(ANALYSIS_ACTIONS.loadCors),
+    debounceTime(500),
     withLatestFrom(state$, (_i, state: IRootState) => [
       _i,
       state.analysis.cors,
@@ -38,6 +39,7 @@ const loadCorsEffect$ = createEffect((action$, state$) =>
 const loadTickIntraDay$ = createEffect((action$, state$) =>
   action$.pipe(
     ofType(ANALYSIS_ACTIONS.loadTickIntraDay),
+    debounceTime(500),
     withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
     switchMap((d: any) => {
       const analysisState: AnalysisState = d[1];
@@ -48,7 +50,7 @@ const loadTickIntraDay$ = createEffect((action$, state$) =>
         validateApiResponsePipe(),
         map((data: ApiResponse) => {
           if (data?.success === true) {
-            return ANALYSIS_ACTIONS.loadCorsSuccess(data);
+            return ANALYSIS_ACTIONS.loadTickIntraDaySuccess(data);
           } else {
             return APP_ACTIONS.fetchApiError(data);
           }

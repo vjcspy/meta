@@ -22,6 +22,8 @@ export const withTickIntraDay = createUiHOC(() => {
   );
 
   return {
-    state: tickIntraDay,
+    state: {
+      tickIntraDay,
+    },
   };
 }, 'withTickIntraDay');

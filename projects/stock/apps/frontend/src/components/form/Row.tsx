@@ -8,8 +8,10 @@ const Row = (
     containerClassname?: string;
     showExpanded?: boolean;
     defaultExpanded?: boolean;
+    oneCol?: boolean;
   }>,
 ) => {
+  const { oneCol = true } = props;
   const containerClassname =
     props?.containerClassname ??
     'grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6 custom-select';
@@ -72,11 +74,14 @@ const Row = (
               </button>
             )}
           </div>
-          {expanded && (
-            <div className={containerClassname}>
-              <div className="mb-5">{props.children}</div>
-            </div>
-          )}
+          <>
+            {expanded && oneCol && (
+              <div className={containerClassname}>
+                <div className="mb-5">{props.children}</div>
+              </div>
+            )}
+          </>
+          <> {expanded && !oneCol && props.children}</>
         </div>
       </div>
     </div>

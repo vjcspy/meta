@@ -26,4 +26,13 @@ export class SyncValues {
   static SYNC_TICKS_QUEUE = 'stock.info.sync.ticks.queue';
 
   static SYNC_TICKS_JOB_KEY = 'stock.info.sync.ticks.job_key';
+
+  /* REFRESH TICK QUEUE */
+  static REFRESH_TICK_EXCHANGE = 'stock.info.refresh.tick.exchange';
+
+  static REFRESH_TICK_ROUTING_KEY = 'stock.info.refresh.tick.key';
+
+  static REFRESH_TICK_QUEUE = 'stock.info.refresh.tick.queue';
+
+  static REFRESH_WINDOW_TIME = 15000;
 }
