@@ -1,6 +1,7 @@
 'use client';
 
 import TickAtPricesChart from '@modules/analysis/components/TickAtPrices/TickAtPricesChart';
+import TickAtPricesSummary from '@modules/analysis/components/TickAtPrices/TickAtPricesSummary';
 import { withPrices } from '@modules/analysis/hoc/withPrices';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
 import Row from '@src/components/form/Row';
@@ -26,13 +27,22 @@ const TickAtPrices = combineHOC(
   }, [props?.state?.prices, props?.state?.ticks]);
 
   return (
-    <Row title={title} oneCol={false}>
-      <div className="grid grid-cols-1 gap-6 pt-2">
-        <div>
-          <TickAtPricesChart ticks={props?.state?.ticks ?? []} />
+    <>
+      <Row title={title} oneCol={false}>
+        <div className="grid grid-cols-1 gap-6 pt-2">
+          <div>
+            <TickAtPricesChart ticks={props?.state?.ticks ?? []} />
+          </div>
         </div>
-      </div>
-    </Row>
+      </Row>
+      <Row title="Summary" oneCol={false}>
+        <div className="grid grid-cols-1 gap-6 pt-2">
+          <div>
+            <TickAtPricesSummary />
+          </div>
+        </div>
+      </Row>
+    </>
   );
 });
 
