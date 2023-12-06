@@ -27,6 +27,13 @@ const SidebarAnalysis = () => {
             </span>
           </div>
         </Link>
+        <Link href="/analysis/tick/at-price" className="group">
+          <div className="flex items-center">
+            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              Tick At Prices
+            </span>
+          </div>
+        </Link>
         <Link href="/analysis/tick/dates" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
