@@ -48,6 +48,15 @@ export const analysisSlice = createSlice({
         state.ticks = action.payload.data;
       }
     },
+
+    /* load price history*/
+    loadPrices: () => undefined,
+    loadPricesSuccess: (state, action: PayloadAction<ApiResponse>) => {
+      if (Array.isArray(action.payload.data)) {
+        state.prices = action.payload.data;
+      }
+    },
+
     /* -------------- */
     setSymbol(state, { payload }) {
       const { symbol } = payload;

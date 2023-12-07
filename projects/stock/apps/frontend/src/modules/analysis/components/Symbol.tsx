@@ -44,7 +44,7 @@ const Symbol = combineHOC(
   const onFromDateChange = useCallback(
     (dates: any) => {
       if (Array.isArray(dates) && dates.length == 1) {
-        props?.actions?.setToDate(moment(dates[0]).format('YYYY-MM-DD'));
+        props?.actions?.setFromDate(moment(dates[0]).format('YYYY-MM-DD'));
       }
     },
     [props?.actions?.setToDate],

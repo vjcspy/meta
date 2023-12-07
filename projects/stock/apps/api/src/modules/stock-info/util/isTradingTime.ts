@@ -1,8 +1,12 @@
+import { XLogger } from '@nest/base/dist';
 import * as moment from 'moment-timezone';
 
 export const isTradingTime = () => {
+  const logger = new XLogger('isTradingTime');
   const currentTime = moment().tz('Asia/Ho_Chi_Minh');
-
+  logger.info(`check current time ${currentTime.format()}`, {
+    currentTime: currentTime.format('YYYY-MM-DD HH:mm'),
+  });
   // Kiểm tra xem ngày giờ hiện tại có nằm trong khoảng từ thứ 2 đến thứ 6 không
   const isWeekday =
     currentTime.isoWeekday() >= 1 && currentTime.isoWeekday() <= 5;
@@ -12,6 +16,11 @@ export const isTradingTime = () => {
     moment({ hour: 9, minute: 0 }),
     moment({ hour: 14, minute: 45 }),
   );
+
+  logger.info(`check current time ${isWeekday} ${isTimeInRange}`, {
+    isWeekday,
+    isTimeInRange,
+  });
 
   return isWeekday && isTimeInRange;
 };

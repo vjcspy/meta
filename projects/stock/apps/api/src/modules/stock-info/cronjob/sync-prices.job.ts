@@ -36,6 +36,9 @@ export class SyncPricesJob {
     this.logger.info(`Published sync stock price for all symbols`);
     this.syncPricePublisher.publish([], true);
     this.syncPricePublisher.publishOne('HOSTC', true);
+    this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+      text: 'Triggered sync stock prices',
+    });
   }
 
   private async isFinishSync(totalCor: number) {

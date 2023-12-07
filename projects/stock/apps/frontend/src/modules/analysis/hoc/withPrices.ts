@@ -4,18 +4,18 @@ import { useAppDispatch } from '@src/store/useAppDispatch';
 import { createUiHOC } from '@web/ui-extension';
 import { useEffect } from 'react';
 
-export const withTicks = createUiHOC(() => {
+export const withPrices = createUiHOC(() => {
   const dispatch = useAppDispatch();
   const symbol = useSelectFromState((state) => state.analysis.symbol);
   const toDate = useSelectFromState((state) => state.analysis.toDate);
   const fromDate = useSelectFromState((state) => state.analysis.fromDate);
-  const ticks = useSelectFromState((state) => state.analysis.ticks);
+  const prices = useSelectFromState((state) => state.analysis.prices);
 
   useEffect(() => {
-    dispatch(ANALYSIS_ACTIONS.loadTicks());
+    dispatch(ANALYSIS_ACTIONS.loadPrices());
   }, [symbol, fromDate, toDate]);
 
   return {
-    state: { ticks },
+    state: { prices },
   };
-}, 'withTicks');
+}, 'withPrices');

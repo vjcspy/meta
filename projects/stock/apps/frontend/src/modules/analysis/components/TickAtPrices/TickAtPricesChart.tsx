@@ -1,0 +1,91 @@
+import * as Plot from '@observablehq/plot';
+import { forEach, reduce } from 'lodash';
+import React, { useEffect, useRef } from 'react';
+
+const TickAtPricesChart = React.memo((props: { ticks: any[] }) => {
+  const containerRef = useRef<any>();
+
+  useEffect(() => {
+    const data: any[] = reduce(
+      props.ticks,
+      (prev: any[], curr) => {
+        if (curr && Array.isArray(curr['meta'])) {
+          forEach(curr['meta'], (value: any) => {
+            if (value['a'] !== 'B') {
+              if (value['p'] * value['vol'] > 200 * 10 ** 6) {
+                prev.push({ ...value, a: 'B-SHARK' });
+              } else {
+                prev.push({ ...value, a: 'B-SHEEP' });
+              }
+            } else if (value['a'] !== 'S') {
+              if (value['p'] * value['vol'] > 200 * 10 ** 6) {
+                prev.push({ ...value, a: 'S-SHARK' });
+              } else {
+                prev.push({ ...value, a: 'S-SHEEP' });
+              }
+            } else {
+              prev.push({ ...value, a: 'S-AT' });
+              prev.push({ ...value, a: 'B-AT' });
+            }
+          });
+        }
+
+        return prev;
+      },
+      [],
+    );
+
+    const plot = Plot.plot({
+      marginTop: 20,
+      marginRight: 20,
+      marginBottom: 30,
+      marginLeft: 140,
+      grid: true,
+      // height: 600,
+      color: {
+        legend: true,
+      },
+      style: { background: 'transparent' },
+      marks: [
+        Plot.barX(
+          data,
+          Plot.groupY(
+            {
+              x: (d: any) => {
+                //console.log(d);
+                const total = d.reduce(
+                  (i: number, c: { a: string; vol: number; p: number }) => {
+                    return (
+                      i + (c.a[0] == 'B' ? c.vol : c.a[0] == 'S' ? -c.vol : 0)
+                    );
+                  },
+                  0,
+                );
+                //console.log(`Total ${total} price ${d[0].p} ${d[0].a}`);
+                return total;
+              },
+            },
+            {
+              fill: 'a',
+              y: 'p',
+            },
+          ),
+        ),
+      ],
+    });
+
+    containerRef.current.append(plot);
+
+    return () => {
+      plot.remove();
+    };
+  }, [props.ticks]);
+
+  return (
+    <>
+      <div ref={containerRef} />
+    </>
+  );
+});
+
+export default TickAtPricesChart;
