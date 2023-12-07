@@ -2,18 +2,27 @@
 
 import TickAtPricesChart from '@modules/analysis/components/TickAtPrices/TickAtPricesChart';
 import TickAtPricesSummary from '@modules/analysis/components/TickAtPrices/TickAtPricesSummary';
+import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withPrices } from '@modules/analysis/hoc/withPrices';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
+import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension';
 import { last } from 'lodash';
 import moment from 'moment/moment';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const TickAtPrices = combineHOC(
   withTicks,
   withPrices,
+  withTradeValueFilter,
+  withFromToDate,
 )((props) => {
+  useEffect(() => {
+    props?.actions?.setFromDate(
+      moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
+    );
+  }, []);
   const title = useMemo(() => {
     const lastTick: any = last(props?.state?.ticks);
 
@@ -31,7 +40,10 @@ const TickAtPrices = combineHOC(
       <Row title={title} oneCol={false}>
         <div className="grid grid-cols-1 gap-6 pt-2">
           <div>
-            <TickAtPricesChart ticks={props?.state?.ticks ?? []} />
+            <TickAtPricesChart
+              ticks={props?.state?.ticks ?? []}
+              tradeValueFilter={props?.state?.tradeValueFilter}
+            />
           </div>
         </div>
       </Row>
