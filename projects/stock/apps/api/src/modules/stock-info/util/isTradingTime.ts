@@ -7,10 +7,9 @@ export const isTradingTime = () => {
     currentTime.isoWeekday() >= 1 && currentTime.isoWeekday() <= 5;
 
   // Kiểm tra xem giờ hiện tại có nằm trong khoảng từ 9h đến 14h45 không
-  const isTimeInRange = currentTime.isBetween(
-    moment({ hour: 9, minute: 0 }, 'Asia/Ho_Chi_Minh'),
-    moment({ hour: 14, minute: 45 }, 'Asia/Ho_Chi_Minh'),
-  );
+  const start = moment.tz({ hour: 9, minute: 0 }, 'Asia/Ho_Chi_Minh');
+  const end = moment.tz({ hour: 14, minute: 45 }, 'Asia/Ho_Chi_Minh');
+  const isTimeInRange = currentTime.isBetween(start, end);
 
   return isWeekday && isTimeInRange;
 };
