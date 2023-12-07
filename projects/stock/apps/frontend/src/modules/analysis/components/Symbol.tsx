@@ -6,8 +6,6 @@ import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { withCors } from '@src/modules/analysis/hoc/withCors';
 import { withSelectedSymbol } from '@src/modules/analysis/hoc/withSelectedSymbol';
-import { ANALYSIS_ACTIONS } from '@src/modules/analysis/store/analysis.actions';
-import { useAppDispatch } from '@src/store/useAppDispatch';
 import { combineHOC } from '@web/ui-extension';
 import Slider from 'antd/es/slider';
 import { debounce } from 'lodash';
@@ -27,7 +25,6 @@ const Symbol = combineHOC(
   withTradeValueFilter,
   withThemState,
 )((props) => {
-  const dispatch = useAppDispatch();
   const corOptions = useMemo(() => {
     return props.state.cors
       ? props.state.cors.map((c: any) => ({
@@ -40,12 +37,18 @@ const Symbol = combineHOC(
   const [value, setValue] = useState<any>();
 
   useEffect(() => {
-    if (props.state.symbol) {
-      setValue(
-        corOptions.find((c: any) => c.value === props.state.symbol) as any,
-      );
+    if (!value) {
+      setValue(corOptions.find((c: any) => c.value === props.state.symbol));
     }
-  }, [props.state.symbol, corOptions]);
+  }, [props?.state?.symbol, value, corOptions]);
+
+  useEffect(() => {
+    if (value?.value) {
+      setTimeout(() => {
+        props?.actions?.selectSymbol(value.value);
+      });
+    }
+  }, [value?.value]);
 
   const onFromDateChange = useCallback(
     (dates: any) => {
@@ -80,13 +83,7 @@ const Symbol = combineHOC(
             windowThreshold={100}
             placeholder="Select an symbol"
             options={corOptions}
-            onChange={(choice: any) => {
-              dispatch(
-                ANALYSIS_ACTIONS.setSymbol({
-                  symbol: choice?.value,
-                }),
-              );
-            }}
+            onChange={setValue}
             value={value}
           />
         </div>

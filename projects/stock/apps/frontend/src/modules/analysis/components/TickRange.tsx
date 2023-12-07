@@ -1,6 +1,7 @@
 'use client';
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
+import { withSelectedSymbol } from '@modules/analysis/hoc/withSelectedSymbol';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import { combineHOC } from '@web/ui-extension';
@@ -10,6 +11,7 @@ import { useEffect } from 'react';
 import TicksSupplyDemandLineChart from './TickRange/TicksSupplyDemandLineChart';
 
 const TickRange = combineHOC(
+  withSelectedSymbol,
   withTicks,
   withTradeValueFilter,
   withFromToDate,
@@ -24,6 +26,7 @@ const TickRange = combineHOC(
       <TicksSupplyDemandLineChart
         ticks={props.state.ticks}
         tradeValueFilter={props.state.tradeValueFilter}
+        symbol={props.state.symbol ?? ''}
       />
     </>
   );
