@@ -248,7 +248,10 @@ const TickIntraDay = combineHOC(
         {/*  />*/}
         {/*</div>*/}
         <div>
-          <label>Trade Value</label>
+          <label>
+            Trade Value:
+            <span className="font-bold text-red-500">{` ${tradeVal[1]}`}</span>
+          </label>
           <div className="mt-5">
             <Slider
               range
