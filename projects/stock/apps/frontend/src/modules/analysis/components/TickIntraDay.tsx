@@ -174,7 +174,7 @@ const TickIntraDay = combineHOC(
               },
               mode: 'x',
               // scaleMode: 'y',
-              overScaleMode: 'x',
+              // overScaleMode: 'x',
             },
             pan: {
               enabled: true,
