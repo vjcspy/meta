@@ -1,12 +1,14 @@
 'use client';
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
+import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
+import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { withCors } from '@src/modules/analysis/hoc/withCors';
 import { withSelectedSymbol } from '@src/modules/analysis/hoc/withSelectedSymbol';
-import { ANALYSIS_ACTIONS } from '@src/modules/analysis/store/analysis.actions';
-import { useAppDispatch } from '@src/store/useAppDispatch';
 import { combineHOC } from '@web/ui-extension';
+import Slider from 'antd/es/slider';
+import { debounce } from 'lodash';
 import moment from 'moment';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -20,8 +22,9 @@ const Symbol = combineHOC(
   withCors,
   withSelectedSymbol,
   withFromToDate,
+  withTradeValueFilter,
+  withThemState,
 )((props) => {
-  const dispatch = useAppDispatch();
   const corOptions = useMemo(() => {
     return props.state.cors
       ? props.state.cors.map((c: any) => ({
@@ -34,12 +37,18 @@ const Symbol = combineHOC(
   const [value, setValue] = useState<any>();
 
   useEffect(() => {
-    if (props.state.symbol) {
-      setValue(
-        corOptions.find((c: any) => c.value === props.state.symbol) as any,
-      );
+    if (!value) {
+      setValue(corOptions.find((c: any) => c.value === props.state.symbol));
     }
-  }, [props.state.symbol, corOptions]);
+  }, [props?.state?.symbol, value, corOptions]);
+
+  useEffect(() => {
+    if (value?.value) {
+      setTimeout(() => {
+        props?.actions?.selectSymbol(value.value);
+      });
+    }
+  }, [value?.value]);
 
   const onFromDateChange = useCallback(
     (dates: any) => {
@@ -59,22 +68,22 @@ const Symbol = combineHOC(
     [props?.actions?.setToDate],
   );
 
+  const debounceUpdateTradeValue = useMemo(() => {
+    return debounce((data: any) => {
+      props?.actions?.setTradeValueFilterAction(data);
+    }, 1000);
+  }, []);
+
   return (
     <Row title={`${value?.label ?? 'Chưa chọn mã'}`} oneCol={false}>
-      <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
         <div>
           <label>Symbol</label>
           <AsyncSelect
             windowThreshold={100}
             placeholder="Select an symbol"
             options={corOptions}
-            onChange={(choice: any) => {
-              dispatch(
-                ANALYSIS_ACTIONS.setSymbol({
-                  symbol: choice?.value,
-                }),
-              );
-            }}
+            onChange={setValue}
             value={value}
           />
         </div>
@@ -104,6 +113,30 @@ const Symbol = combineHOC(
               className="form-input"
               onChange={onToDateChange}
             />
+          </div>
+        )}
+        {props?.tradeValue && (
+          <div>
+            <label>
+              Trade Value:
+              <span className="font-bold text-red-500">{` ${props?.state?.tradeValueFilter?.[1]} triệu`}</span>
+            </label>
+            <div className="mt-5">
+              <Slider
+                range
+                max={1000}
+                min={0}
+                defaultValue={props?.state?.tradeValueFilter ?? 250}
+                onChange={debounceUpdateTradeValue}
+                styles={{
+                  rail: {
+                    backgroundColor: props?.state.themeState.isDarkMode
+                      ? 'white'
+                      : 'rgba(0, 0, 0, 0.04)',
+                  },
+                }}
+              />
+            </div>
           </div>
         )}
       </div>

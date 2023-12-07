@@ -1,11 +1,11 @@
 import Symbol from '@modules/analysis/components/Symbol';
-import TickAtPrices from '@src/modules/analysis/components/TickAtPrices';
+import TickRange from '@modules/analysis/components/TickRange';
 
-export default function TickAtPrice() {
+export default function TickDates() {
   return (
     <>
       <Symbol fromDate={true} toDate={true} tradeValue={true} />
-      <TickAtPrices />
+      <TickRange />
     </>
   );
 }

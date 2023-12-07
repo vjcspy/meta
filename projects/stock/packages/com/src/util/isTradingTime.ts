@@ -1,4 +1,4 @@
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 export const isTradingTime = () => {
   const currentTime = moment().tz('Asia/Ho_Chi_Minh');

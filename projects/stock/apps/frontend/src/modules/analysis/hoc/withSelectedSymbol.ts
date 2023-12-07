@@ -4,7 +4,7 @@ import { useAppDispatch } from '@src/store/useAppDispatch';
 import { SYMBOL_CACHE_KEY } from '@src/value/analysis.value';
 import { useSelector } from '@stock/packages-redux';
 import { createUiHOC } from '@web/ui-extension';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const withSelectedSymbol = createUiHOC(() => {
   const symbol = useSelector((state: IRootState) => state.analysis.symbol);
@@ -23,9 +23,20 @@ export const withSelectedSymbol = createUiHOC(() => {
     }
   }, [symbol]);
 
+  const selectSymbol = useCallback((symbol: string) => {
+    dispatch(
+      ANALYSIS_ACTIONS.setSymbol({
+        symbol,
+      }),
+    );
+  }, []);
+
   return {
     state: {
       symbol,
+    },
+    actions: {
+      selectSymbol,
     },
   };
 }, 'withSelectedCor');

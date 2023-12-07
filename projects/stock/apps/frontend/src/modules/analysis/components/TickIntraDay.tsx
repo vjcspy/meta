@@ -3,7 +3,9 @@
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
+import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
+import { CommonValue } from '@modules/analysis/value/common.value';
 import { withThemState } from '@modules/app/hoc/withThemState';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
@@ -13,7 +15,6 @@ import {
   TimeResolution,
 } from '@stock/packages-com/dist/tick/merge-by-res';
 import { combineHOC } from '@web/ui-extension';
-import Slider from 'antd/es/slider';
 import moment from 'moment/moment';
 import momentTimezone from 'moment-timezone';
 import { useCallback, useMemo, useState } from 'react';
@@ -25,9 +26,9 @@ const TickIntraDay = combineHOC(
   withFromToDate,
   withThemState,
   withRefreshTicks,
+  withTradeValueFilter,
 )((props) => {
   const [showChartType, setShowChartType] = useState('3');
-  const [tradeVal, setTradeVal] = useState([0, 350, 1000]);
   const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
   const onChange = useCallback(
     (dates: any) => {
@@ -53,12 +54,15 @@ const TickIntraDay = combineHOC(
   const chartJsConfig: any = useMemo(() => {
     if (
       !Array.isArray(props.state?.tickIntraDay?.meta) ||
-      props.state?.tickIntraDay.meta.length === 0
+      props.state?.tickIntraDay.meta.length === 0 ||
+      !Array.isArray(props?.state?.tradeValueFilter) ||
+      props?.state?.tradeValueFilter.length !== 3
     ) {
       return undefined;
     }
     const date = moment().utc(props.state.tickIntraDay['date']);
     const meta = props.state.tickIntraDay.meta;
+    const tradeVal = props.state.tradeValueFilter;
     let datasets = [];
     let labels: any;
     if (showChartType === '1') {
@@ -68,17 +72,17 @@ const TickIntraDay = combineHOC(
       });
       datasets = [
         {
-          label: `Buy Vol < ${Number(tradeVal[1])}`,
+          label: `Buy < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,61,202)',
+          borderColor: CommonValue.BUY_SHEEP_COLOR,
           tension: 0,
         },
         {
-          label: `Sell Vol < ${Number(tradeVal[1])}`,
+          label: `Sell < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,52,52)',
+          borderColor: CommonValue.SELL_SHEEP_COLOR,
           tension: 0,
         },
       ];
@@ -92,17 +96,17 @@ const TickIntraDay = combineHOC(
       });
       datasets = [
         {
-          label: `Buy Vol > ${Number(tradeVal[1])}`,
+          label: `Buy > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,202,48)',
+          borderColor: CommonValue.BUY_SHARK_COLOR,
           tension: 0,
         },
         {
-          label: `Sell Vol > ${Number(tradeVal[1])}`,
+          label: `Sell > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,122,52)',
+          borderColor: CommonValue.SELL_SHARK_COLOR,
           tension: 0,
         },
       ];
@@ -123,31 +127,31 @@ const TickIntraDay = combineHOC(
       });
       datasets = [
         {
-          label: `Buy Vol ${Number(tradeVal[1])}`,
+          label: `Buy < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp1.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,61,202)',
+          borderColor: CommonValue.BUY_SHEEP_COLOR,
           tension: 0,
         },
         {
-          label: `Sell Vol ${Number(tradeVal[1])}`,
+          label: `Sell < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp1.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,52,52)',
+          borderColor: CommonValue.SELL_SHEEP_COLOR,
           tension: 0,
         },
         {
-          label: 'Buy Vol 2',
+          label: `Buy > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp2.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,202,48)',
+          borderColor: CommonValue.BUY_SHARK_COLOR,
           tension: 0,
         },
         {
-          label: 'Sell Vol 2',
+          label: `Sell > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp2.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,122,52)',
+          borderColor: CommonValue.SELL_SHARK_COLOR,
           tension: 0,
         },
       ];
@@ -170,7 +174,7 @@ const TickIntraDay = combineHOC(
               },
               mode: 'x',
               // scaleMode: 'y',
-              overScaleMode: 'x',
+              // overScaleMode: 'x',
             },
             pan: {
               enabled: true,
@@ -180,7 +184,12 @@ const TickIntraDay = combineHOC(
         },
       },
     };
-  }, [props.state.tickIntraDay, timeRes, showChartType, tradeVal]);
+  }, [
+    props.state.tickIntraDay,
+    timeRes,
+    showChartType,
+    props?.state?.tradeValueFilter,
+  ]);
 
   const onTimeResChange = useCallback((e: any) => {
     setTimeRes(e.target.value);
@@ -195,7 +204,7 @@ const TickIntraDay = combineHOC(
       }`}
       oneCol={false}
     >
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
         <div className="mb-5">
           <label>Date</label>
           <Flatpickr
@@ -223,7 +232,7 @@ const TickIntraDay = combineHOC(
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
         <div>
           <label>Time Resolution</label>
           <select
@@ -246,24 +255,6 @@ const TickIntraDay = combineHOC(
         {/*    className="form-input"*/}
         {/*  />*/}
         {/*</div>*/}
-        <div>
-          <label>Trade Value</label>
-          <div className="mt-5">
-            <Slider
-              range
-              max={1000}
-              defaultValue={tradeVal}
-              onChange={setTradeVal}
-              styles={{
-                rail: {
-                  backgroundColor: props?.state.themeState.isDarkMode
-                    ? 'white'
-                    : 'rgba(0, 0, 0, 0.04)',
-                },
-              }}
-            />
-          </div>
-        </div>
       </div>
       <div className="grid grid-cols-1 gap-6 pt-2">
         <label className="pt-6">Mua bán theo thời gian</label>

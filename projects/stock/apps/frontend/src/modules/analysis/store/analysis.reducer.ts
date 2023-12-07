@@ -20,6 +20,7 @@ export const analysisSlice = createSlice({
 
     /* Load tick intra-day*/
     loadTickIntraDay: (_, __: PayloadAction<{ toDate?: string }>) => undefined,
+    refreshTickIntraDay: () => undefined,
     loadTickIntraDaySuccess: (state, action: PayloadAction<ApiResponse>) => {
       const tickIntraDay = action.payload.data;
       if (Array.isArray(tickIntraDay['meta'])) {
@@ -74,8 +75,8 @@ export const analysisSlice = createSlice({
 
       return state;
     },
-    setFilterTradeValue(state, action) {
-      state.filterTradeValue = action.payload?.filterTradeValue;
+    setTradeValueFilter(state, action) {
+      state.tradeValueFilter = action.payload?.tradeValueFilter;
 
       return state;
     },
