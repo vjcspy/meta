@@ -61,7 +61,7 @@ const Symbol = combineHOC(
 
   return (
     <Row title={`${value?.label ?? 'Chưa chọn mã'}`} oneCol={false}>
-      <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
         <div>
           <label>Symbol</label>
           <AsyncSelect

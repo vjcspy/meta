@@ -1,3 +1,4 @@
+import { CommonValue } from '@modules/analysis/value/common.value';
 import * as Plot from '@observablehq/plot';
 import { forEach, reduce } from 'lodash';
 import React, { useEffect, useRef } from 'react';
@@ -11,13 +12,13 @@ const TickAtPricesChart = React.memo((props: { ticks: any[] }) => {
       (prev: any[], curr) => {
         if (curr && Array.isArray(curr['meta'])) {
           forEach(curr['meta'], (value: any) => {
-            if (value['a'] !== 'B') {
+            if (value['a'] === 'B') {
               if (value['p'] * value['vol'] > 200 * 10 ** 6) {
                 prev.push({ ...value, a: 'B-SHARK' });
               } else {
                 prev.push({ ...value, a: 'B-SHEEP' });
               }
-            } else if (value['a'] !== 'S') {
+            } else if (value['a'] === 'S') {
               if (value['p'] * value['vol'] > 200 * 10 ** 6) {
                 prev.push({ ...value, a: 'S-SHARK' });
               } else {
@@ -44,6 +45,15 @@ const TickAtPricesChart = React.memo((props: { ticks: any[] }) => {
       // height: 600,
       color: {
         legend: true,
+        domain: ['B-SHARK', 'B-SHEEP', 'S-SHARK', 'S-SHEEP', 'S-AT', 'B-AT'],
+        range: [
+          CommonValue.BUY_SHARK_COLOR,
+          CommonValue.BUY_SHEEP_COLOR,
+          CommonValue.SELL_SHARK_COLOR,
+          CommonValue.SELL_SHEEP_COLOR,
+          'pink',
+          'pink',
+        ],
       },
       style: { background: 'transparent' },
       marks: [

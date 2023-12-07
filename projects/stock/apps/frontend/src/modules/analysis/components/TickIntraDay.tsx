@@ -4,6 +4,7 @@ import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
 import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
+import { CommonValue } from '@modules/analysis/value/common.value';
 import { withThemState } from '@modules/app/hoc/withThemState';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
@@ -68,17 +69,17 @@ const TickIntraDay = combineHOC(
       });
       datasets = [
         {
-          label: `Buy Vol < ${Number(tradeVal[1])}`,
+          label: `Buy < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,61,202)',
+          borderColor: CommonValue.BUY_SHEEP_COLOR,
           tension: 0,
         },
         {
-          label: `Sell Vol < ${Number(tradeVal[1])}`,
+          label: `Sell < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,52,52)',
+          borderColor: CommonValue.SELL_SHEEP_COLOR,
           tension: 0,
         },
       ];
@@ -92,17 +93,17 @@ const TickIntraDay = combineHOC(
       });
       datasets = [
         {
-          label: `Buy Vol > ${Number(tradeVal[1])}`,
+          label: `Buy > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,202,48)',
+          borderColor: CommonValue.BUY_SHARK_COLOR,
           tension: 0,
         },
         {
-          label: `Sell Vol > ${Number(tradeVal[1])}`,
+          label: `Sell > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,122,52)',
+          borderColor: CommonValue.SELL_SHARK_COLOR,
           tension: 0,
         },
       ];
@@ -123,31 +124,31 @@ const TickIntraDay = combineHOC(
       });
       datasets = [
         {
-          label: `Buy Vol ${Number(tradeVal[1])}`,
+          label: `Buy < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp1.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,61,202)',
+          borderColor: CommonValue.BUY_SHEEP_COLOR,
           tension: 0,
         },
         {
-          label: `Sell Vol ${Number(tradeVal[1])}`,
+          label: `Sell < ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp1.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,52,52)',
+          borderColor: CommonValue.SELL_SHEEP_COLOR,
           tension: 0,
         },
         {
-          label: 'Buy Vol 2',
+          label: `Buy > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp2.map((d: any) => d.buy),
           fill: false,
-          borderColor: 'rgb(45,202,48)',
+          borderColor: CommonValue.BUY_SHARK_COLOR,
           tension: 0,
         },
         {
-          label: 'Sell Vol 2',
+          label: `Sell > ${Number(tradeVal[1])}`,
           data: mergedByTimeStamp2.map((d: any) => d.sell),
           fill: false,
-          borderColor: 'rgb(203,122,52)',
+          borderColor: CommonValue.SELL_SHARK_COLOR,
           tension: 0,
         },
       ];
@@ -195,7 +196,7 @@ const TickIntraDay = combineHOC(
       }`}
       oneCol={false}
     >
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
         <div className="mb-5">
           <label>Date</label>
           <Flatpickr
@@ -223,7 +224,7 @@ const TickIntraDay = combineHOC(
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
         <div>
           <label>Time Resolution</label>
           <select
