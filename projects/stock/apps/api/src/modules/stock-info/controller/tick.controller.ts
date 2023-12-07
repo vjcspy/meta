@@ -7,9 +7,9 @@ import {
 import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import { RefreshTickConsumer } from '@modules/stock-info/queue/consumer/refresh-tick.consumer';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
-import { isTradingTime } from '@modules/stock-info/util/isTradingTime';
 import { XLogger } from '@nest/base';
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
+import { isTradingTime } from '@stock/packages-com/dist/util/isTradingTime';
 
 @Controller('tick')
 export class TickController {
