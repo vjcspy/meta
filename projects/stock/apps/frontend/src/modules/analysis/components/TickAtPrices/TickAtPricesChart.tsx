@@ -25,8 +25,16 @@ const TickAtPricesChart = React.memo((props: { ticks: any[] }) => {
                 prev.push({ ...value, a: 'S-SHEEP' });
               }
             } else {
-              prev.push({ ...value, a: 'S-AT' });
-              prev.push({ ...value, a: 'B-AT' });
+              prev.push({
+                ...value,
+                a: 'S-AT',
+                vol: parseInt(String(value.vol / 2)),
+              });
+              prev.push({
+                ...value,
+                a: 'B-AT',
+                vol: parseInt(String(value.vol / 2)),
+              });
             }
           });
         }
