@@ -1,4 +1,5 @@
 import type { AnalysisState } from '@modules/analysis/store/analysis.state';
+import { CommonValue } from '@modules/analysis/value/common.value';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
 import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiResponseRx';
@@ -7,7 +8,7 @@ import { APP_ACTIONS } from '@src/modules/app/store/app.actions';
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { debounceTime, from, map } from 'rxjs';
+import { auditTime, debounceTime, from, map } from 'rxjs';
 import { filter, switchMap, withLatestFrom } from 'rxjs/operators';
 
 const loadCorsEffect$ = createEffect((action$, state$) =>
@@ -60,6 +61,14 @@ const loadTickIntraDay$ = createEffect((action$, state$) =>
         catchGeneralErrorPipe(),
       );
     }),
+  ),
+);
+
+const refreshTickIntraDay$ = createEffect((action$) =>
+  action$.pipe(
+    ofType(ANALYSIS_ACTIONS.refreshTickIntraDay),
+    auditTime(CommonValue.REFRESH_WINDOW_TIME),
+    map(() => ANALYSIS_ACTIONS.loadTickIntraDay({})),
   ),
 );
 
@@ -119,5 +128,6 @@ export const configAnalysisEffects = (storeManager: any) => {
     loadTickIntraDay$,
     loadTicks$,
     loadPrices$,
+    refreshTickIntraDay$,
   ]);
 };

@@ -14,7 +14,6 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Meta',
   description: 'Meta',
-  icons: ['favicon.png'],
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -30,6 +29,7 @@ export default function RootLayout({ children }: { children: any }) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap"
         />
+        <link rel="icon" href="/favicon.png" sizes="any" />
       </head>
       <body>
         <StyledComponentsRegistry>

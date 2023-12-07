@@ -1,5 +1,7 @@
+import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
 import { CommonValue } from '@modules/analysis/value/common.value';
 import type { IRootState } from '@src/store';
+import { useAppDispatch } from '@src/store/useAppDispatch';
 import { isTradingTime } from '@stock/packages-com/dist/util/isTradingTime';
 import { useSelector } from '@stock/packages-redux';
 import { createUiHOC } from '@web/ui-extension';
@@ -27,10 +29,16 @@ const requestRefreshTick = (symbol: string) => {
 
 export const withRefreshTicks = createUiHOC(() => {
   const symbol = useSelector((state: IRootState) => state.analysis.symbol);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const _i = setInterval(() => {
       if (isTradingTime()) {
-        if (symbol) refreshTickRequest$.next(symbol);
+        if (symbol) {
+          refreshTickRequest$.next(symbol);
+          setTimeout(() => {
+            dispatch(ANALYSIS_ACTIONS.refreshTickIntraDay());
+          }, 1000);
+        }
       }
     }, 2000);
 

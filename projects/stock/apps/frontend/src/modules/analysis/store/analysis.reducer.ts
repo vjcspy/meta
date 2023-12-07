@@ -20,6 +20,7 @@ export const analysisSlice = createSlice({
 
     /* Load tick intra-day*/
     loadTickIntraDay: (_, __: PayloadAction<{ toDate?: string }>) => undefined,
+    refreshTickIntraDay: () => undefined,
     loadTickIntraDaySuccess: (state, action: PayloadAction<ApiResponse>) => {
       const tickIntraDay = action.payload.data;
       if (Array.isArray(tickIntraDay['meta'])) {
