@@ -8,13 +8,15 @@ import { Line } from 'react-chartjs-2';
 
 const TicksSupplyDemandLineChart = React.memo(
   (props: { ticks: any[]; tradeValueFilter: any }) => {
-    const [viewByValue, setViewByValue] = useState(false);
+    const [viewByValue, setViewByValue] = useState(true);
     const tradeValue = props.tradeValueFilter[1];
 
     const lastTickDate = useMemo(() => {
       const lastTick = last(props.ticks);
       if (lastTick && lastTick['date']) {
-        return moment(lastTick.date).format('YYYY-MM-DD');
+        return `${lastTick['symbol']} - ${moment(lastTick.date).format(
+          'YYYY-MM-DD',
+        )}`;
       }
       return '';
     }, [props.ticks]);
@@ -342,7 +344,7 @@ const TicksSupplyDemandLineChart = React.memo(
 
     return (
       <>
-        <Row title={`Config`} oneCol={false}>
+        <Row title={`${lastTickDate}`} oneCol={false}>
           <div className="grid grid-cols-1 gap-6 pt-2">
             <div>
               <label className="flex cursor-pointer items-center">
@@ -357,7 +359,7 @@ const TicksSupplyDemandLineChart = React.memo(
             </div>
           </div>
         </Row>
-        <Row title={`Mua bán từng ngày (${lastTickDate})`} oneCol={false}>
+        <Row title={`Mua bán từng ngày`} oneCol={false}>
           <div className="grid grid-cols-1 gap-6 pt-2">
             <label className="pt-6">Mua bán theo thời gian</label>
             <ChartJSPlugins plugins={['zoom']}>
@@ -365,7 +367,7 @@ const TicksSupplyDemandLineChart = React.memo(
             </ChartJSPlugins>
           </div>
         </Row>
-        <Row title={`Mua bán từng ngày (${lastTickDate})`} oneCol={false}>
+        <Row title={`Mua bán từng ngày`} oneCol={false}>
           <div className="grid grid-cols-1 gap-6 pt-2">
             <label className="pt-6">Mua bán theo thời gian</label>
             <ChartJSPlugins plugins={['zoom']}>
