@@ -122,7 +122,7 @@ const Symbol = combineHOC(
           <div>
             <label>
               Trade Value:
-              <span className="font-bold text-red-500">{` ${props?.state?.tradeValueFilter}`}</span>
+              <span className="font-bold text-red-500">{` ${props?.state?.tradeValueFilter?.[1]} triệu`}</span>
             </label>
             <div className="mt-5">
               <Slider
