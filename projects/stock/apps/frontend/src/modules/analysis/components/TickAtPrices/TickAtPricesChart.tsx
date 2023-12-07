@@ -1,25 +1,36 @@
+import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import { CommonValue } from '@modules/analysis/value/common.value';
 import * as Plot from '@observablehq/plot';
+import { combineHOC } from '@web/ui-extension';
 import { forEach, reduce } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 
-const TickAtPricesChart = React.memo((props: { ticks: any[] }) => {
+const TickAtPricesChart = combineHOC(withTradeValueFilter)((props) => {
   const containerRef = useRef<any>();
 
   useEffect(() => {
+    if (!Array.isArray(props.ticks) || props.ticks.length === 0) {
+      return;
+    }
+    const filterValue =
+      Array.isArray(props?.state?.tradeValueFilter) &&
+      props?.state?.tradeValueFilter.length === 3
+        ? props?.state?.tradeValueFilter[1]
+        : 250;
+
     const data: any[] = reduce(
-      props.ticks,
+      props.ticks ?? [],
       (prev: any[], curr) => {
         if (curr && Array.isArray(curr['meta'])) {
           forEach(curr['meta'], (value: any) => {
             if (value['a'] === 'B') {
-              if (value['p'] * value['vol'] > 200 * 10 ** 6) {
+              if (value['p'] * value['vol'] > filterValue * 10 ** 6) {
                 prev.push({ ...value, a: 'B-SHARK' });
               } else {
                 prev.push({ ...value, a: 'B-SHEEP' });
               }
             } else if (value['a'] === 'S') {
-              if (value['p'] * value['vol'] > 200 * 10 ** 6) {
+              if (value['p'] * value['vol'] > filterValue * 10 ** 6) {
                 prev.push({ ...value, a: 'S-SHARK' });
               } else {
                 prev.push({ ...value, a: 'S-SHEEP' });
@@ -97,7 +108,7 @@ const TickAtPricesChart = React.memo((props: { ticks: any[] }) => {
     return () => {
       plot.remove();
     };
-  }, [props.ticks]);
+  }, [props?.state?.tradeValueFilter, props?.ticks]);
 
   return (
     <>

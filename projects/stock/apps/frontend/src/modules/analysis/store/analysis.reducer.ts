@@ -75,8 +75,8 @@ export const analysisSlice = createSlice({
 
       return state;
     },
-    setFilterTradeValue(state, action) {
-      state.filterTradeValue = action.payload?.filterTradeValue;
+    setTradeValueFilter(state, action) {
+      state.tradeValueFilter = action.payload?.tradeValueFilter;
 
       return state;
     },

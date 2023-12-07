@@ -4,7 +4,7 @@ import TickAtPrices from '@src/modules/analysis/components/TickAtPrices';
 export default function TickAtPrice() {
   return (
     <>
-      <Symbol fromDate={true} toDate={true} />
+      <Symbol fromDate={true} toDate={true} tradeValue={true} />
       <TickAtPrices />
     </>
   );

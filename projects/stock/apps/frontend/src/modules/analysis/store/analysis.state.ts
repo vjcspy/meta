@@ -9,7 +9,7 @@ export interface AnalysisState {
   ticks?: any[];
   tickIntraDay?: any;
   tickDayFromData?: string;
-  filterTradeValue: number; // Trade value for each lenh mua hoac ban
+  tradeValueFilter: number[]; // Trade value for each lenh mua hoac ban
   capFilter?: number;
   analysis?: any[];
   hullma_intra_day?: {
@@ -23,5 +23,5 @@ export interface AnalysisState {
 export const analysisInitialState: AnalysisState = {
   fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
   toDate: moment().utc().format('YYYY-MM-DD'),
-  filterTradeValue: 80,
+  tradeValueFilter: [0, 250, 1000],
 };

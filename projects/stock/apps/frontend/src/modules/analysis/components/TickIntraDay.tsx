@@ -3,6 +3,7 @@
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
+import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
 import { CommonValue } from '@modules/analysis/value/common.value';
 import { withThemState } from '@modules/app/hoc/withThemState';
@@ -14,7 +15,6 @@ import {
   TimeResolution,
 } from '@stock/packages-com/dist/tick/merge-by-res';
 import { combineHOC } from '@web/ui-extension';
-import Slider from 'antd/es/slider';
 import moment from 'moment/moment';
 import momentTimezone from 'moment-timezone';
 import { useCallback, useMemo, useState } from 'react';
@@ -26,9 +26,9 @@ const TickIntraDay = combineHOC(
   withFromToDate,
   withThemState,
   withRefreshTicks,
+  withTradeValueFilter,
 )((props) => {
   const [showChartType, setShowChartType] = useState('3');
-  const [tradeVal, setTradeVal] = useState([0, 350, 1000]);
   const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
   const onChange = useCallback(
     (dates: any) => {
@@ -54,12 +54,15 @@ const TickIntraDay = combineHOC(
   const chartJsConfig: any = useMemo(() => {
     if (
       !Array.isArray(props.state?.tickIntraDay?.meta) ||
-      props.state?.tickIntraDay.meta.length === 0
+      props.state?.tickIntraDay.meta.length === 0 ||
+      !Array.isArray(props?.state?.tradeValueFilter) ||
+      props?.state?.tradeValueFilter.length !== 3
     ) {
       return undefined;
     }
     const date = moment().utc(props.state.tickIntraDay['date']);
     const meta = props.state.tickIntraDay.meta;
+    const tradeVal = props.state.tradeValueFilter;
     let datasets = [];
     let labels: any;
     if (showChartType === '1') {
@@ -181,7 +184,12 @@ const TickIntraDay = combineHOC(
         },
       },
     };
-  }, [props.state.tickIntraDay, timeRes, showChartType, tradeVal]);
+  }, [
+    props.state.tickIntraDay,
+    timeRes,
+    showChartType,
+    props?.state?.tradeValueFilter,
+  ]);
 
   const onTimeResChange = useCallback((e: any) => {
     setTimeRes(e.target.value);
@@ -247,27 +255,6 @@ const TickIntraDay = combineHOC(
         {/*    className="form-input"*/}
         {/*  />*/}
         {/*</div>*/}
-        <div>
-          <label>
-            Trade Value:
-            <span className="font-bold text-red-500">{` ${tradeVal[1]}`}</span>
-          </label>
-          <div className="mt-5">
-            <Slider
-              range
-              max={1000}
-              defaultValue={tradeVal}
-              onChange={setTradeVal}
-              styles={{
-                rail: {
-                  backgroundColor: props?.state.themeState.isDarkMode
-                    ? 'white'
-                    : 'rgba(0, 0, 0, 0.04)',
-                },
-              }}
-            />
-          </div>
-        </div>
       </div>
       <div className="grid grid-cols-1 gap-6 pt-2">
         <label className="pt-6">Mua bán theo thời gian</label>

@@ -1,12 +1,16 @@
 'use client';
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
+import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
+import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { withCors } from '@src/modules/analysis/hoc/withCors';
 import { withSelectedSymbol } from '@src/modules/analysis/hoc/withSelectedSymbol';
 import { ANALYSIS_ACTIONS } from '@src/modules/analysis/store/analysis.actions';
 import { useAppDispatch } from '@src/store/useAppDispatch';
 import { combineHOC } from '@web/ui-extension';
+import Slider from 'antd/es/slider';
+import { debounce } from 'lodash';
 import moment from 'moment';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -20,6 +24,8 @@ const Symbol = combineHOC(
   withCors,
   withSelectedSymbol,
   withFromToDate,
+  withTradeValueFilter,
+  withThemState,
 )((props) => {
   const dispatch = useAppDispatch();
   const corOptions = useMemo(() => {
@@ -58,6 +64,12 @@ const Symbol = combineHOC(
     },
     [props?.actions?.setToDate],
   );
+
+  const debounceUpdateTradeValue = useMemo(() => {
+    return debounce((data: any) => {
+      props?.actions?.setTradeValueFilterAction(data);
+    }, 1000);
+  }, []);
 
   return (
     <Row title={`${value?.label ?? 'Chưa chọn mã'}`} oneCol={false}>
@@ -104,6 +116,30 @@ const Symbol = combineHOC(
               className="form-input"
               onChange={onToDateChange}
             />
+          </div>
+        )}
+        {props?.tradeValue && (
+          <div>
+            <label>
+              Trade Value:
+              <span className="font-bold text-red-500">{` ${props?.state?.tradeValueFilter}`}</span>
+            </label>
+            <div className="mt-5">
+              <Slider
+                range
+                max={1000}
+                min={0}
+                defaultValue={props?.state?.tradeValueFilter ?? 250}
+                onChange={debounceUpdateTradeValue}
+                styles={{
+                  rail: {
+                    backgroundColor: props?.state.themeState.isDarkMode
+                      ? 'white'
+                      : 'rgba(0, 0, 0, 0.04)',
+                  },
+                }}
+              />
+            </div>
           </div>
         )}
       </div>
