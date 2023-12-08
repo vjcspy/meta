@@ -33,7 +33,11 @@ const TicksSupplyDemandLineChart = (props: {
   const lastTickDate = useMemo(() => {
     const lastTick = last(props.ticks);
     if (lastTick) {
-      if (lastTick['date'] && lastTick['symbol'] === props.symbol) {
+      if (lastTick['date']) {
+        if (lastTick['symbol'] !== props.symbol) {
+          return `Loading data for ${props.symbol}...`;
+        }
+
         return `${lastTick['symbol']} - ${moment(lastTick.date).format(
           'YYYY-MM-DD',
         )}`;
