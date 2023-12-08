@@ -21,10 +21,9 @@ const TickAtPrices = combineHOC(
   withRefreshTicks,
 )((props) => {
   useEffect(() => {
-    props?.actions?.setFromDate(
-      moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
-    );
+    props?.actions?.setFromDate(moment().utc().format('YYYY-MM-DD'));
   }, []);
+
   const title = useMemo(() => {
     const lastTick: any = last(props?.state?.ticks);
 
