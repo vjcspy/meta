@@ -4,6 +4,7 @@ import TickAtPricesChart from '@modules/analysis/components/TickAtPrices/TickAtP
 import TickAtPricesSummary from '@modules/analysis/components/TickAtPrices/TickAtPricesSummary';
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withPrices } from '@modules/analysis/hoc/withPrices';
+import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import Row from '@src/components/form/Row';
@@ -17,6 +18,7 @@ const TickAtPrices = combineHOC(
   withPrices,
   withTradeValueFilter,
   withFromToDate,
+  withRefreshTicks,
 )((props) => {
   useEffect(() => {
     props?.actions?.setFromDate(

@@ -1,6 +1,7 @@
 'use client';
 
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
+import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withSelectedSymbol } from '@modules/analysis/hoc/withSelectedSymbol';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
@@ -15,6 +16,7 @@ const TickRange = combineHOC(
   withTicks,
   withTradeValueFilter,
   withFromToDate,
+  withRefreshTicks,
 )((props) => {
   useEffect(() => {
     props?.actions?.setFromDate(

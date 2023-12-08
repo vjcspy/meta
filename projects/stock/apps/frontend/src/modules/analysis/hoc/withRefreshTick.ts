@@ -35,9 +35,7 @@ export const withRefreshTicks = createUiHOC(() => {
       if (isTradingTime()) {
         if (symbol) {
           refreshTickRequest$.next(symbol);
-          setTimeout(() => {
-            dispatch(ANALYSIS_ACTIONS.refreshTickIntraDay());
-          }, 1000);
+          dispatch(ANALYSIS_ACTIONS.refreshTickIntraDay());
         }
       }
     }, 2000);
