@@ -21,7 +21,7 @@ export interface ExtensionConfig {
   uiId: string;
   // Được sử dụng trong TagStackComponent. Chỉ có những tag thoả mãn mới được add vào
   uiTags?: string[];
-  //Hiển thị lên layout builder
+  // Hiển thị lên layout builder
   title?: string;
   // Mặc định là component type
   type?: ExtensionType;

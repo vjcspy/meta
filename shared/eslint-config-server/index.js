@@ -68,7 +68,9 @@ module.exports = {
         "no-nested-ternary": "warn",
         "consistent-return": "warn",
         "import/order": "off", // Conflict with simple import,
-        "max-classes-per-file": "off"
+        "max-classes-per-file": "off",
+        "import/extensions": "off",
+        "import/export": "off",
       }
     },
     // Configuration for testing

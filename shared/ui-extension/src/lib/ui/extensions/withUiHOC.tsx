@@ -5,7 +5,7 @@ import { HOCManager } from '../hoc';
 
 export const withUiHOC = (
   OrgComponent: UiComponent<any>,
-  hoc: string[]
+  hoc: string[],
 ): UiComponent<any> => {
   return React.memo((props: any) => {
     const ComponentWithHoc = useMemo(() => {
@@ -13,11 +13,10 @@ export const withUiHOC = (
       return hoc.reverse().reduce((result, value) => {
         const hocFN = HOCManager.getInstance().getByName(value);
         if (typeof hocFN !== 'function') {
-          console.error('We could not found hoc with name: ' + value);
+          console.error(`We could not found hoc with name: ${value}`);
           return result;
-        } else {
-          return hocFN(result, props);
         }
+        return hocFN(result, props);
       }, OrgComponent);
     }, [hoc]);
 

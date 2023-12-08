@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { Map } from 'immutable';
 
 import type { ExtensionConfig } from '../../types';
@@ -24,6 +25,7 @@ function getPriority(c: any) {
 
 export class ExtensionManager {
   static COMPONENTS: Map<string, ExtensionConfig> = Map<any, any>();
+
   protected static INSTANCE: any;
 
   static getInstance(): ExtensionManager {
@@ -46,6 +48,7 @@ export class ExtensionManager {
           c,
           ExtensionManager.COMPONENTS.get(c.uiId),
         ];
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         sortedToMerge.sort((c: any, b: any) => {
           return getPriority(c) - getPriority(b);
         });
@@ -69,7 +72,8 @@ export class ExtensionManager {
         // c = _.merge(...sortedToMerge);
         // c.hoc = hocs;
 
-        /* CHUYỂN QUA LẤY LUÔN THEO PRIORITY*/
+        /* CHUYỂN QUA LẤY LUÔN THEO PRIORITY */
+        // eslint-disable-next-line prefer-destructuring
         c = sortedToMerge[0];
       }
 

@@ -12,10 +12,10 @@ export const useStackComponent = (props: {
     }
 
     return props.extensionDataConfig.extensionDataConfigs?.map((s, index) => {
-      if (s['uiId']) {
+      if (s.uiId) {
         return (
           <UiExtension
-            key={s.uiId + '' + index}
+            key={`${s.uiId}${index}`}
             uiId={s.uiId}
             extensionDataConfig={s}
           />

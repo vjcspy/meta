@@ -29,17 +29,14 @@ export const getUiExtension = (uiId: string): UiComponent<any> => {
 
   const extCfg = ExtensionManager.getInstance().cptCfg(uiId);
   if (!extCfg) {
-    console.warn('Not found cfg for extension id: ' + uiId);
+    console.warn(`Not found cfg for extension id: ${uiId}`);
 
     return ExtensionBlank;
   }
 
   let CptConfig: any = extCfg.component;
   let OriginComponent: UiComponent<any>;
-  if (
-    typeof CptConfig === 'object' &&
-    typeof CptConfig['defer'] === 'function'
-  ) {
+  if (typeof CptConfig === 'object' && typeof CptConfig.defer === 'function') {
     /*
      * Do cần phải config extension trước khi chạy nên nếu không để là function thì tất cả các page đều sẽ load drivers
      * Để tối ưu performance thì lúc nào cần load page nào mới thực hiện inject driver cho page đó
@@ -54,7 +51,7 @@ export const getUiExtension = (uiId: string): UiComponent<any> => {
       return (
         <>
           <Suspense fallback={null}>
-            {/*@ts-ignore*/}
+            {/* @ts-ignore */}
             <CptConfig {...props} />
           </Suspense>
         </>
@@ -81,11 +78,11 @@ export const getUiExtension = (uiId: string): UiComponent<any> => {
 
   if (OriginComponent.hasOwnProperty('getInitialProps')) {
     // @ts-ignore
-    GetUiExtension['getInitialProps'] = OriginComponent.getInitialProps;
+    GetUiExtension.getInitialProps = OriginComponent.getInitialProps;
   }
 
   GetUiExtension.displayName =
-    OriginComponent.displayName ?? 'getUiExtension: ' + uiId;
+    OriginComponent.displayName ?? `getUiExtension: ${uiId}`;
 
   // ExtensionManager.RESOLVED_COMPONENTS =
   //   ExtensionManager.RESOLVED_COMPONENTS.set(uiId, GetUiExtension);

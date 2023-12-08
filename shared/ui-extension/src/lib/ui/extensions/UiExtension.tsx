@@ -29,7 +29,7 @@ export const UiExtension = React.memo<{
 
   const Component = useMemo(
     () => getUiExtension(uiId),
-    [props?.extensionDataConfig, uiId]
+    [props?.extensionDataConfig, uiId],
   );
 
   Component.displayName = `UiExtension: ${uiId}`;

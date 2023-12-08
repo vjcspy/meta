@@ -4,12 +4,13 @@ import type { UiHOC } from '../../types';
 
 export class HOCManager {
   protected static INSTANCE: HOCManager;
+
   protected static hocs: Map<string, UiHOC> = Map<any, any>();
 
   public static getInstance(): HOCManager {
     if (typeof HOCManager.INSTANCE === 'undefined') {
       console.info(
-        '______________________________________ Create HOCManager ______________________________________'
+        '______________________________________ Create HOCManager ______________________________________',
       );
       HOCManager.INSTANCE = new HOCManager();
     }
@@ -27,8 +28,8 @@ export class HOCManager {
     return HOCManager.hocs.get(hocName);
   }
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  configHOCs(uiHOCs: UiHOC[]) {
+  // eslint-disable-next-line unused-imports/no-unused-vars,@typescript-eslint/no-unused-vars
+  configHOCs(_: UiHOC[]) {
     // TODO: implement if needed
   }
 
