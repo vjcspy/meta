@@ -67,7 +67,7 @@ const loadTickIntraDay$ = createEffect((action$, state$) =>
 const refreshTickIntraDay$ = createEffect((action$) =>
   action$.pipe(
     ofType(ANALYSIS_ACTIONS.refreshTickIntraDay),
-    auditTime(CommonValue.REFRESH_WINDOW_TIME),
+    auditTime(2 * CommonValue.REFRESH_WINDOW_TIME),
     map(() => ANALYSIS_ACTIONS.loadTickIntraDay({})),
   ),
 );
