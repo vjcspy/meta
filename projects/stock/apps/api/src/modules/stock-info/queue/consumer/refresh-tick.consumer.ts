@@ -1,9 +1,11 @@
-import type { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
+import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { XLogger } from '@nest/base/dist';
 import { Nack, RabbitSubscribe } from '@nest/rabbitmq/dist';
+import { Injectable } from '@nestjs/common';
 import { auditTime, groupBy, mergeMap, Subject } from 'rxjs';
 
+@Injectable()
 export class RefreshTickConsumer {
   public static refreshTick$ = new Subject<string>();
 

@@ -24,7 +24,7 @@ export class TickController {
   @Get('history')
   getTick(@Query() request: GetTickHistoryRequest) {
     const { date, symbol } = request;
-    this.logger.info('prcoess get tick  for symbol', {
+    this.logger.info('process get tick for symbol', {
       symbol,
       date,
     });
@@ -34,7 +34,7 @@ export class TickController {
   @Get('intra-day')
   async getTickIntraDay(@Query() request: GetTickHistoryRequest) {
     const { date, symbol } = request;
-    this.logger.info('prcoess get tick  for symbol', {
+    this.logger.info('process get tick  for symbol', {
       symbol,
       date,
     });
@@ -45,7 +45,7 @@ export class TickController {
   @Get('histories')
   getHistories(@Query() request: GetTickHistoriesRequest) {
     const { from, to, symbol } = request;
-    this.logger.info('prcoess get tick histories for symbol', {
+    this.logger.info('process get tick histories for symbol', {
       symbol,
       from,
       to,
@@ -56,11 +56,14 @@ export class TickController {
   @Get('histories-v1')
   async getHistoriesV1(@Query() request: GetTickHistoriesRequest) {
     const { from, to, symbol } = request;
-    this.logger.info('prcoess get tick histories for symbol', {
-      symbol,
-      from,
-      to,
-    });
+    this.logger.info(
+      `process get tick histories for symbol ${request.symbol}`,
+      {
+        symbol,
+        from,
+        to,
+      },
+    );
     const his = await this.tickHelper.getHistories(symbol, from, to);
 
     return new OkResponse(undefined, his);
