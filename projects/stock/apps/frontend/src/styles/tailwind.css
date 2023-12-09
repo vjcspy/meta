@@ -703,3 +703,8 @@ pre.hljs {
 .swal2-container .swal2-popup.swal2-toast.color-success {
     @apply bg-success;
 }
+
+/*antd dark*/
+body.dark .rc-virtual-list-scrollbar-thumb {
+    background: rgb(251 191 36) none !important;
+}

@@ -21,7 +21,6 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    BaseModule,
     CoreModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -36,6 +35,7 @@ import { AppService } from './app.service';
         '.env.default', // Khong su dung duoc .env vi trong code cua nest luc nao cung uu tien file nay
       ],
     }),
+    BaseModule,
     ...(process.env.CRON_ENABLE === 'true' ? [ScheduleModule.forRoot()] : []),
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,

@@ -1,8 +1,12 @@
 'use client';
 
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { withCors } from '@modules/analysis/hoc/withCors';
+import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension/dist';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider, Switch, theme } from 'antd';
+import Search from 'antd/es/input/Search';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
 
@@ -15,18 +19,27 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: 'Full Name',
+    title: 'Symbol',
     width: 100,
     dataIndex: 'name',
     key: 'name',
     fixed: 'left',
   },
   {
-    title: 'Age',
+    title: '',
     width: 100,
     dataIndex: 'age',
     key: 'age',
     fixed: 'left',
+    render: () => {
+      return (
+        <Switch
+          checkedChildren={<CheckOutlined />}
+          unCheckedChildren={<CloseOutlined />}
+          defaultChecked
+        />
+      );
+    },
   },
   {
     title: 'Column 1',
@@ -64,13 +77,21 @@ const columns: ColumnsType<DataType> = [
     key: '7',
   },
   { title: 'Column 8', dataIndex: 'address', key: '8' },
-  {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
-    render: () => <a>action</a>,
-  },
+  // {
+  //   title: 'Action',
+  //   key: 'operation',
+  //   fixed: 'right',
+  //   width: 100,
+  //   render: () => {
+  //     return (
+  //       <Switch
+  //         checkedChildren={<CheckOutlined />}
+  //         unCheckedChildren={<CloseOutlined />}
+  //         defaultChecked
+  //       />
+  //     );
+  //   },
+  // },
 ];
 
 const data: DataType[] = [];
@@ -83,7 +104,10 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-const SymbolTable = combineHOC()(() => {
+const SymbolTable = combineHOC(
+  withThemState,
+  withCors,
+)((props) => {
   return (
     <>
       <Row title={`Analysis Symbol Table`} oneCol={false}>
@@ -96,7 +120,9 @@ const SymbolTable = combineHOC()(() => {
                 //   colorTextBase: 'white',
                 // },
               },
-              algorithm: theme.darkAlgorithm,
+              algorithm: props.state.themeState.isDarkMode
+                ? theme.darkAlgorithm
+                : theme.defaultAlgorithm,
               token: { fontSize: 13 },
             }}
           >
@@ -109,8 +135,12 @@ const SymbolTable = combineHOC()(() => {
               summary={() => (
                 <Table.Summary fixed="top">
                   <Table.Summary.Row>
-                    <Table.Summary.Cell index={0} colSpan={2}>
-                      Hello
+                    <Table.Summary.Cell index={0} colSpan={2} align="center">
+                      <Search
+                        placeholder="Symbol"
+                        onSearch={() => {}}
+                        style={{ width: 160 }}
+                      />
                     </Table.Summary.Cell>
                     {/*<Table.Summary.Cell index={2}>*/}
                     {/*  Scroll Context*/}
