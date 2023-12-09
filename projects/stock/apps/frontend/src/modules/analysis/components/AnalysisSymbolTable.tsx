@@ -10,115 +10,195 @@ import { ConfigProvider, Switch, theme } from 'antd';
 import Search from 'antd/es/input/Search';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
+import { compact, find, map, uniqBy } from 'lodash';
+import { useMemo, useState } from 'react';
 
-interface DataType {
+interface AnalysisSymbolType {
   key: React.Key;
-  name: string;
-  age: number;
-  address: string;
+  symbol: string;
+  industryName1: string;
+  industryName2: string;
+  industryName3: string;
+  totalShares: number;
+
+  /*Analysis table*/
+  trade_value_7: number;
+  trade_value_14: number;
+  trade_value_30: number;
+  l16_hullma_trend: number;
+  l16_hullma_day_in_trend: number;
+  l16_hullma_highest_diff_percent: number;
+  cur_gap_percent: number;
+  cap: number;
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Symbol',
-    width: 100,
-    dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
-  },
-  {
-    title: '',
-    width: 100,
-    dataIndex: 'age',
-    key: 'age',
-    fixed: 'left',
-    render: () => {
-      return (
-        <Switch
-          checkedChildren={<CheckOutlined />}
-          unCheckedChildren={<CloseOutlined />}
-          defaultChecked
-        />
-      );
-    },
-  },
-  {
-    title: 'Column 1',
-    dataIndex: 'address',
-    key: '1',
-  },
-  {
-    title: 'Column 2',
-    dataIndex: 'address',
-    key: '2',
-  },
-  {
-    title: 'Column 3',
-    dataIndex: 'address',
-    key: '3',
-  },
-  {
-    title: 'Column 4',
-    dataIndex: 'address',
-    key: '4',
-  },
-  {
-    title: 'Column 5',
-    dataIndex: 'address',
-    key: '5',
-  },
-  {
-    title: 'Column 6',
-    dataIndex: 'address',
-    key: '6',
-  },
-  {
-    title: 'Column 7',
-    dataIndex: 'address',
-    key: '7',
-  },
-  { title: 'Column 8', dataIndex: 'address', key: '8' },
-  // {
-  //   title: 'Action',
-  //   key: 'operation',
-  //   fixed: 'right',
-  //   width: 100,
-  //   render: () => {
-  //     return (
-  //       <Switch
-  //         checkedChildren={<CheckOutlined />}
-  //         unCheckedChildren={<CloseOutlined />}
-  //         defaultChecked
-  //       />
-  //     );
-  //   },
-  // },
-];
-
-const data: DataType[] = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: `Edward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
+const hullTrend = {
+  1: 'UP',
+  0: '-',
+  [-1]: 'DOWN',
+};
 
 const AnalysisSymbolTable = combineHOC(
   withThemState,
   withCors,
   withAnalysisTableData,
 )((props) => {
+  const [symbolSearch, setSymbolSearch] = useState('');
+
+  const tableData = useMemo(() => {
+    if (
+      !Array.isArray(props.state.cors) ||
+      props.state.cors.length === 0 ||
+      !Array.isArray(props.state.analysisTableData) ||
+      props.state.analysisTableData.length === 0
+    ) {
+      return undefined;
+    }
+
+    const tableColumns: ColumnsType<AnalysisSymbolType> = [
+      {
+        title: 'Symbol',
+        width: 100,
+        dataIndex: 'symbol',
+        fixed: 'left',
+      },
+      {
+        title: '',
+        width: 100,
+        dataIndex: 'code',
+        fixed: 'left',
+        render: () => {
+          return (
+            <Switch
+              checkedChildren={<CheckOutlined />}
+              unCheckedChildren={<CloseOutlined />}
+              defaultChecked
+            />
+          );
+        },
+      },
+      {
+        title: 'trend',
+        dataIndex: 'l16_hullma_trend',
+        sorter: (a, b) => a.l16_hullma_trend - b.l16_hullma_trend,
+        fixed: 'left',
+        render: (value: any) => {
+          // @ts-ignore
+          return <span>{hullTrend[value]}</span>;
+        },
+        filters: [
+          {
+            text: 'Up',
+            value: 1,
+          },
+          {
+            text: 'Down',
+            value: -1,
+          },
+          {
+            text: 'Unknown',
+            value: 0,
+          },
+        ],
+        onFilter: (value: any, record) => record.l16_hullma_trend === value,
+        width: 100,
+      },
+      {
+        title: 'dayInTrend',
+        dataIndex: 'l16_hullma_day_in_trend',
+        sorter: (a, b) => a.l16_hullma_day_in_trend - b.l16_hullma_day_in_trend,
+        fixed: 'left',
+        width: 100,
+      },
+      {
+        title: 'hullDiff',
+        dataIndex: 'l16_hullma_highest_diff_percent',
+        sorter: (a, b) =>
+          a.l16_hullma_highest_diff_percent - b.l16_hullma_highest_diff_percent,
+        fixed: 'left',
+        width: 100,
+      },
+
+      {
+        title: 'industryName1',
+        dataIndex: 'industryName1',
+      },
+      {
+        title: 'industryName2',
+        dataIndex: 'industryName2',
+      },
+      {
+        title: 'industryName3',
+        dataIndex: 'industryName3',
+      },
+      {
+        title: 'GTGD3',
+        dataIndex: 'trade_value_7',
+        sorter: (a, b) => a.trade_value_7 - b.trade_value_7,
+        width: 100,
+      },
+      {
+        title: 'GTGD14',
+        dataIndex: 'trade_value_14',
+        sorter: (a, b) => a.trade_value_14 - b.trade_value_14,
+        width: 100,
+      },
+      {
+        title: 'GTGD30',
+        dataIndex: 'trade_value_30',
+        sorter: (a, b) => a.trade_value_30 - b.trade_value_30,
+        width: 100,
+      },
+      {
+        title: 'gap',
+        dataIndex: 'cur_gap_percent',
+        sorter: (a, b) => a.cur_gap_percent - b.cur_gap_percent,
+        width: 100,
+      },
+      {
+        title: 'cap',
+        dataIndex: 'cap',
+        sorter: (a, b) => a.cap - b.cap,
+        width: 100,
+      },
+    ];
+
+    let dataSource = map(props.state.analysisTableData, (i: any) => {
+      if (symbolSearch) {
+        if (
+          typeof i?.symbol !== 'string' ||
+          i.symbol.indexOf(symbolSearch.toUpperCase()) === -1
+        ) {
+          return undefined;
+        }
+      }
+
+      const cor = find(props.state.cors, (c: any) => c?.code === i?.symbol);
+
+      if (!cor) {
+        return undefined;
+      }
+
+      return { key: i.symbol, ...i, ...cor };
+    });
+    dataSource = compact(dataSource);
+    dataSource = uniqBy(dataSource, 'symbol');
+
+    return {
+      columns: tableColumns,
+      dataSource,
+    };
+  }, [props.state.cors, props.state.analysisTableData, symbolSearch]);
+
   return (
     <>
       <Row title={`Analysis Symbol Table`} oneCol={false}>
-        {!props.state.analysisTableData && (
+        {!tableData && (
           <div>
             <span>Loading ...</span>
           </div>
         )}
-        {props.state.analysisTableData && (
+        {tableData && (
           <div className="grid grid-cols-1 text-xs">
             <ConfigProvider
               theme={{
@@ -137,17 +217,21 @@ const AnalysisSymbolTable = combineHOC(
               <Table
                 pagination={false}
                 virtual
-                columns={columns}
-                dataSource={data}
+                columns={tableData!.columns}
+                dataSource={tableData!.dataSource}
                 scroll={{ x: 2000, y: 400 }}
                 summary={() => (
                   <Table.Summary fixed="top">
                     <Table.Summary.Row>
                       <Table.Summary.Cell index={0} colSpan={2} align="center">
                         <Search
-                          placeholder="Symbol"
-                          onSearch={() => {}}
                           style={{ width: 160 }}
+                          className="uppercase"
+                          placeholder="Symbol"
+                          onChange={(e) => {
+                            setSymbolSearch(e?.target?.value);
+                          }}
+                          onSearch={() => {}}
                         />
                       </Table.Summary.Cell>
                       {/*<Table.Summary.Cell index={2}>*/}
