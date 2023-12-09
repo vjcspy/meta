@@ -4,5 +4,5 @@ export class CommonValue {
   static SELL_SHARK_COLOR = 'rgb(203,52,52)';
   static SELL_SHEEP_COLOR = 'rgb(239,148,30)';
 
-  static REFRESH_WINDOW_TIME = 5000;
+  static REFRESH_WINDOW_TIME = 10000;
 }

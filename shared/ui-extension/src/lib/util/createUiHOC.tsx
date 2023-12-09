@@ -1,5 +1,4 @@
-import merge from 'lodash/merge';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 // const getPropsName = (displayName: string) => {
 //   const regexPropsName = new RegExp(/^(With)(.*)(Props)$/);
@@ -58,25 +57,38 @@ import React, { useMemo } from 'react';
 // };
 
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
+  k: infer I,
 ) => void
   ? I
   : never;
 
 export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
   hookFn: (props: any) => Pick<TProps, TInjectedKeys>,
-  displayName: string
+  displayName: string,
 ) {
   return function hoc(Component: React.ComponentType<TProps>) {
     const UiHOC = (props1: Omit<TProps, TInjectedKeys>) => {
       const hookData = hookFn({ ...props1 });
 
-      const newProps = useMemo(
-        () => merge(hookData, props1),
-        [hookData, props1]
+      return (
+        <Component
+          {...({
+            ...props1,
+            state: {
+              // @ts-ignore
+              ...props1?.state,
+              // @ts-ignore
+              ...hookData?.state,
+            },
+            actions: {
+              // @ts-ignore
+              ...props1?.actions,
+              // @ts-ignore
+              ...hookData?.actions,
+            },
+          } as any)}
+        />
       );
-
-      return <Component {...(newProps as any)} />;
     };
 
     const oriDisplayName = Component.displayName || Component.name || '';
@@ -87,7 +99,7 @@ export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
 }
 
 type HOCType<TProps, TInjectedKeys extends keyof TProps> = (
-  Component: React.ComponentType<any>
+  Component: React.ComponentType<any>,
 ) => React.ComponentType<Omit<TProps, TInjectedKeys>>;
 
 type PropsType<HOCFns> = HOCFns extends HOCType<infer P, never>[] ? P : never;
@@ -98,12 +110,12 @@ export function combineHOC<Fns extends HOCType<any, any>[]>(
   component: React.ComponentType<
     UnionToIntersection<PropsType<Fns>> &
       Record<Exclude<string, keyof UnionToIntersection<PropsType<Fns>>>, any>
-  >
+  >,
 ) => any;
 
 export function combineHOC(...objs: [...any]) {
   return (Component: React.ComponentType<any>) => {
-    const _withHocs = objs.reverse().reduce((ComponentWithHoc, hoc) => {
+    const _withHocs = objs.reduce((ComponentWithHoc, hoc) => {
       return hoc(ComponentWithHoc);
     }, Component);
 

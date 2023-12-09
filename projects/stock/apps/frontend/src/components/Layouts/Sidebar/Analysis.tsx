@@ -16,7 +16,7 @@ const SidebarAnalysis = () => {
         >
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
-        <span>Analysis</span>
+        <span>Tick</span>
       </h2>
 
       <li className="nav-item">
@@ -37,7 +37,14 @@ const SidebarAnalysis = () => {
         <Link href="/analysis/tick/range" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Tick Dates
+              Tick Range
+            </span>
+          </div>
+        </Link>
+        <Link href="/analysis/tick/range-market" className="group">
+          <div className="flex items-center">
+            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              Tick Range Market
             </span>
           </div>
         </Link>

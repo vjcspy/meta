@@ -19,5 +19,5 @@ export type UiComponent<T> = ComponentType<T & Record<any, any>>;
  */
 export type UiHOC = (
   Component: ComponentType<any>,
-  props: any
+  props: any,
 ) => ComponentType<any>;

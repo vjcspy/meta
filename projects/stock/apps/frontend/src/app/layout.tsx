@@ -4,13 +4,14 @@ import 'flatpickr/dist/flatpickr.css';
 
 import StyledComponentsRegistry from '@src/components/AntdRegistry';
 import App from '@src/components/App';
-// const inter = Nunito({
-//   subsets: ['latin'],
-//   weight: ['400', '500', '600', '700'],
-//   display: 'swap',
-// });
 import type { Metadata } from 'next';
+import { Noto_Sans_Mende_Kikakui } from 'next/font/google';
 
+const inter = Noto_Sans_Mende_Kikakui({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+});
 export const metadata: Metadata = {
   title: 'Meta',
   description: 'Meta',
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: { children: any }) {
         />
         <link rel="icon" href="/favicon.png" sizes="any" />
       </head>
-      <body>
+      <body className={inter.className}>
         <StyledComponentsRegistry>
           <App> {children}</App>
         </StyledComponentsRegistry>

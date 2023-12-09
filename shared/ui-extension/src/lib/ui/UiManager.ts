@@ -10,7 +10,8 @@ export class UiManager {
     if (uiData?.uiHOCs) {
       HOCManager.getInstance().configHOCs(uiData.uiHOCs);
     }
-    for (const config of uiData.extensionConfigs) {
+    for (let i = 0; i < uiData.extensionConfigs.length; i++) {
+      const config = uiData.extensionConfigs[i];
       if (typeof config === 'function') {
         ExtensionManager.getInstance().config(config());
       } else {

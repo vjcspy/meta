@@ -1,3 +1,4 @@
+import { OkResponse } from '@modules/core/model/ok-response';
 import {
   GetStockTradingAnalysisRequest,
   StockTradingAnalysisResponse,
@@ -59,6 +60,31 @@ export class AnalysisController {
     return plainToInstance(StockTradingAnalysisResponse, data, {
       excludeExtraneousValues: true,
     });
+  }
+
+  @Get('analysis-v1')
+  async getAnalysisV1(@Query() request: GetStockTradingAnalysisRequest) {
+    const { symbol } = request;
+    let data: any;
+    if (symbol) {
+      data = await this.stockTradingAnalysisRepo.findOne(symbol);
+    } else {
+      data = await this.stockTradingAnalysisRepo.findAll();
+    }
+
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      throw new HttpException(
+        'Not found. Check symbol or run job to analyze',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return new OkResponse(
+      undefined,
+      plainToInstance(StockTradingAnalysisResponse, data, {
+        excludeExtraneousValues: true,
+      }),
+    );
   }
 
   @Get('analyze-test')

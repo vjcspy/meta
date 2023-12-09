@@ -10,7 +10,7 @@ import { UiExtension } from './UiExtension';
 
 export const withExtensionHook = (
   OrgComponent: UiComponent<any>,
-  extensionConfig: ExtensionConfig
+  extensionConfig: ExtensionConfig,
 ): UiComponent<any> => {
   return React.memo((props) => {
     const extensionData = useMemo(() => {
@@ -23,16 +23,16 @@ export const withExtensionHook = (
       ) {
         return _extensionData;
       }
-      _extensionData['hookCpt'] = {};
+      _extensionData.hookCpt = {};
 
       extensionConfig.structure.forEach((s: any) => {
         const mayBeExtensionDataConfig: ExtensionDataConfig | undefined =
           props.extensionDataConfig.extensionDataConfigs.find(
-            (c: any) => c && s && c['forHookId'] === s['hookId']
+            (c: any) => c && s && c.forHookId === s.hookId,
           );
 
         if (mayBeExtensionDataConfig) {
-          _extensionData['hookCpt'][s['hookId']] = (
+          _extensionData.hookCpt[s.hookId] = (
             <UiExtension
               uiId={s.uiId}
               extensionDataConfig={mayBeExtensionDataConfig}

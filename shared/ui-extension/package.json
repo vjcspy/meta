@@ -2,7 +2,7 @@
   "name": "@web/ui-extension",
   "version": "0.0.0",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "license": "MIT",
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
