@@ -91,7 +91,7 @@ const TicksSupplyDemandLineChart = (props: {
               },
               mode: 'x',
               // scaleMode: 'y',
-              // overScaleMode: 'x',
+              overScaleMode: 'x',
             },
             pan: {
               enabled: true,
@@ -146,7 +146,7 @@ const TicksSupplyDemandLineChart = (props: {
               },
               mode: 'x',
               // scaleMode: 'y',
-              // overScaleMode: 'x',
+              overScaleMode: 'x',
             },
             pan: {
               enabled: true,
@@ -227,7 +227,7 @@ const TicksSupplyDemandLineChart = (props: {
               },
               mode: 'x',
               // scaleMode: 'y',
-              // overScaleMode: 'x',
+              overScaleMode: 'x',
             },
             pan: {
               enabled: true,
@@ -302,7 +302,7 @@ const TicksSupplyDemandLineChart = (props: {
               },
               mode: 'x',
               // scaleMode: 'y',
-              // overScaleMode: 'x',
+              overScaleMode: 'x',
             },
             pan: {
               enabled: true,

@@ -1,6 +1,7 @@
 'use client';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { withAnalysisTableData } from '@modules/analysis/hoc/withAnalysisTableData';
 import { withCors } from '@modules/analysis/hoc/withCors';
 import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
@@ -104,61 +105,69 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-const SymbolTable = combineHOC(
+const AnalysisSymbolTable = combineHOC(
   withThemState,
   withCors,
+  withAnalysisTableData,
 )((props) => {
   return (
     <>
       <Row title={`Analysis Symbol Table`} oneCol={false}>
-        <div className="grid grid-cols-1 text-xs">
-          <ConfigProvider
-            theme={{
-              components: {
-                // Table: {
-                //   colorBgBase: 'transparent',
-                //   colorTextBase: 'white',
-                // },
-              },
-              algorithm: props.state.themeState.isDarkMode
-                ? theme.darkAlgorithm
-                : theme.defaultAlgorithm,
-              token: { fontSize: 13 },
-            }}
-          >
-            <Table
-              pagination={false}
-              virtual
-              columns={columns}
-              dataSource={data}
-              scroll={{ x: 2000, y: 400 }}
-              summary={() => (
-                <Table.Summary fixed="top">
-                  <Table.Summary.Row>
-                    <Table.Summary.Cell index={0} colSpan={2} align="center">
-                      <Search
-                        placeholder="Symbol"
-                        onSearch={() => {}}
-                        style={{ width: 160 }}
-                      />
-                    </Table.Summary.Cell>
-                    {/*<Table.Summary.Cell index={2}>*/}
-                    {/*  Scroll Context*/}
-                    {/*</Table.Summary.Cell>*/}
-                    {/*<Table.Summary.Cell index={12}>*/}
-                    {/*  Fix Right*/}
-                    {/*</Table.Summary.Cell>*/}
-                  </Table.Summary.Row>
-                </Table.Summary>
-              )}
-              // antd site header height
-              sticky={{ offsetHeader: 64 }}
-            />
-          </ConfigProvider>
-        </div>
+        {!props.state.analysisTableData && (
+          <div>
+            <span>Loading ...</span>
+          </div>
+        )}
+        {props.state.analysisTableData && (
+          <div className="grid grid-cols-1 text-xs">
+            <ConfigProvider
+              theme={{
+                components: {
+                  // Table: {
+                  //   colorBgBase: 'transparent',
+                  //   colorTextBase: 'white',
+                  // },
+                },
+                algorithm: props.state.themeState.isDarkMode
+                  ? theme.darkAlgorithm
+                  : theme.defaultAlgorithm,
+                token: { fontSize: 13 },
+              }}
+            >
+              <Table
+                pagination={false}
+                virtual
+                columns={columns}
+                dataSource={data}
+                scroll={{ x: 2000, y: 400 }}
+                summary={() => (
+                  <Table.Summary fixed="top">
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell index={0} colSpan={2} align="center">
+                        <Search
+                          placeholder="Symbol"
+                          onSearch={() => {}}
+                          style={{ width: 160 }}
+                        />
+                      </Table.Summary.Cell>
+                      {/*<Table.Summary.Cell index={2}>*/}
+                      {/*  Scroll Context*/}
+                      {/*</Table.Summary.Cell>*/}
+                      {/*<Table.Summary.Cell index={12}>*/}
+                      {/*  Fix Right*/}
+                      {/*</Table.Summary.Cell>*/}
+                    </Table.Summary.Row>
+                  </Table.Summary>
+                )}
+                // antd site header height
+                sticky={{ offsetHeader: 64 }}
+              />
+            </ConfigProvider>
+          </div>
+        )}
       </Row>
     </>
   );
 });
 
-export default SymbolTable;
+export default AnalysisSymbolTable;

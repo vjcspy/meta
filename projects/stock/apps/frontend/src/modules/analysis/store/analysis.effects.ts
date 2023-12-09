@@ -1,5 +1,10 @@
-import type { AnalysisState } from '@modules/analysis/store/analysis.state';
-import { CommonValue } from '@modules/analysis/value/common.value';
+import { loadAnalysisTableData$ } from '@modules/analysis/store/effects/loadAnalaysisTableData';
+import { loadPrices$ } from '@modules/analysis/store/effects/loadPrices';
+import {
+  loadTickIntraDay$,
+  refreshTickIntraDay$,
+} from '@modules/analysis/store/effects/loadTickIntraDay';
+import { loadTicks$ } from '@modules/analysis/store/effects/loadTicks';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
 import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiResponseRx';
@@ -8,7 +13,7 @@ import { APP_ACTIONS } from '@src/modules/app/store/app.actions';
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { auditTime, debounceTime, from, map } from 'rxjs';
+import { debounceTime, from, map } from 'rxjs';
 import { filter, switchMap, withLatestFrom } from 'rxjs/operators';
 
 const loadCorsEffect$ = createEffect((action$, state$) =>
@@ -39,89 +44,6 @@ const loadCorsEffect$ = createEffect((action$, state$) =>
   ),
 );
 
-const loadTickIntraDay$ = createEffect((action$, state$) =>
-  action$.pipe(
-    ofType(ANALYSIS_ACTIONS.loadTickIntraDay),
-    debounceTime(500),
-    withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
-    switchMap((d: any) => {
-      const analysisState: AnalysisState = d[1];
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/intra-day?symbol=${analysisState.symbol}&date=${analysisState.toDate}`;
-
-      return from(fetch(url)).pipe(
-        switchMap((res) => from(res.json())),
-        validateApiResponsePipe(),
-        map((data: ApiResponse) => {
-          if (data?.success === true) {
-            return ANALYSIS_ACTIONS.loadTickIntraDaySuccess(data);
-          } else {
-            return APP_ACTIONS.fetchApiError(data);
-          }
-        }),
-        catchGeneralErrorPipe(),
-      );
-    }),
-  ),
-);
-
-const refreshTickIntraDay$ = createEffect((action$) =>
-  action$.pipe(
-    ofType(ANALYSIS_ACTIONS.refreshTickIntraDay),
-    auditTime(2 * CommonValue.REFRESH_WINDOW_TIME),
-    map(() => ANALYSIS_ACTIONS.loadTickIntraDay({})),
-  ),
-);
-
-const loadTicks$ = createEffect((action$, state$) =>
-  action$.pipe(
-    ofType(ANALYSIS_ACTIONS.loadTicks),
-    debounceTime(500),
-    withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
-    switchMap((value: any) => {
-      const analysisState: AnalysisState = value[1];
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v1?symbol=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
-
-      return from(fetch(url)).pipe(
-        switchMap((res) => from(res.json())),
-        validateApiResponsePipe(),
-        map((data: ApiResponse) => {
-          if (data?.success === true) {
-            return ANALYSIS_ACTIONS.loadTicksSuccess(data);
-          } else {
-            return APP_ACTIONS.fetchApiError(data);
-          }
-        }),
-        catchGeneralErrorPipe(),
-      );
-    }),
-  ),
-);
-
-const loadPrices$ = createEffect((action$, state$) =>
-  action$.pipe(
-    ofType(ANALYSIS_ACTIONS.loadPrices),
-    debounceTime(500),
-    withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
-    switchMap((value: any) => {
-      const analysisState: AnalysisState = value[1];
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/histories?code=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
-
-      return from(fetch(url)).pipe(
-        switchMap((res) => from(res.json())),
-        validateApiResponsePipe(),
-        map((data: ApiResponse) => {
-          if (data?.success === true) {
-            return ANALYSIS_ACTIONS.loadPricesSuccess(data);
-          } else {
-            return APP_ACTIONS.fetchApiError(data);
-          }
-        }),
-        catchGeneralErrorPipe(),
-      );
-    }),
-  ),
-);
-
 export const configAnalysisEffects = (storeManager: any) => {
   storeManager.addEpics('analysis', [
     loadCorsEffect$,
@@ -129,5 +51,6 @@ export const configAnalysisEffects = (storeManager: any) => {
     loadTicks$,
     loadPrices$,
     refreshTickIntraDay$,
+    loadAnalysisTableData$,
   ]);
 };
