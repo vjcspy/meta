@@ -21,6 +21,7 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
+    BaseModule,
     CoreModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -36,7 +37,6 @@ import { AppService } from './app.service';
       ],
     }),
     ...(process.env.CRON_ENABLE === 'true' ? [ScheduleModule.forRoot()] : []),
-    BaseModule,
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
       // Nếu không khai báo name thì mặc định là đang config cho default connection
