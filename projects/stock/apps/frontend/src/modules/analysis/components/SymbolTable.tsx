@@ -2,7 +2,7 @@
 
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension/dist';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
 
@@ -83,13 +83,20 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-const SymbolTable = combineHOC()((props) => {
+const SymbolTable = combineHOC()(() => {
   return (
     <>
       <Row title={`Analysis Symbol Table`} oneCol={false}>
         <div className="grid grid-cols-1 text-xs">
           <ConfigProvider
             theme={{
+              components: {
+                // Table: {
+                //   colorBgBase: 'transparent',
+                //   colorTextBase: 'white',
+                // },
+              },
+              algorithm: theme.darkAlgorithm,
               token: { fontSize: 13 },
             }}
           >
@@ -99,6 +106,23 @@ const SymbolTable = combineHOC()((props) => {
               columns={columns}
               dataSource={data}
               scroll={{ x: 2000, y: 400 }}
+              summary={() => (
+                <Table.Summary fixed="top">
+                  <Table.Summary.Row>
+                    <Table.Summary.Cell index={0} colSpan={2}>
+                      Hello
+                    </Table.Summary.Cell>
+                    {/*<Table.Summary.Cell index={2}>*/}
+                    {/*  Scroll Context*/}
+                    {/*</Table.Summary.Cell>*/}
+                    {/*<Table.Summary.Cell index={12}>*/}
+                    {/*  Fix Right*/}
+                    {/*</Table.Summary.Cell>*/}
+                  </Table.Summary.Row>
+                </Table.Summary>
+              )}
+              // antd site header height
+              sticky={{ offsetHeader: 64 }}
             />
           </ConfigProvider>
         </div>
