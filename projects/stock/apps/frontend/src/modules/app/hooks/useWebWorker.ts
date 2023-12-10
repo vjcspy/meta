@@ -1,5 +1,5 @@
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 export const useWebWorker = <T>(

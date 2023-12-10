@@ -1,7 +1,7 @@
 import { CommonValue } from '@modules/analysis/value/common.value';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
-import { last } from 'lodash';
+import { last } from 'lodash-es';
 import moment from 'moment';
 import React, { useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';

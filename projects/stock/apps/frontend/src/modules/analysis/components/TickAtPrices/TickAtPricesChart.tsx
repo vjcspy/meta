@@ -1,6 +1,6 @@
 import { CommonValue } from '@modules/analysis/value/common.value';
 import * as Plot from '@observablehq/plot';
-import { forEach, reduce } from 'lodash';
+import { forEach, reduce } from 'lodash-es';
 import React, { useEffect, useRef } from 'react';
 
 const TickAtPricesChart = React.memo(
