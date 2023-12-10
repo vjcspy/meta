@@ -1,24 +1,23 @@
+import type { MarketSymbolCategory } from '@modules/analysis/types';
 import moment from 'moment/moment';
 
 export interface AnalysisState {
   cors?: any[];
+
+  /* __________ Du lieu cua symbol dang xem __________*/
   symbol?: string;
   fromDate: string;
   toDate: string;
   prices?: any[];
-  ticks?: any[];
   tickIntraDay?: any;
-  tickDayFromData?: string;
-  tradeValueFilter: number[]; // Trade value for each lenh mua hoac ban
+  ticks?: any[];
+  tradeValueFilter: number[]; // Trade value filter for each lenh mua hoac ban
+
+  /*__________ analysis table data __________*/
+  analysisTableData?: any[];
   capFilter?: number;
-  analysis?: any[];
-  hullma_intra_day?: {
-    fromDate: string;
-    toDate: string;
-    hullma5?: any[];
-    hullma15?: any[];
-    hullma30?: any[];
-  };
+  marketCategories?: MarketSymbolCategory[];
+  selectedMarketCat?: MarketSymbolCategory;
 }
 export const analysisInitialState: AnalysisState = {
   fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),

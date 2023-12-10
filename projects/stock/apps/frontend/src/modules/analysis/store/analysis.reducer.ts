@@ -1,16 +1,18 @@
+import type { MarketSymbolCategory } from '@modules/analysis/types';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { analysisInitialState } from '@src/modules/analysis/store/analysis.state';
 import { SYMBOL_CACHE_KEY } from '@src/value/analysis.value';
 import type { PayloadAction } from '@stock/packages-redux';
 import { createSlice } from '@stock/packages-redux';
 import { map, sortBy } from 'lodash';
+import { filter } from 'lodash-es';
 import moment from 'moment/moment';
 
 export const analysisSlice = createSlice({
   name: 'analysis',
   initialState: analysisInitialState,
   reducers: {
-    /* Load Cors*/
+    /* ____________________________________ Load Cors ____________________________________*/
     loadCors: () => undefined,
     loadCorsSuccess: (state, action: PayloadAction<ApiResponse>) => {
       state.cors = action.payload.data.cors;
@@ -18,14 +20,13 @@ export const analysisSlice = createSlice({
       return state;
     },
 
-    /* Load tick intra-day*/
+    /* ____________________________________ Load tick intra-day ____________________________________*/
     loadTickIntraDay: (_, __: PayloadAction<{ toDate?: string }>) => undefined,
     refreshTickIntraDay: () => undefined,
     loadTickIntraDaySuccess: (state, action: PayloadAction<ApiResponse>) => {
       const tickIntraDay = action.payload.data;
       if (Array.isArray(tickIntraDay['meta'])) {
         const date = moment(tickIntraDay['date']);
-        state.tickDayFromData = date.format('YYYY-MM-DD');
         tickIntraDay.meta = map(tickIntraDay.meta, (d) => {
           const timeString = d['time'];
           date.utc().set({
@@ -42,7 +43,7 @@ export const analysisSlice = createSlice({
       return state;
     },
 
-    /* load tick multiple days*/
+    /* ____________________________________ load tick multiple days ____________________________________*/
     loadTicks: () => undefined,
     loadTicksSuccess: (state, action: PayloadAction<ApiResponse>) => {
       if (Array.isArray(action.payload.data)) {
@@ -50,7 +51,7 @@ export const analysisSlice = createSlice({
       }
     },
 
-    /* load price history*/
+    /* ____________________________________ load price history ____________________________________*/
     loadPrices: () => undefined,
     loadPricesSuccess: (state, action: PayloadAction<ApiResponse>) => {
       if (Array.isArray(action.payload.data)) {
@@ -58,7 +59,55 @@ export const analysisSlice = createSlice({
       }
     },
 
-    /* -------------- */
+    /* ____________________________________ load analysis table data ____________________________________*/
+    loadAnalysisTableData: () => undefined,
+    loadAnalysisTableDataSuccess: (
+      state,
+      action: PayloadAction<ApiResponse>,
+    ) => {
+      if (Array.isArray(action.payload.data)) {
+        state.analysisTableData = action.payload.data;
+      }
+    },
+
+    loadMarketCat: () => undefined,
+    loadMarketCatSuccess: (state, action: PayloadAction<ApiResponse>) => {
+      if (Array.isArray(action.payload.data)) {
+        state.marketCategories = action.payload.data;
+      }
+    },
+    selectMarketCat: (
+      state,
+      action: PayloadAction<{ cat: MarketSymbolCategory }>,
+    ) => {
+      state.selectedMarketCat = action.payload.cat;
+    },
+    toggleSelectedCatSymbol: (
+      state,
+      action: PayloadAction<{ symbol: string }>,
+    ) => {
+      if (state.selectedMarketCat) {
+        if (
+          state?.selectedMarketCat?.symbols.indexOf(action.payload.symbol) > -1
+        ) {
+          state.selectedMarketCat.symbols = filter(
+            state?.selectedMarketCat?.symbols,
+            (a) => a !== action.payload.symbol,
+          );
+        } else {
+          state.selectedMarketCat.symbols.push(action.payload.symbol);
+        }
+      }
+    },
+    saveMarketCat: (
+      state,
+      action: PayloadAction<{ cat: MarketSymbolCategory }>,
+    ) => {
+      state.selectedMarketCat = action.payload.cat;
+    },
+    saveMarketCatSuccess: (_, __: PayloadAction<ApiResponse>) => {},
+
+    /* ____________________________________ general ____________________________________ */
     setSymbol(state, { payload }) {
       const { symbol } = payload;
       localStorage.setItem(SYMBOL_CACHE_KEY, symbol);
@@ -82,16 +131,6 @@ export const analysisSlice = createSlice({
     },
     setCapFilter(state, action) {
       state.capFilter = action.payload?.capFilter;
-    },
-    setHullmaDate(state, action) {
-      const { fromDate, toDate } = action.payload;
-
-      state.hullma_intra_day = {
-        fromDate,
-        toDate,
-      };
-
-      return state;
     },
   },
 });

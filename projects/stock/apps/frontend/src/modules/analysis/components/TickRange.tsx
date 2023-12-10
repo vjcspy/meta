@@ -32,12 +32,18 @@ const TickRange = combineHOC(
   const [viewByValue, setViewByValue] = useState(true);
 
   useEffect(() => {
-    props.actions?.calTickRangeData({
-      ticks: props.state.ticks,
-      tradeValue: props.state.tradeValueFilter?.[1],
-      viewByValue,
-      symbol: props.state.symbol,
-    });
+    if (
+      Array.isArray(props.state.ticks) &&
+      props.state.ticks.length > 0 &&
+      props.state?.symbol
+    ) {
+      props.actions?.calTickRangeData({
+        ticks: props.state.ticks,
+        tradeValue: props.state.tradeValueFilter?.[1],
+        viewByValue,
+        symbol: props.state.symbol,
+      });
+    }
   }, [
     props.state?.ticks,
     props.state?.tradeValueFilter?.[1],

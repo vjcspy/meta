@@ -1,5 +1,5 @@
-import SymbolTable from '@modules/analysis/components/SymbolTable';
+import MarketTickRange from '@modules/analysis/components/MarketTickRange';
 
 export default function TickRangeMarket() {
-  return <SymbolTable />;
+  return <MarketTickRange />;
 }

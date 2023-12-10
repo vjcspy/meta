@@ -9,7 +9,7 @@ import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension';
-import { last } from 'lodash';
+import { last } from 'lodash-es';
 import moment from 'moment/moment';
 import { useEffect, useMemo } from 'react';
 

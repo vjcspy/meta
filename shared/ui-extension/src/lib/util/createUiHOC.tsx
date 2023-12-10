@@ -64,7 +64,7 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 
 export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
   hookFn: (props: any) => Pick<TProps, TInjectedKeys>,
-  displayName: string,
+  displayName: string = 'UiHOC',
 ) {
   return function hoc(Component: React.ComponentType<TProps>) {
     const UiHOC = (props1: Omit<TProps, TInjectedKeys>) => {
@@ -91,8 +91,9 @@ export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
       );
     };
 
-    const oriDisplayName = Component.displayName || Component.name || '';
-    UiHOC.displayName = `${displayName}(${oriDisplayName})`;
+    UiHOC.displayName = `${displayName}(${
+      Component.displayName || Component.name || ''
+    })`;
 
     return UiHOC;
   };
