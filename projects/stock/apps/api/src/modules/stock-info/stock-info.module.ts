@@ -1,6 +1,7 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CorController } from '@modules/stock-info/controller/cor.controller';
+import { MarketCatController } from '@modules/stock-info/controller/market-cat.controller';
 import { StockPriceController } from '@modules/stock-info/controller/stock-price.controller';
 import { TickController } from '@modules/stock-info/controller/tick.controller';
 import { CRONJOB_SERVICES } from '@modules/stock-info/cronjob';
@@ -53,7 +54,12 @@ import { Module } from '@nestjs/common';
     SyncTicksConsumer,
     RefreshTickConsumer,
   ],
-  controllers: [CorController, StockPriceController, TickController],
+  controllers: [
+    CorController,
+    StockPriceController,
+    TickController,
+    MarketCatController,
+  ],
   exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS],
 })
 export class StockInfoModule implements OnModuleInit {

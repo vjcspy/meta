@@ -5,6 +5,10 @@ import {
   refreshTickIntraDay$,
 } from '@modules/analysis/store/effects/loadTickIntraDay';
 import { loadTicks$ } from '@modules/analysis/store/effects/loadTicks';
+import {
+  loadMarketCat$,
+  saveMarketCat$,
+} from '@modules/analysis/store/effects/marketCat';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
 import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiResponseRx';
@@ -52,5 +56,7 @@ export const configAnalysisEffects = (storeManager: any) => {
     loadPrices$,
     refreshTickIntraDay$,
     loadAnalysisTableData$,
+    loadMarketCat$,
+    saveMarketCat$,
   ]);
 };

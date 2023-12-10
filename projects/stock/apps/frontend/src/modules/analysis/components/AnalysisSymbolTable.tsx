@@ -3,14 +3,15 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { withAnalysisTableData } from '@modules/analysis/hoc/withAnalysisTableData';
 import { withCors } from '@modules/analysis/hoc/withCors';
+import withMarketSymbolCategories from '@modules/analysis/hoc/withMarketSymbolCategories';
 import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
-import { combineHOC } from '@web/ui-extension/dist';
+import { combineHOC } from '@web/ui-extension';
 import { ConfigProvider, Switch, theme } from 'antd';
 import Search from 'antd/es/input/Search';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
-import { compact, find, map, uniqBy } from 'lodash';
+import { compact, filter, find, map, uniq, uniqBy } from 'lodash-es';
 import { useMemo, useState } from 'react';
 
 interface AnalysisSymbolType {
@@ -38,19 +39,43 @@ const hullTrend = {
   [-1]: 'DOWN',
 };
 
-const AnalysisSymbolTable = combineHOC(
+export default combineHOC(
   withThemState,
   withCors,
   withAnalysisTableData,
+  withMarketSymbolCategories,
 )((props) => {
+  const { adjustMarketCat } = props; // Allow select symbol to market category
   const [symbolSearch, setSymbolSearch] = useState('');
 
-  const tableData = useMemo(() => {
+  const originData = useMemo(() => {
     if (
       !Array.isArray(props.state.cors) ||
       props.state.cors.length === 0 ||
       !Array.isArray(props.state.analysisTableData) ||
       props.state.analysisTableData.length === 0
+    ) {
+      return undefined;
+    }
+
+    let data = map(props.state.analysisTableData, (i: any) => {
+      const cor = find(props.state.cors, (c: any) => c?.code === i?.symbol);
+
+      if (!cor) {
+        return undefined;
+      }
+
+      return { key: i.symbol, ...i, ...cor };
+    });
+    data = compact(data);
+    data = uniqBy(data, 'symbol');
+    return data;
+  }, [props.state.analysisTableData, props.state.cors]);
+
+  const columns = useMemo(() => {
+    if (
+      adjustMarketCat &&
+      !Array.isArray(props?.state?.selectedMarketCat?.symbols)
     ) {
       return undefined;
     }
@@ -64,17 +89,59 @@ const AnalysisSymbolTable = combineHOC(
       },
       {
         title: '',
-        width: 100,
+        width: adjustMarketCat ? 100 : 10,
         dataIndex: 'code',
-        fixed: 'left',
-        render: () => {
+        fixed: 'left' as any,
+        render: (value) => {
           return (
-            <Switch
-              checkedChildren={<CheckOutlined />}
-              unCheckedChildren={<CloseOutlined />}
-              defaultChecked
-            />
+            adjustMarketCat && (
+              <Switch
+                checkedChildren={<CheckOutlined />}
+                unCheckedChildren={<CloseOutlined />}
+                checked={
+                  props.state.selectedMarketCat.symbols.indexOf(value) > -1
+                }
+                onChange={(e) => {
+                  let symbols = [...props.state.selectedMarketCat.symbols];
+                  if (e) {
+                    symbols.push(value);
+                    symbols = uniq(symbols);
+                  } else {
+                    symbols = filter(symbols, (a) => a !== value);
+                  }
+                  props.actions.saveMarketCat({
+                    ...props.state.selectedMarketCat,
+                    symbols,
+                  });
+                }}
+              />
+            )
           );
+        },
+        filters: adjustMarketCat
+          ? [
+              {
+                text: 'On',
+                value: 1,
+              },
+              {
+                text: 'Off',
+                value: -1,
+              },
+            ]
+          : undefined,
+        onFilter: (value: any, record) => {
+          if (value == 1) {
+            return (
+              props.state.selectedMarketCat.symbols.indexOf(record.symbol) > -1
+            );
+          } else if (value === -1) {
+            return (
+              props.state.selectedMarketCat.symbols.indexOf(record.symbol) == -1
+            );
+          }
+
+          return true;
         },
       },
       {
@@ -162,43 +229,35 @@ const AnalysisSymbolTable = combineHOC(
         width: 100,
       },
     ];
+    return tableColumns;
+  }, [adjustMarketCat, props.state?.selectedMarketCat]);
 
-    let dataSource = map(props.state.analysisTableData, (i: any) => {
-      if (symbolSearch) {
-        if (
-          typeof i?.symbol !== 'string' ||
-          i.symbol.indexOf(symbolSearch.toUpperCase()) === -1
-        ) {
-          return undefined;
-        }
-      }
+  const dataSource = useMemo(() => {
+    if (!originData) {
+      return undefined;
+    }
+    let dataSource = originData;
+    if (symbolSearch) {
+      dataSource = filter(dataSource, (i) => {
+        return (
+          typeof i?.symbol === 'string' &&
+          i.symbol.indexOf(symbolSearch.toUpperCase()) > -1
+        );
+      });
+    }
 
-      const cor = find(props.state.cors, (c: any) => c?.code === i?.symbol);
-
-      if (!cor) {
-        return undefined;
-      }
-
-      return { key: i.symbol, ...i, ...cor };
-    });
-    dataSource = compact(dataSource);
-    dataSource = uniqBy(dataSource, 'symbol');
-
-    return {
-      columns: tableColumns,
-      dataSource,
-    };
-  }, [props.state.cors, props.state.analysisTableData, symbolSearch]);
+    return dataSource;
+  }, [originData, symbolSearch]);
 
   return (
     <>
       <Row title={`Analysis Symbol Table`} oneCol={false}>
-        {!tableData && (
+        {(!dataSource || !columns) && (
           <div>
             <span>Loading ...</span>
           </div>
         )}
-        {tableData && (
+        {dataSource && columns && (
           <div className="grid grid-cols-1 text-xs">
             <ConfigProvider
               theme={{
@@ -217,15 +276,15 @@ const AnalysisSymbolTable = combineHOC(
               <Table
                 pagination={false}
                 virtual
-                columns={tableData!.columns}
-                dataSource={tableData!.dataSource}
+                columns={columns}
+                dataSource={dataSource}
                 scroll={{ x: 2000, y: 400 }}
                 summary={() => (
                   <Table.Summary fixed="top">
                     <Table.Summary.Row>
                       <Table.Summary.Cell index={0} colSpan={2} align="center">
                         <Search
-                          style={{ width: 160 }}
+                          style={{ width: 100 }}
                           className="uppercase"
                           placeholder="Symbol"
                           onChange={(e) => {
@@ -253,5 +312,3 @@ const AnalysisSymbolTable = combineHOC(
     </>
   );
 });
-
-export default AnalysisSymbolTable;

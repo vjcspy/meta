@@ -1,7 +1,7 @@
 import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
 import { useSelectFromState } from '@src/store/selectFromState';
 import { useAppDispatch } from '@src/store/useAppDispatch';
-import { createUiHOC } from '@web/ui-extension/dist';
+import { createUiHOC } from '@web/ui-extension';
 import { useEffect } from 'react';
 
 export const withAnalysisTableData = createUiHOC(() => {

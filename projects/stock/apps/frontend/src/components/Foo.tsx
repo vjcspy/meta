@@ -1,7 +1,7 @@
 'use client';
 
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 import { useEffect, useState } from 'react';
 
 function withLogger(WrappedComponent: any) {

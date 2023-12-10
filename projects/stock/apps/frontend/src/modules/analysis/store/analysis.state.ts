@@ -1,3 +1,4 @@
+import type { MarketSymbolCategory } from '@modules/analysis/types';
 import moment from 'moment/moment';
 
 export interface AnalysisState {
@@ -15,6 +16,8 @@ export interface AnalysisState {
   /*__________ analysis table data __________*/
   analysisTableData?: any[];
   capFilter?: number;
+  marketCategories?: MarketSymbolCategory[];
+  selectedMarketCat?: MarketSymbolCategory;
 }
 export const analysisInitialState: AnalysisState = {
   fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),

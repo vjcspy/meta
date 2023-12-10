@@ -1,9 +1,11 @@
+import type { MarketSymbolCategory } from '@modules/analysis/types';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { analysisInitialState } from '@src/modules/analysis/store/analysis.state';
 import { SYMBOL_CACHE_KEY } from '@src/value/analysis.value';
 import type { PayloadAction } from '@stock/packages-redux';
 import { createSlice } from '@stock/packages-redux';
 import { map, sortBy } from 'lodash';
+import { filter } from 'lodash-es';
 import moment from 'moment/moment';
 
 export const analysisSlice = createSlice({
@@ -67,6 +69,43 @@ export const analysisSlice = createSlice({
         state.analysisTableData = action.payload.data;
       }
     },
+
+    loadMarketCat: () => undefined,
+    loadMarketCatSuccess: (state, action: PayloadAction<ApiResponse>) => {
+      if (Array.isArray(action.payload.data)) {
+        state.marketCategories = action.payload.data;
+      }
+    },
+    selectMarketCat: (
+      state,
+      action: PayloadAction<{ cat: MarketSymbolCategory }>,
+    ) => {
+      state.selectedMarketCat = action.payload.cat;
+    },
+    toggleSelectedCatSymbol: (
+      state,
+      action: PayloadAction<{ symbol: string }>,
+    ) => {
+      if (state.selectedMarketCat) {
+        if (
+          state?.selectedMarketCat?.symbols.indexOf(action.payload.symbol) > -1
+        ) {
+          state.selectedMarketCat.symbols = filter(
+            state?.selectedMarketCat?.symbols,
+            (a) => a !== action.payload.symbol,
+          );
+        } else {
+          state.selectedMarketCat.symbols.push(action.payload.symbol);
+        }
+      }
+    },
+    saveMarketCat: (
+      state,
+      action: PayloadAction<{ cat: MarketSymbolCategory }>,
+    ) => {
+      state.selectedMarketCat = action.payload.cat;
+    },
+    saveMarketCatSuccess: (_, __: PayloadAction<ApiResponse>) => {},
 
     /* ____________________________________ general ____________________________________ */
     setSymbol(state, { payload }) {
