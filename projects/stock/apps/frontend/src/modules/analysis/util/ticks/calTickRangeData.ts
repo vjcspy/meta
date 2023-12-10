@@ -1,4 +1,4 @@
-import { forEach, last, sortBy } from 'lodash';
+import { forEach, last, sortBy } from 'lodash-es';
 
 export const calTickRangeData = (data: {
   ticks: any[];

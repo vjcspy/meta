@@ -9,6 +9,10 @@ import {
   loadMarketCat$,
   saveMarketCat$,
 } from '@modules/analysis/store/effects/marketCat';
+import {
+  loadMarketSymbolTick$,
+  loadMarketTicks$,
+} from '@modules/analysis/store/effects/marketTicks';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
 import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiResponseRx';
@@ -58,5 +62,7 @@ export const configAnalysisEffects = (storeManager: any) => {
     loadAnalysisTableData$,
     loadMarketCat$,
     saveMarketCat$,
+    loadMarketTicks$,
+    loadMarketSymbolTick$,
   ]);
 };

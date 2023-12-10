@@ -1,4 +1,5 @@
 import { OkResponse } from '@modules/core/model/ok-response';
+import { getInstanceId, xAppContext } from '@nest/base/dist';
 import type {
   CallHandler,
   ExecutionContext,
@@ -15,6 +16,10 @@ export class AppResponseInterceptor<T> implements NestInterceptor<T, Response> {
       map((data) => {
         if (data instanceof OkResponse) {
           const response = context.switchToHttp().getResponse();
+          response.header(
+            'x-correlation-id',
+            `${getInstanceId()}|${xAppContext().getXCorrelationId()}`,
+          );
           if (response.statusCode === 201) {
             response.status(200); // Thay đổi mã trạng thái từ 201 thành 200
           }

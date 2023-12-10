@@ -1,6 +1,5 @@
 import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
 import type { AnalysisState } from '@modules/analysis/store/analysis.state';
-import { CommonValue } from '@modules/analysis/value/common.value';
 import { APP_ACTIONS } from '@modules/app/store/app.actions';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
@@ -8,7 +7,7 @@ import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiRespo
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { auditTime, debounceTime, from, map } from 'rxjs';
+import { debounceTime, from, map } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 
 export const loadTicks$ = createEffect((action$, state$) =>
@@ -35,4 +34,3 @@ export const loadTicks$ = createEffect((action$, state$) =>
     }),
   ),
 );
-

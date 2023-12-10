@@ -8,7 +8,7 @@ import { withCors } from '@src/modules/analysis/hoc/withCors';
 import { withSelectedSymbol } from '@src/modules/analysis/hoc/withSelectedSymbol';
 import { combineHOC } from '@web/ui-extension';
 import Slider from 'antd/es/slider';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import moment from 'moment';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useState } from 'react';

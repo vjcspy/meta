@@ -4,7 +4,7 @@ import { analysisInitialState } from '@src/modules/analysis/store/analysis.state
 import { SYMBOL_CACHE_KEY } from '@src/value/analysis.value';
 import type { PayloadAction } from '@stock/packages-redux';
 import { createSlice } from '@stock/packages-redux';
-import { map, sortBy } from 'lodash';
+import { map, sortBy } from 'lodash-es';
 import { filter } from 'lodash-es';
 import moment from 'moment/moment';
 
@@ -106,6 +106,15 @@ export const analysisSlice = createSlice({
       state.selectedMarketCat = action.payload.cat;
     },
     saveMarketCatSuccess: (_, __: PayloadAction<ApiResponse>) => {},
+
+    /* ____________________________________ Load Market Ticks ____________________________________*/
+    loadMarketTicks: () => undefined, // it is safe for call every time you want
+    loadMarketSymbolTick: (_, __: PayloadAction<{ symbol: string }>) =>
+      undefined, // not call directly from action dispatcher
+    loadMarketSymbolTickSuccess: (
+      _,
+      __: PayloadAction<{ symbol: string; data: ApiResponse }>,
+    ) => undefined,
 
     /* ____________________________________ general ____________________________________ */
     setSymbol(state, { payload }) {

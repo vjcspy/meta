@@ -18,9 +18,15 @@ export interface AnalysisState {
   capFilter?: number;
   marketCategories?: MarketSymbolCategory[];
   selectedMarketCat?: MarketSymbolCategory;
+  marketFromDate: string;
+  marketToDate: string;
 }
 export const analysisInitialState: AnalysisState = {
   fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
   toDate: moment().utc().format('YYYY-MM-DD'),
   tradeValueFilter: [0, 250, 1000],
+
+  /* __________ market __________ */
+  marketFromDate: moment().utc().subtract(90, 'days').format('YYYY-MM-DD'),
+  marketToDate: moment().utc().format('YYYY-MM-DD'),
 };

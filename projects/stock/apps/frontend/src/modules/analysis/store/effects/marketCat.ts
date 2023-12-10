@@ -14,7 +14,7 @@ export const loadMarketCat$ = createEffect((action$) =>
     ofType(ANALYSIS_ACTIONS.loadMarketCat),
     debounceTime(500),
     switchMap(() => {
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/market-cat/list`;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-cat/list`;
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),
@@ -37,7 +37,7 @@ export const saveMarketCat$ = createEffect((action$) =>
     ofType(ANALYSIS_ACTIONS.saveMarketCat),
     debounceTime(500),
     switchMap((action) => {
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/market-cat/save`;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-cat/save`;
 
       return from(axios.post(url, action.payload.cat)).pipe(
         map((res) => res.data),
