@@ -44,6 +44,7 @@ export class StockPriceController {
       STOCK_PRICE_SYNC({
         code: symbol,
         resolve: () => {},
+        fromBeginning: true,
       }),
     );
 
