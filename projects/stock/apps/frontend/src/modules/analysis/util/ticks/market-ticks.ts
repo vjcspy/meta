@@ -25,7 +25,7 @@ resolveTickChart$
 const resolvedTickCart$ = new ReplaySubject();
 
 export class MarketTicks {
-  static DEBUG = true;
+  static DEBUG = false;
   static fromDate: string;
   static toDate: string;
   static loadingInfo: Record<
