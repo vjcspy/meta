@@ -2,14 +2,17 @@
 
 import AnalysisSymbolTable from '@modules/analysis/components/AnalysisSymbolTable';
 import MarketSymbolCategories from '@modules/analysis/components/MarketSymbolCategories';
-import withMarketTickData from '@modules/analysis/hoc/withMarketTickData';
+import MarketTickRangeChart from '@modules/analysis/components/MarketTickRange/MarketTickRangeChart';
+import MarketTickRangeConfig from '@modules/analysis/components/MarketTickRange/MarketTickRangeConfig';
 import { combineHOC } from '@web/ui-extension';
 
-export default combineHOC(withMarketTickData)(() => {
+export default combineHOC()(() => {
   return (
     <>
       <MarketSymbolCategories />
       <AnalysisSymbolTable adjustMarketCat={true} />
+      <MarketTickRangeConfig />
+      <MarketTickRangeChart />
     </>
   );
 });

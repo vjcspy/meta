@@ -33,15 +33,7 @@ export const loadMarketTicks$ = createEffect((action$, state$) =>
         Array.isArray(selectedMarketCat?.symbols) &&
         selectedMarketCat?.symbols.length > 0
       ) {
-        if (
-          marketFromDate !== MarketTicks.fromDate ||
-          marketToDate !== MarketTicks.toDate
-        ) {
-          MarketTicks.ticks = [];
-          MarketTicks.loadingInfo = {};
-          MarketTicks.fromDate = marketFromDate;
-          MarketTicks.toDate = marketToDate;
-        }
+        MarketTicks.setTicksDate(marketFromDate, marketToDate);
 
         const needLoadSymbols = difference(
           selectedMarketCat.symbols,
@@ -71,12 +63,13 @@ export const loadMarketSymbolTick$ = createEffect((action$) =>
         filter(
           (action) =>
             !MarketTicks.loadingInfo[action?.payload?.symbol]?.isLoading ||
-            MarketTicks.loadingInfo[action?.payload?.symbol]?.loaded,
+            !!MarketTicks.loadingInfo[action?.payload?.symbol]?.loaded,
         ),
         switchMap((action) => {
           const symbol = action.payload.symbol;
           MarketTicks.loadingInfo[symbol] = { isLoading: true };
-          console.log(`Will load market tick data for symbol ${symbol}`);
+          MarketTicks.log(`Will load market tick data for symbol ${symbol}`);
+
           const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v1?symbol=${symbol}&from=${MarketTicks.fromDate}&to=${MarketTicks.toDate}`;
 
           return from(fetch(url)).pipe(
@@ -89,7 +82,11 @@ export const loadMarketSymbolTick$ = createEffect((action$) =>
                   loaded: true,
                 };
                 MarketTicks.ticks.push({ symbol, ticks: data.data });
-                console.log(MarketTicks.ticks);
+                MarketTicks.log(
+                  `Loaded market ticks ${symbol}`,
+                  MarketTicks.ticks,
+                );
+                MarketTicks.publishResolveTickChartData();
                 return ANALYSIS_ACTIONS.loadMarketSymbolTickSuccess({
                   symbol,
                   data,

@@ -1,14 +1,11 @@
 'use client';
 
+import TradeValueFilter from '@modules/analysis/components/TradeValueFilter';
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
-import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
-import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { withCors } from '@src/modules/analysis/hoc/withCors';
 import { withSelectedSymbol } from '@src/modules/analysis/hoc/withSelectedSymbol';
 import { combineHOC } from '@web/ui-extension';
-import Slider from 'antd/es/slider';
-import { debounce } from 'lodash-es';
 import moment from 'moment';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -22,8 +19,6 @@ const Symbol = combineHOC(
   withCors,
   withSelectedSymbol,
   withFromToDate,
-  withTradeValueFilter,
-  withThemState,
 )((props) => {
   const corOptions = useMemo(() => {
     return props.state.cors
@@ -68,12 +63,6 @@ const Symbol = combineHOC(
     [props?.actions?.setToDate],
   );
 
-  const debounceUpdateTradeValue = useMemo(() => {
-    return debounce((data: any) => {
-      props?.actions?.setTradeValueFilterAction(data);
-    }, 1000);
-  }, []);
-
   return (
     <Row title={`${value?.label ?? 'Chưa chọn mã'}`} oneCol={false}>
       <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
@@ -115,30 +104,7 @@ const Symbol = combineHOC(
             />
           </div>
         )}
-        {props?.tradeValue && (
-          <div>
-            <label>
-              Trade Value:
-              <span className="font-bold text-red-500">{` ${props?.state?.tradeValueFilter?.[1]} triệu`}</span>
-            </label>
-            <div className="mt-5">
-              <Slider
-                range
-                max={1000}
-                min={0}
-                defaultValue={props?.state?.tradeValueFilter ?? 250}
-                onChange={debounceUpdateTradeValue}
-                styles={{
-                  rail: {
-                    backgroundColor: props?.state.themeState.isDarkMode
-                      ? 'white'
-                      : 'rgba(0, 0, 0, 0.04)',
-                  },
-                }}
-              />
-            </div>
-          </div>
-        )}
+        {props?.tradeValue && <TradeValueFilter />}
       </div>
     </Row>
   );

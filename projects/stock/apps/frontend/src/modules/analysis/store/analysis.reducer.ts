@@ -106,6 +106,12 @@ export const analysisSlice = createSlice({
       state.selectedMarketCat = action.payload.cat;
     },
     saveMarketCatSuccess: (_, __: PayloadAction<ApiResponse>) => {},
+    setMarketFromDate: (state, action: PayloadAction<{ fromDate: string }>) => {
+      state.marketFromDate = action.payload.fromDate;
+    },
+    setMarketToDate: (state, action: PayloadAction<{ toDate: string }>) => {
+      state.marketToDate = action.payload.toDate;
+    },
 
     /* ____________________________________ Load Market Ticks ____________________________________*/
     loadMarketTicks: () => undefined, // it is safe for call every time you want
