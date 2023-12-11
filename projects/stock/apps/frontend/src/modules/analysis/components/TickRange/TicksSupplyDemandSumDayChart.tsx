@@ -1,8 +1,9 @@
 import { CommonValue } from '@modules/analysis/value/common.value';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
+import { forEach, size, sortBy, values } from 'lodash-es';
 import moment from 'moment/moment';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 
 const TicksSupplyDemandSumDayChart = React.memo(
@@ -11,23 +12,97 @@ const TicksSupplyDemandSumDayChart = React.memo(
     market?: boolean;
     type: 'sheep' | 'shark';
   }) => {
+    useEffect(() => {
+      setTimeout(() => {
+        window.scrollTo(0, 999999999999);
+      }, 250);
+    }, []);
+
     const { tickRageData, market = false, type } = props;
+
+    let marketTickRageData: any;
+
     const chartJsConfig: any = useMemo(() => {
       if (!Array.isArray(tickRageData)) {
         return undefined;
       }
 
+      let tickSize: number;
+      const data: Record<
+        string,
+        {
+          date: string;
+          sBSheep: number;
+          sBShark: number;
+          sSSheep: number;
+          sSShark: number;
+        }
+      > = {};
       if (market) {
-        return {};
+        let errorInfo: Error;
+        forEach(tickRageData, (t: any) => {
+          const tickData = t?.data;
+
+          if (tickData?.length > 0) {
+            if (!tickSize) {
+              tickSize = tickData.length;
+            }
+
+            if (tickSize !== tickData.length) {
+              errorInfo = new Error(
+                `Tick data length not equal for symbol ${tickData?.symbol}`,
+              );
+            }
+
+            forEach(tickData, (d: any) => {
+              const date = moment(d.date).format('YY-MM-DD');
+              if (!data[date]) {
+                data[date] = {
+                  date,
+                  sBSheep: 0,
+                  sBShark: 0,
+                  sSSheep: 0,
+                  sSShark: 0,
+                };
+              }
+
+              if (type === 'sheep') {
+                data[date].sBSheep = data[date].sBSheep + d.sBSheep;
+                data[date].sSSheep = data[date].sSSheep + d.sSSheep;
+              } else {
+                data[date].sBShark = data[date].sBShark + d.sBShark;
+                data[date].sSShark = data[date].sSShark + d.sSShark;
+              }
+            });
+          } else {
+            errorInfo = new Error(
+              `Tick data empty for symbol ${tickData?.symbol}`,
+            );
+
+            return false;
+          }
+        });
+
+        // @ts-ignore
+        if (errorInfo) {
+          return undefined;
+        }
+
+        marketTickRageData = sortBy(values(data));
       }
+
       return {
         data: {
-          labels: tickRageData.map((d: any) => moment(d.date).format('MM-DD')),
+          labels: market
+            ? marketTickRageData.map((d: any) => d.date)
+            : tickRageData.map((d: any) => moment(d.date).format('MM-DD')),
           datasets: [
             {
               label: `Buy `,
-              data: tickRageData.map((d: any) =>
-                type === 'sheep' ? d.sBSheep : d.sBShark,
+              data: (market ? marketTickRageData : tickRageData).map(
+                (d: any) => {
+                  return type === 'sheep' ? d.sBSheep : d.sBShark;
+                },
               ),
               fill: false,
               borderColor:
@@ -38,8 +113,8 @@ const TicksSupplyDemandSumDayChart = React.memo(
             },
             {
               label: `Sell`,
-              data: tickRageData.map((d: any) =>
-                type === 'sheep' ? d.sSSheep : d.sSShark,
+              data: (market ? marketTickRageData : tickRageData).map(
+                (d: any) => (type === 'sheep' ? d.sSSheep : d.sSShark),
               ),
               fill: false,
               borderColor:
@@ -50,10 +125,11 @@ const TicksSupplyDemandSumDayChart = React.memo(
             },
             {
               label: `Diff`,
-              data: tickRageData.map((d: any) =>
-                type === 'sheep'
-                  ? d.sBSheep - d.sSSheep
-                  : d.sBShark - d.sSShark,
+              data: (market ? marketTickRageData : tickRageData).map(
+                (d: any) =>
+                  type === 'sheep'
+                    ? d.sBSheep - d.sSSheep
+                    : d.sBShark - d.sSShark,
               ),
               fill: false,
               borderColor: 'pink',
@@ -113,7 +189,9 @@ const TicksSupplyDemandSumDayChart = React.memo(
       <>
         {chartJsConfig && (
           <Row
-            title={`Mua bán cộng dồn - ${type === 'sheep' ? 'SHEEP' : 'SHARK'}`}
+            title={`Mua bán cộng dồn - ${
+              type === 'sheep' ? 'SHEEP' : 'SHARK'
+            } (${market ? size(tickRageData) : 1} symbols)`}
             oneCol={false}
           >
             <div className="grid grid-cols-1 gap-6 pt-2">

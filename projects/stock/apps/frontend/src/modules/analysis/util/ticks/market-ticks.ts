@@ -37,7 +37,7 @@ export class MarketTicks {
   > = {};
   static ticks: { symbol: string; ticks: any }[] = [];
 
-  /* Calculate market ticks chart data*/
+  /* ___________________________________ Calculate market ticks chart data ___________________________________*/
   static tickCharts: { symbol: string; tradeValue: number; data: any }[] = [];
 
   /*
@@ -217,11 +217,10 @@ export class MarketTicks {
       need,
       MarketTicks.tickCharts.map((t) => t.symbol),
     );
-    console.log('=>>>>>>>>>>> diff', diff);
     if (diff.length > 0) {
       return {
         isFinish: false,
-        message: `Calculating market tick for ${diff.length} symbols`,
+        message: `Remaining ${diff.length} symbols to calculate...`,
       };
     }
 
