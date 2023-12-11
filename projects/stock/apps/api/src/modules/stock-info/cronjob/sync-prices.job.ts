@@ -1,5 +1,4 @@
 import { SlackHelper } from '@modules/core/helper/slack.helper';
-import { CronScheduleModel } from '@modules/core/model/CronSchedule.model';
 import { prisma } from '@modules/core/util/prisma';
 import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-price.publisher';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
@@ -15,7 +14,6 @@ export class SyncPricesJob {
 
   constructor(
     private syncPricePublisher: StockPricePublisher,
-    private cronScheduleModel: CronScheduleModel,
     private slackHelper: SlackHelper,
   ) {}
 
@@ -58,19 +56,22 @@ export class SyncPricesJob {
     return numberSyncSuccess === totalCor;
   }
 
-  @Cron('0 */30 9-14 * * 1-5', {
-    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_5_MINS`,
+  @Cron('0 */15 9-14 * * 1-5', {
+    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_15_MINS`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncPrice() {
     if (!isMainProcess()) return;
-    const size = await this.syncPricePublisher.publish(['HOSE']);
+    const size = await this.syncPricePublisher.publish();
 
     // VNINDEX
     await this.syncPricePublisher.publishOne('HOSTC');
     this.logger.info(
       `Published sync stock price current day with size ${size.size}`,
     );
+    this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+      text: 'Triggered sync stock prices',
+    });
   }
 
   /*

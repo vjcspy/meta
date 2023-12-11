@@ -14,5 +14,9 @@ export default createUiHOC(() => {
     dispatch(ANALYSIS_ACTIONS.loadMarketTicks());
   }, [selectedMarketCat]);
 
-  return {};
+  return {
+    state: {
+      selectedMarketCat,
+    },
+  };
 });

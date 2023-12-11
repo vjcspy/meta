@@ -4,21 +4,27 @@ import {
   GetTickHistoriesRequest,
   GetTickHistoryRequest,
 } from '@modules/stock-info/controller/tick.dto';
+import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
+import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { TickHelper } from '@modules/stock-info/helper/tick.helper';
-import { RefreshTickConsumer } from '@modules/stock-info/queue/consumer/refresh-tick.consumer';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { XLogger } from '@nest/base';
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { isTradingTime } from '@stock/packages-com/dist/util/isTradingTime';
+import type { Moment } from 'moment';
+import moment from 'moment/moment';
 
 @Controller('tick')
 export class TickController {
+  static _SYNC_CHECK_CACHE_INFO: Record<string, Moment> = {};
+
   private readonly logger = new XLogger(TickController.name);
 
   constructor(
     private readonly tickHelper: TickHelper,
-    private refreshTickConsumer: RefreshTickConsumer,
     private syncTickPublisher: SyncTicksPublisher,
+    private syncTickHelper: SyncTicksHelper,
+    private stockPriceHelper: StockPriceHelper,
   ) {}
 
   @Get('history')
@@ -74,6 +80,32 @@ export class TickController {
     if (!isTradingTime()) {
       throw new BadRequestException('Not in trading time');
     }
+
+    if (
+      !TickController._SYNC_CHECK_CACHE_INFO[infoQuery.symbol] ||
+      !moment().isSame(
+        TickController._SYNC_CHECK_CACHE_INFO[infoQuery.symbol],
+        'day',
+      )
+    ) {
+      TickController._SYNC_CHECK_CACHE_INFO[infoQuery.symbol] = moment();
+      const tick: any = await this.tickHelper.getHistory(
+        infoQuery.symbol,
+        moment().toDate(),
+      );
+
+      const price = await this.stockPriceHelper.getHistory(
+        infoQuery.symbol,
+        moment().toDate(),
+        moment().toDate(),
+      );
+
+      if (price?.length > 0 && !tick?.id) {
+        this.syncTickHelper.syncTicks(infoQuery.symbol);
+        return new OkResponse();
+      }
+    }
+
     this.syncTickPublisher.publishRefreshTick(infoQuery.symbol);
 
     return new OkResponse();

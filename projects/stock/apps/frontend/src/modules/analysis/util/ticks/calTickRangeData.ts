@@ -83,5 +83,9 @@ export const calTickRangeData = (data: {
     });
   });
 
-  return _data;
+  return {
+    symbol,
+    data: _data,
+    tradeValue,
+  };
 };

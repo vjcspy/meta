@@ -7,12 +7,12 @@ import withMarketSymbolCategories from '@modules/analysis/hoc/withMarketSymbolCa
 import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension';
-import { ConfigProvider, Switch, theme } from 'antd';
+import { ConfigProvider, InputNumber, Switch, theme } from 'antd';
 import Search from 'antd/es/input/Search';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
 import { compact, filter, find, map, uniq, uniqBy } from 'lodash-es';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 interface AnalysisSymbolType {
   key: React.Key;
@@ -45,6 +45,7 @@ export default combineHOC(
   withAnalysisTableData,
   withMarketSymbolCategories,
 )((props) => {
+  const [tradeValue, setTradeValue] = useState(80); // filter GTGD
   const { adjustMarketCat } = props; // Allow select symbol to market category
   const [symbolSearch, setSymbolSearch] = useState('');
 
@@ -59,6 +60,12 @@ export default combineHOC(
     }
 
     let data = map(props.state.analysisTableData, (i: any) => {
+      if (
+        Math.max(i.trade_value_7, i.trade_value_14, i.trade_value_30) <
+        tradeValue
+      ) {
+        return undefined;
+      }
       const cor = find(props.state.cors, (c: any) => c?.code === i?.symbol);
 
       if (!cor) {
@@ -70,7 +77,7 @@ export default combineHOC(
     data = compact(data);
     data = uniqBy(data, 'symbol');
     return data;
-  }, [props.state.analysisTableData, props.state.cors]);
+  }, [props.state.analysisTableData, props.state.cors, tradeValue]);
 
   const columns = useMemo(() => {
     if (
@@ -187,18 +194,6 @@ export default combineHOC(
       },
 
       {
-        title: 'industryName1',
-        dataIndex: 'industryName1',
-      },
-      {
-        title: 'industryName2',
-        dataIndex: 'industryName2',
-      },
-      {
-        title: 'industryName3',
-        dataIndex: 'industryName3',
-      },
-      {
         title: 'GTGD3',
         dataIndex: 'trade_value_7',
         sorter: (a, b) => a.trade_value_7 - b.trade_value_7,
@@ -228,6 +223,18 @@ export default combineHOC(
         sorter: (a, b) => a.cap - b.cap,
         width: 100,
       },
+      {
+        title: 'industryName1',
+        dataIndex: 'industryName1',
+      },
+      {
+        title: 'industryName2',
+        dataIndex: 'industryName2',
+      },
+      {
+        title: 'industryName3',
+        dataIndex: 'industryName3',
+      },
     ];
     return tableColumns;
   }, [adjustMarketCat, props.state?.selectedMarketCat]);
@@ -248,6 +255,10 @@ export default combineHOC(
 
     return dataSource;
   }, [originData, symbolSearch]);
+
+  const onTradeValueChange = useCallback((e: any) => {
+    setTradeValue(e);
+  }, []);
 
   return (
     <>
@@ -293,9 +304,17 @@ export default combineHOC(
                           onSearch={() => {}}
                         />
                       </Table.Summary.Cell>
-                      {/*<Table.Summary.Cell index={2}>*/}
-                      {/*  Scroll Context*/}
-                      {/*</Table.Summary.Cell>*/}
+                      <Table.Summary.Cell index={2} colSpan={2} align="center">
+                        <div className="inline">
+                          <span className="mr-2">GTGD</span>
+                          <InputNumber
+                            min={0}
+                            max={1000}
+                            defaultValue={tradeValue}
+                            onChange={onTradeValueChange}
+                          />
+                        </div>
+                      </Table.Summary.Cell>
                       {/*<Table.Summary.Cell index={12}>*/}
                       {/*  Fix Right*/}
                       {/*</Table.Summary.Cell>*/}

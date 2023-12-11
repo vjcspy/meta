@@ -3,7 +3,7 @@ import { createUiHOC } from '@web/ui-extension';
 import { useState } from 'react';
 
 export const withCalTickRageWorker = createUiHOC(() => {
-  const [tickRageData, setTickRageDate] = useState<any>();
+  const [tickRageData, setTickRageData] = useState<any>();
 
   const { emmit: calTickRangeData } = useWebWorker(
     () =>
@@ -13,7 +13,7 @@ export const withCalTickRageWorker = createUiHOC(() => {
           import.meta.url,
         ),
       ),
-    setTickRageDate,
+    (data: any) => setTickRageData(data?.data),
   );
 
   return {
@@ -22,4 +22,4 @@ export const withCalTickRageWorker = createUiHOC(() => {
       calTickRangeData,
     },
   };
-}, 'withCalTickRageWorker');
+});
