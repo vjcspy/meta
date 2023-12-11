@@ -8,6 +8,8 @@ import { combineHOC } from '@web/ui-extension/dist';
 import { filter } from 'lodash-es';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import TicksSupplyDemandDayChart from '../TickRange/TicksSupplyDemandDayChart';
+
 const defaultViewChart = {
   sumShark: false,
   sumSheep: false,
@@ -156,11 +158,25 @@ export default combineHOC(
                     market={true}
                   />
                 )}
-
                 {viewChart.sumSheep && (
                   <TicksSupplyDemandSumDayChart
                     tickRageData={tickRageData}
                     type="sheep"
+                    market={true}
+                  />
+                )}
+
+                {viewChart.sheep && (
+                  <TicksSupplyDemandDayChart
+                    tickRageData={tickRageData}
+                    type="sheep"
+                    market={true}
+                  />
+                )}
+                {viewChart.shark && (
+                  <TicksSupplyDemandDayChart
+                    tickRageData={tickRageData}
+                    type="shark"
                     market={true}
                   />
                 )}

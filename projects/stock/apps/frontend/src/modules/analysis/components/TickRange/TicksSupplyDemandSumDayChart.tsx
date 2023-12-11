@@ -1,7 +1,7 @@
 import { CommonValue } from '@modules/analysis/value/common.value';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
-import { forEach, size, sortBy, values } from 'lodash-es';
+import { difference, first, forEach, size, sortBy, values } from 'lodash-es';
 import moment from 'moment/moment';
 import React, { useEffect, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -20,13 +20,11 @@ const TicksSupplyDemandSumDayChart = React.memo(
 
     const { tickRageData, market = false, type } = props;
 
-    let marketTickRageData: any;
-
     const chartJsConfig: any = useMemo(() => {
       if (!Array.isArray(tickRageData)) {
         return undefined;
       }
-
+      let marketTickRageData: any;
       let tickSize: number;
       const data: Record<
         string,
@@ -49,8 +47,18 @@ const TicksSupplyDemandSumDayChart = React.memo(
             }
 
             if (tickSize !== tickData.length) {
+              const diffDates = difference(
+                first(tickRageData)?.data?.map((d: any) => d.date),
+                t?.data?.map((d: any) => d.date),
+              );
+              console.error(
+                `Tick data length not equal for symbol ${t?.symbol}`,
+                tickRageData,
+                'diffDates',
+                diffDates,
+              );
               errorInfo = new Error(
-                `Tick data length not equal for symbol ${tickData?.symbol}`,
+                `Tick data length not equal for symbol ${t?.symbol}`,
               );
             }
 
@@ -85,6 +93,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
 
         // @ts-ignore
         if (errorInfo) {
+          console.error(errorInfo);
           return undefined;
         }
 
@@ -95,7 +104,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
         data: {
           labels: market
             ? marketTickRageData.map((d: any) => d.date)
-            : tickRageData.map((d: any) => moment(d.date).format('MM-DD')),
+            : tickRageData.map((d: any) => moment(d.date).format('YY-MM-DD')),
           datasets: [
             {
               label: `Buy `,

@@ -1,6 +1,6 @@
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
-import { delay, difference, find, forEach, isNumber, random } from 'lodash-es';
+import { difference, find, forEach, isNumber } from 'lodash-es';
 import { debounceTime, ReplaySubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -12,13 +12,14 @@ resolveTickChart$
     filter(() => isNumber(MarketTicks.tickChartsTradeValue)),
   )
   .subscribe(() => {
-    forEach(MarketTicks.ticks, (t, index) => {
-      delay(
-        () => {
-          MarketTicks.resolveTickChart(t.symbol);
-        },
-        random(50, 150) * index,
-      );
+    forEach(MarketTicks.ticks, (t, _index) => {
+      // delay(
+      //   () => {
+      //     MarketTicks.resolveTickChart(t.symbol);
+      //   },
+      //   random(50, 150) * index,
+      // );
+      MarketTicks.resolveTickChart(t.symbol);
     });
   });
 
