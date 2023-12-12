@@ -56,8 +56,8 @@ export class SyncPricesJob {
     return numberSyncSuccess === totalCor;
   }
 
-  @Cron('0 */15 9-14 * * 1-5', {
-    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_15_MINS`,
+  @Cron('0 */30 9-14 * * 1-5', {
+    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_30_MINS`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncPrice() {
