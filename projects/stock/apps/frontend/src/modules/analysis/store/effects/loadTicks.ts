@@ -17,7 +17,7 @@ export const loadTicks$ = createEffect((action$, state$) =>
     withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
     switchMap((value: any) => {
       const analysisState: AnalysisState = value[1];
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v1?symbol=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v2?symbol=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),

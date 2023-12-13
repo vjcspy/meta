@@ -70,7 +70,7 @@ export const loadMarketSymbolTick$ = createEffect((action$) =>
           MarketTicks.loadingInfo[symbol] = { isLoading: true };
           MarketTicks.log(`Will load market tick data for symbol ${symbol}`);
 
-          const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v1?symbol=${symbol}&from=${MarketTicks.fromDate}&to=${MarketTicks.toDate}`;
+          const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v2?symbol=${symbol}&from=${MarketTicks.fromDate}&to=${MarketTicks.toDate}`;
 
           return from(fetch(url)).pipe(
             switchMap((res) => from(res.json())),

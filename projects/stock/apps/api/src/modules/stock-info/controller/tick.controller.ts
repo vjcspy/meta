@@ -75,6 +75,22 @@ export class TickController {
     return new OkResponse(undefined, his);
   }
 
+  @Get('histories-v2')
+  async getHistoriesV2(@Query() request: GetTickHistoriesRequest) {
+    const { from, to, symbol } = request;
+    this.logger.info(
+      `process get tick historiesV2 for symbol ${request.symbol}`,
+      {
+        symbol,
+        from,
+        to,
+      },
+    );
+    const his = await this.tickHelper.getHistoriesV2(symbol, from, to);
+
+    return new OkResponse(undefined, his);
+  }
+
   @Get('refresh-tick')
   async refreshTick(@Query() infoQuery: GetSymbolInfoQuery) {
     if (!isTradingTime()) {
