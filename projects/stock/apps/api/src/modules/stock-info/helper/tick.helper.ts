@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { prisma } from '@modules/core/util/prisma';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { find, forEach, map, sortBy } from 'lodash';
+import { find, forEach, map, sortBy, uniqBy } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable()
@@ -77,6 +78,38 @@ export class TickHelper {
         return h;
       });
 
+      histories = sortBy(histories, (h) => h.date.getTime());
+
+      return histories;
+    }
+    return [];
+  }
+
+  async getHistoriesV2(symbol: string, from: string, to: string) {
+    const fromDate = moment.utc(from).toDate();
+    const toDate = moment.utc(to).toDate();
+
+    let histories = await prisma.stockInfoTicks.findMany({
+      where: {
+        symbol,
+        date: {
+          lte: toDate,
+          gte: fromDate,
+        },
+      },
+    });
+
+    if (histories.length > 0) {
+      histories = map(histories, (h) => {
+        if (Array.isArray(h?.meta)) {
+          h.meta = map(h.meta, (_t) => this.mapTickData(_t));
+        } else {
+          h.meta = [];
+        }
+
+        return h;
+      });
+      histories = uniqBy(histories, 'date');
       histories = sortBy(histories, (h) => h.date.getTime());
 
       return histories;
