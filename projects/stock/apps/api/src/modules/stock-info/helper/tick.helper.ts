@@ -109,7 +109,7 @@ export class TickHelper {
 
         return h;
       });
-      histories = uniqBy(histories, 'date');
+      histories = uniqBy(histories, (h) => h.date.getTime());
       histories = sortBy(histories, (h) => h.date.getTime());
 
       return histories;
