@@ -79,6 +79,12 @@ export const calTickRangeData = (data: {
       sBShark,
       sSSheep,
       sSShark,
+      pct_buy_sell_sheep: Math.round(bSheep / sSheep),
+      pct_buy_sell_shark: Math.round(bShark / sShark),
+      pct_buy_sheep_shark: Math.round(bSheep / bShark),
+      pct_shell_sheep_shark: Math.round(sSheep / sShark),
+      pct_sum_buy_sheep_shark: Math.round(sBSheep / sBShark),
+      pct_sum_shell_sheep_shark: Math.round(sSSheep / sSShark),
       close: tick.close,
     });
   });

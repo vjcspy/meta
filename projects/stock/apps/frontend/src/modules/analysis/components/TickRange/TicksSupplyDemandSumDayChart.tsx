@@ -97,7 +97,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
           return undefined;
         }
 
-        marketTickRageData = sortBy(values(data));
+        marketTickRageData = sortBy(values(data), (a) => a.date);
       }
 
       return {

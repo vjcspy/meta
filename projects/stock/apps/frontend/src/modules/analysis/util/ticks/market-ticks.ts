@@ -3,7 +3,14 @@ import { isSSR } from '@web/base/dist/util/isSSR';
 import { difference, find, forEach, isNumber } from 'lodash-es';
 import { debounceTime, ReplaySubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+export interface ResolveTickChartStatus {
+  isFinish: boolean;
+  message?: string;
+}
 
+/*
+ * For publish resolve chart whenever
+ * */
 const resolveTickChart$ = new Subject<any>();
 
 resolveTickChart$
@@ -13,16 +20,13 @@ resolveTickChart$
   )
   .subscribe(() => {
     forEach(MarketTicks.ticks, (t, _index) => {
-      // delay(
-      //   () => {
-      //     MarketTicks.resolveTickChart(t.symbol);
-      //   },
-      //   random(50, 150) * index,
-      // );
       MarketTicks.resolveTickChart(t.symbol);
     });
   });
 
+/*
+ * Emit an event after resolving each tick data for every symbol
+ * */
 const resolvedTickCart$ = new ReplaySubject();
 
 export class MarketTicks {
@@ -210,10 +214,7 @@ export class MarketTicks {
     return resolvedTickCart$;
   }
 
-  static getResolveTickChartStatus(need: string[]): {
-    isFinish: boolean;
-    message?: string;
-  } {
+  static getResolveTickChartStatus(need: string[]): ResolveTickChartStatus {
     const diff = difference(
       need,
       MarketTicks.tickCharts.map((t) => t.symbol),

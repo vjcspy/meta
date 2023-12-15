@@ -1,6 +1,7 @@
 import TicksSupplyDemandSumDayChart from '@modules/analysis/components/TickRange/TicksSupplyDemandSumDayChart';
 import withMarketTickCat from '@modules/analysis/hoc/withMarketTickCat';
 import withMarketTickDate from '@modules/analysis/hoc/withMarketTickDate';
+import withMarketTickResolveChartStatus from '@modules/analysis/hoc/withMarketTickResolveChartStatus';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import { MarketTicks } from '@modules/analysis/util/ticks/market-ticks';
 import Row from '@src/components/form/Row';
@@ -20,8 +21,8 @@ export default combineHOC(
   withMarketTickDate,
   withTradeValueFilter,
   withMarketTickCat,
+  withMarketTickResolveChartStatus,
 )((props) => {
-  const [calStatus, setCalStatus] = useState<any>();
   useEffect(() => {
     MarketTicks.setTicksDate(
       props.state?.marketFromDate,
@@ -38,26 +39,12 @@ export default combineHOC(
     }
   }, [props.state?.tradeValueFilter]);
 
-  useEffect(() => {
-    const sub = MarketTicks.getResolvedTickChartObserver().subscribe(() => {
-      setCalStatus(
-        MarketTicks.getResolveTickChartStatus(
-          props.state?.selectedMarketCat?.symbols ?? [],
-        ),
-      );
-    });
-
-    return () => {
-      sub.unsubscribe();
-    };
-  }, [props?.state?.selectedMarketCat]);
-
   const hasSymbolInCurrentCat = useMemo(() => {
     return props?.state?.selectedMarketCat?.symbols.length > 0;
   }, [props?.state?.selectedMarketCat?.symbols]);
 
   const tickRageData: any = useMemo(() => {
-    if (calStatus?.isFinish) {
+    if (props.state?.resolveMarketTickChartStatus?.isFinish) {
       return filter(
         MarketTicks.tickCharts,
         (i) => props?.state?.selectedMarketCat?.symbols?.indexOf(i.symbol) > -1,
@@ -65,7 +52,10 @@ export default combineHOC(
     } else {
       return undefined;
     }
-  }, [calStatus?.isFinish, props?.state?.selectedMarketCat?.symbols]);
+  }, [
+    props.state?.resolveMarketTickChartStatus?.isFinish,
+    props?.state?.selectedMarketCat?.symbols,
+  ]);
 
   const [viewChart, setViewChart] = useState({
     sumShark: false,
@@ -81,8 +71,9 @@ export default combineHOC(
           "Current market category don't have any symbol"}
         {hasSymbolInCurrentCat && (
           <>
-            {!calStatus?.isFinish && calStatus?.message}
-            {!!calStatus?.isFinish && (
+            {!props.state?.resolveMarketTickChartStatus?.isFinish &&
+              props.state?.resolveMarketTickChartStatus?.message}
+            {!!props.state?.resolveMarketTickChartStatus?.isFinish && (
               <>
                 <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
                   <div>
