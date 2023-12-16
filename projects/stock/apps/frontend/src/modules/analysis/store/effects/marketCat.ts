@@ -5,13 +5,17 @@ import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError'
 import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiResponseRx';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
+import { message } from 'antd';
 import axios from 'axios';
 import { debounceTime, from, map } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 export const loadMarketCat$ = createEffect((action$) =>
   action$.pipe(
-    ofType(ANALYSIS_ACTIONS.loadMarketCat),
+    ofType(
+      ANALYSIS_ACTIONS.loadMarketCat,
+      ANALYSIS_ACTIONS.saveMarketCatSuccess,
+    ),
     debounceTime(500),
     switchMap(() => {
       const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-cat/list`;
@@ -44,6 +48,10 @@ export const saveMarketCat$ = createEffect((action$) =>
         validateApiResponsePipe(),
         map((data: ApiResponse) => {
           if (data?.success === true) {
+            message.open({
+              type: 'success',
+              content: 'Save Market Category success',
+            });
             return ANALYSIS_ACTIONS.saveMarketCatSuccess(data);
           } else {
             return APP_ACTIONS.fetchApiError(data);

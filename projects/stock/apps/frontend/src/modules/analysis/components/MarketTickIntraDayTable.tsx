@@ -5,7 +5,6 @@ import { MarketTicks } from '@modules/analysis/util/ticks/market-ticks';
 import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension/dist';
-import { ConfigProvider, theme } from 'antd';
 import Search from 'antd/es/input/Search';
 import Table, { type ColumnsType } from 'antd/es/table';
 import { filter, find, forEach } from 'lodash-es';
@@ -24,61 +23,46 @@ const TableComponent = React.memo(
     return (
       <div className="mt-5 grid grid-cols-1 text-xs">
         <div className="grid grid-cols-1 text-xs">
-          <ConfigProvider
-            theme={{
-              components: {
-                // Table: {
-                //   colorBgBase: 'transparent',
-                //   colorTextBase: 'white',
-                // },
-              },
-              algorithm: props.isDarkMode
-                ? theme.darkAlgorithm
-                : theme.defaultAlgorithm,
-              token: { fontSize: 13 },
-            }}
-          >
-            <Table
-              pagination={false}
-              // virtual
-              columns={props.columns}
-              dataSource={props.dataSource}
-              scroll={{ x: 1200, y: 400 }}
-              summary={() => (
-                <Table.Summary fixed="top">
-                  <Table.Summary.Row>
-                    <Table.Summary.Cell index={0} colSpan={1} align="center">
-                      <Search
-                        // style={{ width: 100 }}
-                        className="uppercase"
-                        placeholder="Symbol"
-                        onChange={(e) => {
-                          props.setSymbolSearch(e?.target?.value);
-                        }}
-                        onSearch={() => {}}
-                      />
-                    </Table.Summary.Cell>
-                    {/*<Table.Summary.Cell index={2} colSpan={2} align="center">*/}
-                    {/*  <div className="inline">*/}
-                    {/*    <span className="mr-2">GTGD</span>*/}
-                    {/*    <InputNumber*/}
-                    {/*      min={0}*/}
-                    {/*      max={1000}*/}
-                    {/*      defaultValue={tradeValue}*/}
-                    {/*      onChange={onTradeValueChange}*/}
-                    {/*    />*/}
-                    {/*  </div>*/}
-                    {/*</Table.Summary.Cell>*/}
-                    {/*<Table.Summary.Cell index={12}>*/}
-                    {/*  Fix Right*/}
-                    {/*</Table.Summary.Cell>*/}
-                  </Table.Summary.Row>
-                </Table.Summary>
-              )}
-              // antd site header height
-              sticky={{ offsetHeader: 64 }}
-            />
-          </ConfigProvider>
+          <Table
+            pagination={false}
+            // virtual
+            columns={props.columns}
+            dataSource={props.dataSource}
+            scroll={{ x: 1200, y: 400 }}
+            summary={() => (
+              <Table.Summary fixed="top">
+                <Table.Summary.Row>
+                  <Table.Summary.Cell index={0} colSpan={1} align="center">
+                    <Search
+                      // style={{ width: 100 }}
+                      className="uppercase"
+                      placeholder="Symbol"
+                      onChange={(e) => {
+                        props.setSymbolSearch(e?.target?.value);
+                      }}
+                      onSearch={() => {}}
+                    />
+                  </Table.Summary.Cell>
+                  {/*<Table.Summary.Cell index={2} colSpan={2} align="center">*/}
+                  {/*  <div className="inline">*/}
+                  {/*    <span className="mr-2">GTGD</span>*/}
+                  {/*    <InputNumber*/}
+                  {/*      min={0}*/}
+                  {/*      max={1000}*/}
+                  {/*      defaultValue={tradeValue}*/}
+                  {/*      onChange={onTradeValueChange}*/}
+                  {/*    />*/}
+                  {/*  </div>*/}
+                  {/*</Table.Summary.Cell>*/}
+                  {/*<Table.Summary.Cell index={12}>*/}
+                  {/*  Fix Right*/}
+                  {/*</Table.Summary.Cell>*/}
+                </Table.Summary.Row>
+              </Table.Summary>
+            )}
+            // antd site header height
+            sticky={{ offsetHeader: 64 }}
+          />
         </div>
       </div>
     );

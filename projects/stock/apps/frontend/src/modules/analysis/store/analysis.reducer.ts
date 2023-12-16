@@ -80,6 +80,13 @@ export const analysisSlice = createSlice({
       state,
       action: PayloadAction<{ cat: MarketSymbolCategory }>,
     ) => {
+      // const isExist = find(
+      //     state.marketCategories,
+      //     (c) => c.key === action.payload.cat.key,
+      // );
+      // if (isExist && isExist.key !== state?.selectedMarketCat?.key) {
+      //   state.selectedMarketCat = isExist;
+      // }
       state.selectedMarketCat = action.payload.cat;
     },
     toggleSelectedCatSymbol: (

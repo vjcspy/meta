@@ -1,3 +1,4 @@
+import MarketTickCategorySelect from '@modules/analysis/components/MarketTickRange/MarketTickCategorySelect';
 import TradeValueFilter from '@modules/analysis/components/TradeValueFilter';
 import withMarketTickDate from '@modules/analysis/hoc/withMarketTickDate';
 import withMarketTickResolveChartStatus from '@modules/analysis/hoc/withMarketTickResolveChartStatus';
@@ -31,7 +32,10 @@ export default combineHOC(
         }`}
         oneCol={false}
       >
-        <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
+        <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <MarketTickCategorySelect />
+          </div>
           <div>
             <label>From Date</label>
             <Flatpickr
