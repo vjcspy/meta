@@ -3,7 +3,7 @@ import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
 import { difference, first, forEach, size, sortBy, values } from 'lodash-es';
 import moment from 'moment/moment';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 
 const TicksSupplyDemandSumDayChart = React.memo(
@@ -12,12 +12,6 @@ const TicksSupplyDemandSumDayChart = React.memo(
     market?: boolean;
     type: 'sheep' | 'shark';
   }) => {
-    useEffect(() => {
-      setTimeout(() => {
-        window.scrollTo(0, 999999999999);
-      }, 250);
-    }, []);
-
     const { tickRageData, market = false, type } = props;
 
     const chartJsConfig: any = useMemo(() => {

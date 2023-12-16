@@ -1,3 +1,4 @@
+import type { MarketTickChartDataType } from '@modules/analysis/util/ticks/calTickRangeData';
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
 import { difference, find, forEach, isNumber } from 'lodash-es';
@@ -43,7 +44,11 @@ export class MarketTicks {
   static ticks: { symbol: string; ticks: any }[] = [];
 
   /* ___________________________________ Calculate market ticks chart data ___________________________________*/
-  static tickCharts: { symbol: string; tradeValue: number; data: any }[] = [];
+  static tickCharts: {
+    symbol: string;
+    tradeValue: number;
+    data: MarketTickChartDataType[];
+  }[] = [];
 
   /*
    Là ánh xạ từ analysis state trade value.
@@ -222,7 +227,7 @@ export class MarketTicks {
     if (diff.length > 0) {
       return {
         isFinish: false,
-        message: `Remaining ${diff.length} symbols to calculate...`,
+        message: `Remaining ${diff.length} symbols to calculate`,
       };
     }
 

@@ -1,11 +1,37 @@
-import { forEach, last, sortBy } from 'lodash-es';
+import { forEach, last, round, sortBy } from 'lodash-es';
+
+export interface MarketTickChartDataType {
+  date: string;
+  bSheep: number;
+  bShark: number;
+  sSheep: number;
+  sShark: number;
+  sBSheep: number;
+  sBShark: number;
+  sSSheep: number;
+  sSShark: number;
+  pct_buy_sell_sheep: number;
+  pct_buy_sell_shark: number;
+  pct_buy_sheep_shark: number;
+  pct_shell_sheep_shark: number;
+  pct_sum_buy_sheep_shark: number;
+  pct_sum_shell_sheep_shark: number;
+  diff_sheep: number;
+  diff_shark: number;
+}
 
 export const calTickRangeData = (data: {
   ticks: any[];
   tradeValue: any;
   viewByValue: any;
   symbol: any;
-}) => {
+}):
+  | undefined
+  | {
+      symbol: string;
+      data: MarketTickChartDataType[];
+      tradeValue: number;
+    } => {
   const { ticks, tradeValue, viewByValue, symbol } = data;
 
   const lastTick = last(ticks);
@@ -71,21 +97,22 @@ export const calTickRangeData = (data: {
 
     _data.push({
       date: tick.date,
-      bSheep,
-      bShark,
-      sSheep,
-      sShark,
-      sBSheep,
-      sBShark,
-      sSSheep,
-      sSShark,
-      pct_buy_sell_sheep: Math.round(bSheep / sSheep),
-      pct_buy_sell_shark: Math.round(bShark / sShark),
-      pct_buy_sheep_shark: Math.round(bSheep / bShark),
-      pct_shell_sheep_shark: Math.round(sSheep / sShark),
-      pct_sum_buy_sheep_shark: Math.round(sBSheep / sBShark),
-      pct_sum_shell_sheep_shark: Math.round(sSSheep / sSShark),
-      close: tick.close,
+      bSheep: round(bSheep / 10 ** 9, 2),
+      bShark: round(bShark / 10 ** 9, 2),
+      sSheep: round(sSheep / 10 ** 9, 2),
+      sShark: round(sShark / 10 ** 9, 2),
+      sBSheep: round(sBSheep / 10 ** 9, 2),
+      sBShark: round(sBShark / 10 ** 9, 2),
+      sSSheep: round(sSSheep / 10 ** 9, 2),
+      sSShark: round(sSShark / 10 ** 9, 2),
+      pct_buy_sell_sheep: round(bSheep / (sSheep + bSheep), 2),
+      pct_buy_sell_shark: round(bShark / (bShark + sShark), 2),
+      pct_buy_sheep_shark: round(bSheep / (bShark + bSheep), 2),
+      pct_shell_sheep_shark: round(sSheep / (sShark + sSheep), 2),
+      pct_sum_buy_sheep_shark: round(sBSheep / (sBShark + sBSheep), 2),
+      pct_sum_shell_sheep_shark: round(sSSheep / (sSShark + sSSheep), 2),
+      diff_sheep: round((bSheep - sSheep) / 10 ** 9, 2),
+      diff_shark: round((bShark - sShark) / 10 ** 9, 2),
     });
   });
 

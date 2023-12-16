@@ -43,14 +43,17 @@ export default combineHOC(
     return props?.state?.selectedMarketCat?.symbols.length > 0;
   }, [props?.state?.selectedMarketCat?.symbols]);
 
-  const tickRageData: any = useMemo(() => {
+  const [tickRageData, setTickRageData] = useState<any>();
+
+  useEffect(() => {
     if (props.state?.resolveMarketTickChartStatus?.isFinish) {
-      return filter(
-        MarketTicks.tickCharts,
-        (i) => props?.state?.selectedMarketCat?.symbols?.indexOf(i.symbol) > -1,
+      setTickRageData(
+        filter(
+          MarketTicks.tickCharts,
+          (i) =>
+            props?.state?.selectedMarketCat?.symbols?.indexOf(i.symbol) > -1,
+        ),
       );
-    } else {
-      return undefined;
     }
   }, [
     props.state?.resolveMarketTickChartStatus?.isFinish,
@@ -66,112 +69,113 @@ export default combineHOC(
 
   return (
     <>
-      <Row title={`Market Ticks Chart`} oneCol={false}>
+      <Row
+        title={`Market Ticks Chart${
+          props.state?.resolveMarketTickChartStatus?.isFinish === false
+            ? ` _____ ${props.state?.resolveMarketTickChartStatus?.message} _____`
+            : ''
+        }`}
+        oneCol={false}
+      >
         {!hasSymbolInCurrentCat &&
           "Current market category don't have any symbol"}
         {hasSymbolInCurrentCat && (
           <>
-            {!props.state?.resolveMarketTickChartStatus?.isFinish &&
-              props.state?.resolveMarketTickChartStatus?.message}
-            {!!props.state?.resolveMarketTickChartStatus?.isFinish && (
-              <>
-                <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
-                  <div>
-                    <label className="flex cursor-pointer items-center">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox"
-                        checked={viewChart.sumSheep}
-                        onChange={() =>
-                          setViewChart({
-                            ...defaultViewChart,
-                            sumSheep: !viewChart.sumSheep,
-                          })
-                        }
-                      />
-                      <span className=" text-white-dark">View Sum Sheep</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label className="flex cursor-pointer items-center">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox"
-                        checked={viewChart.sumShark}
-                        onChange={() =>
-                          setViewChart({
-                            ...defaultViewChart,
-                            sumShark: !viewChart.sumShark,
-                          })
-                        }
-                      />
-                      <span className=" text-white-dark">View Sum Shark</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label className="flex cursor-pointer items-center">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox"
-                        checked={viewChart.sheep}
-                        onChange={() =>
-                          setViewChart({
-                            ...defaultViewChart,
-                            sheep: !viewChart.sheep,
-                          })
-                        }
-                      />
-                      <span className=" text-white-dark">View Sheep</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label className="flex cursor-pointer items-center">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox"
-                        checked={viewChart.shark}
-                        onChange={() =>
-                          setViewChart({
-                            ...defaultViewChart,
-                            shark: !viewChart.shark,
-                          })
-                        }
-                      />
-                      <span className=" text-white-dark">View shark</span>
-                    </label>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
+              <div>
+                <label className="flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox"
+                    checked={viewChart.sumSheep}
+                    onChange={() =>
+                      setViewChart({
+                        ...defaultViewChart,
+                        sumSheep: !viewChart.sumSheep,
+                      })
+                    }
+                  />
+                  <span className=" text-white-dark">View Sum Sheep</span>
+                </label>
+              </div>
+              <div>
+                <label className="flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox"
+                    checked={viewChart.sumShark}
+                    onChange={() =>
+                      setViewChart({
+                        ...defaultViewChart,
+                        sumShark: !viewChart.sumShark,
+                      })
+                    }
+                  />
+                  <span className=" text-white-dark">View Sum Shark</span>
+                </label>
+              </div>
+              <div>
+                <label className="flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox"
+                    checked={viewChart.sheep}
+                    onChange={() =>
+                      setViewChart({
+                        ...defaultViewChart,
+                        sheep: !viewChart.sheep,
+                      })
+                    }
+                  />
+                  <span className=" text-white-dark">View Sheep</span>
+                </label>
+              </div>
+              <div>
+                <label className="flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox"
+                    checked={viewChart.shark}
+                    onChange={() =>
+                      setViewChart({
+                        ...defaultViewChart,
+                        shark: !viewChart.shark,
+                      })
+                    }
+                  />
+                  <span className=" text-white-dark">View shark</span>
+                </label>
+              </div>
+            </div>
 
-                {viewChart.sumShark && (
-                  <TicksSupplyDemandSumDayChart
-                    tickRageData={tickRageData}
-                    type="shark"
-                    market={true}
-                  />
-                )}
-                {viewChart.sumSheep && (
-                  <TicksSupplyDemandSumDayChart
-                    tickRageData={tickRageData}
-                    type="sheep"
-                    market={true}
-                  />
-                )}
+            {viewChart.sumShark && (
+              <TicksSupplyDemandSumDayChart
+                tickRageData={tickRageData}
+                type="shark"
+                market={true}
+              />
+            )}
+            {viewChart.sumSheep && (
+              <TicksSupplyDemandSumDayChart
+                tickRageData={tickRageData}
+                type="sheep"
+                market={true}
+              />
+            )}
 
-                {viewChart.sheep && (
-                  <TicksSupplyDemandDayChart
-                    tickRageData={tickRageData}
-                    type="sheep"
-                    market={true}
-                  />
-                )}
-                {viewChart.shark && (
-                  <TicksSupplyDemandDayChart
-                    tickRageData={tickRageData}
-                    type="shark"
-                    market={true}
-                  />
-                )}
-              </>
+            {viewChart.sheep && (
+              <TicksSupplyDemandDayChart
+                tickRageData={tickRageData}
+                type="sheep"
+                market={true}
+              />
+            )}
+            {viewChart.shark && (
+              <TicksSupplyDemandDayChart
+                tickRageData={tickRageData}
+                type="shark"
+                market={true}
+              />
             )}
           </>
         )}
