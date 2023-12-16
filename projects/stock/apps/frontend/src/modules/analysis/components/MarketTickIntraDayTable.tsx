@@ -1,3 +1,4 @@
+import withMarketTickCat from '@modules/analysis/hoc/withMarketTickCat';
 import withMarketTickDate from '@modules/analysis/hoc/withMarketTickDate';
 import withMarketTickResolveChartStatus from '@modules/analysis/hoc/withMarketTickResolveChartStatus';
 import type { MarketTickChartDataType } from '@modules/analysis/util/ticks/calTickRangeData';
@@ -73,6 +74,7 @@ export default combineHOC(
   withThemState,
   withMarketTickDate,
   withMarketTickResolveChartStatus,
+  withMarketTickCat,
 )((props) => {
   const [date, setDate] = useState<string>(props?.state?.marketToDate);
   const [symbolSearch, setSymbolSearch] = useState('');
@@ -208,22 +210,28 @@ export default combineHOC(
       let data: any = [];
       let error: Error;
 
-      forEach(MarketTicks.tickCharts, (d) => {
-        const dateData = find(d.data, (_d) =>
-          moment(_d.date).isSame(moment(date), 'day'),
-        );
+      forEach(
+        filter(
+          MarketTicks.tickCharts,
+          (t) => props.state.selectedMarketCat?.symbols?.indexOf(t.symbol) > -1,
+        ),
+        (d) => {
+          const dateData = find(d.data, (_d) =>
+            moment(_d.date).isSame(moment(date), 'day'),
+          );
 
-        if (!dateData) {
-          error = new Error(`Not found date ${date} for symbol ${d.symbol}`);
-          return false;
-        }
+          if (!dateData) {
+            error = new Error(`Not found date ${date} for symbol ${d.symbol}`);
+            return false;
+          }
 
-        data.push({
-          key: d.symbol,
-          symbol: d.symbol,
-          ...dateData,
-        });
-      });
+          data.push({
+            key: d.symbol,
+            symbol: d.symbol,
+            ...dateData,
+          });
+        },
+      );
 
       // @ts-ignore
       if (error) {
@@ -244,7 +252,8 @@ export default combineHOC(
   }, [
     symbolSearch,
     date,
-    props?.state?.resolveMarketTickChartStatus?.isFinish,
+    props.state.resolveMarketTickChartStatus?.isFinish,
+    props.state.selectedMarketCat?.symbols,
   ]);
 
   return (
