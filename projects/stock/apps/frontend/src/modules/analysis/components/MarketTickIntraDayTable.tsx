@@ -29,7 +29,7 @@ const TableComponent = React.memo(
             // virtual
             columns={props.columns}
             dataSource={props.dataSource}
-            scroll={{ x: 1200, y: 400 }}
+            scroll={{ x: 1700, y: 400 }}
             summary={() => (
               <Table.Summary fixed="top">
                 <Table.Summary.Row>
@@ -182,9 +182,9 @@ export default combineHOC(
       },
       {
         title: '% sell sheep shark',
-        dataIndex: 'pct_shell_sheep_shark',
+        dataIndex: 'pct_sell_sheep_shark',
         width: 70,
-        sorter: (a, b) => a.pct_shell_sheep_shark - b.pct_shell_sheep_shark,
+        sorter: (a, b) => a.pct_sell_sheep_shark - b.pct_sell_sheep_shark,
       },
       {
         title: '%Σ buy sheep shark',
@@ -194,10 +194,22 @@ export default combineHOC(
       },
       {
         title: '%Σ sell sheep shark',
-        dataIndex: 'pct_sum_shell_sheep_shark',
+        dataIndex: 'pct_sum_sell_sheep_shark',
         width: 70,
         sorter: (a, b) =>
-          a.pct_sum_shell_sheep_shark - b.pct_sum_shell_sheep_shark,
+          a.pct_sum_sell_sheep_shark - b.pct_sum_sell_sheep_shark,
+      },
+      {
+        title: '%Σ buy sell sheep',
+        dataIndex: 'pct_sum_buy_sell_sheep',
+        width: 70,
+        sorter: (a, b) => a.pct_sum_buy_sell_sheep - b.pct_sum_buy_sell_sheep,
+      },
+      {
+        title: '%Σ buy sell shark',
+        dataIndex: 'pct_sum_buy_sell_shark',
+        width: 70,
+        sorter: (a, b) => a.pct_sum_buy_sell_shark - b.pct_sum_buy_sell_shark,
       },
     ];
 

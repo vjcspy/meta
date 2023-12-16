@@ -96,7 +96,7 @@ export default combineHOC(
       },
       {
         title: '',
-        width: adjustMarketCat ? 100 : 10,
+        width: adjustMarketCat ? 70 : 10,
         dataIndex: 'code',
         fixed: 'left' as any,
         render: (value) => {
@@ -180,62 +180,70 @@ export default combineHOC(
         width: 100,
       },
       {
-        title: 'dayInTrend',
+        title: 'day in Trend',
         dataIndex: 'l16_hullma_day_in_trend',
         sorter: (a, b) => a.l16_hullma_day_in_trend - b.l16_hullma_day_in_trend,
         fixed: 'left',
-        width: 100,
+        width: 70,
       },
       {
-        title: 'hullDiff',
+        title: 'hull diff',
         dataIndex: 'l16_hullma_highest_diff_percent',
         sorter: (a, b) =>
           a.l16_hullma_highest_diff_percent - b.l16_hullma_highest_diff_percent,
         fixed: 'left',
-        width: 100,
+        width: 70,
       },
 
       {
         title: 'GTGD3',
         dataIndex: 'trade_value_7',
         sorter: (a, b) => a.trade_value_7 - b.trade_value_7,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'GTGD14',
         dataIndex: 'trade_value_14',
         sorter: (a, b) => a.trade_value_14 - b.trade_value_14,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'GTGD30',
         dataIndex: 'trade_value_30',
         sorter: (a, b) => a.trade_value_30 - b.trade_value_30,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'gap',
         dataIndex: 'cur_gap_percent',
         sorter: (a, b) => a.cur_gap_percent - b.cur_gap_percent,
-        width: 100,
+        fixed: 'left',
+        width: 70,
       },
       {
         title: 'cap',
         dataIndex: 'cap',
         sorter: (a, b) => a.cap - b.cap,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'industryName1',
         dataIndex: 'industryName1',
+        width: 130,
       },
       {
         title: 'industryName2',
         dataIndex: 'industryName2',
+        width: 170,
       },
       {
         title: 'industryName3',
         dataIndex: 'industryName3',
+        width: 170,
       },
     ];
     return tableColumns;
@@ -284,7 +292,7 @@ export default combineHOC(
               virtual
               columns={columns}
               dataSource={dataSource}
-              scroll={{ x: 2000, y: 400 }}
+              scroll={{ x: 1700, y: 400 }}
               summary={() => (
                 <Table.Summary fixed="top">
                   <Table.Summary.Row>
