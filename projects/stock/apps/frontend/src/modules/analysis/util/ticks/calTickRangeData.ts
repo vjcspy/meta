@@ -101,10 +101,10 @@ export const calTickRangeData = (data: {
 
     _data.push({
       date: tick.date,
-      bSheep: round(bSheep / 10 ** 9, 2),
-      bShark: round(bShark / 10 ** 9, 2),
-      sSheep: round(sSheep / 10 ** 9, 2),
-      sShark: round(sShark / 10 ** 9, 2),
+      bSheep: round(bSheep / 10 ** 9, 0),
+      bShark: round(bShark / 10 ** 9, 0),
+      sSheep: round(sSheep / 10 ** 9, 0),
+      sShark: round(sShark / 10 ** 9, 0),
       sBSheep: round(sBSheep / 10 ** 9, 0),
       sBShark: round(sBShark / 10 ** 9, 0),
       sSSheep: round(sSSheep / 10 ** 9, 0),
@@ -117,10 +117,10 @@ export const calTickRangeData = (data: {
       pct_sum_sell_sheep_shark: round(sSSheep / (sSShark + sSSheep), 2),
       pct_sum_buy_sell_sheep: round(sBSheep / (sBSheep + sSSheep), 2),
       pct_sum_buy_sell_shark: round(sBShark / (sBShark + sSShark), 2),
-      diff_sheep: round((bSheep - sSheep) / 10 ** 9, 2),
-      diff_shark: round((bShark - sShark) / 10 ** 9, 2),
+      diff_sheep: round((bSheep - sSheep) / 10 ** 9, 0),
+      diff_shark: round((bShark - sShark) / 10 ** 9, 0),
       diff_sum_shark: round((sBShark - sSShark) / 10 ** 9, 0),
-      diff_sum_sheep: round((sBSheep - sSSheep) / 10 ** 9, 2),
+      diff_sum_sheep: round((sBSheep - sSSheep) / 10 ** 9, 0),
     });
   });
 
