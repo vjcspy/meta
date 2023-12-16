@@ -112,12 +112,6 @@ export default combineHOC(
         sorter: (a, b) => a.sSheep - b.sSheep,
       },
       {
-        title: 'diff SHEEP',
-        dataIndex: 'diff_sheep',
-        width: 70,
-        sorter: (a, b) => a.diff_sheep - b.diff_sheep,
-      },
-      {
         title: '% SHEEP buy sell',
         dataIndex: 'pct_buy_sell_sheep',
         width: 70,
@@ -137,7 +131,7 @@ export default combineHOC(
         sorter: (a, b) => a.sShark - b.sShark,
       },
       {
-        title: 'diff SHARK',
+        title: 'ⅅiff SHARK',
         dataIndex: 'diff_shark',
         width: 70,
         sorter: (a, b) => a.diff_shark - b.diff_shark,
@@ -176,6 +170,12 @@ export default combineHOC(
         sorter: (a, b) => a.sSSheep - b.sSSheep,
       },
       {
+        title: 'ⅅiff Σ SHEEP',
+        dataIndex: 'diff_sum_sheep',
+        width: 70,
+        sorter: (a, b) => a.diff_sum_sheep - b.diff_sum_sheep,
+      },
+      {
         title: '%Σ buy sell SHEEP',
         dataIndex: 'pct_sum_buy_sell_sheep',
         width: 70,
@@ -193,6 +193,12 @@ export default combineHOC(
         dataIndex: 'sSShark',
         width: 80,
         sorter: (a, b) => a.sSShark - b.sSShark,
+      },
+      {
+        title: 'ⅅiff Σ SHARK',
+        dataIndex: 'diff_sum_shark',
+        width: 70,
+        sorter: (a, b) => a.diff_sum_shark - b.diff_sum_shark,
       },
       {
         title: '%Σ buy sell SHARK',
