@@ -1,9 +1,10 @@
 import { SettingOutlined } from '@ant-design/icons';
 import withMarketSymbolCategories from '@modules/analysis/hoc/withMarketSymbolCategories';
 import { CommonValue } from '@modules/analysis/value/common.value';
+import { message } from '@modules/app/util/message';
 import { MARKET_TICK_SELECTED_CATEGORY_KEY } from '@src/value/analysis.value';
 import { combineHOC } from '@web/ui-extension/dist';
-import { Button, Input, message, Modal, Space, Table } from 'antd';
+import { Button, Input, Modal, Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { find, map } from 'lodash-es';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -106,8 +107,7 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
       );
 
       if (defaultCat) {
-        message.open({
-          type: 'success',
+        message().success({
           content: `Select category: ${defaultCat.name}`,
         });
         props?.actions?.selectMarketCat(defaultCat);

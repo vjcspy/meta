@@ -23,7 +23,7 @@ import { filter, withLatestFrom } from 'rxjs/operators';
 export const loadMarketTicks$ = createEffect((action$, state$) =>
   action$.pipe(
     ofType(ANALYSIS_ACTIONS.loadMarketTicks),
-    debounceTime(500),
+    debounceTime(1000),
     withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
     mergeMap((d: any) => {
       const analysisState: AnalysisState = d[1];
