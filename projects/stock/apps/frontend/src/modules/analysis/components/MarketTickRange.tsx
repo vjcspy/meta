@@ -12,8 +12,8 @@ export default combineHOC()(() => {
     <>
       <MarketSymbolCategories />
       <AnalysisSymbolTable adjustMarketCat={true} />
-      <MarketTickRangeConfig />
       <MarketTickIntraDayTable />
+      <MarketTickRangeConfig />
       <MarketTickRangeChart />
     </>
   );

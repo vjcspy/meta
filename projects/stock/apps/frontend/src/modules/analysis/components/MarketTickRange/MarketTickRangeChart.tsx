@@ -69,14 +69,7 @@ export default combineHOC(
 
   return (
     <>
-      <Row
-        title={`Market Ticks Chart${
-          props.state?.resolveMarketTickChartStatus?.isFinish === false
-            ? ` _____ ${props.state?.resolveMarketTickChartStatus?.message} _____`
-            : ''
-        }`}
-        oneCol={false}
-      >
+      <Row title={`Market Ticks Chart`} oneCol={false}>
         {!hasSymbolInCurrentCat &&
           "Current market category don't have any symbol"}
         {hasSymbolInCurrentCat && (

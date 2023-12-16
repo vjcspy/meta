@@ -217,8 +217,9 @@ export default combineHOC(
 
     return c;
   }, []);
+  const [dataSource, setDataSource] = useState<any>();
 
-  const dataSource = useMemo(() => {
+  useEffect(() => {
     if (props?.state?.resolveMarketTickChartStatus?.isFinish && date) {
       let data: any = [];
       let error: Error;
@@ -243,7 +244,8 @@ export default combineHOC(
       // @ts-ignore
       if (error) {
         console.error(error);
-        return undefined;
+
+        return;
       }
 
       if (symbolSearch) {
@@ -253,10 +255,8 @@ export default combineHOC(
         );
       }
 
-      return data;
+      setDataSource(data);
     }
-
-    return undefined;
   }, [
     symbolSearch,
     date,
