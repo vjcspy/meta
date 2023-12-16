@@ -20,6 +20,8 @@ export interface MarketTickChartDataType {
   pct_sum_buy_sell_shark: number;
   diff_sheep: number;
   diff_shark: number;
+  diff_sum_sheep: number;
+  diff_sum_shark: number;
 }
 
 export const calTickRangeData = (data: {
@@ -103,10 +105,10 @@ export const calTickRangeData = (data: {
       bShark: round(bShark / 10 ** 9, 2),
       sSheep: round(sSheep / 10 ** 9, 2),
       sShark: round(sShark / 10 ** 9, 2),
-      sBSheep: round(sBSheep / 10 ** 9, 2),
-      sBShark: round(sBShark / 10 ** 9, 2),
-      sSSheep: round(sSSheep / 10 ** 9, 2),
-      sSShark: round(sSShark / 10 ** 9, 2),
+      sBSheep: round(sBSheep / 10 ** 9, 0),
+      sBShark: round(sBShark / 10 ** 9, 0),
+      sSSheep: round(sSSheep / 10 ** 9, 0),
+      sSShark: round(sSShark / 10 ** 9, 0),
       pct_buy_sell_sheep: round(bSheep / (sSheep + bSheep), 2),
       pct_buy_sell_shark: round(bShark / (bShark + sShark), 2),
       pct_buy_sheep_shark: round(bSheep / (bShark + bSheep), 2),
@@ -117,6 +119,8 @@ export const calTickRangeData = (data: {
       pct_sum_buy_sell_shark: round(sBShark / (sBShark + sSShark), 2),
       diff_sheep: round((bSheep - sSheep) / 10 ** 9, 2),
       diff_shark: round((bShark - sShark) / 10 ** 9, 2),
+      diff_sum_shark: round((sBShark - sSShark) / 10 ** 9, 0),
+      diff_sum_sheep: round((sBSheep - sSSheep) / 10 ** 9, 2),
     });
   });
 
