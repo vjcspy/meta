@@ -100,116 +100,119 @@ export default combineHOC(
         fixed: 'left',
       },
       {
-        title: 'sheep Buy',
+        title: 'SHEEP Buy',
         dataIndex: 'bSheep',
         width: 70,
         sorter: (a, b) => a.bSheep - b.bSheep,
       },
       {
-        title: 'sheep Sell',
+        title: 'SHEEP Sell',
         dataIndex: 'sSheep',
         width: 70,
         sorter: (a, b) => a.sSheep - b.sSheep,
       },
       {
-        title: 'shark Buy',
-        dataIndex: 'bShark',
-        width: 70,
-        sorter: (a, b) => a.bShark - b.bShark,
-      },
-      {
-        title: 'shark Sell',
-        dataIndex: 'sShark',
-        width: 70,
-        sorter: (a, b) => a.sShark - b.sShark,
-      },
-      {
-        title: 'diff sheep',
+        title: 'diff SHEEP',
         dataIndex: 'diff_sheep',
         width: 70,
         sorter: (a, b) => a.diff_sheep - b.diff_sheep,
       },
       {
-        title: 'diff shark',
-        dataIndex: 'diff_shark',
-        width: 70,
-        sorter: (a, b) => a.diff_shark - b.diff_shark,
-      },
-      /*Sum*/
-      {
-        title: 'Σ sheep Buy',
-        dataIndex: 'sBSheep',
-        width: 80,
-        sorter: (a, b) => a.sBSheep - b.sBSheep,
-      },
-      {
-        title: 'Σ sheep Sell',
-        dataIndex: 'sSSheep',
-        width: 80,
-        sorter: (a, b) => a.sSSheep - b.sSSheep,
-      },
-      {
-        title: 'Σ shark Buy',
-        dataIndex: 'sBShark',
-        width: 80,
-        sorter: (a, b) => a.sBShark - b.sBShark,
-      },
-      {
-        title: 'Σ shark Sell',
-        dataIndex: 'sSShark',
-        width: 80,
-        sorter: (a, b) => a.sSShark - b.sSShark,
-      },
-
-      /*Percent*/
-      {
-        title: '% sheep buy/sell',
+        title: '% SHEEP buy sell',
         dataIndex: 'pct_buy_sell_sheep',
         width: 70,
         sorter: (a, b) => a.pct_buy_sell_sheep - b.pct_buy_sell_sheep,
       },
+
       {
-        title: '% shark buy/sell',
+        title: 'SHARK Buy',
+        dataIndex: 'bShark',
+        width: 70,
+        sorter: (a, b) => a.bShark - b.bShark,
+      },
+      {
+        title: 'SHARK Sell',
+        dataIndex: 'sShark',
+        width: 70,
+        sorter: (a, b) => a.sShark - b.sShark,
+      },
+      {
+        title: 'diff SHARK',
+        dataIndex: 'diff_shark',
+        width: 70,
+        sorter: (a, b) => a.diff_shark - b.diff_shark,
+      },
+      {
+        title: '% SHARK buy sell',
         dataIndex: 'pct_buy_sell_shark',
         width: 70,
         sorter: (a, b) => a.pct_buy_sell_shark - b.pct_buy_sell_shark,
       },
+
       {
-        title: '% buy sheep shark',
+        title: '% buy SHEEP SHARK',
         dataIndex: 'pct_buy_sheep_shark',
         width: 70,
         sorter: (a, b) => a.pct_buy_sheep_shark - b.pct_buy_sheep_shark,
       },
       {
-        title: '% sell sheep shark',
+        title: '% sell SHEEP SHARK',
         dataIndex: 'pct_sell_sheep_shark',
         width: 70,
         sorter: (a, b) => a.pct_sell_sheep_shark - b.pct_sell_sheep_shark,
       },
+
+      /*Sum*/
       {
-        title: '%Σ buy sheep shark',
+        title: 'Σ SHEEP Buy',
+        dataIndex: 'sBSheep',
+        width: 80,
+        sorter: (a, b) => a.sBSheep - b.sBSheep,
+      },
+      {
+        title: 'Σ SHEEP Sell',
+        dataIndex: 'sSSheep',
+        width: 80,
+        sorter: (a, b) => a.sSSheep - b.sSSheep,
+      },
+      {
+        title: '%Σ buy sell SHEEP',
+        dataIndex: 'pct_sum_buy_sell_sheep',
+        width: 70,
+        sorter: (a, b) => a.pct_sum_buy_sell_sheep - b.pct_sum_buy_sell_sheep,
+      },
+
+      {
+        title: 'Σ SHARK Buy',
+        dataIndex: 'sBShark',
+        width: 80,
+        sorter: (a, b) => a.sBShark - b.sBShark,
+      },
+      {
+        title: 'Σ SHARK Sell',
+        dataIndex: 'sSShark',
+        width: 80,
+        sorter: (a, b) => a.sSShark - b.sSShark,
+      },
+      {
+        title: '%Σ buy sell SHARK',
+        dataIndex: 'pct_sum_buy_sell_shark',
+        width: 70,
+        sorter: (a, b) => a.pct_sum_buy_sell_shark - b.pct_sum_buy_sell_shark,
+      },
+
+      {
+        title: '%Σ buy SHEEP SHARK',
         dataIndex: 'pct_sum_buy_sheep_shark',
         width: 70,
         sorter: (a, b) => a.pct_sum_buy_sheep_shark - b.pct_sum_buy_sheep_shark,
       },
       {
-        title: '%Σ sell sheep shark',
+        title: '%Σ sell SHEEP SHARK',
         dataIndex: 'pct_sum_sell_sheep_shark',
         width: 70,
         sorter: (a, b) =>
           a.pct_sum_sell_sheep_shark - b.pct_sum_sell_sheep_shark,
-      },
-      {
-        title: '%Σ buy sell sheep',
-        dataIndex: 'pct_sum_buy_sell_sheep',
-        width: 70,
-        sorter: (a, b) => a.pct_sum_buy_sell_sheep - b.pct_sum_buy_sell_sheep,
-      },
-      {
-        title: '%Σ buy sell shark',
-        dataIndex: 'pct_sum_buy_sell_shark',
-        width: 70,
-        sorter: (a, b) => a.pct_sum_buy_sell_shark - b.pct_sum_buy_sell_shark,
       },
     ];
 
