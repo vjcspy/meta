@@ -1,6 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons';
 import withMarketSymbolCategories from '@modules/analysis/hoc/withMarketSymbolCategories';
 import { CommonValue } from '@modules/analysis/value/common.value';
+import { MARKET_TICK_SELECTED_CATEGORY_KEY } from '@src/value/analysis.value';
 import { combineHOC } from '@web/ui-extension/dist';
 import { Button, Input, Modal, Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
@@ -89,14 +90,19 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
     }
   }, [props?.state?.selectedMarketCat]);
 
+  /*SELECT DEFAULT CATEGORY*/
   useEffect(() => {
     if (
       Array.isArray(props.state?.marketCategories) &&
       !props?.state?.selectedMarketCat
     ) {
+      const defaultCatKey =
+        localStorage.getItem(MARKET_TICK_SELECTED_CATEGORY_KEY) ??
+        CommonValue.DEFAULT_MARKET_SYMBOL_CAT;
+
       const defaultCat = find(
         props.state?.marketCategories,
-        (c) => c?.key === CommonValue.DEFAULT_MARKET_SYMBOL_CAT,
+        (c) => c?.key === defaultCatKey,
       );
 
       if (defaultCat) {
@@ -138,7 +144,7 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
   return (
     <>
       <div>
-        <label>{`Select Category (${props?.state?.selectedMarketCat?.symbols?.length} symbols)`}</label>
+        <label>{`Category (${props?.state?.selectedMarketCat?.symbols?.length} symbols)`}</label>
         <Button
           size="middle"
           style={{ width: '100%', height: '2.25rem' }}

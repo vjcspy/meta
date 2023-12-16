@@ -1,7 +1,10 @@
 import type { MarketSymbolCategory } from '@modules/analysis/types';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { analysisInitialState } from '@src/modules/analysis/store/analysis.state';
-import { SYMBOL_CACHE_KEY } from '@src/value/analysis.value';
+import {
+  MARKET_TICK_SELECTED_CATEGORY_KEY,
+  SYMBOL_CACHE_KEY,
+} from '@src/value/analysis.value';
 import type { PayloadAction } from '@stock/packages-redux';
 import { createSlice } from '@stock/packages-redux';
 import { map, sortBy } from 'lodash-es';
@@ -87,7 +90,13 @@ export const analysisSlice = createSlice({
       // if (isExist && isExist.key !== state?.selectedMarketCat?.key) {
       //   state.selectedMarketCat = isExist;
       // }
-      state.selectedMarketCat = action.payload.cat;
+      if (action.payload.cat?.key) {
+        state.selectedMarketCat = action.payload.cat;
+        localStorage.setItem(
+          MARKET_TICK_SELECTED_CATEGORY_KEY,
+          action.payload.cat.key,
+        );
+      }
     },
     toggleSelectedCatSymbol: (
       state,
