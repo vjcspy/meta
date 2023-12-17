@@ -27,6 +27,8 @@ const CategoryTable = React.memo(
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
+          sorter: (a, b) => a.name.localeCompare(b.name),
+          defaultSortOrder: 'ascend',
           render: (text, record) => (
             <a
               onClick={() => {
