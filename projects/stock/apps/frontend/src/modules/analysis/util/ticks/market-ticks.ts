@@ -178,7 +178,7 @@ export class MarketTicks {
         );
 
         worker.postMessage({
-          ticks: tickData.ticks,
+          ticks: tickData!.ticks,
           symbol,
           tradeValue: MarketTicks.tickChartsTradeValue,
           viewByValue: true,

@@ -30,8 +30,9 @@ export const loadMarketTicks$ = createEffect((action$, state$) =>
       const { marketFromDate, marketToDate } = analysisState;
       const selectedMarketCat = analysisState.selectedMarketCat;
       if (
+        selectedMarketCat &&
         Array.isArray(selectedMarketCat?.symbols) &&
-        selectedMarketCat?.symbols.length > 0
+        selectedMarketCat.symbols.length > 0
       ) {
         MarketTicks.setTicksDate(marketFromDate, marketToDate);
 

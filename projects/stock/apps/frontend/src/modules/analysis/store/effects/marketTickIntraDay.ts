@@ -32,8 +32,9 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
       const selectedMarketCat = analysisState.selectedMarketCat;
 
       if (
+        selectedMarketCat &&
         Array.isArray(selectedMarketCat?.symbols) &&
-        selectedMarketCat?.symbols.length > 0
+        selectedMarketCat.symbols.length > 0
       ) {
         MarketIntraDay.setTickDate(date);
 
