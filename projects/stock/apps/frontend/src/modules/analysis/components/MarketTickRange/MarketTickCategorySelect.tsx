@@ -146,7 +146,7 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
   }
 
   return (
-    <>
+    <div>
       <div>
         <label>{`Category (${props?.state?.selectedMarketCat?.symbols?.length} symbols)`}</label>
         <Button
@@ -227,6 +227,6 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
           </div>
         </form>
       </Modal>
-    </>
+    </div>
   );
 });

@@ -212,6 +212,12 @@ export class MarketTicks {
       `Publish resolve all ticks chart data (it's safe to call whenever)`,
     );
     resolveTickChart$.next(undefined);
+
+    /*
+     * Vì sau khi resolve tick chart mới publish event,
+     * mà có trường hợp tick đã load xong(và đã resolve xong chart data) nên sẽ không trigger,
+     * do đó khi vào lại page sẽ không biết là đã resolved chart data
+     * */
     resolvedTickCart$.next(undefined);
   }
 

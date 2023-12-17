@@ -22,6 +22,7 @@ export default combineHOC(
       props?.actions?.setMarketToDate(moment(dates[0]).format('YYYY-MM-DD'));
     }
   }, []);
+
   return (
     <>
       <Row
@@ -33,9 +34,7 @@ export default combineHOC(
         oneCol={false}
       >
         <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <MarketTickCategorySelect />
-          </div>
+          <MarketTickCategorySelect />
           <div>
             <label>From Date</label>
             <Flatpickr

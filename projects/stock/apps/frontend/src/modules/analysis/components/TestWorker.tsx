@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 const TestWorker = React.memo(() => {
   const router = useRouter();
   useEffect(() => {
-    router.push('/analysis/tick/range-market');
+    router.push('/analysis/tick/market-range');
   }, []);
 
   return <></>;

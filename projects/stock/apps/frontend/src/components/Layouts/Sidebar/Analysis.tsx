@@ -23,28 +23,35 @@ const SidebarAnalysis = () => {
         <Link href="/analysis/tick/intraday" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Tick Intraday
+              Intraday
             </span>
           </div>
         </Link>
         <Link href="/analysis/tick/at-price" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Tick At Prices
+              Price
             </span>
           </div>
         </Link>
         <Link href="/analysis/tick/range" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Tick Range
+              Range
             </span>
           </div>
         </Link>
-        <Link href="/analysis/tick/range-market" className="group">
+        <Link href="/analysis/tick/market-intraday" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Tick Range Market
+              Market Intra-day
+            </span>
+          </div>
+        </Link>
+        <Link href="/analysis/tick/market-range" className="group">
+          <div className="flex items-center">
+            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              Market Range
             </span>
           </div>
         </Link>

@@ -1,13 +1,15 @@
+import type { ResolveTickChartStatus } from '@modules/analysis/util/ticks/market-ticks';
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
-import { isNumber } from 'lodash-es';
+import { difference, isNumber } from 'lodash-es';
 import { ReplaySubject, Subject } from 'rxjs';
 
 const resolveTickChart$ = new Subject<any>();
 const resolvedTickCart$ = new ReplaySubject();
 
 export class MarketIntraDay {
-  static DEBUG = false;
+  static DEBUG = true;
+  static BACK_DATE = 5;
   private static _worker: Worker | undefined;
   /* ___________________________________ Market Tick Data ___________________________________ */
   static DATE: string;
@@ -53,7 +55,19 @@ export class MarketIntraDay {
     }
   }
 
-  static publishResolveTickChartData() {}
+  static publishResolveTickChartData() {
+    MarketIntraDay.log(
+      `Publish resolve all ticks chart data (it's safe to call whenever)`,
+    );
+    resolveTickChart$.next(undefined);
+
+    /*
+     * Vì sau khi resolve tick chart mới publish event,
+     * mà có trường hợp tick đã load xong(và đã resolve xong chart data) nên sẽ không trigger,
+     * do đó khi vào lại page sẽ không biết là đã resolved chart data
+     * */
+    resolvedTickCart$.next(undefined);
+  }
 
   static getWorker(): Worker | undefined {
     if (isSSR()) {
@@ -108,5 +122,27 @@ export class MarketIntraDay {
     }
 
     return MarketIntraDay._worker;
+  }
+
+  static getResolvedTickChartObserver() {
+    return resolvedTickCart$;
+  }
+
+  static getResolveTickChartStatus(need: string[]): ResolveTickChartStatus {
+    const diff = difference(
+      need,
+      MarketIntraDay.tickCharts.map((t) => t.symbol),
+    );
+    if (diff.length > 0) {
+      return {
+        isFinish: false,
+        message: `Remaining ${diff.length} symbols to calculate`,
+      };
+    }
+
+    return {
+      isFinish: true,
+      message: '',
+    };
   }
 }

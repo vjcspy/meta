@@ -285,7 +285,7 @@ export default combineHOC(
 
   return (
     <>
-      <Row title={`Market Tick Category Intra-day`} oneCol={false}>
+      <Row title={`Market Range Table`} oneCol={false}>
         <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <label>Specific Date</label>

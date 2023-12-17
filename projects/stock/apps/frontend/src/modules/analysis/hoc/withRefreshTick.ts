@@ -8,7 +8,11 @@ import { createUiHOC } from '@web/ui-extension';
 import { useEffect } from 'react';
 import { auditTime, groupBy, mergeMap, Subject } from 'rxjs';
 
-export const refreshTickRequest$ = new Subject<string>();
+/**
+ * Trigger for updating tick data in server
+ * @type {Subject<string>}
+ */
+export const refreshTickRequest$: Subject<string> = new Subject<string>();
 refreshTickRequest$
   .pipe(
     groupBy((symbol) => symbol),

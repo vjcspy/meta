@@ -123,7 +123,13 @@ export const analysisSlice = createSlice({
     ) => undefined,
 
     /* ____________________________________ Load Market Intra-day ____________________________________ */
-    loadMarketIntraDay: () => undefined, // it is safe for call every time you want
+    loadMarketIntraDayTicks: () => undefined, // it is safe for call every time you want
+    loadMarketIntraDayTick: (_, __: PayloadAction<{ symbol: string }>) =>
+      undefined, // not call directly from action dispatcher
+    loadMarketIntraDayTickSuccess: (
+      _,
+      __: PayloadAction<{ symbol: string; data: ApiResponse }>,
+    ) => undefined,
     /* ____________________________________ general ____________________________________ */
     setSymbol(state, { payload }) {
       const { symbol } = payload;
