@@ -1,4 +1,8 @@
 import { loadAnalysisTableData$ } from '@modules/analysis/store/effects/loadAnalaysisTableData';
+import {
+  loadMarketTickIntraDay$,
+  tapLoadTickIntraDaySuccess,
+} from '@modules/analysis/store/effects/loadMarketTickIntraDay';
 import { loadPrices$ } from '@modules/analysis/store/effects/loadPrices';
 import {
   loadTickIntraDay$,
@@ -64,5 +68,7 @@ export const configAnalysisEffects = (storeManager: any) => {
     saveMarketCat$,
     loadMarketTicks$,
     loadMarketSymbolTick$,
+    loadMarketTickIntraDay$,
+    tapLoadTickIntraDaySuccess,
   ]);
 };
