@@ -8,7 +8,7 @@ import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiRespo
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { difference, map as arrayMap } from 'lodash-es';
+import { forEach, map as arrayMap } from 'lodash-es';
 import {
   debounceTime,
   EMPTY,
@@ -36,10 +36,15 @@ export const loadMarketTicks$ = createEffect((action$, state$) =>
       ) {
         MarketTicks.setTicksDate(marketFromDate, marketToDate);
 
-        const needLoadSymbols = difference(
-          selectedMarketCat.symbols,
-          arrayMap(MarketTicks.ticks, (t: any) => t.symbol),
-        );
+        const needLoadSymbols: string[] = [];
+        forEach(selectedMarketCat.symbols, (symbol: string) => {
+          if (
+            MarketTicks.loadingInfo[symbol]?.loaded !== true &&
+            MarketTicks.loadingInfo[symbol]?.isLoading !== true
+          ) {
+            needLoadSymbols.push(symbol);
+          }
+        });
 
         if (needLoadSymbols.length > 0) {
           const actions = arrayMap(needLoadSymbols, (symbol: string) =>
@@ -78,16 +83,7 @@ export const loadMarketSymbolTick$ = createEffect((action$) =>
             validateApiResponsePipe(),
             map((data: ApiResponse) => {
               if (data?.success === true) {
-                MarketTicks.loadingInfo[symbol] = {
-                  isLoading: false,
-                  loaded: true,
-                };
-                MarketTicks.ticks.push({ symbol, ticks: data.data });
-                MarketTicks.log(
-                  `Loaded market ticks ${symbol}`,
-                  MarketTicks.ticks,
-                );
-                MarketTicks.publishResolveTickChartData();
+                MarketTicks.saveTick({ symbol, ticks: data.data });
                 return ANALYSIS_ACTIONS.loadMarketSymbolTickSuccess({
                   symbol,
                   data,

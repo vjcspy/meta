@@ -5,6 +5,7 @@ export class CommonValue {
   static SELL_SHEEP_COLOR = 'rgb(239,148,30)';
 
   static REFRESH_WINDOW_TIME = 10000;
+  static RE_FETCH_TICKS_WINDOW_TIME = 60000;
 
   static DEFAULT_MARKET_SYMBOL_CAT = 'DEFAULT_MARKET_CAT_KEY';
 }
