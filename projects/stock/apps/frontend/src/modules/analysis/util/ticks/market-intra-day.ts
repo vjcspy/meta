@@ -1,16 +1,30 @@
 import type { ResolveTickChartStatus } from '@modules/analysis/util/ticks/market-ticks';
+import type { TimeResolution } from '@stock/packages-com/dist/tick/merge-by-res';
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
-import { difference, isNumber } from 'lodash-es';
+import {
+  difference,
+  filter as lodashFilter,
+  forEach,
+  isNumber,
+} from 'lodash-es';
 import { ReplaySubject, Subject } from 'rxjs';
 
+const loadedTick$ = new Subject<any>();
+
 const resolveTickChart$ = new Subject<any>();
-const resolvedTickCart$ = new ReplaySubject();
+const resolvedTickChart$ = new ReplaySubject();
+
+export interface MarketIntraDayTickRecord {
+  symbol: string;
+  ticks: any;
+}
 
 export class MarketIntraDay {
   static DEBUG = true;
-  static BACK_DATE = 5;
+  static BACK_DATE = 7;
   private static _worker: Worker | undefined;
+
   /* ___________________________________ Market Tick Data ___________________________________ */
   static DATE: string;
   static loadingInfo: Record<
@@ -20,7 +34,7 @@ export class MarketIntraDay {
       loaded?: boolean;
     }
   > = {};
-  static ticks: { symbol: string; data: any }[] = [];
+  static ticks: MarketIntraDayTickRecord[] = [];
 
   /* ___________________________________ Calculate market ticks chart data ___________________________________ */
   static tickCharts: {
@@ -29,7 +43,8 @@ export class MarketIntraDay {
     data: any;
   }[] = [];
 
-  static tickChartsTradeValue: number;
+  static tickChartTradeValue: number;
+  static tickChartTimeRes: TimeResolution;
   static resoleTickChartInfo: Record<
     string,
     { isResolvingTickChart?: boolean; isResolvedTickChart?: boolean }
@@ -45,6 +60,41 @@ export class MarketIntraDay {
     MarketIntraDay.ticks = [];
     MarketIntraDay.tickCharts = [];
     MarketIntraDay.loadingInfo = {};
+    MarketIntraDay.resoleTickChartInfo = {};
+  }
+
+  static saveTick(data: MarketIntraDayTickRecord) {
+    MarketIntraDay.ticks = lodashFilter(
+      MarketIntraDay.ticks,
+      (t) => t.symbol !== data.symbol,
+    );
+    MarketIntraDay.loadingInfo[data.symbol] = {
+      isLoading: false,
+      loaded: true,
+    };
+    MarketIntraDay.ticks.push(data);
+    loadedTick$.next(data.symbol);
+    MarketIntraDay.log(
+      `Loaded market ticks ${data.symbol}`,
+      MarketIntraDay.ticks,
+    );
+  }
+
+  static getLoadedTickObserver() {
+    return loadedTick$.asObservable();
+  }
+
+  static isLoadedFullTicks(needed: string[]) {
+    let isFull = true;
+    forEach(needed, (symbol: string) => {
+      if (MarketIntraDay.loadingInfo[symbol]?.loaded !== true) {
+        isFull = false;
+
+        return false;
+      }
+    });
+
+    return isFull;
   }
 
   static setTickDate(date: string) {
@@ -66,7 +116,7 @@ export class MarketIntraDay {
      * mà có trường hợp tick đã load xong(và đã resolve xong chart data) nên sẽ không trigger,
      * do đó khi vào lại page sẽ không biết là đã resolved chart data
      * */
-    resolvedTickCart$.next(undefined);
+    resolvedTickChart$.next(undefined);
   }
 
   static getWorker(): Worker | undefined {
@@ -96,7 +146,7 @@ export class MarketIntraDay {
 
             return;
           }
-          if (tradeValue === MarketIntraDay.tickChartsTradeValue) {
+          if (tradeValue === MarketIntraDay.tickChartTradeValue) {
             // Sẽ có trường hợp đang chạy worker mà lại thay đổi trade value
             MarketIntraDay.tickCharts.push(event.data);
             MarketIntraDay.resoleTickChartInfo[symbol] = {
@@ -107,7 +157,7 @@ export class MarketIntraDay {
               `Resolved tick chart data for symbol ${symbol}`,
               MarketIntraDay.tickCharts,
             );
-            resolvedTickCart$.next(undefined);
+            resolvedTickChart$.next(undefined);
           }
         }
       };
@@ -125,7 +175,7 @@ export class MarketIntraDay {
   }
 
   static getResolvedTickChartObserver() {
-    return resolvedTickCart$;
+    return resolvedTickChart$;
   }
 
   static getResolveTickChartStatus(need: string[]): ResolveTickChartStatus {

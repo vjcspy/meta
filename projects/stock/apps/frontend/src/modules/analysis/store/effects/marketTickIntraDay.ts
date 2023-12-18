@@ -8,7 +8,7 @@ import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiRespo
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { difference, map as arrayMap } from 'lodash-es';
+import { forEach, map as arrayMap } from 'lodash-es';
 import moment from 'moment/moment';
 import {
   debounceTime,
@@ -38,10 +38,15 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
       ) {
         MarketIntraDay.setTickDate(date);
 
-        const needLoadSymbols = difference(
-          selectedMarketCat.symbols,
-          arrayMap(MarketIntraDay.ticks, (t: any) => t.symbol),
-        );
+        const needLoadSymbols: string[] = [];
+        forEach(selectedMarketCat.symbols, (symbol: string) => {
+          if (
+            MarketIntraDay.loadingInfo[symbol]?.loaded !== true &&
+            MarketIntraDay.loadingInfo[symbol]?.isLoading !== true
+          ) {
+            needLoadSymbols.push(symbol);
+          }
+        });
 
         if (needLoadSymbols.length > 0) {
           const actions = arrayMap(needLoadSymbols, (symbol: string) =>
@@ -88,16 +93,7 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
             validateApiResponsePipe(),
             map((data: ApiResponse) => {
               if (data?.success === true) {
-                MarketIntraDay.loadingInfo[symbol] = {
-                  isLoading: false,
-                  loaded: true,
-                };
-                MarketIntraDay.ticks.push({ symbol, data: data.data });
-                MarketIntraDay.log(
-                  `Loaded market intra-day tick ${symbol}`,
-                  MarketIntraDay.ticks,
-                );
-                MarketIntraDay.publishResolveTickChartData();
+                MarketIntraDay.saveTick({ symbol, ticks: data.data });
                 return ANALYSIS_ACTIONS.loadMarketIntraDayTickSuccess({
                   symbol,
                   data,
