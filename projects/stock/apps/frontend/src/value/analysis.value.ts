@@ -1,1 +1,3 @@
 export const SYMBOL_CACHE_KEY = 'analysis.symbol';
+export const MARKET_TICK_SELECTED_CATEGORY_KEY =
+  'MARKET_TICK_SELECTED_CATEGORY_KEY';

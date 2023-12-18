@@ -1,4 +1,5 @@
 import type { MarketSymbolCategory } from '@modules/analysis/types';
+import { getLatestWorkingDay } from '@modules/analysis/util/moment/getLatestWorkingDay';
 import moment from 'moment/moment';
 
 export interface AnalysisState {
@@ -22,11 +23,15 @@ export interface AnalysisState {
   marketToDate: string;
 }
 export const analysisInitialState: AnalysisState = {
-  fromDate: moment().utc().subtract(10, 'days').format('YYYY-MM-DD'),
-  toDate: moment().utc().format('YYYY-MM-DD'),
+  fromDate: moment(getLatestWorkingDay())
+    .subtract(3, 'months')
+    .format('YYYY-MM-DD'),
+  toDate: getLatestWorkingDay(),
   tradeValueFilter: [0, 250, 1000],
 
   /* __________ market __________ */
-  marketFromDate: moment().utc().subtract(90, 'days').format('YYYY-MM-DD'),
-  marketToDate: moment().utc().format('YYYY-MM-DD'),
+  marketFromDate: moment(getLatestWorkingDay())
+    .subtract(3, 'months')
+    .format('YYYY-MM-DD'),
+  marketToDate: getLatestWorkingDay(),
 };

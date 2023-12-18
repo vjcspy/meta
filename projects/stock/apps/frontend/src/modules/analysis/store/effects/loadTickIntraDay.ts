@@ -8,6 +8,8 @@ import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiRespo
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
+import { sortBy } from 'lodash-es';
+import moment from 'moment';
 import { auditTime, debounceTime, from, map } from 'rxjs';
 import { switchMap, withLatestFrom } from 'rxjs/operators';
 
@@ -18,13 +20,29 @@ export const loadTickIntraDay$ = createEffect((action$, state$) =>
     withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
     switchMap((d: any) => {
       const analysisState: AnalysisState = d[1];
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/intra-day?symbol=${analysisState.symbol}&date=${analysisState.toDate}`;
+      const action = d[0];
+      const symbol = action?.payload?.symbol ?? analysisState.symbol;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/intra-day?symbol=${symbol}&date=${analysisState.toDate}`;
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),
         validateApiResponsePipe(),
         map((data: ApiResponse) => {
           if (data?.success === true) {
+            const tickIntraDay: any = data?.data;
+            if (Array.isArray(tickIntraDay['meta'])) {
+              const date = moment(tickIntraDay['date']);
+              tickIntraDay.meta = tickIntraDay.meta.map((d: any) => {
+                const timeString = d['time'];
+                date.utc().set({
+                  hour: moment(timeString, 'HH:mm:ss').hour(),
+                  minute: moment(timeString, 'HH:mm:ss').minute(),
+                  second: moment(timeString, 'HH:mm:ss').second(),
+                });
+                return { ...d, ts: date.utc().unix() };
+              });
+              tickIntraDay.meta = sortBy(tickIntraDay.meta, (d) => -d.ts);
+            }
             return ANALYSIS_ACTIONS.loadTickIntraDaySuccess(data);
           } else {
             return APP_ACTIONS.fetchApiError(data);

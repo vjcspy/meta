@@ -10,11 +10,7 @@ export const withTickIntraDay = createUiHOC(() => {
   const toDate = useSelectFromState((state) => state.analysis.toDate);
 
   useEffect(() => {
-    dispatch(
-      ANALYSIS_ACTIONS.loadTickIntraDay({
-        toDate,
-      }),
-    );
+    dispatch(ANALYSIS_ACTIONS.loadTickIntraDay({}));
   }, [symbol, toDate]);
 
   const tickIntraDay = useSelectFromState(

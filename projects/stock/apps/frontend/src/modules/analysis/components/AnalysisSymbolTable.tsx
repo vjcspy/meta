@@ -7,7 +7,7 @@ import withMarketSymbolCategories from '@modules/analysis/hoc/withMarketSymbolCa
 import { withThemState } from '@modules/app/hoc/withThemState';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension';
-import { ConfigProvider, InputNumber, Switch, theme } from 'antd';
+import { InputNumber, Switch } from 'antd';
 import Search from 'antd/es/input/Search';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
@@ -96,7 +96,7 @@ export default combineHOC(
       },
       {
         title: '',
-        width: adjustMarketCat ? 100 : 10,
+        width: adjustMarketCat ? 70 : 10,
         dataIndex: 'code',
         fixed: 'left' as any,
         render: (value) => {
@@ -150,6 +150,8 @@ export default combineHOC(
 
           return true;
         },
+        sorter: (_, b) =>
+          props.state.selectedMarketCat.symbols.indexOf(b.symbol),
       },
       {
         title: 'trend',
@@ -178,62 +180,70 @@ export default combineHOC(
         width: 100,
       },
       {
-        title: 'dayInTrend',
+        title: 'day in Trend',
         dataIndex: 'l16_hullma_day_in_trend',
         sorter: (a, b) => a.l16_hullma_day_in_trend - b.l16_hullma_day_in_trend,
         fixed: 'left',
-        width: 100,
+        width: 70,
       },
       {
-        title: 'hullDiff',
+        title: 'hull diff',
         dataIndex: 'l16_hullma_highest_diff_percent',
         sorter: (a, b) =>
           a.l16_hullma_highest_diff_percent - b.l16_hullma_highest_diff_percent,
         fixed: 'left',
-        width: 100,
+        width: 70,
       },
 
       {
         title: 'GTGD3',
         dataIndex: 'trade_value_7',
         sorter: (a, b) => a.trade_value_7 - b.trade_value_7,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'GTGD14',
         dataIndex: 'trade_value_14',
         sorter: (a, b) => a.trade_value_14 - b.trade_value_14,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'GTGD30',
         dataIndex: 'trade_value_30',
         sorter: (a, b) => a.trade_value_30 - b.trade_value_30,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'gap',
         dataIndex: 'cur_gap_percent',
         sorter: (a, b) => a.cur_gap_percent - b.cur_gap_percent,
-        width: 100,
+        fixed: 'left',
+        width: 70,
       },
       {
         title: 'cap',
         dataIndex: 'cap',
         sorter: (a, b) => a.cap - b.cap,
-        width: 100,
+        fixed: 'left',
+        width: 80,
       },
       {
         title: 'industryName1',
         dataIndex: 'industryName1',
+        width: 130,
       },
       {
         title: 'industryName2',
         dataIndex: 'industryName2',
+        width: 170,
       },
       {
         title: 'industryName3',
         dataIndex: 'industryName3',
+        width: 170,
       },
     ];
     return tableColumns;
@@ -262,7 +272,14 @@ export default combineHOC(
 
   return (
     <>
-      <Row title={`Analysis Symbol Table`} oneCol={false}>
+      <Row
+        title={`Analysis Symbol Table ${
+          props.adjustMarketCat
+            ? `-> Category: ${props.state?.selectedMarketCat?.name}(${props?.state?.selectedMarketCat?.symbols?.length} symbols)`
+            : ''
+        }`}
+        oneCol={false}
+      >
         {(!dataSource || !columns) && (
           <div>
             <span>Loading ...</span>
@@ -270,61 +287,46 @@ export default combineHOC(
         )}
         {dataSource && columns && (
           <div className="grid grid-cols-1 text-xs">
-            <ConfigProvider
-              theme={{
-                components: {
-                  // Table: {
-                  //   colorBgBase: 'transparent',
-                  //   colorTextBase: 'white',
-                  // },
-                },
-                algorithm: props.state.themeState.isDarkMode
-                  ? theme.darkAlgorithm
-                  : theme.defaultAlgorithm,
-                token: { fontSize: 13 },
-              }}
-            >
-              <Table
-                pagination={false}
-                virtual
-                columns={columns}
-                dataSource={dataSource}
-                scroll={{ x: 2000, y: 400 }}
-                summary={() => (
-                  <Table.Summary fixed="top">
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell index={0} colSpan={2} align="center">
-                        <Search
-                          style={{ width: 100 }}
-                          className="uppercase"
-                          placeholder="Symbol"
-                          onChange={(e) => {
-                            setSymbolSearch(e?.target?.value);
-                          }}
-                          onSearch={() => {}}
+            <Table
+              pagination={false}
+              virtual
+              columns={columns}
+              dataSource={dataSource}
+              scroll={{ x: 1700, y: 400 }}
+              summary={() => (
+                <Table.Summary fixed="top">
+                  <Table.Summary.Row>
+                    <Table.Summary.Cell index={0} colSpan={2} align="center">
+                      <Search
+                        style={{ width: 100 }}
+                        className="uppercase"
+                        placeholder="Symbol"
+                        onChange={(e) => {
+                          setSymbolSearch(e?.target?.value);
+                        }}
+                        onSearch={() => {}}
+                      />
+                    </Table.Summary.Cell>
+                    <Table.Summary.Cell index={2} colSpan={2} align="center">
+                      <div className="inline">
+                        <span className="mr-2">GTGD</span>
+                        <InputNumber
+                          min={0}
+                          max={1000}
+                          defaultValue={tradeValue}
+                          onChange={onTradeValueChange}
                         />
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell index={2} colSpan={2} align="center">
-                        <div className="inline">
-                          <span className="mr-2">GTGD</span>
-                          <InputNumber
-                            min={0}
-                            max={1000}
-                            defaultValue={tradeValue}
-                            onChange={onTradeValueChange}
-                          />
-                        </div>
-                      </Table.Summary.Cell>
-                      {/*<Table.Summary.Cell index={12}>*/}
-                      {/*  Fix Right*/}
-                      {/*</Table.Summary.Cell>*/}
-                    </Table.Summary.Row>
-                  </Table.Summary>
-                )}
-                // antd site header height
-                sticky={{ offsetHeader: 64 }}
-              />
-            </ConfigProvider>
+                      </div>
+                    </Table.Summary.Cell>
+                    {/*<Table.Summary.Cell index={12}>*/}
+                    {/*  Fix Right*/}
+                    {/*</Table.Summary.Cell>*/}
+                  </Table.Summary.Row>
+                </Table.Summary>
+              )}
+              // antd site header height
+              sticky={{ offsetHeader: 64 }}
+            />
           </div>
         )}
       </Row>

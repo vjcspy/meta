@@ -10,6 +10,10 @@ import {
   saveMarketCat$,
 } from '@modules/analysis/store/effects/marketCat';
 import {
+  loadMarketIntraDayTick$,
+  loadMarketTickIntraDay$,
+} from '@modules/analysis/store/effects/marketTickIntraDay';
+import {
   loadMarketSymbolTick$,
   loadMarketTicks$,
 } from '@modules/analysis/store/effects/marketTicks';
@@ -64,5 +68,7 @@ export const configAnalysisEffects = (storeManager: any) => {
     saveMarketCat$,
     loadMarketTicks$,
     loadMarketSymbolTick$,
+    loadMarketTickIntraDay$,
+    loadMarketIntraDayTick$,
   ]);
 };

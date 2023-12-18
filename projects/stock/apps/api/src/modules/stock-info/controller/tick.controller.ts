@@ -12,7 +12,7 @@ import { XLogger } from '@nest/base';
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { isTradingTime } from '@stock/packages-com/dist/util/isTradingTime';
 import type { Moment } from 'moment';
-import moment from 'moment/moment';
+import * as moment from 'moment/moment';
 
 @Controller('tick')
 export class TickController {

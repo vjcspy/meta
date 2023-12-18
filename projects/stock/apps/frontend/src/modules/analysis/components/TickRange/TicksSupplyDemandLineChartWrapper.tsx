@@ -12,7 +12,7 @@ const defaultViewChart = {
   sheep: false,
 };
 
-const TicksSupplyDemandLineChart = (props: {
+const TicksSupplyDemandLineChartWrapper = (props: {
   ticks: any[];
   tradeValueFilter: any;
   symbol: string;
@@ -158,4 +158,4 @@ const TicksSupplyDemandLineChart = (props: {
     </>
   );
 };
-export default TicksSupplyDemandLineChart;
+export default TicksSupplyDemandLineChartWrapper;

@@ -1,6 +1,7 @@
 import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
 import { APP_ACTIONS } from '@modules/app/store/app.actions';
 import type { ApiResponse } from '@modules/app/type/api-response';
+import { message } from '@modules/app/util/message';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
 import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiResponseRx';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
@@ -11,7 +12,10 @@ import { switchMap } from 'rxjs/operators';
 
 export const loadMarketCat$ = createEffect((action$) =>
   action$.pipe(
-    ofType(ANALYSIS_ACTIONS.loadMarketCat),
+    ofType(
+      ANALYSIS_ACTIONS.loadMarketCat,
+      ANALYSIS_ACTIONS.saveMarketCatSuccess,
+    ),
     debounceTime(500),
     switchMap(() => {
       const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-cat/list`;
@@ -35,7 +39,7 @@ export const loadMarketCat$ = createEffect((action$) =>
 export const saveMarketCat$ = createEffect((action$) =>
   action$.pipe(
     ofType(ANALYSIS_ACTIONS.saveMarketCat),
-    debounceTime(500),
+    debounceTime(1000),
     switchMap((action) => {
       const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-cat/save`;
 
@@ -44,6 +48,9 @@ export const saveMarketCat$ = createEffect((action$) =>
         validateApiResponsePipe(),
         map((data: ApiResponse) => {
           if (data?.success === true) {
+            message().success({
+              content: 'Save Market Category success',
+            });
             return ANALYSIS_ACTIONS.saveMarketCatSuccess(data);
           } else {
             return APP_ACTIONS.fetchApiError(data);

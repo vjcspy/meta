@@ -1,9 +1,17 @@
+import type { MarketTickChartDataType } from '@modules/analysis/util/ticks/calTickRangeData';
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
 import { difference, find, forEach, isNumber } from 'lodash-es';
 import { debounceTime, ReplaySubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+export interface ResolveTickChartStatus {
+  isFinish: boolean;
+  message?: string;
+}
 
+/*
+ * For publish resolve chart whenever
+ * */
 const resolveTickChart$ = new Subject<any>();
 
 resolveTickChart$
@@ -13,16 +21,13 @@ resolveTickChart$
   )
   .subscribe(() => {
     forEach(MarketTicks.ticks, (t, _index) => {
-      // delay(
-      //   () => {
-      //     MarketTicks.resolveTickChart(t.symbol);
-      //   },
-      //   random(50, 150) * index,
-      // );
       MarketTicks.resolveTickChart(t.symbol);
     });
   });
 
+/*
+ * Emit an event after resolving each tick data for every symbol
+ * */
 const resolvedTickCart$ = new ReplaySubject();
 
 export class MarketTicks {
@@ -39,7 +44,11 @@ export class MarketTicks {
   static ticks: { symbol: string; ticks: any }[] = [];
 
   /* ___________________________________ Calculate market ticks chart data ___________________________________*/
-  static tickCharts: { symbol: string; tradeValue: number; data: any }[] = [];
+  static tickCharts: {
+    symbol: string;
+    tradeValue: number;
+    data: MarketTickChartDataType[];
+  }[] = [];
 
   /*
    Là ánh xạ từ analysis state trade value.
@@ -169,7 +178,7 @@ export class MarketTicks {
         );
 
         worker.postMessage({
-          ticks: tickData.ticks,
+          ticks: tickData!.ticks,
           symbol,
           tradeValue: MarketTicks.tickChartsTradeValue,
           viewByValue: true,
@@ -203,6 +212,12 @@ export class MarketTicks {
       `Publish resolve all ticks chart data (it's safe to call whenever)`,
     );
     resolveTickChart$.next(undefined);
+
+    /*
+     * Vì sau khi resolve tick chart mới publish event,
+     * mà có trường hợp tick đã load xong(và đã resolve xong chart data) nên sẽ không trigger,
+     * do đó khi vào lại page sẽ không biết là đã resolved chart data
+     * */
     resolvedTickCart$.next(undefined);
   }
 
@@ -210,10 +225,7 @@ export class MarketTicks {
     return resolvedTickCart$;
   }
 
-  static getResolveTickChartStatus(need: string[]): {
-    isFinish: boolean;
-    message?: string;
-  } {
+  static getResolveTickChartStatus(need: string[]): ResolveTickChartStatus {
     const diff = difference(
       need,
       MarketTicks.tickCharts.map((t) => t.symbol),
@@ -221,7 +233,7 @@ export class MarketTicks {
     if (diff.length > 0) {
       return {
         isFinish: false,
-        message: `Remaining ${diff.length} symbols to calculate...`,
+        message: `Remaining ${diff.length} symbols to calculate`,
       };
     }
 

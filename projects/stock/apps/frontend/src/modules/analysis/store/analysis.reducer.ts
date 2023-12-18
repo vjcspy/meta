@@ -1,12 +1,13 @@
 import type { MarketSymbolCategory } from '@modules/analysis/types';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { analysisInitialState } from '@src/modules/analysis/store/analysis.state';
-import { SYMBOL_CACHE_KEY } from '@src/value/analysis.value';
+import {
+  MARKET_TICK_SELECTED_CATEGORY_KEY,
+  SYMBOL_CACHE_KEY,
+} from '@src/value/analysis.value';
 import type { PayloadAction } from '@stock/packages-redux';
 import { createSlice } from '@stock/packages-redux';
-import { map, sortBy } from 'lodash-es';
 import { filter } from 'lodash-es';
-import moment from 'moment/moment';
 
 export const analysisSlice = createSlice({
   name: 'analysis',
@@ -21,24 +22,10 @@ export const analysisSlice = createSlice({
     },
 
     /* ____________________________________ Load tick intra-day ____________________________________*/
-    loadTickIntraDay: (_, __: PayloadAction<{ toDate?: string }>) => undefined,
+    loadTickIntraDay: (_, __: PayloadAction<{ symbol?: string }>) => undefined,
     refreshTickIntraDay: () => undefined,
     loadTickIntraDaySuccess: (state, action: PayloadAction<ApiResponse>) => {
-      const tickIntraDay = action.payload.data;
-      if (Array.isArray(tickIntraDay['meta'])) {
-        const date = moment(tickIntraDay['date']);
-        tickIntraDay.meta = map(tickIntraDay.meta, (d) => {
-          const timeString = d['time'];
-          date.utc().set({
-            hour: moment(timeString, 'HH:mm:ss').hour(),
-            minute: moment(timeString, 'HH:mm:ss').minute(),
-            second: moment(timeString, 'HH:mm:ss').second(),
-          });
-          return { ...d, ts: date.utc().unix() };
-        });
-        tickIntraDay.meta = sortBy(tickIntraDay.meta, (d) => -d.ts);
-      }
-      state.tickIntraDay = tickIntraDay;
+      state.tickIntraDay = action.payload.data;
 
       return state;
     },
@@ -80,7 +67,20 @@ export const analysisSlice = createSlice({
       state,
       action: PayloadAction<{ cat: MarketSymbolCategory }>,
     ) => {
-      state.selectedMarketCat = action.payload.cat;
+      // const isExist = find(
+      //     state.marketCategories,
+      //     (c) => c.key === action.payload.cat.key,
+      // );
+      // if (isExist && isExist.key !== state?.selectedMarketCat?.key) {
+      //   state.selectedMarketCat = isExist;
+      // }
+      if (action.payload.cat?.key) {
+        state.selectedMarketCat = action.payload.cat;
+        localStorage.setItem(
+          MARKET_TICK_SELECTED_CATEGORY_KEY,
+          action.payload.cat.key,
+        );
+      }
     },
     toggleSelectedCatSymbol: (
       state,
@@ -113,7 +113,7 @@ export const analysisSlice = createSlice({
       state.marketToDate = action.payload.toDate;
     },
 
-    /* ____________________________________ Load Market Ticks ____________________________________*/
+    /* ____________________________________ Load Market Ticks ____________________________________ */
     loadMarketTicks: () => undefined, // it is safe for call every time you want
     loadMarketSymbolTick: (_, __: PayloadAction<{ symbol: string }>) =>
       undefined, // not call directly from action dispatcher
@@ -122,6 +122,14 @@ export const analysisSlice = createSlice({
       __: PayloadAction<{ symbol: string; data: ApiResponse }>,
     ) => undefined,
 
+    /* ____________________________________ Load Market Intra-day ____________________________________ */
+    loadMarketIntraDayTicks: () => undefined, // it is safe for call every time you want
+    loadMarketIntraDayTick: (_, __: PayloadAction<{ symbol: string }>) =>
+      undefined, // not call directly from action dispatcher
+    loadMarketIntraDayTickSuccess: (
+      _,
+      __: PayloadAction<{ symbol: string; data: ApiResponse }>,
+    ) => undefined,
     /* ____________________________________ general ____________________________________ */
     setSymbol(state, { payload }) {
       const { symbol } = payload;

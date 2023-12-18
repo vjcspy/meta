@@ -1,5 +1,6 @@
 'use client';
 
+import TicksSupplyDemandLineChartWrapper from '@modules/analysis/components/TickRange/TicksSupplyDemandLineChartWrapper';
 import { withCalTickRageWorker } from '@modules/analysis/hoc/withCalTickRageWorker';
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
@@ -11,9 +12,7 @@ import { combineHOC } from '@web/ui-extension';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 
-import TicksSupplyDemandLineChart from './TickRange/TicksSupplyDemandLineChart';
-
-const TickRange = combineHOC(
+export default combineHOC(
   withSelectedSymbol,
   withTicks,
   withTradeValueFilter,
@@ -53,7 +52,7 @@ const TickRange = combineHOC(
 
   return (
     <>
-      <TicksSupplyDemandLineChart
+      <TicksSupplyDemandLineChartWrapper
         ticks={props.state.ticks}
         tradeValueFilter={props.state.tradeValueFilter}
         symbol={props.state.symbol ?? ''}
@@ -64,5 +63,3 @@ const TickRange = combineHOC(
     </>
   );
 });
-
-export default TickRange;
