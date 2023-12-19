@@ -69,11 +69,11 @@ export const loadMarketSymbolTick$ = createEffect((action$) =>
         filter(
           (action) =>
             !MarketTicks.loadingInfo[action?.payload?.symbol]?.isLoading ||
-            !!MarketTicks.loadingInfo[action?.payload?.symbol]?.loaded,
+            !MarketTicks.loadingInfo[action?.payload?.symbol]?.loaded,
         ),
         switchMap((action) => {
           const symbol = action.payload.symbol;
-          MarketTicks.loadingInfo[symbol] = { isLoading: true };
+          MarketTicks.loadingInfo[symbol] = { isLoading: true, loaded: false };
           MarketTicks.log(`Will load market tick data for symbol ${symbol}`);
 
           const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-v2?symbol=${symbol}&from=${MarketTicks.fromDate}&to=${MarketTicks.toDate}`;

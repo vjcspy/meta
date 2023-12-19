@@ -4,6 +4,6 @@ addEventListener('message', (event) => {
   postMessage(calTickIntraDayData(event.data));
 });
 
-// addEventListener('messageerror', () => {
-//   postMessage('messageerror');
-// });
+addEventListener('messageerror', () => {
+  postMessage('messageerror');
+});

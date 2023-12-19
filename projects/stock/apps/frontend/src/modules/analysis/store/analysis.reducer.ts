@@ -5,6 +5,7 @@ import {
   MARKET_TICK_SELECTED_CATEGORY_KEY,
   SYMBOL_CACHE_KEY,
 } from '@src/value/analysis.value';
+import type { TimeResolution } from '@stock/packages-com/dist/tick/merge-by-res';
 import type { PayloadAction } from '@stock/packages-redux';
 import { createSlice } from '@stock/packages-redux';
 import { filter } from 'lodash-es';
@@ -154,6 +155,9 @@ export const analysisSlice = createSlice({
     },
     setCapFilter(state, action) {
       state.capFilter = action.payload?.capFilter;
+    },
+    setTimeRes(state, action: PayloadAction<{ timeRes: TimeResolution }>) {
+      state.timeRes = action.payload.timeRes;
     },
   },
 });

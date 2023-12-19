@@ -1,8 +1,8 @@
+import type { MarketIntraDayTickRecord } from '@modules/analysis/util/ticks/market-intra-day';
 import type { TimeResolution } from '@stock/packages-com/dist/tick/merge-by-res';
 import { group_by_time_period } from '@stock/packages-com/dist/tick/merge-by-res';
-import { first, forEach, orderBy, sortBy, tail, values } from 'lodash-es';
+import { filter, forEach, sortBy, values } from 'lodash-es';
 import moment from 'moment/moment';
-import {MarketIntraDayTickRecord} from "@modules/analysis/util/ticks/market-intra-day";
 
 export interface MarketIntraDayTickInfo {
   ts: number;
@@ -27,8 +27,8 @@ function resolveChartTicks(
   const date = moment.utc();
   let historyData: Record<number, MarketIntraDayTickInfo> = {};
   forEach(historyTicks, (tickDate: any) => {
-    let meta = tickDate?.meta ?? [];
-    meta = sortBy(meta, 'time');
+    const meta = tickDate?.meta ?? [];
+    // meta = sortBy(meta, 'time');
 
     forEach(meta, (tick: any) => {
       const timeString = tick.time;
@@ -77,10 +77,11 @@ function resolveChartTicks(
   let sum_shark_buy = 0;
   let sum_shark_sell = 0;
   let diff_sum_shark = 0;
+
   historyData = sortBy(values(historyData), 'ts');
   forEach(historyData, (tickTime) => {
     sum_sheep_buy += tickTime.sheep_buy;
-    sum_sheep_sell += tickTime.shark_sell;
+    sum_sheep_sell += tickTime.sheep_sell;
     diff_sum_sheep = sum_sheep_buy - sum_sheep_sell;
     sum_shark_buy += tickTime.shark_buy;
     sum_shark_sell += tickTime.shark_sell;
@@ -101,22 +102,36 @@ export const calTickIntraDayData = (data: {
   ticks: MarketIntraDayTickRecord[];
   timeRes: TimeResolution;
   tradeValue: number;
+  date: string;
 }) => {
-  // @ts-ignore
-  if (Array.isArray(data.ticks) || data.ticks.length === 0) {
+  if (!Array.isArray(data.ticks) || data.ticks.length === 0) {
     return undefined;
   }
 
-  const ticks = orderBy(data.ticks, (tick: any) => tick.date, 'desc');
+  const currentDate = moment(data.date);
+  const historyTicks: any[] = [];
+  const currentTicks: any[] = [];
+  forEach(data.ticks, (symbolTick: MarketIntraDayTickRecord) => {
+    const _hisTicks = filter(
+      symbolTick.ticks,
+      (_d) => !moment(_d.date).isSame(currentDate, 'day'),
+    );
 
-  const historyTicks = tail(ticks);
+    historyTicks.push(..._hisTicks);
+
+    const _currentTicks = filter(symbolTick.ticks, (_d) =>
+      moment(_d.date).isSame(currentDate, 'day'),
+    );
+
+    currentTicks.push(..._currentTicks);
+  });
+
   const historyIntraDayData = resolveChartTicks(
     historyTicks,
     data.tradeValue,
     data.timeRes,
   );
 
-  const currentTicks = first(ticks);
   const currentIntraDayData = resolveChartTicks(
     currentTicks,
     data.tradeValue,
@@ -124,6 +139,8 @@ export const calTickIntraDayData = (data: {
   );
 
   return {
+    tradeValue: data.tradeValue,
+    timeRes: data.timeRes,
     historyIntraDayData,
     currentIntraDayData,
   };

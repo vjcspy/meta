@@ -2,7 +2,7 @@ import type { MarketTickChartDataType } from '@modules/analysis/util/ticks/calTi
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
 import { filter as lodashFilter, find, forEach, isNumber } from 'lodash-es';
-import { debounceTime, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime } from 'rxjs';
 import { filter } from 'rxjs/operators';
 export interface ResolveTickChartStatus {
   isFinish: boolean;
@@ -12,7 +12,7 @@ export interface ResolveTickChartStatus {
 /*
  * For publish resolve chart whenever
  * */
-const resolveTickChart$ = new Subject<any>();
+const resolveTickChart$ = new BehaviorSubject<any>(undefined);
 
 resolveTickChart$
   .pipe(
@@ -28,7 +28,7 @@ resolveTickChart$
 /*
  * Emit an event after resolving each tick data for every symbol
  * */
-const resolvedTickCart$ = new ReplaySubject();
+const resolvedTickCart$ = new BehaviorSubject(undefined);
 
 interface MarketTickRecord {
   symbol: string;

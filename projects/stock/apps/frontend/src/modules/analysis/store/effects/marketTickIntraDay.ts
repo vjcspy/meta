@@ -71,7 +71,7 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
         filter(
           (action) =>
             !MarketIntraDay.loadingInfo[action?.payload?.symbol]?.isLoading ||
-            !!MarketIntraDay.loadingInfo[action?.payload?.symbol]?.loaded,
+            !MarketIntraDay.loadingInfo[action?.payload?.symbol]?.loaded,
         ),
         withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
         switchMap((d: any) => {
@@ -79,13 +79,16 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
           const analysisState: AnalysisState = d[1];
           const date = analysisState.toDate;
           const symbol = action.payload.symbol;
-          MarketIntraDay.loadingInfo[symbol] = { isLoading: true };
+          MarketIntraDay.loadingInfo[symbol] = {
+            isLoading: true,
+            loaded: false,
+          };
           MarketIntraDay.log(`Will load market tick data for symbol ${symbol}`);
 
           const url = `${
             process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL
           }/tick/histories-v2?symbol=${symbol}&from=${moment(date)
-            .subtract(MarketIntraDay.BACK_DATE, 'days')
+            .subtract(MarketIntraDay.BACK_DATE + 5, 'days')
             .format('YYYY-MM-DD')}&to=${date}`;
 
           return from(fetch(url)).pipe(
