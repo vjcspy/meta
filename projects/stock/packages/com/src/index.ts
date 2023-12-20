@@ -1,1 +1,1 @@
-console.log([]);
+export * from './type/tick';

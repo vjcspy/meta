@@ -58,7 +58,7 @@ export interface MarketIntraDayChartData {
 
 export class MarketIntraDay {
   static DEBUG = true;
-  static BACK_DATE = 2;
+  static BACK_DATE = 3;
   private static _worker: Worker | undefined;
 
   /* ___________________________________ Market Tick Data ___________________________________ */
