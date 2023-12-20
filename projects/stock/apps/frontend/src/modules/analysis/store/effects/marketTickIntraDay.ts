@@ -40,15 +40,23 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
 
         const needLoadSymbols: string[] = [];
         forEach(selectedMarketCat.symbols, (symbol: string) => {
+          if (!MarketIntraDay.loadingInfo.hasOwnProperty(symbol)) {
+            MarketIntraDay.loadingInfo[symbol] = {
+              loaded: false,
+              isLoading: false,
+            };
+          }
+
           if (
-            MarketIntraDay.loadingInfo[symbol]?.loaded !== true &&
-            MarketIntraDay.loadingInfo[symbol]?.isLoading !== true
+            !MarketIntraDay.loadingInfo[symbol].loaded &&
+            !MarketIntraDay.loadingInfo[symbol].isLoading
           ) {
             needLoadSymbols.push(symbol);
           }
         });
 
         if (needLoadSymbols.length > 0) {
+          MarketIntraDay.getLoadedTickObserver().next(undefined);
           const actions = arrayMap(needLoadSymbols, (symbol: string) =>
             ANALYSIS_ACTIONS.loadMarketIntraDayTick({ symbol }),
           );
@@ -56,7 +64,8 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
           return from(actions);
         }
       }
-
+      MarketIntraDay.log('=>> Skipping loading ticks data');
+      MarketIntraDay.getLoadedTickObserver().next(undefined);
       return EMPTY;
     }),
   ),

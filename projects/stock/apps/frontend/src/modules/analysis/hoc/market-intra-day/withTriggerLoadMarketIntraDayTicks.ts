@@ -1,5 +1,4 @@
 import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
-import { MarketIntraDay } from '@modules/analysis/util/ticks/market-intra-day';
 import { useSelectFromState } from '@src/store/selectFromState';
 import { useAppDispatch } from '@src/store/useAppDispatch';
 import { createUiHOC } from '@web/ui-extension/dist';
@@ -13,7 +12,6 @@ export default createUiHOC(() => {
   );
 
   useEffect(() => {
-    MarketIntraDay.getLoadedTickObserver().next(undefined);
     dispatch(ANALYSIS_ACTIONS.loadMarketIntraDayTicks());
   }, [date, selectedMarketCat]);
 

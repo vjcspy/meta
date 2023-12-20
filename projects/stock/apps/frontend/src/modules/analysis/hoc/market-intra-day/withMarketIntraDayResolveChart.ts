@@ -14,12 +14,15 @@ export default createUiHOC(() => {
   );
   const timeRes = useSelectFromState((state) => state.analysis.timeRes);
 
-  const [isLoadedFullTicks, setLoadedFullTicks] = useState(false);
+  const [loadTicksInfo, setLoadTicksInfo] = useState<{
+    isFull: boolean;
+    notLoaded: number;
+  }>();
 
   useEffect(() => {
     if (selectedMarketCat?.symbols?.length > 0) {
       const sub = MarketIntraDay.getLoadedTickObserver().subscribe(() => {
-        setLoadedFullTicks(
+        setLoadTicksInfo(
           MarketIntraDay.isLoadedFullTicks(selectedMarketCat.symbols),
         );
       });
@@ -31,7 +34,7 @@ export default createUiHOC(() => {
   }, [selectedMarketCat]);
 
   useEffect(() => {
-    if (isLoadedFullTicks) {
+    const sub = MarketIntraDay.getLoadedTickObserver().subscribe(() => {
       if (
         tradeValue?.length === 3 &&
         isString(date) &&
@@ -46,14 +49,12 @@ export default createUiHOC(() => {
           selectedMarketCat.symbols,
         );
       }
-    }
-  }, [
-    isLoadedFullTicks,
-    date,
-    tradeValue,
-    timeRes,
-    selectedMarketCat?.symbols,
-  ]);
+    });
 
-  return { state: { isLoadedFullTicks } };
+    return () => {
+      sub.unsubscribe();
+    };
+  }, [date, tradeValue, timeRes, selectedMarketCat?.symbols]);
+
+  return { state: { loadTicksInfo } };
 });

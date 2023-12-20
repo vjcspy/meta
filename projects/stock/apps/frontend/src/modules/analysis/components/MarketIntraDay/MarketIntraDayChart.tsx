@@ -96,128 +96,125 @@ export default combineHOC(
     return data;
   }, [props.state.chartData, viewChart]);
 
-  if (!chartJsConfig) {
-    return <></>;
-  }
-
   return (
     <>
       <Row title={`Market Ticks Chart`} oneCol={false}>
-        {!hasSymbolInCurrentCat &&
-          "Current market category don't have any symbol"}
-
-        {hasSymbolInCurrentCat && (
-          <>
-            <div className="grid grid-cols-1 gap-6 py-2 md:grid-cols-6 lg:grid-cols-6">
-              <div>
-                <label className="flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={viewChart.diffSheep}
-                    onChange={() =>
-                      setViewChart({
-                        ...defaultViewChart,
-                        diffSheep: !viewChart.diffSheep,
-                      })
-                    }
-                  />
-                  <span className=" text-white-dark">View Diff Sheep</span>
-                </label>
-              </div>
-              <div>
-                <label className="flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={viewChart.diffShark}
-                    onChange={() =>
-                      setViewChart({
-                        ...defaultViewChart,
-                        diffShark: !viewChart.diffShark,
-                      })
-                    }
-                  />
-                  <span className=" text-white-dark">View Diff Shark</span>
-                </label>
-              </div>
-              <div>
-                <label className="flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={viewChart.buySheep}
-                    onChange={() =>
-                      setViewChart({
-                        ...defaultViewChart,
-                        buySheep: !viewChart.buySheep,
-                      })
-                    }
-                  />
-                  <span className=" text-white-dark">View Buy Sheep</span>
-                </label>
-              </div>
-              <div>
-                <label className="flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={viewChart.sellSheep}
-                    onChange={() =>
-                      setViewChart({
-                        ...defaultViewChart,
-                        sellSheep: !viewChart.sellSheep,
-                      })
-                    }
-                  />
-                  <span className=" text-white-dark">View Sell Sheep</span>
-                </label>
-              </div>
-              <div>
-                <label className="flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={viewChart.buyShark}
-                    onChange={() =>
-                      setViewChart({
-                        ...defaultViewChart,
-                        buyShark: !viewChart.buyShark,
-                      })
-                    }
-                  />
-                  <span className=" text-white-dark">View Buy Shark</span>
-                </label>
-              </div>
-              <div>
-                <label className="flex cursor-pointer items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox"
-                    checked={viewChart.sellShark}
-                    onChange={() =>
-                      setViewChart({
-                        ...defaultViewChart,
-                        sellShark: !viewChart.sellShark,
-                      })
-                    }
-                  />
-                  <span className=" text-white-dark">View Sell Shark</span>
-                </label>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
-              <ChartJSPlugins plugins={['zoom']}>
-                {chartJsConfig && (
-                  <Line
-                    data={chartJsConfig}
-                    options={CHARTJS_INTRADAY_OPTIONS}
-                  />
-                )}
-              </ChartJSPlugins>
-            </div>
-          </>
+        {!hasSymbolInCurrentCat && (
+          <div className="mb-5 grid grid-cols-1 gap-6">
+            <span className="text-danger">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              Current market category don't have any symbol
+            </span>
+          </div>
         )}
+
+        <>
+          <div className="grid grid-cols-1 gap-6 py-2 md:grid-cols-6 lg:grid-cols-6">
+            <div>
+              <label className="flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={viewChart.diffSheep}
+                  onChange={() =>
+                    setViewChart({
+                      ...defaultViewChart,
+                      diffSheep: !viewChart.diffSheep,
+                    })
+                  }
+                />
+                <span className=" text-white-dark">View Diff Sheep</span>
+              </label>
+            </div>
+            <div>
+              <label className="flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={viewChart.diffShark}
+                  onChange={() =>
+                    setViewChart({
+                      ...defaultViewChart,
+                      diffShark: !viewChart.diffShark,
+                    })
+                  }
+                />
+                <span className=" text-white-dark">View Diff Shark</span>
+              </label>
+            </div>
+            <div>
+              <label className="flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={viewChart.buySheep}
+                  onChange={() =>
+                    setViewChart({
+                      ...defaultViewChart,
+                      buySheep: !viewChart.buySheep,
+                    })
+                  }
+                />
+                <span className=" text-white-dark">View Buy Sheep</span>
+              </label>
+            </div>
+            <div>
+              <label className="flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={viewChart.sellSheep}
+                  onChange={() =>
+                    setViewChart({
+                      ...defaultViewChart,
+                      sellSheep: !viewChart.sellSheep,
+                    })
+                  }
+                />
+                <span className=" text-white-dark">View Sell Sheep</span>
+              </label>
+            </div>
+            <div>
+              <label className="flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={viewChart.buyShark}
+                  onChange={() =>
+                    setViewChart({
+                      ...defaultViewChart,
+                      buyShark: !viewChart.buyShark,
+                    })
+                  }
+                />
+                <span className=" text-white-dark">View Buy Shark</span>
+              </label>
+            </div>
+            <div>
+              <label className="flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={viewChart.sellShark}
+                  onChange={() =>
+                    setViewChart({
+                      ...defaultViewChart,
+                      sellShark: !viewChart.sellShark,
+                    })
+                  }
+                />
+                <span className=" text-white-dark">View Sell Shark</span>
+              </label>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
+            <ChartJSPlugins plugins={['zoom']}>
+              {chartJsConfig && (
+                <Line data={chartJsConfig} options={CHARTJS_INTRADAY_OPTIONS} />
+              )}
+            </ChartJSPlugins>
+          </div>
+        </>
       </Row>
     </>
   );

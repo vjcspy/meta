@@ -2,7 +2,15 @@ import type { MarketIntraDayTickInfo } from '@modules/analysis/util/ticks/calTic
 import type { TimeResolution } from '@stock/packages-com/dist/tick/merge-by-res';
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
-import { filter, forEach, isNumber, orderBy, take } from 'lodash-es';
+import {
+  difference,
+  filter,
+  first,
+  forEach,
+  isNumber,
+  orderBy,
+  take,
+} from 'lodash-es';
 import { BehaviorSubject, debounceTime, Subject } from 'rxjs';
 
 /* Trigger everytime load tick*/
@@ -36,6 +44,12 @@ export interface MarketIntraDayTickRecord {
   ticks: any;
 }
 
+export interface MarketIntraDayResolvedChartInfo {
+  isResolved: boolean;
+  isLoading?: boolean;
+  symbols: string[];
+}
+
 export interface MarketIntraDayChartData {
   historyIntraDayData: MarketIntraDayTickInfo[];
   currentIntraDayData: MarketIntraDayTickInfo[];
@@ -45,11 +59,11 @@ export interface MarketIntraDayChartData {
 
 export class MarketIntraDay {
   static DEBUG = true;
-  static BACK_DATE = 3;
+  static BACK_DATE = 2;
   private static _worker: Worker | undefined;
 
   /* ___________________________________ Market Tick Data ___________________________________ */
-  static DATE: string;
+  private static DATE: string;
   static loadingInfo: Record<
     string,
     {
@@ -60,7 +74,10 @@ export class MarketIntraDay {
   static ticks: MarketIntraDayTickRecord[] = [];
 
   /* ___________________________________ Calculate market ticks chart data ___________________________________ */
-  static isResolveIntraDayChartData: boolean = false;
+  static isResolveIntraDayChartData: MarketIntraDayResolvedChartInfo = {
+    isResolved: false,
+    symbols: [],
+  };
   static tickChartTradeValue: number;
   static tickChartTimeRes: TimeResolution;
   static marketIntraDayChartData: MarketIntraDayChartData | undefined;
@@ -76,7 +93,10 @@ export class MarketIntraDay {
     MarketIntraDay.ticks = [];
     MarketIntraDay.marketIntraDayChartData = undefined;
     MarketIntraDay.loadingInfo = {};
-    MarketIntraDay.isResolveIntraDayChartData = false;
+    MarketIntraDay.isResolveIntraDayChartData = {
+      isResolved: false,
+      symbols: [],
+    };
     loadedTick$.next(undefined);
   }
 
@@ -103,15 +123,16 @@ export class MarketIntraDay {
 
   static isLoadedFullTicks(needed: string[]) {
     let isFull = true;
+    let notLoaded: number = 0;
     forEach(needed, (symbol: string) => {
       if (MarketIntraDay.loadingInfo[symbol]?.loaded !== true) {
         isFull = false;
 
-        return false;
+        notLoaded++;
       }
     });
 
-    return isFull;
+    return { isFull, notLoaded };
   }
 
   static setTickDate(date: string) {
@@ -155,10 +176,11 @@ export class MarketIntraDay {
       }
     });
 
-    if (!isLoadedFullTicks) {
+    if (!isLoadedFullTicks || MarketIntraDay.ticks.length === 0) {
       MarketIntraDay.log(
         `=> Skipping resolveTickChartData due to not having loaded full tick data`,
       );
+      return;
     }
 
     let needCalculate = false;
@@ -172,83 +194,98 @@ export class MarketIntraDay {
       );
       needCalculate = true;
     } else {
-      if (!MarketIntraDay.isResolveIntraDayChartData) {
+      if (!MarketIntraDay.isResolveIntraDayChartData.isResolved) {
         MarketIntraDay.log(
           `Will resolveTickChartData due to !isResolveIntraDayChartData`,
         );
         needCalculate = true;
+      } else {
+        if (
+          difference(symbols, MarketIntraDay.isResolveIntraDayChartData.symbols)
+            .length > 0 ||
+          difference(MarketIntraDay.isResolveIntraDayChartData.symbols, symbols)
+            .length > 0
+        ) {
+          MarketIntraDay.log(
+            `Will resolveTickChartData due to symbols changed`,
+          );
+          needCalculate = true;
+        }
       }
     }
 
-    if (needCalculate) {
-      // validate ticks data before send worker
-      let length: number;
-      MarketIntraDay.log(`Validating ticks before calculate chart data`);
-      let hasError = false;
+    if (!needCalculate) {
+      MarketIntraDay.log(`=>> Skipping resolveTickChartData`);
+      return;
+    }
 
-      MarketIntraDay.ticks = filter(MarketIntraDay.ticks, (d) =>
-        symbols.includes(d.symbol),
-      );
+    MarketIntraDay.log(`Validating ticks before calculate chart data`);
+    let hasError = false;
 
-      forEach(MarketIntraDay.ticks, (value: MarketIntraDayTickRecord) => {
-        if (!Array.isArray(value.ticks)) {
-          hasError = true;
-          console.error(`Tick Data for symbol ${value.symbol} is an array`);
+    const ticks = filter(MarketIntraDay.ticks, (d) =>
+      symbols.includes(d.symbol),
+    );
+    // validate ticks data before send worker
+    const length: number = first(ticks)?.ticks?.length;
 
-          return;
-        }
+    forEach(ticks, (value: MarketIntraDayTickRecord) => {
+      if (!Array.isArray(value.ticks)) {
+        hasError = true;
+        console.error(`Tick Data for symbol ${value.symbol} is an array`);
 
-        if (!length) {
-          length = value.ticks.length;
-        }
-
-        if (length !== value.ticks.length) {
-          hasError = true;
-          console.error(
-            `Tick Data for symbol ${value.symbol} not valid length`,
-            value,
-            MarketIntraDay.ticks,
-          );
-        }
-
-        if (value.ticks.length < MarketIntraDay.BACK_DATE + 1) {
-          hasError = true;
-          console.error(
-            `Tick Data for symbol ${value.symbol} has not enough ${MarketIntraDay.BACK_DATE} days`,
-            value,
-          );
-        }
-
-        value.ticks = orderBy(value.ticks, (t) => t.date, 'desc');
-        value.ticks = take(value.ticks, MarketIntraDay.BACK_DATE + 1);
-      });
-
-      if (hasError) {
         return;
       }
 
-      /*
-       * Trước khi tính thì lưu lại information,
-       * nhưng vẫn có flag isResolveIntraDayChartData để biết là chưa resolve cho nhưng info này
-       * */
-      MarketIntraDay.tickChartTimeRes = timeRes;
-      MarketIntraDay.tickChartTradeValue = tradeValue;
-      MarketIntraDay.DATE = date;
-      MarketIntraDay.isResolveIntraDayChartData = false;
+      if (length !== value.ticks.length) {
+        hasError = true;
+        console.error(
+          `Tick Data for symbol ${value.symbol} not valid length`,
+          value,
+          MarketIntraDay.ticks,
+        );
+      }
 
-      const payload = {
-        ticks: MarketIntraDay.ticks,
-        timeRes: MarketIntraDay.tickChartTimeRes,
-        tradeValue: MarketIntraDay.tickChartTradeValue,
-        date: MarketIntraDay.DATE,
-      };
+      if (value.ticks.length < MarketIntraDay.BACK_DATE + 1) {
+        hasError = true;
+        console.error(
+          `Tick Data for symbol ${value.symbol} has not enough ${MarketIntraDay.BACK_DATE} days`,
+          value,
+        );
+      }
 
-      MarketIntraDay.log(
-        `=>> Send data to worker for calculating chart data`,
-        payload,
-      );
-      MarketIntraDay.getWorker()?.postMessage(payload);
+      value.ticks = orderBy(value.ticks, (t) => t.date, 'desc');
+      value.ticks = take(value.ticks, MarketIntraDay.BACK_DATE + 1);
+    });
+
+    if (hasError) {
+      return;
     }
+
+    /*
+     * Trước khi tính thì lưu lại information,
+     * nhưng vẫn có flag isResolveIntraDayChartData để biết là chưa resolve cho nhưng info này
+     * */
+    MarketIntraDay.tickChartTimeRes = timeRes;
+    MarketIntraDay.tickChartTradeValue = tradeValue;
+    MarketIntraDay.DATE = date;
+    MarketIntraDay.isResolveIntraDayChartData = {
+      isResolved: false,
+      isLoading: true,
+      symbols,
+    };
+
+    const payload = {
+      ticks: ticks,
+      timeRes: MarketIntraDay.tickChartTimeRes,
+      tradeValue: MarketIntraDay.tickChartTradeValue,
+      date: MarketIntraDay.DATE,
+    };
+
+    MarketIntraDay.log(
+      `=>> Send data to worker for calculating chart data`,
+      payload,
+    );
+    MarketIntraDay.getWorker()?.postMessage(payload);
   }
 
   static getWorker(): Worker | undefined {
@@ -288,12 +325,14 @@ export class MarketIntraDay {
               `=>> Resolved Market intra-day chart data`,
               MarketIntraDay.marketIntraDayChartData,
             );
-            MarketIntraDay.isResolveIntraDayChartData = true;
+            MarketIntraDay.isResolveIntraDayChartData.isResolved = true;
+            MarketIntraDay.isResolveIntraDayChartData.isLoading = false;
             resolvedMarketIntraDayChart$.next(undefined);
           }
         }
       };
       MarketIntraDay._worker.onerror = (event: any) => {
+        MarketIntraDay.isResolveIntraDayChartData.isLoading = false;
         console.error(
           `${formatContext(
             'MarketTicksWorker',

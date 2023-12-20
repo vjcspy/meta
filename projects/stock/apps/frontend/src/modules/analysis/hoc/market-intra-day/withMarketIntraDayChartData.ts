@@ -9,7 +9,7 @@ export default createUiHOC(() => {
   useEffect(() => {
     const subscriber = MarketIntraDay.getResolvedTickChartObserver().subscribe(
       () => {
-        if (MarketIntraDay.isResolveIntraDayChartData) {
+        if (MarketIntraDay.isResolveIntraDayChartData.isResolved) {
           setChartData(MarketIntraDay.marketIntraDayChartData);
         }
       },
