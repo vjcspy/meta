@@ -1,25 +1,24 @@
 'use client';
 
+import TimeRes from '@modules/analysis/components/TimeRes';
+import ToDate from '@modules/analysis/components/ToDate';
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTickIntraDay } from '@modules/analysis/hoc/withTickIntraDay';
+import withTimeRes from '@modules/analysis/hoc/withTimeRes';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
-import { getTimeResolutionOptions } from '@modules/analysis/util/getTimeResolutionOptions';
+import { CHARTJS_INTRADAY_OPTIONS } from '@modules/analysis/value/chartjs.value';
 import { CommonValue } from '@modules/analysis/value/common.value';
 import { withThemState } from '@modules/app/hoc/withThemState';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
-import {
-  mergeByRes,
-  TimeResolution,
-} from '@stock/packages-com/dist/tick/merge-by-res';
+import { mergeByRes } from '@stock/packages-com/dist/tick/merge-by-res';
 import { combineHOC } from '@web/ui-extension';
 import moment from 'moment/moment';
 import momentTimezone from 'moment-timezone';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import Flatpickr from 'react-flatpickr';
 
 const TickIntraDay = combineHOC(
   withTickIntraDay,
@@ -27,17 +26,10 @@ const TickIntraDay = combineHOC(
   withThemState,
   withRefreshTicks,
   withTradeValueFilter,
+  withTimeRes,
 )((props) => {
+  const timeRes = props.state.timeRes;
   const [showChartType, setShowChartType] = useState('3');
-  const [timeRes, setTimeRes] = useState<TimeResolution>(TimeResolution['3M']);
-  const onChange = useCallback(
-    (dates: any) => {
-      if (Array.isArray(dates) && dates.length == 1) {
-        props.actions.setToDate(moment(dates[0]).format('YYYY-MM-DD'));
-      }
-    },
-    [props.actions.setToDate],
-  );
 
   const lastTickMoment = useMemo(() => {
     if (props.state.tickIntraDay) {
@@ -87,7 +79,7 @@ const TickIntraDay = combineHOC(
         },
       ];
       labels = mergedByTimeStamp.map((d: any) => {
-        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm');
       });
     } else if (showChartType === '2') {
       const mergedByTimeStamp = mergeByRes(meta, date, timeRes, {
@@ -111,7 +103,7 @@ const TickIntraDay = combineHOC(
         },
       ];
       labels = mergedByTimeStamp.map((d: any) => {
-        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm');
       });
     } else {
       const mergedByTimeStamp1 = mergeByRes(meta, date, timeRes, {
@@ -123,7 +115,7 @@ const TickIntraDay = combineHOC(
         max: Number(tradeVal[2]),
       });
       labels = mergedByTimeStamp2.map((d: any) => {
-        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm:ss');
+        return momentTimezone.unix(d.ts).tz(TIMEZONE).format('HH:mm');
       });
       datasets = [
         {
@@ -162,27 +154,7 @@ const TickIntraDay = combineHOC(
         labels,
         datasets,
       },
-      options: {
-        plugins: {
-          zoom: {
-            zoom: {
-              wheel: {
-                enabled: true,
-              },
-              pinch: {
-                enabled: false,
-              },
-              mode: 'x',
-              // scaleMode: 'y',
-              // overScaleMode: 'x',
-            },
-            pan: {
-              enabled: true,
-              mode: 'x',
-            },
-          },
-        },
-      },
+      options: CHARTJS_INTRADAY_OPTIONS,
     };
   }, [
     props.state.tickIntraDay,
@@ -190,10 +162,6 @@ const TickIntraDay = combineHOC(
     showChartType,
     props?.state?.tradeValueFilter,
   ]);
-
-  const onTimeResChange = useCallback((e: any) => {
-    setTimeRes(e.target.value);
-  }, []);
 
   return (
     <Row
@@ -204,19 +172,8 @@ const TickIntraDay = combineHOC(
       }`}
       oneCol={false}
     >
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
-        <div className="mb-5">
-          <label>Date</label>
-          <Flatpickr
-            value={props.state.toDate}
-            options={{
-              dateFormat: 'Y-m-d',
-              position: 'auto left',
-            }}
-            className="form-input"
-            onChange={onChange}
-          />
-        </div>
+      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-6">
+        <ToDate />
         <div>
           <label>Number of type</label>
           <select
@@ -231,31 +188,9 @@ const TickIntraDay = combineHOC(
             <option value="3">All</option>
           </select>
         </div>
+        <TimeRes />
       </div>
-      <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-3">
-        <div>
-          <label>Time Resolution</label>
-          <select
-            value={timeRes}
-            className="form-select text-white-dark"
-            onChange={onTimeResChange}
-          >
-            {getTimeResolutionOptions().map((d) => (
-              <option key={d.value} value={d.value}>
-                {d.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        {/*<div>*/}
-        {/*  <label>Default Input</label>*/}
-        {/*  <input*/}
-        {/*    type="text"*/}
-        {/*    placeholder="Default Input"*/}
-        {/*    className="form-input"*/}
-        {/*  />*/}
-        {/*</div>*/}
-      </div>
+
       <div className="grid grid-cols-1 gap-6 pt-2">
         <label className="pt-6">Mua bán theo thời gian</label>
         <ChartJSPlugins plugins={['zoom']}>

@@ -10,7 +10,7 @@ export enum TimeResolution {
   '30M' = 30,
 }
 
-const group_by_time_period = (
+export const group_by_time_period = (
   time: Moment,
   timeResolution: TimeResolution,
 ): Moment => {

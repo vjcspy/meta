@@ -2,7 +2,7 @@
   "name": "@stock/packages-com",
   "version": "1.0.0",
   "main": "dist/index",
-  "types": "src/index",
+  "types": "dist/index",
   "files": [
     "dist"
   ],

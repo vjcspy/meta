@@ -50,7 +50,11 @@ export class SyncTicksHelper {
             )}`,
           ),
         );
-
+        this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+          text: `Too many sync failures ${symbol} date ${syncDate.format(
+            'YYYY-MM-DD',
+          )}`,
+        });
         return;
       }
 

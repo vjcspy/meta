@@ -10,6 +10,7 @@ export default createUiHOC(() => {
   const selectedMarketCat = useSelectFromState(
     (state) => state.analysis.selectedMarketCat,
   );
+
   // Refresh tick for all symbols in category
   useEffect(() => {
     const i = setInterval(() => {

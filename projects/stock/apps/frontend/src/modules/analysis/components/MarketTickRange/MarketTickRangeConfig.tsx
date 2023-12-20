@@ -35,29 +35,31 @@ export default combineHOC(
       >
         <div className="custom-select grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-4">
           <MarketTickCategorySelect />
-          <div>
-            <label>From Date</label>
-            <Flatpickr
-              value={props.state.marketFromDate}
-              options={{
-                dateFormat: 'Y-m-d',
-                position: 'auto left',
-              }}
-              className="form-input"
-              onChange={onFromDateChange}
-            />
-          </div>
-          <div>
-            <label>To Date</label>
-            <Flatpickr
-              value={props.state.marketToDate}
-              options={{
-                dateFormat: 'Y-m-d',
-                position: 'auto left',
-              }}
-              className="form-input"
-              onChange={onToDateChange}
-            />
+          <div className="custom-select grid grid-cols-2 gap-6">
+            <div>
+              <label>From Date</label>
+              <Flatpickr
+                value={props.state.marketFromDate}
+                options={{
+                  dateFormat: 'Y-m-d',
+                  position: 'auto left',
+                }}
+                className="form-input"
+                onChange={onFromDateChange}
+              />
+            </div>
+            <div>
+              <label>To Date</label>
+              <Flatpickr
+                value={props.state.marketToDate}
+                options={{
+                  dateFormat: 'Y-m-d',
+                  position: 'auto left',
+                }}
+                className="form-input"
+                onChange={onToDateChange}
+              />
+            </div>
           </div>
           <TradeValueFilter />
         </div>

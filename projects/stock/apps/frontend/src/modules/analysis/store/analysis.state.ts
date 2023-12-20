@@ -1,5 +1,6 @@
 import type { MarketSymbolCategory } from '@modules/analysis/types';
 import { getLatestWorkingDay } from '@modules/analysis/util/moment/getLatestWorkingDay';
+import { TimeResolution } from '@stock/packages-com/dist/tick/merge-by-res';
 import moment from 'moment/moment';
 
 export interface AnalysisState {
@@ -13,6 +14,7 @@ export interface AnalysisState {
   tickIntraDay?: any;
   ticks?: any[];
   tradeValueFilter: number[]; // Trade value filter for each lenh mua hoac ban
+  timeRes: TimeResolution;
 
   /*__________ analysis table data __________*/
   analysisTableData?: any[];
@@ -28,6 +30,7 @@ export const analysisInitialState: AnalysisState = {
     .format('YYYY-MM-DD'),
   toDate: getLatestWorkingDay(),
   tradeValueFilter: [0, 250, 1000],
+  timeRes: TimeResolution['3M'],
 
   /* __________ market __________ */
   marketFromDate: moment(getLatestWorkingDay())

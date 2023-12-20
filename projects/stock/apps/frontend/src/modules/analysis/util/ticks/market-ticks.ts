@@ -1,8 +1,8 @@
 import type { MarketTickChartDataType } from '@modules/analysis/util/ticks/calTickRangeData';
 import { formatContext } from '@web/base/dist/lib/logger/console-template/format-content';
 import { isSSR } from '@web/base/dist/util/isSSR';
-import { difference, find, forEach, isNumber } from 'lodash-es';
-import { debounceTime, ReplaySubject, Subject } from 'rxjs';
+import { filter as lodashFilter, find, forEach, isNumber } from 'lodash-es';
+import { BehaviorSubject, debounceTime } from 'rxjs';
 import { filter } from 'rxjs/operators';
 export interface ResolveTickChartStatus {
   isFinish: boolean;
@@ -12,7 +12,7 @@ export interface ResolveTickChartStatus {
 /*
  * For publish resolve chart whenever
  * */
-const resolveTickChart$ = new Subject<any>();
+const resolveTickChart$ = new BehaviorSubject<any>(undefined);
 
 resolveTickChart$
   .pipe(
@@ -28,7 +28,17 @@ resolveTickChart$
 /*
  * Emit an event after resolving each tick data for every symbol
  * */
-const resolvedTickCart$ = new ReplaySubject();
+const resolvedTickCart$ = new BehaviorSubject(undefined);
+
+interface MarketTickRecord {
+  symbol: string;
+  ticks: any;
+}
+interface MarketTickChartRecord {
+  symbol: string;
+  tradeValue: number;
+  data: MarketTickChartDataType[];
+}
 
 export class MarketTicks {
   static DEBUG = false;
@@ -41,14 +51,10 @@ export class MarketTicks {
       loaded?: boolean;
     }
   > = {};
-  static ticks: { symbol: string; ticks: any }[] = [];
+  static ticks: MarketTickRecord[] = [];
 
   /* ___________________________________ Calculate market ticks chart data ___________________________________*/
-  static tickCharts: {
-    symbol: string;
-    tradeValue: number;
-    data: MarketTickChartDataType[];
-  }[] = [];
+  static tickCharts: MarketTickChartRecord[] = [];
 
   /*
    Là ánh xạ từ analysis state trade value.
@@ -74,9 +80,56 @@ export class MarketTicks {
     MarketTicks.ticks = [];
     MarketTicks.tickCharts = [];
     MarketTicks.loadingInfo = {};
+    MarketTicks.resoleTickChartInfo = {};
   }
 
   private static _worker: Worker | undefined;
+
+  static saveTick(data: MarketTickRecord) {
+    MarketTicks.ticks = lodashFilter(
+      MarketTicks.ticks,
+      (t) => t.symbol !== data.symbol,
+    );
+    MarketTicks.loadingInfo[data.symbol] = {
+      isLoading: false,
+      loaded: true,
+    };
+    MarketTicks.ticks.push(data);
+    MarketTicks.publishResolveTickChartData();
+    MarketTicks.log(`Loaded market ticks ${data.symbol}`, MarketTicks.ticks);
+  }
+
+  static saveTickChartData(data: MarketTickChartRecord) {
+    const symbol = data?.symbol;
+    const tradeValue = data?.tradeValue;
+    if (!symbol || !isNumber(tradeValue)) {
+      console.error(
+        `${formatContext(
+          'MarketTicksWorker',
+        )} Wrong response data format from worker`,
+      );
+
+      return;
+    }
+    if (tradeValue === MarketTicks.tickChartsTradeValue) {
+      MarketTicks.tickCharts = lodashFilter(
+        MarketTicks.tickCharts,
+        (tc) => tc.symbol !== symbol,
+      );
+      // Sẽ có trường hợp đang chạy worker mà lại thay đổi trade value
+      MarketTicks.tickCharts.push(data);
+      MarketTicks.resoleTickChartInfo[symbol] = {
+        isResolvedTickChart: true,
+        isResolvingTickChart: false,
+      };
+      MarketTicks.log(
+        `Resolved tick chart data for symbol ${symbol}`,
+        MarketTicks.tickCharts,
+      );
+      resolvedTickCart$.next(undefined);
+    }
+  }
+
   static getWorker(): Worker | undefined {
     if (isSSR()) {
       return undefined;
@@ -91,33 +144,7 @@ export class MarketTicks {
       );
 
       MarketTicks._worker.onmessage = (event: any) => {
-        if (event?.data) {
-          MarketTicks.log(`Received data from worker`);
-          const symbol = event.data?.symbol;
-          const tradeValue = event.data?.tradeValue;
-          if (!symbol || !isNumber(tradeValue)) {
-            console.error(
-              `${formatContext(
-                'MarketTicksWorker',
-              )} Wrong response data format from worker`,
-            );
-
-            return;
-          }
-          if (tradeValue === MarketTicks.tickChartsTradeValue) {
-            // Sẽ có trường hợp đang chạy worker mà lại thay đổi trade value
-            MarketTicks.tickCharts.push(event.data);
-            MarketTicks.resoleTickChartInfo[symbol] = {
-              isResolvedTickChart: true,
-              isResolvingTickChart: false,
-            };
-            MarketTicks.log(
-              `Resolved tick chart data for symbol ${symbol}`,
-              MarketTicks.tickCharts,
-            );
-            resolvedTickCart$.next(undefined);
-          }
-        }
+        MarketTicks.saveTickChartData(event?.data);
       };
       MarketTicks._worker.onerror = (event: any) => {
         console.error(
@@ -226,10 +253,15 @@ export class MarketTicks {
   }
 
   static getResolveTickChartStatus(need: string[]): ResolveTickChartStatus {
-    const diff = difference(
-      need,
-      MarketTicks.tickCharts.map((t) => t.symbol),
-    );
+    const diff = [];
+    forEach(need, (symbol: string) => {
+      if (
+        MarketTicks.resoleTickChartInfo[symbol]?.isResolvedTickChart !== true
+      ) {
+        diff.push(symbol);
+      }
+    });
+
     if (diff.length > 0) {
       return {
         isFinish: false,

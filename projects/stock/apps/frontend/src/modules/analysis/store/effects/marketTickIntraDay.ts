@@ -8,7 +8,7 @@ import { validateApiResponsePipe } from '@modules/app/util/pipe/validateApiRespo
 import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
-import { difference, map as arrayMap } from 'lodash-es';
+import { forEach, map as arrayMap } from 'lodash-es';
 import moment from 'moment/moment';
 import {
   debounceTime,
@@ -38,12 +38,25 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
       ) {
         MarketIntraDay.setTickDate(date);
 
-        const needLoadSymbols = difference(
-          selectedMarketCat.symbols,
-          arrayMap(MarketIntraDay.ticks, (t: any) => t.symbol),
-        );
+        const needLoadSymbols: string[] = [];
+        forEach(selectedMarketCat.symbols, (symbol: string) => {
+          if (!MarketIntraDay.loadingInfo.hasOwnProperty(symbol)) {
+            MarketIntraDay.loadingInfo[symbol] = {
+              loaded: false,
+              isLoading: false,
+            };
+          }
+
+          if (
+            !MarketIntraDay.loadingInfo[symbol].loaded &&
+            !MarketIntraDay.loadingInfo[symbol].isLoading
+          ) {
+            needLoadSymbols.push(symbol);
+          }
+        });
 
         if (needLoadSymbols.length > 0) {
+          MarketIntraDay.getLoadedTickObserver().next(undefined);
           const actions = arrayMap(needLoadSymbols, (symbol: string) =>
             ANALYSIS_ACTIONS.loadMarketIntraDayTick({ symbol }),
           );
@@ -51,7 +64,8 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
           return from(actions);
         }
       }
-
+      MarketIntraDay.log('=>> Skipping loading ticks data');
+      MarketIntraDay.getLoadedTickObserver().next(undefined);
       return EMPTY;
     }),
   ),
@@ -66,7 +80,7 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
         filter(
           (action) =>
             !MarketIntraDay.loadingInfo[action?.payload?.symbol]?.isLoading ||
-            !!MarketIntraDay.loadingInfo[action?.payload?.symbol]?.loaded,
+            !MarketIntraDay.loadingInfo[action?.payload?.symbol]?.loaded,
         ),
         withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
         switchMap((d: any) => {
@@ -74,13 +88,16 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
           const analysisState: AnalysisState = d[1];
           const date = analysisState.toDate;
           const symbol = action.payload.symbol;
-          MarketIntraDay.loadingInfo[symbol] = { isLoading: true };
+          MarketIntraDay.loadingInfo[symbol] = {
+            isLoading: true,
+            loaded: false,
+          };
           MarketIntraDay.log(`Will load market tick data for symbol ${symbol}`);
 
           const url = `${
             process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL
           }/tick/histories-v2?symbol=${symbol}&from=${moment(date)
-            .subtract(MarketIntraDay.BACK_DATE, 'days')
+            .subtract(MarketIntraDay.BACK_DATE + 2, 'days')
             .format('YYYY-MM-DD')}&to=${date}`;
 
           return from(fetch(url)).pipe(
@@ -88,16 +105,7 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
             validateApiResponsePipe(),
             map((data: ApiResponse) => {
               if (data?.success === true) {
-                MarketIntraDay.loadingInfo[symbol] = {
-                  isLoading: false,
-                  loaded: true,
-                };
-                MarketIntraDay.ticks.push({ symbol, data: data.data });
-                MarketIntraDay.log(
-                  `Loaded market intra-day tick ${symbol}`,
-                  MarketIntraDay.ticks,
-                );
-                MarketIntraDay.publishResolveTickChartData();
+                MarketIntraDay.saveTick({ symbol, ticks: data.data });
                 return ANALYSIS_ACTIONS.loadMarketIntraDayTickSuccess({
                   symbol,
                   data,
