@@ -43,7 +43,6 @@ export default createUiHOC(() => {
         selectedMarketCat.symbols.length > 0
       ) {
         MarketIntraDay.triggerResolveChartData(
-          date,
           tradeValue[1],
           timeRes,
           selectedMarketCat.symbols,
@@ -54,7 +53,7 @@ export default createUiHOC(() => {
     return () => {
       sub.unsubscribe();
     };
-  }, [date, tradeValue, timeRes, selectedMarketCat?.symbols]);
+  }, [tradeValue, timeRes, selectedMarketCat?.symbols]);
 
   return { state: { loadTicksInfo } };
 });

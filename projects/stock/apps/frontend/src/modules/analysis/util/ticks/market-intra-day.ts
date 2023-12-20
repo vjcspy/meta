@@ -27,7 +27,6 @@ const triggerResolveChartData$ = new Subject<{
 }>();
 triggerResolveChartData$.pipe(debounceTime(250)).subscribe((data) => {
   MarketIntraDay._resolveTickChartData(
-    data.date,
     data.tradeValue,
     data.timeRes,
     data.symbols,
@@ -97,7 +96,6 @@ export class MarketIntraDay {
       isResolved: false,
       symbols: [],
     };
-    loadedTick$.next(undefined);
   }
 
   static saveTick(data: MarketIntraDayTickRecord) {
@@ -110,7 +108,7 @@ export class MarketIntraDay {
       loaded: true,
     };
     MarketIntraDay.ticks.push(data);
-    loadedTick$.next(data.symbol);
+    MarketIntraDay.getLoadedTickObserver().next(data.symbol);
     MarketIntraDay.log(
       `Loaded market ticks ${data.symbol}`,
       MarketIntraDay.ticks,
@@ -144,13 +142,12 @@ export class MarketIntraDay {
   }
 
   static triggerResolveChartData(
-    date: string,
     tradeValue: number,
     timeRes: TimeResolution,
     symbols: string[],
   ) {
     return triggerResolveChartData$.next({
-      date,
+      date: MarketIntraDay.DATE,
       timeRes,
       tradeValue,
       symbols,
@@ -158,7 +155,6 @@ export class MarketIntraDay {
   }
 
   static _resolveTickChartData(
-    date: string,
     tradeValue: number,
     timeRes: TimeResolution,
     symbols: string[],
@@ -185,12 +181,11 @@ export class MarketIntraDay {
 
     let needCalculate = false;
     if (
-      MarketIntraDay.DATE !== date ||
       MarketIntraDay.tickChartTradeValue !== tradeValue ||
       MarketIntraDay.tickChartTimeRes !== timeRes
     ) {
       MarketIntraDay.log(
-        `Will resolveTickChartData due to input values changed (date || tradeValue || timeRes)`,
+        `Will resolveTickChartData due to input values changed (tradeValue || timeRes)`,
       );
       needCalculate = true;
     } else {
@@ -267,7 +262,6 @@ export class MarketIntraDay {
      * */
     MarketIntraDay.tickChartTimeRes = timeRes;
     MarketIntraDay.tickChartTradeValue = tradeValue;
-    MarketIntraDay.DATE = date;
     MarketIntraDay.isResolveIntraDayChartData = {
       isResolved: false,
       isLoading: true,
