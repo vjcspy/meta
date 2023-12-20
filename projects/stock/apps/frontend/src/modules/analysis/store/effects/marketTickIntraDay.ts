@@ -97,7 +97,7 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
           const url = `${
             process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL
           }/tick/histories-v2?symbol=${symbol}&from=${moment(date)
-            .subtract(MarketIntraDay.BACK_DATE + 5, 'days')
+            .subtract(MarketIntraDay.BACK_DATE + 2, 'days')
             .format('YYYY-MM-DD')}&to=${date}`;
 
           return from(fetch(url)).pipe(
