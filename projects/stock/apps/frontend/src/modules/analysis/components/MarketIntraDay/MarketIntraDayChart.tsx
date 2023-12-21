@@ -208,7 +208,10 @@ export default combineHOC(
           <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
             <ChartJSPlugins plugins={['zoom']}>
               {chartJsConfig && (
-                <Line data={chartJsConfig} options={CHARTJS_INTRADAY_OPTIONS} />
+                <Line
+                  data={chartJsConfig}
+                  options={CHARTJS_INTRADAY_OPTIONS as any}
+                />
               )}
             </ChartJSPlugins>
           </div>

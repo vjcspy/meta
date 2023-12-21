@@ -190,20 +190,20 @@ const TicksSupplyDemandSumDayChart = React.memo(
 
     return (
       <>
-        {chartJsConfig && (
-          <Row
-            title={`Mua bán cộng dồn - ${
-              type === 'sheep' ? 'SHEEP' : 'SHARK'
-            } (${market ? size(tickRageData) : 1} symbols)`}
-            oneCol={false}
-          >
-            <div className="grid grid-cols-1 gap-6 pt-2">
+        <Row
+          title={`Mua bán cộng dồn - ${type === 'sheep' ? 'SHEEP' : 'SHARK'} (${
+            market ? size(tickRageData) : 1
+          } symbols)`}
+          oneCol={false}
+        >
+          <div className="grid grid-cols-1 gap-6 pt-2">
+            {chartJsConfig && (
               <ChartJSPlugins plugins={['zoom']}>
                 <Line {...chartJsConfig} />
               </ChartJSPlugins>
-            </div>
-          </Row>
-        )}
+            )}
+          </div>
+        </Row>
       </>
     );
   },

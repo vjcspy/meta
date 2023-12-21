@@ -113,6 +113,19 @@ const TicksSupplyDemandDayChart = React.memo(
                   : CommonValue.SELL_SHARK_COLOR,
               tension: 0,
             },
+            ...[
+              market
+                ? undefined
+                : {
+                    label: `close`,
+                    data: tickRageData.map((d: any) => d.close),
+                    fill: false,
+                    tension: 0,
+                    borderColor: 'pink',
+                    borderWidth: 0.5,
+                    yAxisID: 'y1',
+                  },
+            ],
           ],
         },
         options: {
@@ -141,6 +154,25 @@ const TicksSupplyDemandDayChart = React.memo(
               },
             },
           },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+            },
+            y1: market
+              ? undefined
+              : {
+                  type: 'linear',
+                  display: true,
+                  position: 'right',
+
+                  // grid line settings
+                  grid: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                  },
+                },
+          },
         },
       };
     }, [tickRageData, market, type]);
@@ -151,20 +183,18 @@ const TicksSupplyDemandDayChart = React.memo(
 
     return (
       <>
-        {chartJsConfig && (
-          <Row
-            title={`Mua bán từng ngày - ${
-              type === 'sheep' ? 'SHEEP' : 'SHARK'
-            }`}
-            oneCol={false}
-          >
-            <div className="grid grid-cols-1 gap-6 pt-2">
+        <Row
+          title={`Mua bán từng ngày - ${type === 'sheep' ? 'SHEEP' : 'SHARK'}`}
+          oneCol={false}
+        >
+          <div className="grid grid-cols-1 gap-6 pt-2">
+            {chartJsConfig && (
               <ChartJSPlugins plugins={['zoom']}>
                 <Line {...chartJsConfig} />
               </ChartJSPlugins>
-            </div>
-          </Row>
-        )}
+            )}
+          </div>
+        </Row>
       </>
     );
   },

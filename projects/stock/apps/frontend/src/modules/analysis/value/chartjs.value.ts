@@ -1,4 +1,6 @@
-export const CHARTJS_INTRADAY_OPTIONS: any = {
+import type { ChartOptions } from 'chart.js';
+
+export const CHARTJS_INTRADAY_OPTIONS: ChartOptions = {
   plugins: {
     zoom: {
       zoom: {
