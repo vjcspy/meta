@@ -26,7 +26,7 @@ interface DataType {
 
 export default combineHOC(withMarketIntraDayChartData)((props) => {
   const [sellRate, setSellRate] = useState(1.7);
-  const [buyRate, setBuyRate] = useState(2);
+  const [buyRate, setBuyRate] = useState(4.3);
   const [symbolSearch, setSymbolSearch] = useState<string>();
 
   const [dataSource, setDataSource] = useState<any>();
@@ -57,6 +57,32 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         dataIndex: 'firstSharkSell',
         key: 'firstSharkSell',
         sorter: (a, b) => a.firstSharkSell - b.firstSharkSell,
+        render: (value) => {
+          if (value < Infinity) {
+            return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
+          }
+          return '';
+        },
+        width: 70,
+      },
+      {
+        title: 'sheep buy',
+        dataIndex: 'firstSheepBuy',
+        key: 'firstSheepBuy',
+        sorter: (a, b) => a.firstSheepBuy - b.firstSheepBuy,
+        render: (value) => {
+          if (value < Infinity) {
+            return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
+          }
+          return '';
+        },
+        width: 70,
+      },
+      {
+        title: 'shark buy',
+        dataIndex: 'firstSharkBuy',
+        key: 'firstSharkBuy',
+        sorter: (a, b) => a.firstSharkBuy - b.firstSharkBuy,
         render: (value) => {
           if (value < Infinity) {
             return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
@@ -108,7 +134,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
               current,
               history,
               sellRate,
-              2,
+              buyRate,
             );
           }
         },
@@ -141,7 +167,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
 
       setDataSource(dt);
     }
-  }, [props.state.chartData, sellRate, symbolSearch]);
+  }, [props.state.chartData, sellRate, symbolSearch, buyRate]);
 
   return (
     <>

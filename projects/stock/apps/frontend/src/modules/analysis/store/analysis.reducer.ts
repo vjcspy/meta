@@ -83,6 +83,15 @@ export const analysisSlice = createSlice({
         );
       }
     },
+    selectFakeMarketCatWithCurrentSymbol: (state) => {
+      if (state.symbol) {
+        state.selectedMarketCat = {
+          name: `Category: ${state.symbol}`,
+          symbols: [state.symbol],
+          key: `FAKE_CAT_FOR_${state.symbol}`,
+        };
+      }
+    },
     toggleSelectedCatSymbol: (
       state,
       action: PayloadAction<{ symbol: string }>,
