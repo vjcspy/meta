@@ -55,14 +55,14 @@ export default combineHOC(
 
   const tickRageData = useMemo(() => {
     if (
-      Array.isArray(props.state.tickRageData) &&
-      Array.isArray(props.state.prices)
+      props.state.tickRageData?.length > 0 &&
+      props.state.prices?.length > 0
     ) {
       return map(props.state.tickRageData, (tickData: any) => {
         const price: any = find(props.state.prices, (p: any) =>
           moment(p.date).isSame(moment(tickData.date), 'day'),
         );
-        return { ...tickData, close: price.rClose ?? 0 };
+        return { ...tickData, close: price?.rClose ?? 0 };
       });
     }
 
