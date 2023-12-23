@@ -8,8 +8,8 @@ import React, { useMemo, useState } from 'react';
 const defaultViewChart = {
   sumShark: false,
   sumSheep: false,
-  shark: false,
-  sheep: false,
+  sumCombine: false,
+  combine: false,
 };
 
 const TicksSupplyDemandLineChartWrapper = (props: {
@@ -23,9 +23,9 @@ const TicksSupplyDemandLineChartWrapper = (props: {
   const { setViewByValue, viewByValue } = props;
   const [viewChart, setViewChart] = useState({
     sumShark: false,
-    sumSheep: true,
-    shark: false,
-    sheep: false,
+    sumSheep: false,
+    sumCombine: false,
+    combine: true,
   });
 
   const lastTickDate = useMemo(() => {
@@ -96,15 +96,15 @@ const TicksSupplyDemandLineChartWrapper = (props: {
               <input
                 type="checkbox"
                 className="form-checkbox"
-                checked={viewChart.sheep}
+                checked={viewChart.sumCombine}
                 onChange={() =>
                   setViewChart({
                     ...defaultViewChart,
-                    sheep: !viewChart.sheep,
+                    sumCombine: !viewChart.sumCombine,
                   })
                 }
               />
-              <span className=" text-white-dark">View Sheep</span>
+              <span className=" text-white-dark">Sum Combine</span>
             </label>
           </div>
           <div>
@@ -112,33 +112,19 @@ const TicksSupplyDemandLineChartWrapper = (props: {
               <input
                 type="checkbox"
                 className="form-checkbox"
-                checked={viewChart.shark}
+                checked={viewChart.combine}
                 onChange={() =>
                   setViewChart({
                     ...defaultViewChart,
-                    shark: !viewChart.shark,
+                    combine: !viewChart.combine,
                   })
                 }
               />
-              <span className=" text-white-dark">View shark</span>
+              <span className=" text-white-dark">By Day</span>
             </label>
           </div>
         </div>
       </Row>
-
-      {viewChart.sheep && (
-        <TicksSupplyDemandDayChart
-          tickRageData={props.tickRageData}
-          type="sheep"
-        />
-      )}
-
-      {viewChart.shark && (
-        <TicksSupplyDemandDayChart
-          tickRageData={props.tickRageData}
-          type="shark"
-        />
-      )}
 
       {viewChart.sumShark && (
         <TicksSupplyDemandSumDayChart
@@ -151,6 +137,20 @@ const TicksSupplyDemandLineChartWrapper = (props: {
         <TicksSupplyDemandSumDayChart
           tickRageData={props.tickRageData}
           type="sheep"
+        />
+      )}
+
+      {viewChart.sumCombine && (
+        <TicksSupplyDemandSumDayChart
+          tickRageData={props.tickRageData}
+          type="combine"
+        />
+      )}
+
+      {viewChart.combine && (
+        <TicksSupplyDemandDayChart
+          tickRageData={props.tickRageData}
+          type="combine"
         />
       )}
     </>

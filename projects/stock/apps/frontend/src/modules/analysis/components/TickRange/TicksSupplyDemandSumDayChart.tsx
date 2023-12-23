@@ -1,4 +1,3 @@
-import { CommonValue } from '@modules/analysis/value/common.value';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
 import { difference, first, forEach, size, sortBy, values } from 'lodash-es';
@@ -10,7 +9,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
   (props: {
     tickRageData: any[];
     market?: boolean;
-    type: 'sheep' | 'shark';
+    type: 'sheep' | 'shark' | 'combine';
   }) => {
     const { tickRageData, market = false, type } = props;
 
@@ -100,45 +99,83 @@ const TicksSupplyDemandSumDayChart = React.memo(
             ? marketTickRageData.map((d: any) => d.date)
             : tickRageData.map((d: any) => moment(d.date).format('YY-MM-DD')),
           datasets: [
-            {
-              label: `Buy `,
-              data: (market ? marketTickRageData : tickRageData).map(
-                (d: any) => {
-                  return type === 'sheep' ? d.sBSheep : d.sBShark;
-                },
-              ),
-              fill: false,
-              borderColor:
-                type === 'sheep'
-                  ? CommonValue.BUY_SHEEP_COLOR
-                  : CommonValue.BUY_SHARK_COLOR,
-              tension: 0,
-            },
-            {
-              label: `Sell`,
-              data: (market ? marketTickRageData : tickRageData).map(
-                (d: any) => (type === 'sheep' ? d.sSSheep : d.sSShark),
-              ),
-              fill: false,
-              borderColor:
-                type === 'sheep'
-                  ? CommonValue.SELL_SHEEP_COLOR
-                  : CommonValue.SELL_SHARK_COLOR,
-              tension: 0,
-            },
-            {
-              label: `Diff`,
-              data: (market ? marketTickRageData : tickRageData).map(
-                (d: any) =>
-                  type === 'sheep'
-                    ? d.sBSheep - d.sSSheep
-                    : d.sBShark - d.sSShark,
-              ),
-              fill: false,
-              borderColor: 'pink',
-              tension: 0,
-              yAxisID: 'y1',
-            },
+            // {
+            //   label: `Buy `,
+            //   data: (market ? marketTickRageData : tickRageData).map(
+            //     (d: any) => {
+            //       return type === 'sheep' ? d.sBSheep : d.sBShark;
+            //     },
+            //   ),
+            //   fill: false,
+            //   borderColor:
+            //     type === 'sheep'
+            //       ? CommonValue.BUY_SHEEP_COLOR
+            //       : CommonValue.BUY_SHARK_COLOR,
+            //   tension: 0,
+            // },
+            // {
+            //   label: `Sell`,
+            //   data: (market ? marketTickRageData : tickRageData).map(
+            //     (d: any) => (type === 'sheep' ? d.sSSheep : d.sSShark),
+            //   ),
+            //   fill: false,
+            //   borderColor:
+            //     type === 'sheep'
+            //       ? CommonValue.SELL_SHEEP_COLOR
+            //       : CommonValue.SELL_SHARK_COLOR,
+            //   tension: 0,
+            // },
+            ...(type === 'combine'
+              ? [
+                  {
+                    label: `sheep`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.sBSheep - d.sSSheep,
+                    ),
+                    fill: false,
+                    borderColor: 'pink',
+                    tension: 0,
+                    yAxisID: 'y',
+                  },
+                  {
+                    label: `shark`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.sBShark - d.sSShark,
+                    ),
+                    fill: false,
+                    borderColor: 'yellow',
+                    tension: 0,
+                    yAxisID: 'y',
+                  },
+                ]
+              : [
+                  {
+                    label: `Diff`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) =>
+                        type === 'sheep'
+                          ? d.sBSheep - d.sSSheep
+                          : d.sBShark - d.sSShark,
+                    ),
+                    fill: false,
+                    borderColor: 'pink',
+                    tension: 0,
+                    yAxisID: 'y',
+                  },
+                ]),
+            ...[
+              market
+                ? undefined
+                : {
+                    label: `close`,
+                    data: tickRageData.map((d: any) => d.close),
+                    fill: false,
+                    tension: 0,
+                    borderColor: 'white',
+                    borderWidth: 0.5,
+                    yAxisID: 'y1',
+                  },
+            ],
           ],
         },
         options: {

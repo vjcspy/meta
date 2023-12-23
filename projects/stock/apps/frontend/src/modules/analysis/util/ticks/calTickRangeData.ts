@@ -98,17 +98,17 @@ export const calTickRangeData = (data: {
     sBSheep += bSheep;
     sSSheep += sSheep;
     sSShark += sShark;
-
+    const roundValue = viewByValue ? 10 ** 9 : 1;
     _data.push({
       date: tick.date,
-      bSheep: round(bSheep / 10 ** 9, 0),
-      bShark: round(bShark / 10 ** 9, 0),
-      sSheep: round(sSheep / 10 ** 9, 0),
-      sShark: round(sShark / 10 ** 9, 0),
-      sBSheep: round(sBSheep / 10 ** 9, 0),
-      sBShark: round(sBShark / 10 ** 9, 0),
-      sSSheep: round(sSSheep / 10 ** 9, 0),
-      sSShark: round(sSShark / 10 ** 9, 0),
+      bSheep: round(bSheep / roundValue, 0),
+      bShark: round(bShark / roundValue, 0),
+      sSheep: round(sSheep / roundValue, 0),
+      sShark: round(sShark / roundValue, 0),
+      sBSheep: round(sBSheep / roundValue, 0),
+      sBShark: round(sBShark / roundValue, 0),
+      sSSheep: round(sSSheep / roundValue, 0),
+      sSShark: round(sSShark / roundValue, 0),
       pct_buy_sell_sheep: round(bSheep / (sSheep + bSheep), 2),
       pct_buy_sell_shark: round(bShark / (bShark + sShark), 2),
       pct_buy_sheep_shark: round(bSheep / (bShark + bSheep), 2),
@@ -117,10 +117,10 @@ export const calTickRangeData = (data: {
       pct_sum_sell_sheep_shark: round(sSSheep / (sSShark + sSSheep), 2),
       pct_sum_buy_sell_sheep: round(sBSheep / (sBSheep + sSSheep), 2),
       pct_sum_buy_sell_shark: round(sBShark / (sBShark + sSShark), 2),
-      diff_sheep: round((bSheep - sSheep) / 10 ** 9, 0),
-      diff_shark: round((bShark - sShark) / 10 ** 9, 0),
-      diff_sum_shark: round((sBShark - sSShark) / 10 ** 9, 0),
-      diff_sum_sheep: round((sBSheep - sSSheep) / 10 ** 9, 0),
+      diff_sheep: round((bSheep - sSheep) / roundValue, 0),
+      diff_shark: round((bShark - sShark) / roundValue, 0),
+      diff_sum_shark: round((sBShark - sSShark) / roundValue, 0),
+      diff_sum_sheep: round((sBSheep - sSSheep) / roundValue, 0),
     });
   });
 

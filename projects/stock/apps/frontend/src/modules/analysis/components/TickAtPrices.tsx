@@ -9,9 +9,9 @@ import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension';
-import { last } from 'lodash-es';
+import { first, last } from 'lodash-es';
 import moment from 'moment/moment';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const TickAtPrices = combineHOC(
   withTicks,
@@ -20,17 +20,14 @@ const TickAtPrices = combineHOC(
   withFromToDate,
   withRefreshTicks,
 )((props) => {
-  useEffect(() => {
-    props?.actions?.setFromDate(moment().utc().format('YYYY-MM-DD'));
-  }, []);
-
   const title = useMemo(() => {
     const lastTick: any = last(props?.state?.ticks);
+    const firstTick: any = first(props?.state?.ticks);
 
     if (lastTick) {
-      const lastDate = lastTick['date'];
-
-      return `Last tick: ${moment(lastDate).format('YYYY-MM-DD')}`;
+      return `${firstTick?.symbol} from ${moment(firstTick['date']).format(
+        'YYYY-MM-DD',
+      )} to ${moment(lastTick['date']).format('YYYY-MM-DD')}`;
     }
 
     return 'Not found ticks data';
