@@ -1,58 +1,15 @@
 import { CommonValue } from '@modules/analysis/value/common.value';
 import * as Plot from '@observablehq/plot';
-import { forEach, reduce } from 'lodash-es';
 import React, { useEffect, useRef } from 'react';
 
 const TickAtPricesChart = React.memo(
-  (props: { ticks: any[]; tradeValueFilter: any }) => {
+  (props: { ticks: any[]; tradeValueFilter: any; data?: any }) => {
     const containerRef = useRef<any>();
-
+    const { data } = props;
     useEffect(() => {
-      if (!Array.isArray(props.ticks) || props.ticks.length === 0) {
+      if (!data) {
         return;
       }
-      const filterValue =
-        Array.isArray(props?.tradeValueFilter) &&
-        props?.tradeValueFilter.length === 3
-          ? props?.tradeValueFilter[1]
-          : 250;
-
-      const data: any[] = reduce(
-        props.ticks ?? [],
-        (prev: any[], curr) => {
-          if (curr && Array.isArray(curr['meta'])) {
-            forEach(curr['meta'], (value: any) => {
-              if (value['a'] === 'B') {
-                if (value['p'] * value['vol'] > filterValue * 10 ** 6) {
-                  prev.push({ ...value, a: 'B-SHARK' });
-                } else {
-                  prev.push({ ...value, a: 'B-SHEEP' });
-                }
-              } else if (value['a'] === 'S') {
-                if (value['p'] * value['vol'] > filterValue * 10 ** 6) {
-                  prev.push({ ...value, a: 'S-SHARK' });
-                } else {
-                  prev.push({ ...value, a: 'S-SHEEP' });
-                }
-              } else {
-                prev.push({
-                  ...value,
-                  a: 'S-AT',
-                  vol: parseInt(String(value.vol / 2)),
-                });
-                prev.push({
-                  ...value,
-                  a: 'B-AT',
-                  vol: parseInt(String(value.vol / 2)),
-                });
-              }
-            });
-          }
-
-          return prev;
-        },
-        [],
-      );
 
       const plot = Plot.plot({
         marginTop: 20,
@@ -107,7 +64,7 @@ const TickAtPricesChart = React.memo(
       return () => {
         plot.remove();
       };
-    }, [props?.tradeValueFilter, props?.ticks]);
+    }, [data]);
 
     return (
       <>

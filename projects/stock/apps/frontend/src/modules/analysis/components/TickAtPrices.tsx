@@ -8,8 +8,9 @@ import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import Row from '@src/components/form/Row';
+import { TickAction } from '@stock/packages-com';
 import { combineHOC } from '@web/ui-extension';
-import { first, last } from 'lodash-es';
+import { first, forEach, last, reduce } from 'lodash-es';
 import moment from 'moment/moment';
 import { useMemo } from 'react';
 
@@ -33,6 +34,56 @@ const TickAtPrices = combineHOC(
     return 'Not found ticks data';
   }, [props?.state?.prices, props?.state?.ticks]);
 
+  const chartData = useMemo(() => {
+    if (!Array.isArray(props.state.ticks) || props.state.ticks.length === 0) {
+      return undefined;
+    }
+    const filterValue =
+      Array.isArray(props?.state?.tradeValueFilter) &&
+      props?.state?.tradeValueFilter.length === 3
+        ? props?.state?.tradeValueFilter[1]
+        : 250;
+
+    const data: any[] = reduce(
+      props.state.ticks ?? [],
+      (prev: any[], curr) => {
+        if (curr && Array.isArray(curr['meta'])) {
+          forEach(curr['meta'], (value: any) => {
+            if (value['a'] === 'B') {
+              if (value['p'] * value['vol'] > filterValue * 10 ** 6) {
+                prev.push({ ...value, a: TickAction.BUY_SHARK });
+              } else {
+                prev.push({ ...value, a: TickAction.BUY_SHEEP });
+              }
+            } else if (value['a'] === 'S') {
+              if (value['p'] * value['vol'] > filterValue * 10 ** 6) {
+                prev.push({ ...value, a: TickAction.SELL_SHARK });
+              } else {
+                prev.push({ ...value, a: TickAction.SELL_SHEEP });
+              }
+            } else {
+              prev.push({
+                ...value,
+                a: TickAction.SELL_AT,
+                vol: parseInt(String(value.vol / 2)),
+              });
+              prev.push({
+                ...value,
+                a: TickAction.BUY_AT,
+                vol: parseInt(String(value.vol / 2)),
+              });
+            }
+          });
+        }
+
+        return prev;
+      },
+      [],
+    );
+
+    return data;
+  }, [props?.state?.ticks, props?.state?.tradeValueFilter]);
+
   return (
     <>
       <Row title={title} oneCol={false}>
@@ -41,6 +92,7 @@ const TickAtPrices = combineHOC(
             <TickAtPricesChart
               ticks={props?.state?.ticks ?? []}
               tradeValueFilter={props?.state?.tradeValueFilter}
+              data={chartData}
             />
           </div>
         </div>
@@ -48,7 +100,7 @@ const TickAtPrices = combineHOC(
       <Row title="Summary" oneCol={false}>
         <div className="grid grid-cols-1 gap-6 pt-2">
           <div>
-            <TickAtPricesSummary ticks={props?.state?.ticks ?? []} />
+            <TickAtPricesSummary data={chartData} />
           </div>
         </div>
       </Row>

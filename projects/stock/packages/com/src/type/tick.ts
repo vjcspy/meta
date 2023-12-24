@@ -12,3 +12,12 @@ export interface IntraDayTickInfo {
   sum_shark_sell: number;
   diff_sum_shark: number;
 }
+
+export enum TickAction {
+  BUY_SHARK = 'B-SHARK',
+  SELL_SHARK = 'S-SHARK',
+  BUY_SHEEP = 'B-SHEEP',
+  SELL_SHEEP = 'S-SHEEP',
+  SELL_AT = 'S-AT',
+  BUY_AT = 'B-AT',
+}
