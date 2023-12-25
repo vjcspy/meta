@@ -47,6 +47,14 @@ export const analysisSlice = createSlice({
       }
     },
 
+    /* ____________________________________ load VNINDEX history ____________________________________*/
+    loadVNINDEX: () => undefined,
+    loadVNINDEXSuccess: (state, action: PayloadAction<ApiResponse>) => {
+      if (Array.isArray(action.payload.data)) {
+        state.vnindexes = action.payload.data;
+      }
+    },
+
     /* ____________________________________ load analysis table data ____________________________________*/
     loadAnalysisTableData: () => undefined,
     loadAnalysisTableDataSuccess: (

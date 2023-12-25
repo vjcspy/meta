@@ -16,6 +16,7 @@ import {
 import {
   loadMarketSymbolTick$,
   loadMarketTicks$,
+  loadVNIndex$,
 } from '@modules/analysis/store/effects/marketTicks';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
@@ -70,5 +71,6 @@ export const configAnalysisEffects = (storeManager: any) => {
     loadMarketSymbolTick$,
     loadMarketTickIntraDay$,
     loadMarketIntraDayTick$,
+    loadVNIndex$,
   ]);
 };

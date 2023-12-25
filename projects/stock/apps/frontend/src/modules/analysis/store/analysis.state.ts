@@ -5,6 +5,7 @@ import moment from 'moment/moment';
 
 export interface AnalysisState {
   cors?: any[];
+  vnindexes?: any[];
 
   /* __________ Du lieu cua symbol dang xem __________*/
   symbol?: string;

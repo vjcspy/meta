@@ -3,6 +3,7 @@ import Row from '@src/components/form/Row';
 import {
   compact,
   difference,
+  find,
   first,
   forEach,
   size,
@@ -17,9 +18,10 @@ const TicksSupplyDemandSumDayChart = React.memo(
   (props: {
     tickRageData: any[];
     market?: boolean;
+    vnindexes?: any[];
     type: 'sheep' | 'shark' | 'combine';
   }) => {
-    const { tickRageData, market = false, type } = props;
+    const { tickRageData, market, type, vnindexes } = props;
 
     const chartJsConfig: any = useMemo(() => {
       if (!Array.isArray(tickRageData)) {
@@ -30,6 +32,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
       const data: Record<
         string,
         {
+          close: number;
           date: string;
           sBSheep: number;
           sBShark: number;
@@ -37,7 +40,12 @@ const TicksSupplyDemandSumDayChart = React.memo(
           sSShark: number;
         }
       > = {};
+
       if (market) {
+        if (!vnindexes) {
+          return undefined;
+        }
+
         let errorInfo: Error;
         forEach(tickRageData, (t: any) => {
           const tickData = t?.data;
@@ -64,9 +72,13 @@ const TicksSupplyDemandSumDayChart = React.memo(
             }
 
             forEach(tickData, (d: any) => {
-              const date = moment(d.date).format('YY-MM-DD');
+              const mDate = moment(d.date);
+              const date = mDate.format('YY-MM-DD');
+              const fDate = mDate.format('YYYY-MM-DD');
+              const index = find(vnindexes, (md: any) => md.date === fDate);
               if (!data[date]) {
                 data[date] = {
+                  close: index?.close ?? 0,
                   date,
                   sBSheep: 0,
                   sBShark: 0,
@@ -145,19 +157,17 @@ const TicksSupplyDemandSumDayChart = React.memo(
                     yAxisID: 'y',
                   },
                 ]),
-            ...[
-              market
-                ? undefined
-                : {
-                    label: `close`,
-                    data: tickRageData.map((d: any) => d.close),
-                    fill: false,
-                    tension: 0,
-                    borderColor: 'white',
-                    borderWidth: 0.5,
-                    yAxisID: 'y1',
-                  },
-            ],
+            {
+              label: `close`,
+              data: (market ? marketTickRageData : tickRageData).map(
+                (d: any) => d.close,
+              ),
+              fill: false,
+              tension: 0,
+              borderColor: 'white',
+              borderWidth: 0.5,
+              yAxisID: 'y1',
+            },
           ]),
         },
         options: {
@@ -167,31 +177,23 @@ const TicksSupplyDemandSumDayChart = React.memo(
             intersect: false,
           },
           stacked: false,
-          scales: market
-            ? {
-                y: {
-                  type: 'linear',
-                  display: true,
-                  position: 'left',
-                },
-              }
-            : {
-                y: {
-                  type: 'linear',
-                  display: true,
-                  position: 'left',
-                },
-                y1: {
-                  type: 'linear',
-                  display: true,
-                  position: 'right',
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
 
-                  // grid line settings
-                  grid: {
-                    drawOnChartArea: false, // only want the grid lines for one axis to show up
-                  },
-                },
+              // grid line settings
+              grid: {
+                drawOnChartArea: false, // only want the grid lines for one axis to show up
               },
+            },
+          },
           plugins: {
             zoom: {
               zoom: {
@@ -213,7 +215,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
           },
         },
       };
-    }, [tickRageData, market, type]);
+    }, [tickRageData, market, type, vnindexes]);
 
     return (
       <>
