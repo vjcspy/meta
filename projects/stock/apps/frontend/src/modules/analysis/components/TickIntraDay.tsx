@@ -146,6 +146,15 @@ const TickIntraDay = combineHOC(
           borderColor: CommonValue.SELL_SHARK_COLOR,
           tension: 0,
         },
+        {
+          label: `Close`,
+          data: mergedByTimeStamp2.map((d: any) => d.open),
+          fill: false,
+          borderColor: 'white',
+          tension: 0,
+          borderWidth: 0.5,
+          yAxisID: 'y1',
+        },
       ];
     }
 
@@ -154,7 +163,26 @@ const TickIntraDay = combineHOC(
         labels,
         datasets,
       },
-      options: CHARTJS_INTRADAY_OPTIONS,
+      options: {
+        ...CHARTJS_INTRADAY_OPTIONS,
+        scales: {
+          y: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+          },
+          y1: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+
+            // grid line settings
+            grid: {
+              drawOnChartArea: false, // only want the grid lines for one axis to show up
+            },
+          },
+        },
+      },
     };
   }, [
     props.state.tickIntraDay,
