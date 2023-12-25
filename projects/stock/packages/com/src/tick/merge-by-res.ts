@@ -103,6 +103,7 @@ export const mergeByRes = (
         throw new Error('Wrong format tick data');
       }
       mergedRes[ts] = {
+        ...mergedRes[ts],
         buy,
         sell,
         oc,

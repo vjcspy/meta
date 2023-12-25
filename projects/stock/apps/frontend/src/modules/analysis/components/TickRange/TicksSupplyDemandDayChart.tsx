@@ -89,134 +89,139 @@ const TicksSupplyDemandDayChart = React.memo(
         }
 
         marketTickRageData = sortBy(values(data));
-      } else {
-        return {
-          data: {
-            labels: market
-              ? marketTickRageData.map((d: any) => d.date)
-              : tickRageData.map((d: any) => moment(d.date).format('YY-MM-DD')),
-            datasets: compact([
-              ...[
-                view.buySheep && (type === 'sheep' || type === 'combine')
-                  ? {
-                      label: `buy Sheep`,
-                      data: (market ? marketTickRageData : tickRageData).map(
-                        (d: any) => d.bSheep,
-                      ),
-                      fill: false,
-                      borderWidth: 1,
-                      borderColor: CommonValue.BUY_SHEEP_COLOR,
-                      tension: 0,
-                    }
-                  : undefined,
-              ],
-              ...[
-                view.buyShark && (type === 'shark' || type === 'combine')
-                  ? {
-                      label: `buy Shark`,
-                      data: (market ? marketTickRageData : tickRageData).map(
-                        (d: any) => d.bShark,
-                      ),
-                      fill: false,
-                      borderWidth: 1,
-                      borderColor: CommonValue.BUY_SHARK_COLOR,
-                      tension: 0,
-                    }
-                  : undefined,
-              ],
-              ...[
-                view.sellSheep && (type === 'sheep' || type === 'combine')
-                  ? {
-                      label: `sell Sheep`,
-                      data: (market ? marketTickRageData : tickRageData).map(
-                        (d: any) => d.sSheep,
-                      ),
-                      fill: false,
-                      borderWidth: 1,
-                      borderColor: CommonValue.SELL_SHEEP_COLOR,
-                      tension: 0,
-                    }
-                  : undefined,
-              ],
-              ...[
-                view.sellShark && (type === 'shark' || type === 'combine')
-                  ? {
-                      label: `sell Shark`,
-                      data: (market ? marketTickRageData : tickRageData).map(
-                        (d: any) => d.sShark,
-                      ),
-                      fill: false,
-                      borderWidth: 1,
-                      borderColor: CommonValue.SELL_SHARK_COLOR,
-                      tension: 0,
-                    }
-                  : undefined,
-              ],
-              ...[
-                market
-                  ? undefined
-                  : {
-                      label: `close`,
-                      data: tickRageData.map((d: any) => d.close),
-                      fill: false,
-                      tension: 0,
-                      borderColor: 'white',
-                      borderWidth: 0.5,
-                      yAxisID: 'y1',
-                    },
-              ],
-            ]),
-          },
-          options: {
-            responsive: true,
-            interaction: {
-              mode: 'index',
-              intersect: false,
-            },
-            stacked: false,
-            plugins: {
-              zoom: {
-                zoom: {
-                  wheel: {
-                    enabled: true,
-                  },
-                  pinch: {
-                    enabled: false,
-                  },
-                  mode: 'x',
-                  // scaleMode: 'y',
-                  overScaleMode: 'x',
-                },
-                pan: {
-                  enabled: true,
-                  mode: 'x',
-                },
-              },
-            },
-            scales: {
-              y: {
-                type: 'linear',
-                display: true,
-                position: 'left',
-              },
-              y1: market
+      }
+
+      return {
+        data: {
+          labels: market
+            ? marketTickRageData.map((d: any) => d.date)
+            : tickRageData.map((d: any) => moment(d.date).format('YY-MM-DD')),
+          datasets: compact([
+            ...[
+              view.buySheep && (type === 'sheep' || type === 'combine')
+                ? {
+                    label: `buy Sheep`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.bSheep,
+                    ),
+                    fill: false,
+                    borderWidth: 1,
+                    borderColor: CommonValue.BUY_SHEEP_COLOR,
+                    tension: 0,
+                  }
+                : undefined,
+            ],
+            ...[
+              view.buyShark && (type === 'shark' || type === 'combine')
+                ? {
+                    label: `buy Shark`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.bShark,
+                    ),
+                    fill: false,
+                    borderWidth: 1,
+                    borderColor: CommonValue.BUY_SHARK_COLOR,
+                    tension: 0,
+                  }
+                : undefined,
+            ],
+            ...[
+              view.sellSheep && (type === 'sheep' || type === 'combine')
+                ? {
+                    label: `sell Sheep`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.sSheep,
+                    ),
+                    fill: false,
+                    borderWidth: 1,
+                    borderColor: CommonValue.SELL_SHEEP_COLOR,
+                    tension: 0,
+                  }
+                : undefined,
+            ],
+            ...[
+              view.sellShark && (type === 'shark' || type === 'combine')
+                ? {
+                    label: `sell Shark`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.sShark,
+                    ),
+                    fill: false,
+                    borderWidth: 1,
+                    borderColor: CommonValue.SELL_SHARK_COLOR,
+                    tension: 0,
+                  }
+                : undefined,
+            ],
+            ...[
+              market
                 ? undefined
                 : {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-
-                    // grid line settings
-                    grid: {
-                      drawOnChartArea: false, // only want the grid lines for one axis to show up
-                    },
+                    label: `close`,
+                    data: tickRageData.map((d: any) => d.close),
+                    fill: false,
+                    tension: 0,
+                    borderColor: 'white',
+                    borderWidth: 0.5,
+                    yAxisID: 'y1',
                   },
+            ],
+          ]),
+        },
+        options: {
+          responsive: true,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          stacked: false,
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: false,
+                },
+                mode: 'x',
+                // scaleMode: 'y',
+                overScaleMode: 'x',
+              },
+              pan: {
+                enabled: true,
+                mode: 'x',
+              },
             },
           },
-        };
-      }
+          scales: market
+            ? {
+                y: {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                },
+              }
+            : {
+                y: {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                },
+                y1: {
+                  type: 'linear',
+                  display: true,
+                  position: 'right',
+
+                  // grid line settings
+                  grid: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                  },
+                },
+              },
+        },
+      };
     }, [tickRageData, market, type, view]);
-    console.log(chartJsConfig);
 
     if (!Array.isArray(tickRageData) || tickRageData.length === 0) {
       return <></>;

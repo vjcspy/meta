@@ -1,6 +1,14 @@
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
-import { difference, first, forEach, size, sortBy, values } from 'lodash-es';
+import {
+  compact,
+  difference,
+  first,
+  forEach,
+  size,
+  sortBy,
+  values,
+} from 'lodash-es';
 import moment from 'moment/moment';
 import React, { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -98,33 +106,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
           labels: market
             ? marketTickRageData.map((d: any) => d.date)
             : tickRageData.map((d: any) => moment(d.date).format('YY-MM-DD')),
-          datasets: [
-            // {
-            //   label: `Buy `,
-            //   data: (market ? marketTickRageData : tickRageData).map(
-            //     (d: any) => {
-            //       return type === 'sheep' ? d.sBSheep : d.sBShark;
-            //     },
-            //   ),
-            //   fill: false,
-            //   borderColor:
-            //     type === 'sheep'
-            //       ? CommonValue.BUY_SHEEP_COLOR
-            //       : CommonValue.BUY_SHARK_COLOR,
-            //   tension: 0,
-            // },
-            // {
-            //   label: `Sell`,
-            //   data: (market ? marketTickRageData : tickRageData).map(
-            //     (d: any) => (type === 'sheep' ? d.sSSheep : d.sSShark),
-            //   ),
-            //   fill: false,
-            //   borderColor:
-            //     type === 'sheep'
-            //       ? CommonValue.SELL_SHEEP_COLOR
-            //       : CommonValue.SELL_SHARK_COLOR,
-            //   tension: 0,
-            // },
+          datasets: compact([
             ...(type === 'combine'
               ? [
                   {
@@ -176,7 +158,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
                     yAxisID: 'y1',
                   },
             ],
-          ],
+          ]),
         },
         options: {
           responsive: true,
@@ -185,23 +167,31 @@ const TicksSupplyDemandSumDayChart = React.memo(
             intersect: false,
           },
           stacked: false,
-          scales: {
-            y: {
-              type: 'linear',
-              display: true,
-              position: 'left',
-            },
-            y1: {
-              type: 'linear',
-              display: true,
-              position: 'right',
+          scales: market
+            ? {
+                y: {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                },
+              }
+            : {
+                y: {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                },
+                y1: {
+                  type: 'linear',
+                  display: true,
+                  position: 'right',
 
-              // grid line settings
-              grid: {
-                drawOnChartArea: false, // only want the grid lines for one axis to show up
+                  // grid line settings
+                  grid: {
+                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                  },
+                },
               },
-            },
-          },
           plugins: {
             zoom: {
               zoom: {
