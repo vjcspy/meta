@@ -1,4 +1,3 @@
-import { CoreModule } from '@modules/core/core.module';
 import { TedbedController } from '@modules/testbed/controller/tedbed.controller';
 import { EVENT_RX } from '@modules/testbed/event-rx';
 import { TestbedConsumer } from '@modules/testbed/queue/consumer/testbed.consumer';
@@ -18,7 +17,6 @@ import { Module } from '@nestjs/common';
       ],
       handlers: [TestbedConsumer],
     }),
-    CoreModule,
   ],
   providers: [...EVENT_RX, TestbedService],
   controllers: [TedbedController],

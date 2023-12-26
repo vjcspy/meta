@@ -4,9 +4,10 @@ import { AppResponseInterceptor } from '@modules/core/intercepter/app-response.i
 import { MODELS } from '@modules/core/model';
 import { CORE_REPO } from '@modules/core/repo';
 import { HttpModule } from '@nestjs/axios';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
+@Global()
 @Module({
   imports: [HttpModule],
   providers: [

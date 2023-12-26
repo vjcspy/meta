@@ -35,6 +35,10 @@ export class AmqpConnectionManager {
     let connection = this.getConnection(connectionName);
 
     if (connection) {
+      if (options.uri) {
+        connection.configuration.uri = options.uri;
+      }
+
       // exchange
       if (Array.isArray(options.exchanges)) {
         connection.configuration.exchanges = [

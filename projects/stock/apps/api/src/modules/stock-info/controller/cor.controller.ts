@@ -87,6 +87,7 @@ export class CorController {
 
   @Get('sync-all-ticks')
   async syncAllTicks() {
+    this.logger.info('Start sync all ticks');
     await this.syncTicksPublisher.publish();
 
     return 'ok';

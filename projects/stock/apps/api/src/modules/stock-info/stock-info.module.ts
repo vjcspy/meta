@@ -1,4 +1,3 @@
-import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CorController } from '@modules/stock-info/controller/cor.controller';
 import { MarketCatController } from '@modules/stock-info/controller/market-cat.controller';
@@ -18,11 +17,11 @@ import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess } from '@nest/base/dist';
 import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnModuleInit } from '@nestjs/common';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
+@Global()
 @Module({
   imports: [
-    CoreModule,
     RabbitMQModule.register({
       exchanges: [
         {

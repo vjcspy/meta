@@ -29,10 +29,12 @@ import { RabbitRpcParamsFactory } from './rabbitmq.factory';
     {
       provide: AmqpConnectionManager,
       useFactory: async (
-        config: RabbitMQConfig,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _config: RabbitMQConfig,
       ): Promise<AmqpConnectionManager> => {
         // create connection by config
-        amqpConnectionManager.config(config);
+        // console.log('->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', config);
+        // amqpConnectionManager.config(config);
         return amqpConnectionManager;
       },
       inject: [RABBIT_CONFIG_TOKEN],
@@ -77,7 +79,7 @@ export class RabbitMQModule
         ...options.handlers,
       ]);
     }
-
+    amqpConnectionManager.config(options);
     return dynamicModule;
   }
 
@@ -92,9 +94,10 @@ export class RabbitMQModule
 
   public async onApplicationBootstrap() {
     if (RabbitMQModule.bootstrapped) {
+      // this.logger.info('Skipping RabbitMQModule bootstrap');
       return;
     }
-
+    this.logger.info('Bootstrap RabbitMQModule...');
     RabbitMQModule.bootstrapped = true;
     for (let i = 0; i < this.connectionManager.getConnections().length; i++) {
       const connection = this.connectionManager.getConnections()[i];
@@ -103,6 +106,9 @@ export class RabbitMQModule
 
     if (process.env.QUEUE_CONSUMER_ENABLE !== 'true') {
       this.logger.info(
+        'The consumer will NOT be registered due to being disabled in the settings.',
+      );
+      this.logger.warn(
         'The consumer will NOT be registered due to being disabled in the settings.',
       );
 
