@@ -4,7 +4,7 @@ import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import type { TickRecord } from '@modules/stock-info/stock-info.type';
 import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
 import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { find, forEach, round, values } from 'lodash';
 import * as moment from 'moment';
@@ -60,15 +60,35 @@ export class TickActionAnalyzeHelper {
       !Array.isArray(defaultCate?.symbols) ||
       defaultCate.symbols.length === 0
     ) {
-      this.logger.warn(`Please check default category`);
+      throw new Error(`Please check default category`);
     }
 
     this.logger.info(`Start load ticks for date ${date}`);
     const ticks = await this.loadCategoryTickDate(defaultCate.symbols, date);
 
     if (!ticks || ticks.length === 0) {
-      this.logger.warn(`Not found ticks for date ${date}`);
+      throw new Error(`Not found ticks for date ${date}`);
     }
+
+    this.logger.info('Deleting date data before run');
+    await prisma.marketTickActionInfo.deleteMany({
+      where: {
+        ts: {
+          gt: moment(date)
+            .set({
+              hour: 0,
+              minute: 0,
+            })
+            .unix(),
+          lt: moment(date)
+            .set({
+              hour: 23,
+              minute: 59,
+            })
+            .unix(),
+        },
+      },
+    });
 
     await this.marketTickActionAnalyze(ticks);
   }
@@ -96,7 +116,7 @@ export class TickActionAnalyzeHelper {
       } catch (e) {
         this.logger.error('Failed loadCategoryTickDate from live', e);
 
-        return undefined;
+        throw e;
       }
     } else {
       const data = [];
@@ -162,7 +182,7 @@ export class TickActionAnalyzeHelper {
     });
 
     const marketData = values(marketGroupedByTs);
-
+    this.logger.info('Start save to DB');
     try {
       await prisma.$transaction(
         marketData.map((record) =>
@@ -211,6 +231,8 @@ export class TickActionAnalyzeHelper {
       );
     } catch (e) {
       this.logger.error(`Failed create market tick action data`, e);
+
+      throw e;
     }
 
     this.logger.info('Save market tick action successfully');

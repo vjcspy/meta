@@ -1,4 +1,4 @@
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import type { AxiosResponse } from 'axios';

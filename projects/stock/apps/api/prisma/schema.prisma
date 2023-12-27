@@ -654,3 +654,17 @@ model MarketSymbolTickActionInfo {
   @@unique([symbol, ts])
   @@map("market_symbol_tick_action_info")
 }
+
+model MarketTickActionJobInfo {
+  id         Int      @id @default(autoincrement())
+  date       DateTime @db.Date
+  isSuccess  Boolean
+  try_count  Int      @db.SmallInt
+  last_error String?  @db.Text
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([date])
+  @@map("market_tick_action_job_info")
+}

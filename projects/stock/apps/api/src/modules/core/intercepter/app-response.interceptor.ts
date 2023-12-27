@@ -1,5 +1,5 @@
 import { OkResponse } from '@modules/core/model/ok-response';
-import { getInstanceId, xAppContext } from '@nest/base/dist';
+import { getInstanceId, xAppContext } from '@nest/base';
 import type {
   CallHandler,
   ExecutionContext,

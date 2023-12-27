@@ -95,6 +95,15 @@ export const initLoggerInstance = (config: {
                     format.splat(),
                     format.simple(),
                   ),
+                  filename: `logs/${getInstanceId()}.warn.log`,
+                  level: 'warn',
+                }),
+                new winston.transports.File({
+                  format: winston.format.combine(
+                    winston.format.uncolorize(),
+                    format.splat(),
+                    format.simple(),
+                  ),
                   filename: 'logs/combined.log',
                 }),
               ]

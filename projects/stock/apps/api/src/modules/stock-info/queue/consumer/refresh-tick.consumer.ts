@@ -1,6 +1,6 @@
 import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Nack, RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 import { auditTime, groupBy, mergeMap, Subject } from 'rxjs';

@@ -5,7 +5,7 @@ import {
   MARKET_ACTION_INFO_EXCHANGE,
   MARKET_ACTION_INFO_JOB_KEY,
 } from '@modules/stock-trading/value/stock-trading-queue.value';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 import { forEach, uniq } from 'lodash';
@@ -24,12 +24,13 @@ export class MarketTickActionAnalyzePublisher {
   async publish() {
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
-      '2023-09-05',
+      // '2023-09-05',
+      '2023-12-25',
     );
 
     const days = prices.map((p) => moment(p.date).format('YYYY-MM-DD'));
     this.logger.info(
-      `Start publish ${days.length} for calculate Market Action Info`,
+      `Start publish ${days.length} days for calculate Market Action Info`,
     );
     forEach(uniq(days), (date) => {
       this.connectionManager
