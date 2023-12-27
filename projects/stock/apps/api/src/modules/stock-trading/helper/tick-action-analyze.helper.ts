@@ -74,13 +74,15 @@ export class TickActionAnalyzeHelper {
     await prisma.marketTickActionInfo.deleteMany({
       where: {
         ts: {
-          gt: moment(date)
+          gt: moment
+            .utc(date)
             .set({
               hour: 0,
               minute: 0,
             })
             .unix(),
-          lt: moment(date)
+          lt: moment
+            .utc(date)
             .set({
               hour: 23,
               minute: 59,
@@ -260,13 +262,13 @@ export class TickActionAnalyzeHelper {
   private symbolTickActionAnalyze(tickDate: SymbolTickDate) {
     const groupedByMin: Record<number, SymbolTickAnalyzeRecord> = {};
 
-    const date = moment(tickDate.date);
+    const date = moment.utc(tickDate.date);
 
     forEach(tickDate.meta, (tick) => {
       const timeString = tick.time;
       date.set({
-        hour: moment(timeString, 'HH:mm:ss').hour(),
-        minute: moment(timeString, 'HH:mm:ss').minute(),
+        hour: moment.utc(timeString, 'HH:mm:ss').hour(),
+        minute: moment.utc(timeString, 'HH:mm:ss').minute(),
         second: 0,
       });
 

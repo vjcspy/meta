@@ -32,7 +32,7 @@ export class MarketTickActionConsumer {
       this.logger.error('Msg not valid', new Error());
       return;
     }
-    const date = moment(msg).toDate();
+    const date = moment.utc(msg).toDate();
     let existed = await prisma.marketTickActionJobInfo.findUnique({
       where: {
         date,

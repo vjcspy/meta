@@ -24,8 +24,8 @@ export class MarketTickActionAnalyzePublisher {
   async publish() {
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
-      // '2023-09-05',
-      '2023-12-25',
+      '2023-09-05',
+      // '2023-12-25',
     );
 
     const days = prices.map((p) => moment(p.date).format('YYYY-MM-DD'));
