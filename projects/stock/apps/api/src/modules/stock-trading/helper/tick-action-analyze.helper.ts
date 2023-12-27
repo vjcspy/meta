@@ -4,7 +4,7 @@ import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import type { TickRecord } from '@modules/stock-info/stock-info.type';
 import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
 import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
-import { XLogger } from '@nest/base';
+import { AppError, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { find, forEach, round, values } from 'lodash';
 import * as moment from 'moment';
@@ -38,6 +38,8 @@ export class TickActionAnalyzeHelper {
   private readonly logger = new XLogger(TickActionAnalyzeHelper.name);
 
   static SHARK_TRADE_VALUE = 400;
+
+  static HISTORY_RECORDS = 1500;
 
   static NEED_FETCH_DATA = true;
 
@@ -94,6 +96,85 @@ export class TickActionAnalyzeHelper {
 
     await this.marketTickActionAnalyze(ticks);
   }
+
+  async analyzeHistoryDataForDate(date: string) {
+    // Phai dam bao du 1500 record tinh tu ngay hien tai
+    // Job se chay vao cuoi ngay, nen cung can dam bao ngay do co record
+    this.logger.info(`Analyze market history data for date ${date}`);
+
+    // check existed record in this day
+    this.logger.info(`Check if has record for current date ${date}`);
+    const isHasRecordCurrentDate = await prisma.marketTickActionInfo.findFirst({
+      where: {
+        ts: {
+          gt: moment
+            .utc(date)
+            .set({
+              hour: 0,
+            })
+            .unix(),
+          lt: moment
+            .utc(date)
+            .add(1, 'day')
+            .set({
+              hour: 0,
+            })
+            .unix(),
+        },
+      },
+      select: {
+        ts: true,
+        market_symbol_tick_actions: {
+          select: {
+            symbol: true,
+          },
+        },
+      },
+    });
+
+    if (!isHasRecordCurrentDate?.ts) {
+      const error = new AppError(
+        'Current day not have any records, please run analyze first',
+      );
+      this.logger.error(error.message, error);
+
+      throw error;
+    }
+
+    // check if has enough history records
+    this.logger.info(
+      `Will get ${TickActionAnalyzeHelper.HISTORY_RECORDS} records history for market`,
+    );
+
+    const histories = await prisma.marketTickActionInfo.findMany({
+      where: {
+        ts: {
+          lt: moment
+            .utc(date)
+            .add(1, 'day')
+            .set({
+              hour: 0,
+            })
+            .unix(),
+        },
+      },
+      take: 1500,
+      orderBy: {
+        ts: 'desc',
+      },
+    });
+
+    if (histories.length !== TickActionAnalyzeHelper.HISTORY_RECORDS) {
+      const error = new AppError(
+        `Not have enough ${TickActionAnalyzeHelper.HISTORY_RECORDS} history records`,
+      );
+      error.setNoRetry();
+      this.logger.error(error.message, error);
+      throw error;
+    }
+  }
+
+  private calculateHistoryData(data: SymbolTickAnalyzeRecord[]) {}
 
   private async getDefaultCat() {
     if (this.isFetchDataFromLive()) {

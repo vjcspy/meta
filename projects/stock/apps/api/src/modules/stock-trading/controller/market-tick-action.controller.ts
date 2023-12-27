@@ -13,4 +13,9 @@ export class MarketTickActionController {
   test() {
     this.marketTickAnalyzePublisher.publish();
   }
+
+  @Get('history-test')
+  testHistory() {
+    this.tickActionAnalyzeHelper.analyzeHistoryDataForDate('2023-12-26');
+  }
 }

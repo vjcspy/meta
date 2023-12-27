@@ -581,29 +581,30 @@ model StockAlert {
 //   @@map("market_tick_action_analyze")
 // }
 //
-// model MarketTickSymbolActionAnalyze {
-//   id Int @id @default(autoincrement())
-//
-//   time_res Int @db.SmallInt
-//
-//   shark_avg_buy_count  Int @db.SmallInt
-//   shark_avg_sell_count Int @db.SmallInt
-//   shark_avg_buy_val    Int @db.SmallInt
-//   shark_avg_sell_val   Int @db.SmallInt
-//
-//   sheep_avg_buy_count  Int @db.SmallInt
-//   sheep_avg_sell_count Int @db.SmallInt
-//   sheep_avg_buy_val    Int @db.SmallInt
-//   sheep_avg_sell_val   Int @db.SmallInt
-//
-//   up_pct_buy_val_150_avg   Int @db.SmallInt // % Symbol se tang neu buy 150% avg
-//   up_pct_buy_count_150_avg Int @db.SmallInt // % Symbol se tang neu buy 150% avg
-//
-//   down_pct_sell_val_150_avg   Int @db.SmallInt // % Symbol se giam neu buy 150% avg
-//   down_pct_sell_count_150_avg Int @db.SmallInt // % Symbol se giam neu buy 150% avg
-//
-//   @@map("market_tick_symbol_action_analyze")
-// }
+model MarketTickActionHistoryAnalyze {
+  id Int @id @default(autoincrement())
+
+  date   DateTime @db.Date
+  symbol String   @db.VarChar(10)
+
+  shark_avg_buy_count  Int @db.SmallInt // for 1 min of N record before
+  shark_avg_sell_count Int @db.SmallInt //  for 1 min of N record before
+  shark_avg_buy_val    Int @db.SmallInt //  for 1 min of N record before
+  shark_avg_sell_val   Int @db.SmallInt //  for 1 min of N record before
+
+  sheep_avg_buy_count  Int @db.Integer //  for 1 min of N record before
+  sheep_avg_sell_count Int @db.Integer //  for 1 min of N record before
+  sheep_avg_buy_val    Int @db.Integer //  for 1 min of N record before
+  sheep_avg_sell_val   Int @db.Integer //  for 1 min of N record before
+
+  up_pct_buy_val_150_avg   Int @db.SmallInt // % Symbol se tang neu buy 150% avg
+  up_pct_buy_count_150_avg Int @db.SmallInt // % Symbol se tang neu buy 150% avg
+
+  down_pct_sell_val_150_avg   Int @db.SmallInt // % Symbol se giam neu buy 150% avg
+  down_pct_sell_count_150_avg Int @db.SmallInt // % Symbol se giam neu buy 150% avg
+
+  @@map("market_tick_symbol_action_analyze")
+}
 
 model MarketTickActionInfo {
   ts Int @id // Timestamp
