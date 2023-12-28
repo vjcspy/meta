@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: any }) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap"
         />
-        <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="icon" href="/logo-symbol.svg" sizes="any" />
       </head>
       <body className={inter.className}>
         <StyledComponentsRegistry>

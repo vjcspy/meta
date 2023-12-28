@@ -556,3 +556,119 @@ model StockAlert {
 
   @@map("stock_alerts")
 }
+
+// model MarketTickActionAnalyze {
+//   id Int @id @default(autoincrement())
+//
+//   time_res Int @db.SmallInt
+//
+//   shark_avg_buy_count  Int @db.SmallInt
+//   shark_avg_sell_count Int @db.SmallInt
+//   shark_avg_buy_val    Int @db.SmallInt
+//   shark_avg_sell_val   Int @db.SmallInt
+//
+//   sheep_avg_buy_count  Int @db.SmallInt
+//   sheep_avg_sell_count Int @db.SmallInt
+//   sheep_avg_buy_val    Int @db.SmallInt
+//   sheep_avg_sell_val   Int @db.SmallInt
+//
+//   up_pct_buy_val_150_avg   Int @db.SmallInt // % VNindex se tang neu buy 150% avg
+//   up_pct_buy_count_150_avg Int @db.SmallInt // % VNindex se tang neu buy 150% avg
+//
+//   down_pct_sell_val_150_avg   Int @db.SmallInt // % VNindex se giam neu buy 150% avg
+//   down_pct_sell_count_150_avg Int @db.SmallInt // % VNindex se giam neu buy 150% avg
+//
+//   @@map("market_tick_action_analyze")
+// }
+//
+model MarketTickActionHistoryAnalyze {
+  id Int @id @default(autoincrement())
+
+  date   DateTime @db.Date
+  symbol String   @db.VarChar(10)
+
+  avg_shark_buy_count  Int @db.SmallInt
+  avg_shark_sell_count Int @db.SmallInt
+  avg_shark_buy_value  Int @db.SmallInt
+  avg_shark_sell_value Int @db.SmallInt
+
+  avg_sheep_buy_count  Int @db.Integer
+  avg_sheep_sell_count Int @db.Integer
+  avg_sheep_buy_value  Int @db.Integer
+  avg_sheep_sell_value Int @db.Integer
+
+  avg_buy_count  Int @db.SmallInt
+  avg_sell_count Int @db.SmallInt
+  avg_buy_value  Int @db.Integer
+  avg_sell_value Int @db.Integer
+
+  @@map("market_tick_action_history_analyze")
+}
+
+model MarketTickActionInfo {
+  ts Int @id // Timestamp
+
+  shark_buy_count  Int @db.SmallInt
+  shark_sell_count Int @db.SmallInt
+  sheep_buy_count  Int @db.SmallInt
+  sheep_sell_count Int @db.SmallInt
+
+  shark_buy_value  Int @db.Integer
+  shark_sell_value Int @db.Integer
+  sheep_buy_value  Int @db.Integer
+  sheep_sell_value Int @db.Integer
+
+  buy_count  Int @db.SmallInt
+  sell_count Int @db.SmallInt
+  buy_value  Int @db.Integer
+  sell_value Int @db.Integer
+
+  market_symbol_tick_actions MarketTickSymbolActionInfo[]
+
+  @@map("market_tick_action_info")
+}
+
+model MarketTickSymbolActionInfo {
+  id Int @id @default(autoincrement())
+
+  ts     Int
+  symbol String @db.VarChar(10)
+
+  shark_buy_count  Int @db.SmallInt
+  shark_sell_count Int @db.SmallInt
+  sheep_buy_count  Int @db.SmallInt
+  sheep_sell_count Int @db.SmallInt
+
+  shark_buy_value  Int @db.Integer
+  shark_sell_value Int @db.Integer
+  sheep_buy_value  Int @db.Integer
+  sheep_sell_value Int @db.Integer
+
+  buy_count  Int @db.SmallInt
+  sell_count Int @db.SmallInt
+  buy_value  Int @db.Integer
+  sell_value Int @db.Integer
+
+  MarketTickAction MarketTickActionInfo @relation(fields: [ts], references: [ts], onDelete: Cascade)
+
+  @@unique([symbol, ts])
+  @@map("market_tick_symbol_action_info")
+}
+
+model MarketTickJobInfo {
+  id   Int      @id @default(autoincrement())
+  date DateTime @db.Date
+
+  type   String @db.VarChar
+  symbol String @db.VarChar(10)
+
+  isSuccess  Boolean
+  try_count  Int     @db.SmallInt
+  last_error String? @db.Text
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([date, type, symbol])
+  @@map("market_tick_job_info")
+}

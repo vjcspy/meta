@@ -47,6 +47,14 @@ export const analysisSlice = createSlice({
       }
     },
 
+    /* ____________________________________ load VNINDEX history ____________________________________*/
+    loadVNINDEX: () => undefined,
+    loadVNINDEXSuccess: (state, action: PayloadAction<ApiResponse>) => {
+      if (Array.isArray(action.payload.data)) {
+        state.vnindexes = action.payload.data;
+      }
+    },
+
     /* ____________________________________ load analysis table data ____________________________________*/
     loadAnalysisTableData: () => undefined,
     loadAnalysisTableDataSuccess: (
@@ -81,6 +89,15 @@ export const analysisSlice = createSlice({
           MARKET_TICK_SELECTED_CATEGORY_KEY,
           action.payload.cat.key,
         );
+      }
+    },
+    selectFakeMarketCatWithCurrentSymbol: (state) => {
+      if (state.symbol) {
+        state.selectedMarketCat = {
+          name: `Category: ${state.symbol}`,
+          symbols: [state.symbol],
+          key: `FAKE_CAT_FOR_${state.symbol}`,
+        };
       }
     },
     toggleSelectedCatSymbol: (

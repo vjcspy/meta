@@ -1,4 +1,3 @@
-import { CoreModule } from '@modules/core/core.module';
 import { HealthController } from '@modules/healthcheck/controller/health.controller';
 import { HealthcheckJob } from '@modules/healthcheck/cronjob/healthcheck.job';
 import { HealthcheckConsumer } from '@modules/healthcheck/queue/consumer/healthcheck.consumer';
@@ -8,7 +7,6 @@ import { Module } from '@nestjs/common';
 
 @Module({
   imports: [
-    CoreModule,
     RabbitMQModule.register({
       exchanges: [
         {

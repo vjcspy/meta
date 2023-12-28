@@ -52,13 +52,15 @@ export interface MarketIntraDayResolvedChartInfo {
 export interface MarketIntraDayChartData {
   historyIntraDayData: MarketIntraDayTickInfo[];
   currentIntraDayData: MarketIntraDayTickInfo[];
+  historyIntraDayDataByTick: Record<string, MarketIntraDayTickInfo[]>;
+  currentIntraDayDataByTick: Record<string, MarketIntraDayTickInfo[]>;
   tradeValue: number;
   timeRes: TimeResolution;
 }
 
 export class MarketIntraDay {
-  static DEBUG = true;
-  static BACK_DATE = 2;
+  static DEBUG = false;
+  static BACK_DATE = 3;
   private static _worker: Worker | undefined;
 
   /* ___________________________________ Market Tick Data ___________________________________ */

@@ -3,6 +3,7 @@ import withMarketTickCat from '@modules/analysis/hoc/withMarketTickCat';
 import withMarketTickDate from '@modules/analysis/hoc/withMarketTickDate';
 import withMarketTickResolveChartStatus from '@modules/analysis/hoc/withMarketTickResolveChartStatus';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
+import withVnIndexex from '@modules/analysis/hoc/withVnIndexex';
 import { MarketTicks } from '@modules/analysis/util/ticks/market-ticks';
 import Row from '@src/components/form/Row';
 import { combineHOC } from '@web/ui-extension/dist';
@@ -22,6 +23,7 @@ export default combineHOC(
   withTradeValueFilter,
   withMarketTickCat,
   withMarketTickResolveChartStatus,
+  withVnIndexex,
 )((props) => {
   useEffect(() => {
     MarketTicks.setTicksDate(
@@ -146,6 +148,7 @@ export default combineHOC(
                 tickRageData={tickRageData}
                 type="shark"
                 market={true}
+                vnindexes={props.state?.vnIndexes}
               />
             )}
             {viewChart.sumSheep && (
@@ -153,6 +156,7 @@ export default combineHOC(
                 tickRageData={tickRageData}
                 type="sheep"
                 market={true}
+                vnindexes={props.state?.vnIndexes}
               />
             )}
 
@@ -161,6 +165,7 @@ export default combineHOC(
                 tickRageData={tickRageData}
                 type="sheep"
                 market={true}
+                vnindexes={props.state?.vnIndexes}
               />
             )}
             {viewChart.shark && (
@@ -168,6 +173,7 @@ export default combineHOC(
                 tickRageData={tickRageData}
                 type="shark"
                 market={true}
+                vnindexes={props.state?.vnIndexes}
               />
             )}
           </>

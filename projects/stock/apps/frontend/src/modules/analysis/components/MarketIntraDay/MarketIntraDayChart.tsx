@@ -1,6 +1,5 @@
 import withMarketIntraDayChartData from '@modules/analysis/hoc/market-intra-day/withMarketIntraDayChartData';
 import withMarketTickCat from '@modules/analysis/hoc/withMarketTickCat';
-import { MarketIntraDay } from '@modules/analysis/util/ticks/market-intra-day';
 import { CHARTJS_INTRADAY_OPTIONS } from '@modules/analysis/value/chartjs.value';
 import { CommonValue } from '@modules/analysis/value/common.value';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
@@ -8,7 +7,6 @@ import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
 import { combineHOC } from '@web/ui-extension/dist';
 import type { ChartData } from 'chart.js';
-import { round } from 'lodash-es';
 import momentTimezone from 'moment-timezone';
 import React, { useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -48,17 +46,17 @@ export default combineHOC(
           label: 'history',
           data: props.state.chartData.historyIntraDayData.map((d) => {
             if (viewChart.sellShark) {
-              return round(d.sum_shark_sell / MarketIntraDay.BACK_DATE);
+              return d.sum_shark_sell;
             } else if (viewChart.sellSheep) {
-              return round(d.sum_sheep_sell / MarketIntraDay.BACK_DATE);
+              return d.sum_sheep_sell;
             } else if (viewChart.buyShark) {
-              return round(d.sum_shark_buy / MarketIntraDay.BACK_DATE);
+              return d.sum_shark_buy;
             } else if (viewChart.buySheep) {
-              return round(d.sum_sheep_buy / MarketIntraDay.BACK_DATE);
+              return d.sum_sheep_buy;
             } else if (viewChart.diffShark) {
-              return round(d.diff_sum_shark / MarketIntraDay.BACK_DATE);
+              return d.diff_sum_shark;
             } else if (viewChart.diffSheep) {
-              return round(d.diff_sum_sheep / MarketIntraDay.BACK_DATE);
+              return d.diff_sum_sheep;
             }
 
             return 0;
@@ -210,7 +208,10 @@ export default combineHOC(
           <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-6 lg:grid-cols-6">
             <ChartJSPlugins plugins={['zoom']}>
               {chartJsConfig && (
-                <Line data={chartJsConfig} options={CHARTJS_INTRADAY_OPTIONS} />
+                <Line
+                  data={chartJsConfig}
+                  options={CHARTJS_INTRADAY_OPTIONS as any}
+                />
               )}
             </ChartJSPlugins>
           </div>

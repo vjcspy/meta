@@ -1,7 +1,15 @@
-import { CommonValue } from '@modules/analysis/value/common.value';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
-import { difference, first, forEach, size, sortBy, values } from 'lodash-es';
+import {
+  compact,
+  difference,
+  find,
+  first,
+  forEach,
+  size,
+  sortBy,
+  values,
+} from 'lodash-es';
 import moment from 'moment/moment';
 import React, { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -10,9 +18,10 @@ const TicksSupplyDemandSumDayChart = React.memo(
   (props: {
     tickRageData: any[];
     market?: boolean;
-    type: 'sheep' | 'shark';
+    vnindexes?: any[];
+    type: 'sheep' | 'shark' | 'combine';
   }) => {
-    const { tickRageData, market = false, type } = props;
+    const { tickRageData, market, type, vnindexes } = props;
 
     const chartJsConfig: any = useMemo(() => {
       if (!Array.isArray(tickRageData)) {
@@ -23,6 +32,7 @@ const TicksSupplyDemandSumDayChart = React.memo(
       const data: Record<
         string,
         {
+          close: number;
           date: string;
           sBSheep: number;
           sBShark: number;
@@ -30,7 +40,12 @@ const TicksSupplyDemandSumDayChart = React.memo(
           sSShark: number;
         }
       > = {};
+
       if (market) {
+        if (!vnindexes) {
+          return undefined;
+        }
+
         let errorInfo: Error;
         forEach(tickRageData, (t: any) => {
           const tickData = t?.data;
@@ -57,9 +72,13 @@ const TicksSupplyDemandSumDayChart = React.memo(
             }
 
             forEach(tickData, (d: any) => {
-              const date = moment(d.date).format('YY-MM-DD');
+              const mDate = moment(d.date);
+              const date = mDate.format('YY-MM-DD');
+              const fDate = mDate.format('YYYY-MM-DD');
+              const index = find(vnindexes, (md: any) => md.date === fDate);
               if (!data[date]) {
                 data[date] = {
+                  close: index?.close ?? 0,
                   date,
                   sBSheep: 0,
                   sBShark: 0,
@@ -99,47 +118,57 @@ const TicksSupplyDemandSumDayChart = React.memo(
           labels: market
             ? marketTickRageData.map((d: any) => d.date)
             : tickRageData.map((d: any) => moment(d.date).format('YY-MM-DD')),
-          datasets: [
+          datasets: compact([
+            ...(type === 'combine'
+              ? [
+                  {
+                    label: `sheep`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.sBSheep - d.sSSheep,
+                    ),
+                    fill: false,
+                    borderColor: 'pink',
+                    tension: 0,
+                    yAxisID: 'y',
+                  },
+                  {
+                    label: `shark`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) => d.sBShark - d.sSShark,
+                    ),
+                    fill: false,
+                    borderColor: 'yellow',
+                    tension: 0,
+                    yAxisID: 'y',
+                  },
+                ]
+              : [
+                  {
+                    label: `Diff`,
+                    data: (market ? marketTickRageData : tickRageData).map(
+                      (d: any) =>
+                        type === 'sheep'
+                          ? d.sBSheep - d.sSSheep
+                          : d.sBShark - d.sSShark,
+                    ),
+                    fill: false,
+                    borderColor: 'pink',
+                    tension: 0,
+                    yAxisID: 'y',
+                  },
+                ]),
             {
-              label: `Buy `,
+              label: `close`,
               data: (market ? marketTickRageData : tickRageData).map(
-                (d: any) => {
-                  return type === 'sheep' ? d.sBSheep : d.sBShark;
-                },
+                (d: any) => d.close,
               ),
               fill: false,
-              borderColor:
-                type === 'sheep'
-                  ? CommonValue.BUY_SHEEP_COLOR
-                  : CommonValue.BUY_SHARK_COLOR,
               tension: 0,
-            },
-            {
-              label: `Sell`,
-              data: (market ? marketTickRageData : tickRageData).map(
-                (d: any) => (type === 'sheep' ? d.sSSheep : d.sSShark),
-              ),
-              fill: false,
-              borderColor:
-                type === 'sheep'
-                  ? CommonValue.SELL_SHEEP_COLOR
-                  : CommonValue.SELL_SHARK_COLOR,
-              tension: 0,
-            },
-            {
-              label: `Diff`,
-              data: (market ? marketTickRageData : tickRageData).map(
-                (d: any) =>
-                  type === 'sheep'
-                    ? d.sBSheep - d.sSSheep
-                    : d.sBShark - d.sSShark,
-              ),
-              fill: false,
-              borderColor: 'pink',
-              tension: 0,
+              borderColor: 'white',
+              borderWidth: 0.5,
               yAxisID: 'y1',
             },
-          ],
+          ]),
         },
         options: {
           responsive: true,
@@ -186,24 +215,24 @@ const TicksSupplyDemandSumDayChart = React.memo(
           },
         },
       };
-    }, [tickRageData, market, type]);
+    }, [tickRageData, market, type, vnindexes]);
 
     return (
       <>
-        {chartJsConfig && (
-          <Row
-            title={`Mua bán cộng dồn - ${
-              type === 'sheep' ? 'SHEEP' : 'SHARK'
-            } (${market ? size(tickRageData) : 1} symbols)`}
-            oneCol={false}
-          >
-            <div className="grid grid-cols-1 gap-6 pt-2">
+        <Row
+          title={`Mua bán cộng dồn - ${type === 'sheep' ? 'SHEEP' : 'SHARK'} (${
+            market ? size(tickRageData) : 1
+          } symbols)`}
+          oneCol={false}
+        >
+          <div className="grid grid-cols-1 gap-6 pt-2">
+            {chartJsConfig && (
               <ChartJSPlugins plugins={['zoom']}>
                 <Line {...chartJsConfig} />
               </ChartJSPlugins>
-            </div>
-          </Row>
-        )}
+            )}
+          </div>
+        </Row>
       </>
     );
   },

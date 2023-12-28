@@ -2,7 +2,7 @@ import { OkResponse } from '@modules/core/model/ok-response';
 import { FlagRepo } from '@modules/core/repo/flag.repo';
 import { MarketCategory } from '@modules/stock-info/controller/market-cat.dto';
 import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import {
   Body,
   Controller,

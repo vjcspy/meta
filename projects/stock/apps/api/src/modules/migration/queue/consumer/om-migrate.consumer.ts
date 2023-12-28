@@ -5,7 +5,7 @@ import {
   MIGRATION_QUEUE_ROUTING_KEY,
 } from '@modules/migration/values/queue.value';
 import { CorrelationType, xAppContext, XLogger } from '@nest/base';
-import { RabbitSubscribe } from '@nest/rabbitmq/dist';
+import { RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

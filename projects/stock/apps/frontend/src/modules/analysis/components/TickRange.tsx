@@ -3,14 +3,16 @@
 import TicksSupplyDemandLineChartWrapper from '@modules/analysis/components/TickRange/TicksSupplyDemandLineChartWrapper';
 import { withCalTickRageWorker } from '@modules/analysis/hoc/withCalTickRageWorker';
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
+import { withPrices } from '@modules/analysis/hoc/withPrices';
 import { withRefreshTicks } from '@modules/analysis/hoc/withRefreshTick';
 import { withSelectedSymbol } from '@modules/analysis/hoc/withSelectedSymbol';
 import { withTicks } from '@modules/analysis/hoc/withTicks';
 import { withTradeValueFilter } from '@modules/analysis/hoc/withTradeValueFilter';
 import { useDebugRender } from '@web/base/dist/hook/useDebugRender';
 import { combineHOC } from '@web/ui-extension';
+import { find, map } from 'lodash-es';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default combineHOC(
   withSelectedSymbol,
@@ -19,6 +21,7 @@ export default combineHOC(
   withFromToDate,
   withRefreshTicks,
   withCalTickRageWorker,
+  withPrices,
 )((props) => {
   useDebugRender('TickRange');
 
@@ -50,6 +53,22 @@ export default combineHOC(
     props.state?.symbol,
   ]);
 
+  const tickRageData = useMemo(() => {
+    if (
+      props.state.tickRageData?.length > 0 &&
+      props.state.prices?.length > 0
+    ) {
+      return map(props.state.tickRageData, (tickData: any) => {
+        const price: any = find(props.state.prices, (p: any) =>
+          moment(p.date).isSame(moment(tickData.date), 'day'),
+        );
+        return { ...tickData, close: price?.rClose ?? 0 };
+      });
+    }
+
+    return undefined;
+  }, [props.state.tickRageData, props.state.prices]);
+
   return (
     <>
       <TicksSupplyDemandLineChartWrapper
@@ -58,7 +77,7 @@ export default combineHOC(
         symbol={props.state.symbol ?? ''}
         viewByValue={viewByValue}
         setViewByValue={setViewByValue}
-        tickRageData={props.state.tickRageData}
+        tickRageData={tickRageData}
       />
     </>
   );

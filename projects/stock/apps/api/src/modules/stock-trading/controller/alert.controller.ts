@@ -1,6 +1,6 @@
 import { AlertDto } from '@modules/stock-trading/controller/alert.dto';
 import { StockAlertRepo } from '@modules/stock-trading/repo/stock-alert.repo';
-import { XLogger } from '@nest/base/dist';
+import { XLogger } from '@nest/base';
 import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 
 @Controller('stock-trading')

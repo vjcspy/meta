@@ -1,27 +1,33 @@
-import { CoreModule } from '@modules/core/core.module';
-import { StockInfoModule } from '@modules/stock-info/stock-info.module';
 import { STOCK_TRADING_CONTROLLERS } from '@modules/stock-trading/controller';
 import { STOCK_TRADING_CRONS } from '@modules/stock-trading/cron';
 import { STOCK_TRADING_HELPERS } from '@modules/stock-trading/helper';
 import { TRADING_QUEUE } from '@modules/stock-trading/queue';
+import { MarketTickActionConsumer } from '@modules/stock-trading/queue/consumer/market-tick-action.consumer';
+import { MarketTickAnalyzeHistoryConsumer } from '@modules/stock-trading/queue/consumer/market-tick-analyze-history.consumer';
 import { STOCK_TRADING_REPO } from '@modules/stock-trading/repo';
-import { STOCK_TRADING_EXCHANGE_KEY } from '@modules/stock-trading/value/stock-trading-queue.value';
+import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
+import {
+  MARKET_ACTION_INFO_EXCHANGE,
+  STOCK_TRADING_EXCHANGE_KEY,
+} from '@modules/stock-trading/value/stock-trading-queue.value';
 import { RabbitMQModule } from '@nest/rabbitmq';
-import { Module } from '@nestjs/common';
+import { Module, type OnModuleInit } from '@nestjs/common';
 
 @Module({
   imports: [
-    CoreModule,
     RabbitMQModule.register({
       exchanges: [
         {
           name: STOCK_TRADING_EXCHANGE_KEY,
           type: 'topic',
         },
+        {
+          name: MARKET_ACTION_INFO_EXCHANGE,
+          type: 'topic',
+        },
       ],
       handlers: [],
     }),
-    StockInfoModule,
   ],
   controllers: [...STOCK_TRADING_CONTROLLERS],
   providers: [
@@ -29,7 +35,13 @@ import { Module } from '@nestjs/common';
     ...STOCK_TRADING_REPO,
     ...TRADING_QUEUE,
     ...STOCK_TRADING_CRONS,
+    LiveRequest,
   ],
   exports: [...STOCK_TRADING_HELPERS, ...STOCK_TRADING_REPO],
 })
-export class StockTradingModule {}
+export class StockTradingModule implements OnModuleInit {
+  onModuleInit() {
+    RabbitMQModule.addHandler([MarketTickActionConsumer]);
+    RabbitMQModule.addHandler([MarketTickAnalyzeHistoryConsumer]);
+  }
+}

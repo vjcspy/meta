@@ -1,4 +1,4 @@
-import { forEach } from 'lodash';
+import { forEach } from 'lodash-es';
 import type { Moment } from 'moment';
 import moment from 'moment';
 
@@ -103,6 +103,7 @@ export const mergeByRes = (
         throw new Error('Wrong format tick data');
       }
       mergedRes[ts] = {
+        ...mergedRes[ts],
         buy,
         sell,
         oc,

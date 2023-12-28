@@ -17,5 +17,6 @@ export const withTicks = createUiHOC(() => {
 
   return {
     state: { ticks },
+    actions: {},
   };
 }, 'withTicks');

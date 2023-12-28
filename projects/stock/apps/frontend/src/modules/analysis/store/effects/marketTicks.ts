@@ -99,3 +99,34 @@ export const loadMarketSymbolTick$ = createEffect((action$) =>
     ),
   ),
 );
+
+export const loadVNIndex$ = createEffect((action$, state$) =>
+  action$.pipe(
+    ofType(
+      ANALYSIS_ACTIONS.loadVNINDEX,
+      ANALYSIS_ACTIONS.setMarketToDate,
+      ANALYSIS_ACTIONS.setMarketFromDate,
+    ),
+    debounceTime(500),
+    withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
+    mergeMap((d: any) => {
+      const analysisState: AnalysisState = d[1];
+      const { marketFromDate, marketToDate } = analysisState;
+
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/histories?code=HOSTC&from=${marketFromDate}&to=${marketToDate}`;
+
+      return from(fetch(url)).pipe(
+        switchMap((res) => from(res.json())),
+        validateApiResponsePipe(),
+        map((data: ApiResponse) => {
+          if (data?.success === true) {
+            return ANALYSIS_ACTIONS.loadVNINDEXSuccess(data);
+          } else {
+            return APP_ACTIONS.fetchApiError(data);
+          }
+        }),
+        catchGeneralErrorPipe(),
+      );
+    }),
+  ),
+);

@@ -1,4 +1,5 @@
 import { SettingOutlined } from '@ant-design/icons';
+import Symbol from '@modules/analysis/components/Symbol';
 import withMarketSymbolCategories from '@modules/analysis/hoc/withMarketSymbolCategories';
 import { CommonValue } from '@modules/analysis/value/common.value';
 import { message } from '@modules/app/util/message';
@@ -117,8 +118,9 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
     }
   }, [props.state?.marketCategories, props?.state?.selectedMarketCat]);
 
-  const [modalOpen, setModalOpen] = useState<boolean>();
-  const [modelCreateOpen, setModalCreateOpen] = useState<boolean>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modelCreateOpen, setModalCreateOpen] = useState<boolean>(false);
+  const [modalFake1Open, setModalFake1Open] = useState<boolean>(false);
 
   const [editCat, setEditCat] = useState<any>({ name: '' });
 
@@ -179,6 +181,18 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
                 setEditCat({
                   name: '',
                 });
+                setModalCreateOpen(false);
+                setModalFake1Open(true);
+              }}
+            >
+              Fake 1 Symbol
+            </Button>
+            <Button
+              onClick={() => {
+                setModalOpen(false);
+                setEditCat({
+                  name: '',
+                });
                 setModalCreateOpen(true);
               }}
             >
@@ -228,6 +242,20 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
             />
           </div>
         </form>
+      </Modal>
+
+      <Modal
+        title={`Fake 1 Symbol Category`}
+        centered
+        maskClosable={false}
+        open={modalFake1Open}
+        onCancel={() => setModalFake1Open(false)}
+        onOk={() => {
+          props.actions.selectFakeMarketCatWithCurrentSymbol();
+          setModalFake1Open(false);
+        }}
+      >
+        <Symbol />
       </Modal>
     </div>
   );

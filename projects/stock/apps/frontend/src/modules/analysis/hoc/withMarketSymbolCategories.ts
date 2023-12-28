@@ -29,11 +29,16 @@ export default createUiHOC(() => {
     dispatch(ANALYSIS_ACTIONS.selectMarketCat({ cat }));
   }, []);
 
+  const selectFakeMarketCatWithCurrentSymbol = useCallback(() => {
+    dispatch(ANALYSIS_ACTIONS.selectFakeMarketCatWithCurrentSymbol());
+  }, []);
+
   return {
     state: { marketCategories, selectedMarketCat },
     actions: {
       saveMarketCat,
       selectMarketCat,
+      selectFakeMarketCatWithCurrentSymbol,
     },
   };
 });

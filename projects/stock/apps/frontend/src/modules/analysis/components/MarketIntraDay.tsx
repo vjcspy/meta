@@ -1,4 +1,5 @@
 'use client';
+import MarketIntraDayAnalyzeTable from '@modules/analysis/components/MarketIntraDay/MarketIntraDayAnalyzeTable';
 import MarketIntraDayChart from '@modules/analysis/components/MarketIntraDay/MarketIntraDayChart';
 import MarketIntraDayConfig from '@modules/analysis/components/MarketIntraDay/MarketIntraDayConfig';
 import withTriggerLoadMarketIntraDayTicks from '@modules/analysis/hoc/market-intra-day/withTriggerLoadMarketIntraDayTicks';
@@ -15,6 +16,7 @@ export default combineHOC(
       <AntdConfigProvider>
         <MarketIntraDayConfig />
         <MarketIntraDayChart />
+        <MarketIntraDayAnalyzeTable />
       </AntdConfigProvider>
     </>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { prisma } from '@modules/core/util/prisma';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
+import type { TickRecord } from '@modules/stock-info/stock-info.type';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { find, forEach, map, sortBy, uniqBy } from 'lodash';
 import * as moment from 'moment';
@@ -22,6 +23,7 @@ export class TickHelper {
     });
 
     if (Array.isArray(data?.meta)) {
+      // @ts-ignore
       data.meta = map(data.meta, (_t: any) => this.mapTickData(_t));
     }
 
@@ -59,6 +61,7 @@ export class TickHelper {
     if (histories.length > 0) {
       histories = map(histories, (h) => {
         if (Array.isArray(h?.meta)) {
+          // @ts-ignore
           h.meta = map(h.meta, (_t) => this.mapTickData(_t));
         } else {
           h.meta = [];
@@ -102,7 +105,7 @@ export class TickHelper {
     if (histories.length > 0) {
       histories = map(histories, (h) => {
         if (Array.isArray(h?.meta)) {
-          h.meta = map(h.meta, (_t) => this.mapTickData(_t));
+          h.meta = map(h.meta, (_t) => this.mapTickData(_t)) as any;
         } else {
           h.meta = [];
         }
@@ -119,7 +122,7 @@ export class TickHelper {
 
   private mapTickData(tick: any) {
     if (Array.isArray(tick) && tick.length === 4) {
-      const _tickData: any = {
+      const _tickData: TickRecord = {
         time: moment.unix(tick[0]).format('HH:mm:ss'),
         vol: tick[1],
         p: Math.round(Number(tick[2]) / 100) * 100,

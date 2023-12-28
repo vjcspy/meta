@@ -94,64 +94,70 @@ export class AmqpConnection {
    * @returns {Promise<void>}
    */
   async initialize() {
-    if (this.configuration.uri) {
-      this._managedConnection = connect(
-        this.configuration.uri,
-        this.config.connectionManagerOptions,
+    if (!this.configuration.uri) {
+      this.logger.warn(
+        `Connection not yet configured uri ${this.config.name}`,
+        this.config,
       );
-      this._managedConnection.on('connect', ({ connection }) => {
-        this._connection = connection;
-        this.logger.log(
-          `Successfully connected to RabbitMQ broker (${this.config.name})`,
-        );
-      });
+    }
+    this.logger.info(`Start initialize connection: ${this.config.name}`);
+    this._managedConnection = connect(
+      this.configuration.uri,
+      this.config.connectionManagerOptions,
+    );
+    this._managedConnection.on('connect', ({ connection }) => {
+      this._connection = connection;
+      this.logger.log(
+        `Successfully connected to RabbitMQ broker (${this.config.name})`,
+      );
+    });
 
-      this._managedConnection.on('disconnect', ({ err }) => {
-        this.logger.error(
-          `Disconnected from RabbitMQ broker (${this.config.name})`,
-          err,
-        );
-      });
+    this._managedConnection.on('disconnect', ({ err }) => {
+      this.logger.error(
+        `Disconnected from RabbitMQ broker (${this.config.name})`,
+        err,
+      );
+    });
 
-      this._managedConnection.on('connectFailed', (arg) => {
-        this.logger.error(
-          `Fail to connect RabbitMQ broker ${arg.url} with message ${arg.err.message}`,
-          arg.err,
-        );
-      });
+    this._managedConnection.on('connectFailed', (arg) => {
+      this.logger.error(
+        `Fail to connect RabbitMQ broker ${arg.url} with message ${arg.err.message}`,
+        arg.err,
+      );
+    });
 
-      const defaultChannel: { name: string; config: RabbitMQChannelConfig } = {
-        name: AmqpConnection.name,
-        config: {
-          prefetchCount: this.config.prefetchCount,
-          default: true,
-        },
-      };
+    const defaultChannel: { name: string; config: RabbitMQChannelConfig } = {
+      name: AmqpConnection.name,
+      config: {
+        prefetchCount: this.config.prefetchCount,
+        default: true,
+      },
+    };
 
-      if (this.config?.channels) {
-        await Promise.all([
-          Object.keys(this.config.channels).map(async (channelName) => {
-            // @ts-ignore
-            const config = this.config.channels[channelName];
+    if (this.config?.channels) {
+      await Promise.all([
+        Object.keys(this.config.channels).map(async (channelName) => {
+          // @ts-ignore
+          const config = this.config.channels[channelName];
 
-            // Only takes the first channel specified as default so other ones get created.
-            if (defaultChannel.name === AmqpConnection.name && config.default) {
-              defaultChannel.name = channelName;
-              defaultChannel.config.prefetchCount =
-                config.prefetchCount || this.config.prefetchCount;
-              return;
-            }
+          // Only takes the first channel specified as default so other ones get created.
+          if (defaultChannel.name === AmqpConnection.name && config.default) {
+            defaultChannel.name = channelName;
+            defaultChannel.config.prefetchCount =
+              config.prefetchCount || this.config.prefetchCount;
+            return;
+          }
 
-            return this.setupManagedChannel(channelName, {
-              ...config,
-              prefetchCount: config.prefetchCount || this.config.prefetchCount,
-              default: false,
-            });
-          }),
-          // default channel is always created
-          this.setupManagedChannel(defaultChannel.name, defaultChannel.config),
-        ]);
-      }
+          // eslint-disable-next-line consistent-return
+          return this.setupManagedChannel(channelName, {
+            ...config,
+            prefetchCount: config.prefetchCount || this.config.prefetchCount,
+            default: false,
+          });
+        }),
+        // default channel is always created
+        this.setupManagedChannel(defaultChannel.name, defaultChannel.config),
+      ]);
     }
   }
 
@@ -159,6 +165,7 @@ export class AmqpConnection {
     name: string,
     config: RabbitMQChannelConfig,
   ) {
+    this.logger.info(`Start setup channel name ${name}`);
     const channel = this._managedConnection.createChannel({
       name,
       json: config.json === true,
@@ -441,6 +448,10 @@ export class AmqpConnection {
 
         channel.ack(msg);
       } catch (e) {
+        this.logger.error(
+          'An error occurred when run consumer. Please ensure catch all error in consumer handler',
+          e as Error,
+        );
         if (msg === null) {
           /* empty */
         } else {
