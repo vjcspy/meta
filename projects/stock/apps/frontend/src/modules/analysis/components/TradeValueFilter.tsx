@@ -16,7 +16,7 @@ export default combineHOC(
       <div className="mt-5">
         <Slider
           range
-          max={1000}
+          max={10000}
           min={0}
           defaultValue={props?.state?.tradeValueFilter ?? 250}
           onChange={props?.actions?.debounceUpdateTradeValue}
