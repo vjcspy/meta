@@ -284,20 +284,21 @@ export class TickActionAnalyzeHelper {
   }
 
   private async getDefaultCat() {
+    if (this._defaultCat) {
+      return this._defaultCat;
+    }
+
     if (this.isFetchDataFromLive()) {
-      if (this._defaultCat) {
-        return this._defaultCat;
-      }
       this.logger.info('Request default category from live');
       const list = await this.liveRequest.getCategoryList();
       this._defaultCat = find(
         list,
         (r: any) => r.key === MarketCatValue.DEFAULT_MARKET_CAT_KEY,
       );
-
-      return this._defaultCat;
+    } else {
+      this._defaultCat = this.marketCatHelper.getDefaultCat();
     }
-    return this.marketCatHelper.getDefaultCat();
+    return this._defaultCat;
   }
 
   private async loadCategoryTickDate(symbols: string[], date: string) {

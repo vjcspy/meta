@@ -1,6 +1,7 @@
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { prisma } from '@modules/core/util/prisma';
 import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-price.publisher';
+import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
@@ -56,13 +57,16 @@ export class SyncPricesJob {
     return numberSyncSuccess === totalCor;
   }
 
-  @Cron('0 */30 9-14 * * 1-5', {
-    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_30_MINS`,
+  @Cron('0 16 9-14 * * 1-5', {
+    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_60_MINS`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncPrice() {
     if (!isMainProcess()) return;
-    const size = await this.syncPricePublisher.publish();
+    const size = await this.syncPricePublisher.publish([
+      StockInfoValue.HOSE_EXCHANGE,
+      StockInfoValue.HNX_EXCHANGE,
+    ]);
 
     // VNINDEX
     await this.syncPricePublisher.publishOne('HOSTC');
