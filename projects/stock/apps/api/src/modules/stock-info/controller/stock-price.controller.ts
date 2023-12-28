@@ -58,6 +58,13 @@ export class StockPriceController {
     return 'ok';
   }
 
+  @Get('sync-all-current')
+  syncAllCurrent() {
+    this.stockPricePublisher.publish([], false);
+
+    return 'ok';
+  }
+
   @Get('history')
   async history(
     @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
