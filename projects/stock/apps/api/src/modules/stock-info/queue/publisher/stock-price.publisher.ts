@@ -20,6 +20,10 @@ export class StockPricePublisher {
         }
       }
 
+      if (cor.code?.length !== 3) {
+        return;
+      }
+
       this.connectionManager.getConnection().publish(
         SyncValues.EXCHANGE_KEY,
         SyncValues.STOCK_PRICE_SYNC_KEY,
