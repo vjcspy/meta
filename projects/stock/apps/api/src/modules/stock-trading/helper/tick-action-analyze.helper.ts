@@ -97,7 +97,7 @@ export class TickActionAnalyzeHelper {
       },
     });
 
-    await this.marketTickActionAnalyze(ticks);
+    await this.marketTickActionAnalyze(ticks, date);
   }
 
   async analyzeHistoryDataForDate(date: string) {
@@ -329,7 +329,10 @@ export class TickActionAnalyzeHelper {
     }
   }
 
-  private async marketTickActionAnalyze(marketTickDate: SymbolTickDate[]) {
+  private async marketTickActionAnalyze(
+    marketTickDate: SymbolTickDate[],
+    date: string,
+  ) {
     this.logger.info('Starting create market tick action');
 
     const marketGroupedByTs: Record<
@@ -378,7 +381,9 @@ export class TickActionAnalyzeHelper {
     });
 
     const marketData = values(marketGroupedByTs);
-    this.logger.info('Start save to DB');
+    this.logger.info(
+      `Start save to DB Market Action Analyze data for date ${date}`,
+    );
     try {
       await prisma.$transaction(
         marketData.map((record) =>
