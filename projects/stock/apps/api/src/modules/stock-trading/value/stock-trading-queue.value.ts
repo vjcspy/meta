@@ -17,3 +17,9 @@ export const MARKET_ACTION_INFO_JOB_KEY =
 
 export const MARKET_ACTION_INFO_QUEUE =
   'stock.trading.market.tick.action.analysis.queue';
+
+export const MARKET_ACTION_HISTORY_ANALYZE_JOB_KEY =
+  'stock.trading.market.tick.history.analysis.job.key';
+
+export const MARKET_ACTION_HISTORY_ANALYZE_QUEUE =
+  'stock.trading.market.tick.history.analysis.queue';

@@ -1,20 +1,20 @@
 import { prisma } from '@modules/core/util/prisma';
 import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
-import { MARKET_TICK_ACTION_TYPE } from '@modules/stock-trading/value/market-tick-action.value';
+import { MARKET_TICK_HISTORY_ANALYZE_TYPE } from '@modules/stock-trading/value/market-tick-action.value';
 import {
+  MARKET_ACTION_HISTORY_ANALYZE_JOB_KEY,
+  MARKET_ACTION_HISTORY_ANALYZE_QUEUE,
   MARKET_ACTION_INFO_EXCHANGE,
-  MARKET_ACTION_INFO_JOB_KEY,
-  MARKET_ACTION_INFO_QUEUE,
 } from '@modules/stock-trading/value/stock-trading-queue.value';
-import { XLogger } from '@nest/base';
-import { Nack, RabbitSubscribe } from '@nest/rabbitmq';
+import { XLogger } from '@nest/base/dist';
+import { Nack, RabbitSubscribe } from '@nest/rabbitmq/dist';
 import { Injectable } from '@nestjs/common';
-import * as moment from 'moment';
+import * as moment from 'moment/moment';
 
 @Injectable()
-export class MarketTickActionConsumer {
-  private readonly logger = new XLogger(MarketTickActionConsumer.name);
+export class MarketTickAnalyzeHistoryConsumer {
+  private readonly logger = new XLogger(MarketTickAnalyzeHistoryConsumer.name);
 
   constructor(
     private readonly marketTickAnalyzeHelper: TickActionAnalyzeHelper,
@@ -22,13 +22,13 @@ export class MarketTickActionConsumer {
 
   @RabbitSubscribe({
     exchange: MARKET_ACTION_INFO_EXCHANGE,
-    routingKey: MARKET_ACTION_INFO_JOB_KEY,
-    queue: MARKET_ACTION_INFO_QUEUE,
+    routingKey: MARKET_ACTION_HISTORY_ANALYZE_JOB_KEY,
+    queue: MARKET_ACTION_HISTORY_ANALYZE_QUEUE,
     queueOptions: {
       durable: true,
     },
   })
-  public async pubSubHandler(msg: any) {
+  async handler(msg: any) {
     this.logger.info(`Received msg ${msg}`);
     if (typeof msg !== 'string') {
       this.logger.error('Msg not valid', new Error());
@@ -40,7 +40,7 @@ export class MarketTickActionConsumer {
       where: {
         date_type_symbol: {
           date,
-          type: MARKET_TICK_ACTION_TYPE,
+          type: MARKET_TICK_HISTORY_ANALYZE_TYPE,
           symbol: StockInfoValue.VNINDEX_CODE,
         },
       },
@@ -53,7 +53,7 @@ export class MarketTickActionConsumer {
           data: {
             try_count: 1,
             date,
-            type: MARKET_TICK_ACTION_TYPE,
+            type: MARKET_TICK_HISTORY_ANALYZE_TYPE,
             symbol: StockInfoValue.VNINDEX_CODE,
             isSuccess: false,
           },
@@ -74,12 +74,12 @@ export class MarketTickActionConsumer {
         return;
       }
 
-      await this.marketTickAnalyzeHelper.runForDate(msg);
+      await this.marketTickAnalyzeHelper.analyzeHistoryDataForDate(msg);
       await prisma.marketTickJobInfo.update({
         where: {
           date_type_symbol: {
             date,
-            type: MARKET_TICK_ACTION_TYPE,
+            type: MARKET_TICK_HISTORY_ANALYZE_TYPE,
             symbol: StockInfoValue.VNINDEX_CODE,
           },
         },
@@ -94,7 +94,7 @@ export class MarketTickActionConsumer {
         where: {
           date_type_symbol: {
             date,
-            type: MARKET_TICK_ACTION_TYPE,
+            type: MARKET_TICK_HISTORY_ANALYZE_TYPE,
             symbol: StockInfoValue.VNINDEX_CODE,
           },
         },

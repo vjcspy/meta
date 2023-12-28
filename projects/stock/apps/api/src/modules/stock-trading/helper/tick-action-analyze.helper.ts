@@ -3,6 +3,7 @@ import { MarketCatHelper } from '@modules/stock-info/helper/market-cat.helper';
 import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import type { TickRecord } from '@modules/stock-info/stock-info.type';
 import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
+import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
 import { AppError, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
@@ -39,9 +40,11 @@ export class TickActionAnalyzeHelper {
 
   static SHARK_TRADE_VALUE = 400;
 
-  static HISTORY_RECORDS = 1500;
+  static HISTORY_RECORDS = 1200;
 
   static NEED_FETCH_DATA = true;
+
+  private _defaultCat: any;
 
   constructor(
     private tickHelper: TickHelper,
@@ -98,6 +101,17 @@ export class TickActionAnalyzeHelper {
   }
 
   async analyzeHistoryDataForDate(date: string) {
+    // remove all record before run
+    this.logger.info(
+      `Will remove all record in Market History Analyze for date ${date}`,
+    );
+
+    await prisma.marketTickActionHistoryAnalyze.deleteMany({
+      where: {
+        date: moment.utc(date).toDate(),
+      },
+    });
+
     // Phai dam bao du 1500 record tinh tu ngay hien tai
     // Job se chay vao cuoi ngay, nen cung can dam bao ngay do co record
     this.logger.info(`Analyze market history data for date ${date}`);
@@ -122,14 +136,6 @@ export class TickActionAnalyzeHelper {
             .unix(),
         },
       },
-      select: {
-        ts: true,
-        market_symbol_tick_actions: {
-          select: {
-            symbol: true,
-          },
-        },
-      },
     });
 
     if (!isHasRecordCurrentDate?.ts) {
@@ -137,9 +143,11 @@ export class TickActionAnalyzeHelper {
         'Current day not have any records, please run analyze first',
       );
       this.logger.error(error.message, error);
-
+      error.setNoRetry();
       throw error;
     }
+
+    const defaultCat = await this.getDefaultCat();
 
     // check if has enough history records
     this.logger.info(
@@ -158,7 +166,7 @@ export class TickActionAnalyzeHelper {
             .unix(),
         },
       },
-      take: 1500,
+      take: TickActionAnalyzeHelper.HISTORY_RECORDS,
       orderBy: {
         ts: 'desc',
       },
@@ -166,24 +174,128 @@ export class TickActionAnalyzeHelper {
 
     if (histories.length !== TickActionAnalyzeHelper.HISTORY_RECORDS) {
       const error = new AppError(
-        `Not have enough ${TickActionAnalyzeHelper.HISTORY_RECORDS} history records`,
+        `Not have enough ${TickActionAnalyzeHelper.HISTORY_RECORDS} history records (${histories.length})`,
       );
       error.setNoRetry();
       this.logger.error(error.message, error);
       throw error;
     }
+
+    const marketAnalysis = {
+      symbol: StockInfoValue.VNINDEX_CODE,
+      date: moment.utc(date).toDate(),
+      ...this.calculateAvgHistoryData(histories),
+    };
+
+    this.logger.info(`Will calculate history for symbols for date ${date}`);
+    const symbolData: any[] = await Promise.all(
+      defaultCat.symbols.map((symbol: string) =>
+        this.calculateHistoryAvgForSymbol(symbol, date),
+      ),
+    );
+    symbolData.push(marketAnalysis);
+    try {
+      this.logger.info(
+        `Start save data market tick action history analyze to DB for date ${date}`,
+      );
+      await prisma.$transaction(
+        symbolData.map((data) =>
+          prisma.marketTickActionHistoryAnalyze.create({
+            data,
+          }),
+        ),
+      );
+
+      this.logger.info(
+        `Successfully analyze market tick history AVG data for date ${date}`,
+      );
+    } catch (e) {
+      this.logger.error(
+        `Failed create tick action history analyze for date ${date}`,
+        e,
+      );
+    }
   }
 
-  private calculateHistoryData(data: SymbolTickAnalyzeRecord[]) {}
+  private async calculateHistoryAvgForSymbol(symbol: string, date: string) {
+    const histories = await prisma.marketTickSymbolActionInfo.findMany({
+      where: {
+        symbol,
+        ts: {
+          lt: moment
+            .utc(date)
+            .add(1, 'day')
+            .set({
+              hour: 0,
+            })
+            .unix(),
+        },
+      },
+      take: TickActionAnalyzeHelper.HISTORY_RECORDS,
+      orderBy: {
+        ts: 'desc',
+      },
+    });
+
+    if (histories.length !== TickActionAnalyzeHelper.HISTORY_RECORDS) {
+      const error = new AppError(
+        `Not have enough ${TickActionAnalyzeHelper.HISTORY_RECORDS} history records for symbol ${symbol} at date ${date} (${histories.length})`,
+      );
+      error.setNoRetry();
+      this.logger.error(error.message, error);
+      throw error;
+    }
+
+    return {
+      symbol,
+      date: moment.utc(date).toDate(),
+      ...this.calculateAvgHistoryData(histories),
+    };
+  }
+
+  private calculateAvgHistoryData(histories: SymbolTickAnalyzeRecord[]) {
+    const sum = {
+      shark_buy_count: 0,
+      shark_sell_count: 0,
+      sheep_buy_count: 0,
+      sheep_sell_count: 0,
+
+      shark_buy_value: 0,
+      shark_sell_value: 0,
+      sheep_buy_value: 0,
+      sheep_sell_value: 0,
+
+      buy_count: 0,
+      sell_count: 0,
+      buy_value: 0,
+      sell_value: 0,
+    };
+    forEach(histories, (h) => {
+      forEach(sum, (_, key) => {
+        sum[key] += h[key];
+      });
+    });
+    const avg: any = {};
+    forEach(sum, (_, key) => {
+      avg[`avg_${key}`] = round(sum[key] / histories.length);
+    });
+
+    return avg;
+  }
 
   private async getDefaultCat() {
     if (this.isFetchDataFromLive()) {
+      if (this._defaultCat) {
+        return this._defaultCat;
+      }
       this.logger.info('Request default category from live');
       const list = await this.liveRequest.getCategoryList();
-      return find(
+      this._defaultCat = find(
         list,
         (r: any) => r.key === MarketCatValue.DEFAULT_MARKET_CAT_KEY,
       );
+
+      return this._defaultCat;
     }
     return this.marketCatHelper.getDefaultCat();
   }

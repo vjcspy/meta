@@ -3,6 +3,7 @@ import { STOCK_TRADING_CRONS } from '@modules/stock-trading/cron';
 import { STOCK_TRADING_HELPERS } from '@modules/stock-trading/helper';
 import { TRADING_QUEUE } from '@modules/stock-trading/queue';
 import { MarketTickActionConsumer } from '@modules/stock-trading/queue/consumer/market-tick-action.consumer';
+import { MarketTickAnalyzeHistoryConsumer } from '@modules/stock-trading/queue/consumer/market-tick-analyze-history.consumer';
 import { STOCK_TRADING_REPO } from '@modules/stock-trading/repo';
 import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
 import {
@@ -41,5 +42,6 @@ import { Module, type OnModuleInit } from '@nestjs/common';
 export class StockTradingModule implements OnModuleInit {
   onModuleInit() {
     RabbitMQModule.addHandler([MarketTickActionConsumer]);
+    RabbitMQModule.addHandler([MarketTickAnalyzeHistoryConsumer]);
   }
 }

@@ -587,23 +587,22 @@ model MarketTickActionHistoryAnalyze {
   date   DateTime @db.Date
   symbol String   @db.VarChar(10)
 
-  shark_avg_buy_count  Int @db.SmallInt // for 1 min of N record before
-  shark_avg_sell_count Int @db.SmallInt //  for 1 min of N record before
-  shark_avg_buy_val    Int @db.SmallInt //  for 1 min of N record before
-  shark_avg_sell_val   Int @db.SmallInt //  for 1 min of N record before
+  avg_shark_buy_count  Int @db.SmallInt
+  avg_shark_sell_count Int @db.SmallInt
+  avg_shark_buy_value  Int @db.SmallInt
+  avg_shark_sell_value Int @db.SmallInt
 
-  sheep_avg_buy_count  Int @db.Integer //  for 1 min of N record before
-  sheep_avg_sell_count Int @db.Integer //  for 1 min of N record before
-  sheep_avg_buy_val    Int @db.Integer //  for 1 min of N record before
-  sheep_avg_sell_val   Int @db.Integer //  for 1 min of N record before
+  avg_sheep_buy_count  Int @db.Integer
+  avg_sheep_sell_count Int @db.Integer
+  avg_sheep_buy_value  Int @db.Integer
+  avg_sheep_sell_value Int @db.Integer
 
-  up_pct_buy_val_150_avg   Int @db.SmallInt // % Symbol se tang neu buy 150% avg
-  up_pct_buy_count_150_avg Int @db.SmallInt // % Symbol se tang neu buy 150% avg
+  avg_buy_count  Int @db.SmallInt
+  avg_sell_count Int @db.SmallInt
+  avg_buy_value  Int @db.Integer
+  avg_sell_value Int @db.Integer
 
-  down_pct_sell_val_150_avg   Int @db.SmallInt // % Symbol se giam neu buy 150% avg
-  down_pct_sell_count_150_avg Int @db.SmallInt // % Symbol se giam neu buy 150% avg
-
-  @@map("market_tick_symbol_action_analyze")
+  @@map("market_tick_action_history_analyze")
 }
 
 model MarketTickActionInfo {
@@ -624,12 +623,12 @@ model MarketTickActionInfo {
   buy_value  Int @db.Integer
   sell_value Int @db.Integer
 
-  market_symbol_tick_actions MarketSymbolTickActionInfo[]
+  market_symbol_tick_actions MarketTickSymbolActionInfo[]
 
   @@map("market_tick_action_info")
 }
 
-model MarketSymbolTickActionInfo {
+model MarketTickSymbolActionInfo {
   id Int @id @default(autoincrement())
 
   ts     Int
@@ -653,19 +652,23 @@ model MarketSymbolTickActionInfo {
   MarketTickAction MarketTickActionInfo @relation(fields: [ts], references: [ts], onDelete: Cascade)
 
   @@unique([symbol, ts])
-  @@map("market_symbol_tick_action_info")
+  @@map("market_tick_symbol_action_info")
 }
 
-model MarketTickActionJobInfo {
-  id         Int      @id @default(autoincrement())
-  date       DateTime @db.Date
+model MarketTickJobInfo {
+  id   Int      @id @default(autoincrement())
+  date DateTime @db.Date
+
+  type   String @db.VarChar
+  symbol String @db.VarChar(10)
+
   isSuccess  Boolean
-  try_count  Int      @db.SmallInt
-  last_error String?  @db.Text
+  try_count  Int     @db.SmallInt
+  last_error String? @db.Text
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@unique([date])
-  @@map("market_tick_action_job_info")
+  @@unique([date, type, symbol])
+  @@map("market_tick_job_info")
 }

@@ -448,6 +448,10 @@ export class AmqpConnection {
 
         channel.ack(msg);
       } catch (e) {
+        this.logger.error(
+          'An error occurred when run consumer. Please ensure catch all error in consumer handler',
+          e as Error,
+        );
         if (msg === null) {
           /* empty */
         } else {
