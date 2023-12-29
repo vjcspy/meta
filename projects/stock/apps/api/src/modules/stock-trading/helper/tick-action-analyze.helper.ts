@@ -6,7 +6,7 @@ import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
 import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
 import { AppError, XLogger } from '@nest/base';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { find, forEach, round, values } from 'lodash';
 import * as moment from 'moment';
 
@@ -57,6 +57,84 @@ export class TickActionAnalyzeHelper {
     return TickActionAnalyzeHelper.NEED_FETCH_DATA;
   }
 
+  async getHistoryDataForDate(symbol: string, date: string) {
+    this.logger.info(`getHistoryDataForDate symbol ${symbol} date ${date}`);
+    let tickActionData;
+    if (symbol === StockInfoValue.VNINDEX_CODE) {
+      tickActionData = await prisma.marketTickActionInfo.findMany({
+        where: {
+          ts: {
+            gt: moment
+              .utc(date)
+              .set({
+                hour: 0,
+              })
+              .unix(),
+            lt: moment
+              .utc(date)
+              .add(1, 'day')
+              .set({
+                hour: 0,
+              })
+              .unix(),
+          },
+        },
+        orderBy: {
+          ts: 'desc',
+        },
+      });
+    } else {
+      tickActionData = await prisma.marketTickSymbolActionInfo.findMany({
+        where: {
+          symbol,
+          ts: {
+            gt: moment
+              .utc(date)
+              .set({
+                hour: 0,
+              })
+              .unix(),
+            lt: moment
+              .utc(date)
+              .add(1, 'day')
+              .set({
+                hour: 0,
+              })
+              .unix(),
+          },
+        },
+        orderBy: {
+          ts: 'desc',
+        },
+      });
+    }
+
+    const tickHistoryAvgData =
+      await prisma.marketTickActionHistoryAnalyze.findFirst({
+        where: {
+          symbol,
+          date: {
+            lt: moment.utc(date).toDate(),
+          },
+        },
+        orderBy: {
+          date: 'desc',
+        },
+      });
+
+    if (!tickActionData || !tickHistoryAvgData) {
+      throw new HttpException(
+        `Not found analyze data for symbol ${symbol} date ${date}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return {
+      tickActionData,
+      tickHistoryAvgData,
+    };
+  }
+
   async runForDate(date: string) {
     this.logger.info(`Start analyzing tick action data for date ${date}`);
 
@@ -89,9 +167,9 @@ export class TickActionAnalyzeHelper {
             .unix(),
           lt: moment
             .utc(date)
+            .add(1, 'day')
             .set({
-              hour: 23,
-              minute: 59,
+              hour: 0,
             })
             .unix(),
         },

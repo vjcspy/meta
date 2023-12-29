@@ -1,7 +1,9 @@
+import { OkResponse } from '@modules/core/model/ok-response';
+import { GetMarketTickActionRequest } from '@modules/stock-trading/controller/market-tick.action.dto';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
 import { MarketTickActionAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-action-analyze.publisher';
 import { MarketTickHistoryAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-history-analyze.publisher';
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
 @Controller('market-tick-action')
 export class MarketTickActionController {
@@ -24,5 +26,15 @@ export class MarketTickActionController {
   @Get('history-test')
   testHistory() {
     this.marketTickHistoryAnalyzePublisher.publish();
+  }
+
+  @Get('intra-day-speed')
+  async history(@Query() request: GetMarketTickActionRequest) {
+    const data = this.tickActionAnalyzeHelper.getHistoryDataForDate(
+      request.symbol,
+      request.date,
+    );
+
+    return new OkResponse(undefined, data);
   }
 }

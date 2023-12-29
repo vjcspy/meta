@@ -7,8 +7,8 @@ import {
   MARKET_ACTION_HISTORY_ANALYZE_QUEUE,
   MARKET_ACTION_INFO_EXCHANGE,
 } from '@modules/stock-trading/value/stock-trading-queue.value';
-import { XLogger } from '@nest/base/dist';
-import { Nack, RabbitSubscribe } from '@nest/rabbitmq/dist';
+import { XLogger } from '@nest/base';
+import { Nack, RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 import * as moment from 'moment/moment';
 

@@ -1,3 +1,5 @@
+import IntraDaySpeed from '@modules/analysis/components/IntraDaySpeed';
+
 export default function Page() {
-  return <>Intra-day speed</>;
+  return <IntraDaySpeed />;
 }
