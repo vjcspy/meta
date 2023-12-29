@@ -62,31 +62,31 @@ export const initLoggerInstance = (config: {
           }),
           ...(config?.file === true
             ? [
+                // new winston.transports.File({
+                //   format: winston.format.combine(
+                //     winston.format.uncolorize(),
+                //     format.splat(),
+                //     format.simple(),
+                //   ),
+                //   filename: `logs/${getInstanceId()}.debug.log`,
+                //   level: 'debug',
+                // }),
+                // new winston.transports.File({
+                //   format: winston.format.combine(
+                //     winston.format.uncolorize(),
+                //     format.splat(),
+                //     format.simple(),
+                //   ),
+                //   filename: `logs/${getInstanceId()}.info.log`,
+                //   level: 'info',
+                // }),
                 new winston.transports.File({
                   format: winston.format.combine(
                     winston.format.uncolorize(),
                     format.splat(),
                     format.simple(),
                   ),
-                  filename: `logs/${getInstanceId()}.debug.log`,
-                  level: 'debug',
-                }),
-                new winston.transports.File({
-                  format: winston.format.combine(
-                    winston.format.uncolorize(),
-                    format.splat(),
-                    format.simple(),
-                  ),
-                  filename: `logs/${getInstanceId()}.info.log`,
-                  level: 'info',
-                }),
-                new winston.transports.File({
-                  format: winston.format.combine(
-                    winston.format.uncolorize(),
-                    format.splat(),
-                    format.simple(),
-                  ),
-                  filename: `logs/${getInstanceId()}.error.log`,
+                  filename: `logs/combined.error.log`,
                   level: 'error',
                 }),
                 new winston.transports.File({
@@ -95,7 +95,7 @@ export const initLoggerInstance = (config: {
                     format.splat(),
                     format.simple(),
                   ),
-                  filename: `logs/${getInstanceId()}.warn.log`,
+                  filename: `logs/combined.warn.log`,
                   level: 'warn',
                 }),
                 new winston.transports.File({
