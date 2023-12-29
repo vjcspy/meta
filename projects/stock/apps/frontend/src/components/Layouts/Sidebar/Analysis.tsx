@@ -23,35 +23,42 @@ const SidebarAnalysis = () => {
         <Link href="/analysis/tick/intraday" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Intraday
+              Intraday (1)
+            </span>
+          </div>
+        </Link>
+        <Link href="/analysis/tick/intraday-sum" className="group">
+          <div className="flex items-center">
+            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              ∑ Intra-day (1-N)
+            </span>
+          </div>
+        </Link>
+        <Link href="/analysis/tick/intraday-speed" className="group">
+          <div className="flex items-center">
+            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              Δ Intra-day (1-N)
             </span>
           </div>
         </Link>
         <Link href="/analysis/tick/at-price" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Price
+              Price (1)
             </span>
           </div>
         </Link>
         <Link href="/analysis/tick/range" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Range
-            </span>
-          </div>
-        </Link>
-        <Link href="/analysis/tick/market-intraday" className="group">
-          <div className="flex items-center">
-            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Market Intra-day
+              Range (1)
             </span>
           </div>
         </Link>
         <Link href="/analysis/tick/market-range" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              Market Range
+              Market Range (N)
             </span>
           </div>
         </Link>
