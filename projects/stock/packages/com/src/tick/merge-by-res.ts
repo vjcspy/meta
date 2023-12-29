@@ -54,7 +54,7 @@ const isValidTradeValue = (
   }
 
   if (typeof tradeValue === 'object') {
-    if (tradeValue.max >= 1000) {
+    if (tradeValue.max >= 10000) {
       // eslint-disable-next-line no-param-reassign
       tradeValue.max = Infinity;
     }

@@ -103,12 +103,6 @@ export class SyncTicksHelper {
                 meta: tickData,
               },
             });
-
-            this.logger.info(
-              `Will save sync status current day ${symbol} date ${syncDate.format(
-                'YYYY-MM-DD',
-              )}`,
-            );
           } else {
             this.logger.info(
               `API return data for previous day for current day ${symbol} date ${syncDate.format(

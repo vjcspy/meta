@@ -34,5 +34,5 @@ export class SyncValues {
 
   static REFRESH_TICK_QUEUE = 'stock.info.refresh.tick.queue';
 
-  static REFRESH_WINDOW_TIME = 15000;
+  static REFRESH_WINDOW_TIME = 30000;
 }
