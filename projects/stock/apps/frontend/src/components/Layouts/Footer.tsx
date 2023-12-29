@@ -5,9 +5,9 @@ import { useMemo } from 'react';
 const Footer = () => {
   const version = useMemo(() => {
     if (process.env.NEXT_PUBLIC_DEPLOY_TIMESTAMP) {
-      return `${moment(process.env.NEXT_PUBLIC_DEPLOY_TIMESTAMP).format(
-        'YYYY-MM-DD HH:mm:ss',
-      )}`;
+      return `${moment(
+        new Date(process.env.NEXT_PUBLIC_DEPLOY_TIMESTAMP),
+      ).format('YYYY-MM-DD HH:mm:ss')}`;
     } else {
       return '';
     }
