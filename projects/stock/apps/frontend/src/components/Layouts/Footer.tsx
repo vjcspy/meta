@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 const Footer = () => {
   const version = useMemo(() => {
     if (process.env.NEXT_PUBLIC_DEPLOY_TIMESTAMP) {
-      return `Version ${moment(process.env.NEXT_PUBLIC_DEPLOY_TIMESTAMP).format(
+      return `${moment(process.env.NEXT_PUBLIC_DEPLOY_TIMESTAMP).format(
         'YYYY-MM-DD HH:mm:ss',
       )}`;
     } else {
@@ -15,7 +15,8 @@ const Footer = () => {
   return (
     <div>
       <p className="pt-6 text-center ltr:sm:text-left rtl:sm:text-right dark:text-white-dark">
-        © {new Date().getFullYear()}. Meta. {version}
+        © {new Date().getFullYear()}. Meta. Build
+        <span className="text-danger"> {version}</span>
       </p>
     </div>
   );
