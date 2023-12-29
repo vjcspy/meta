@@ -645,6 +645,7 @@ model MarketTickSymbolActionInfo {
 
   ts     Int
   symbol String @db.VarChar(10)
+  price  Int    @db.Integer
 
   shark_buy_count  Int @db.SmallInt
   shark_sell_count Int @db.SmallInt
