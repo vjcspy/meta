@@ -1,11 +1,13 @@
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CronScheduleModel } from '@modules/core/model/CronSchedule.model';
 import { prisma } from '@modules/core/util/prisma';
+import { MarketCatHelper } from '@modules/stock-info/helper/market-cat.helper';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import { forEach } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable()
@@ -16,6 +18,7 @@ export class SyncTicksJob {
     private syncTicksPublisher: SyncTicksPublisher,
     private cronScheduleModel: CronScheduleModel,
     private slackHelper: SlackHelper,
+    private catHelper: MarketCatHelper,
   ) {}
 
   // * * * * * *
@@ -81,5 +84,39 @@ export class SyncTicksJob {
       },
     });
     return numberSyncSuccess === totalCor;
+  }
+
+  // * * * * * *
+  // | | | | | |
+  // | | | | | day of week
+  // | | | | months
+  // | | | day of month
+  // | | hours
+  // | minutes
+  // seconds (optional)
+  @Cron('0 * 9-14 * * 1-5', {
+    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_1_MINS`,
+    timeZone: 'Asia/Ho_Chi_Minh',
+  })
+  async syncDefaultCat() {
+    try {
+      if (isMainProcess()) {
+        const defaultCat = await this.catHelper.getDefaultCat();
+
+        if (
+          Array.isArray(defaultCat?.symbols) &&
+          defaultCat.symbols.length > 0
+        ) {
+          forEach(defaultCat.symbols, (symbol) => {
+            this.syncTicksPublisher.publishRefreshTick(symbol);
+          });
+        }
+      }
+    } catch (e) {
+      this.logger.error('Failed when refresh tick for default category', e);
+      this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+        text: `Failed when refresh tick for default category ${e?.message}`,
+      });
+    }
   }
 }

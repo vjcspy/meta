@@ -46,6 +46,51 @@ export class UpdateStockTradingAnalysisDto {
   @IsOptional()
   @Expose()
   cap: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_buy_30: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_sell_30: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_diff_30: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_buy_15: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_sell_15: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_diff_15: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_buy_7: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_sell_7: number;
+
+  @IsInt()
+  @IsOptional()
+  @Expose()
+  foreign_diff_7: number;
 }
 
 export class StockTradingAnalysisResponse {

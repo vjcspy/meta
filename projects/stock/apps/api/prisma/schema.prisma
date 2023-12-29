@@ -533,6 +533,18 @@ model StockTradingAnalysis {
   l16_hullma_highest_diff_percent Int @default(0) @db.SmallInt // Neu dang o downtrend, thi gia giam max tu luc up trend lan truoc la bao nhieu
   cur_gap_percent                 Int @default(0) @db.SmallInt
 
+  foreign_buy_30  Int @default(0) @db.SmallInt
+  foreign_sell_30 Int @default(0) @db.SmallInt
+  foreign_diff_30 Int @default(0) @db.SmallInt
+
+  foreign_buy_15  Int @default(0) @db.SmallInt
+  foreign_sell_15 Int @default(0) @db.SmallInt
+  foreign_diff_15 Int @default(0) @db.SmallInt
+
+  foreign_buy_7  Int @default(0) @db.SmallInt
+  foreign_sell_7 Int @default(0) @db.SmallInt
+  foreign_diff_7 Int @default(0) @db.SmallInt
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
