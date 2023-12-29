@@ -18,6 +18,7 @@ export interface SymbolTickDate {
 
 export interface SymbolTickAnalyzeRecord {
   ts: number;
+  price?: number;
   shark_buy_count: number;
   shark_sell_count: number;
   sheep_buy_count: number;
@@ -375,6 +376,7 @@ export class TickActionAnalyzeHelper {
         marketGroupedByTs[ts].symbols.push({
           symbol: symbolTickDate.symbol,
           ts,
+          price: value.price,
           ...transactions,
         });
       });
@@ -407,8 +409,9 @@ export class TickActionAnalyzeHelper {
               sell_value: record.sell_value,
 
               market_symbol_tick_actions: {
-                create: record.symbols.map((symbol) => ({
+                create: record.symbols.map((symbol: any) => ({
                   symbol: symbol.symbol,
+                  price: symbol.price,
 
                   shark_buy_count: symbol.shark_buy_count,
                   shark_sell_count: symbol.shark_sell_count,
@@ -422,8 +425,8 @@ export class TickActionAnalyzeHelper {
 
                   buy_count: symbol.buy_count,
                   sell_count: symbol.sell_count,
-                  buy_value: symbol.buy_val,
-                  sell_value: symbol.sell_val,
+                  buy_value: symbol.buy_value,
+                  sell_value: symbol.sell_value,
                 })),
               },
             },
@@ -453,8 +456,8 @@ export class TickActionAnalyzeHelper {
 
       buy_count: value.buy_count,
       sell_count: value.sell_count,
-      buy_val: round(value.buy_value / 10 ** 6),
-      sell_val: round(value.sell_value / 10 ** 6),
+      buy_value: round(value.buy_value / 10 ** 6),
+      sell_value: round(value.sell_value / 10 ** 6),
     };
   }
 
@@ -476,6 +479,7 @@ export class TickActionAnalyzeHelper {
       if (!groupedByMin.hasOwnProperty(ts)) {
         groupedByMin[ts] = {
           ts,
+          price: tick.p,
           shark_buy_count: 0,
           shark_sell_count: 0,
           sheep_buy_count: 0,
