@@ -109,22 +109,27 @@ export class TickActionAnalyzeHelper {
       });
     }
 
+    if (!tickActionData) {
+      throw new HttpException(
+        `Not found tick action data for symbol ${symbol} date ${date}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     const tickHistoryAvgData =
       await prisma.marketTickActionHistoryAnalyze.findFirst({
         where: {
           symbol,
-          date: {
-            lt: moment.utc(date).toDate(),
-          },
+          date: moment.utc(date).toDate(),
         },
         orderBy: {
           date: 'desc',
         },
       });
 
-    if (!tickActionData || !tickHistoryAvgData) {
+    if (!tickHistoryAvgData) {
       throw new HttpException(
-        `Not found analyze data for symbol ${symbol} date ${date}`,
+        `Not found analyze history data for symbol ${symbol} date ${date}`,
         HttpStatus.NOT_FOUND,
       );
     }
