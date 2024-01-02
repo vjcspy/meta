@@ -9,6 +9,9 @@ export default createUiHOC(() => {
   const symbol = useSelectFromState(
     (state) => state.analysis.intraDaySpeedSymbol,
   );
+  const intraDaySpeedData = useSelectFromState(
+    (state) => state.analysis.intraDaySpeedData,
+  );
   const date = useSelectFromState((state) => state.analysis.toDate);
 
   useEffect(() => {
@@ -18,6 +21,7 @@ export default createUiHOC(() => {
   return {
     state: {
       symbol,
+      intraDaySpeedData,
     },
   };
 });

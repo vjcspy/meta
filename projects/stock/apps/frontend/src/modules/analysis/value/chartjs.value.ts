@@ -12,7 +12,7 @@ export const CHARTJS_INTRADAY_OPTIONS: ChartOptions = {
         },
         mode: 'x',
         // scaleMode: 'y',
-        // overScaleMode: 'x',
+        overScaleMode: 'x',
       },
       pan: {
         enabled: true,
