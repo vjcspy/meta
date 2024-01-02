@@ -20,7 +20,7 @@ export class XLogger {
   }
 
   debug(message: any, metadata?: Record<string, any>): void {
-    metadata = this._injectContext();
+    metadata = this._injectContext(metadata);
     if (metadata) {
       this._logger.debug(message, metadata);
     } else {
@@ -35,7 +35,7 @@ export class XLogger {
    * @param metadata
    */
   error(message: any, error: Error, metadata?: Record<string, any>): void {
-    metadata = this._injectContext();
+    metadata = this._injectContext(metadata);
 
     if (error instanceof AxiosError) {
       const errorMeta = format(error);
@@ -59,7 +59,7 @@ export class XLogger {
    * @param metadata
    */
   log(message: any, metadata?: Record<string, any>): void {
-    metadata = this._injectContext();
+    metadata = this._injectContext(metadata);
 
     if (metadata) {
       this._logger.log(message, metadata);
@@ -86,7 +86,7 @@ export class XLogger {
   }
 
   warn(message: any, metadata?: Record<string, any>): void {
-    metadata = this._injectContext();
+    metadata = this._injectContext(metadata);
     if (metadata) {
       this._logger.warn(message, metadata);
     } else {

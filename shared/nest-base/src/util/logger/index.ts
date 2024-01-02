@@ -1,13 +1,14 @@
 import type { LoggerService } from '@nestjs/common';
 import { SplunkTransport } from 'chitility/dist/lib/logger/transport/SplunkTransport';
 import * as winston from 'winston';
-import { createLogger, format } from 'winston';
+import { createLogger } from 'winston';
 
 import { getAppName, getInstanceId } from '../environment';
 import { nestLikeConsoleFormat } from './format/nestlike';
 import { WinstonLogger } from './winston';
 
 let logger: LoggerService;
+
 export const initLoggerInstance = (config: {
   splunk: {
     enable: string;
@@ -83,28 +84,46 @@ export const initLoggerInstance = (config: {
                 new winston.transports.File({
                   format: winston.format.combine(
                     winston.format.uncolorize(),
-                    format.splat(),
-                    format.simple(),
+                    nestLikeConsoleFormat(getInstanceId(), {
+                      colors: false,
+                      prettyPrint: true,
+                      showMeta: false,
+                    }),
                   ),
                   filename: `logs/combined.error.log`,
                   level: 'error',
+                  maxsize: 5000000, // Kích thước tối đa của file (1MB)
+                  maxFiles: 5, // Số lượng file log tối đa (lưu trữ lịch sử)
+                  tailable: true,
                 }),
                 new winston.transports.File({
                   format: winston.format.combine(
                     winston.format.uncolorize(),
-                    format.splat(),
-                    format.simple(),
+                    nestLikeConsoleFormat(getInstanceId(), {
+                      colors: false,
+                      prettyPrint: true,
+                      showMeta: false,
+                    }),
                   ),
                   filename: `logs/combined.warn.log`,
                   level: 'warn',
+                  maxsize: 5000000, // Kích thước tối đa của file (1MB)
+                  maxFiles: 5, // Số lượng file log tối đa (lưu trữ lịch sử)
+                  tailable: true,
                 }),
                 new winston.transports.File({
                   format: winston.format.combine(
                     winston.format.uncolorize(),
-                    format.splat(),
-                    format.simple(),
+                    nestLikeConsoleFormat(getInstanceId(), {
+                      colors: false,
+                      prettyPrint: true,
+                      showMeta: false,
+                    }),
                   ),
                   filename: 'logs/combined.log',
+                  maxsize: 5000000, // Kích thước tối đa của file (1MB)
+                  maxFiles: 5, // Số lượng file log tối đa (lưu trữ lịch sử)
+                  tailable: true,
                 }),
               ]
             : []),
@@ -114,7 +133,7 @@ export const initLoggerInstance = (config: {
             url: config?.splunk?.url,
             token: config?.splunk?.token,
             index: config?.splunk?.index,
-            source: config?.splunk?.source,
+            source: config?.splunk?.source as any,
           }) as any,
         ],
       }),
