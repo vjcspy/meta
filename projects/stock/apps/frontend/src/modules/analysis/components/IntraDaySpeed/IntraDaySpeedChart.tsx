@@ -4,11 +4,12 @@ import { CommonValue } from '@modules/analysis/value/common.value';
 import { message } from '@modules/app/util/message';
 import ChartJSPlugins from '@src/components/chartjs/ChartJSPlugins';
 import Row from '@src/components/form/Row';
+import { TIMEZONE } from '@src/value/common.value';
 import { mergeTickActionInfo } from '@stock/packages-com/dist/tick/merge-tick-action-info';
 import { combineHOC } from '@web/ui-extension/dist';
 import type { ChartData } from 'chart.js';
-import { compact, forEach, keys, round } from 'lodash-es';
-import moment from 'moment/moment';
+import { compact, first, forEach, isNumber, keys, round } from 'lodash-es';
+import * as moment from 'moment-timezone';
 import React, { useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
@@ -189,12 +190,30 @@ export default combineHOC(withTimeRes)((props) => {
     return chartData;
   }, [props?.intraDaySpeedData, props.state.timeRes, chartLine]);
 
+  const title = useMemo(() => {
+    const lastTick: any = first(props?.intraDaySpeedData?.tickActionData);
+    if (
+      isNumber(lastTick?.ts) &&
+      props?.intraDaySpeedData?.tickHistoryAvgData?.date
+    ) {
+      const lastDate = moment(
+        props?.intraDaySpeedData?.tickHistoryAvgData?.date,
+      );
+
+      return `Last tick ${moment
+        .unix(lastTick?.ts)
+        .tz(TIMEZONE)
+        .format('YYYY-MM-DD HH:mm:ss')} - compare with date ${lastDate.format(
+        'YYYY-MM-DD',
+      )}`;
+    }
+
+    return '';
+  }, [props?.intraDaySpeedData]);
+
   return (
     <>
-      <Row
-        title={`IntraDay Speed Chart: ${props?.intraDaySpeedData?.tickHistoryAvgData?.date}`}
-        oneCol={false}
-      >
+      <Row title={`IntraDay Speed Chart: ${title}`} oneCol={false}>
         <div className="grid grid-cols-1 gap-6 py-2 md:grid-cols-4 lg:grid-cols-4">
           <div>
             <label className="flex cursor-pointer items-center">
