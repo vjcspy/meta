@@ -1,6 +1,7 @@
 'use client';
 
 import FromDate from '@modules/analysis/components/FromDate';
+import TimeRes from '@modules/analysis/components/TimeRes';
 import ToDate from '@modules/analysis/components/ToDate';
 import TradeValueFilter from '@modules/analysis/components/TradeValueFilter';
 import { withFromToDate } from '@modules/analysis/hoc/withFromToDate';
@@ -61,6 +62,7 @@ const Symbol = combineHOC(
         {props?.fromDate && <FromDate />}
         {props?.toDate && <ToDate />}
         {props?.tradeValue && <TradeValueFilter />}
+        {props?.timeRes && <TimeRes />}
       </div>
     </Row>
   );
