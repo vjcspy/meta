@@ -23,8 +23,8 @@ export const loadIntraDaySpeed$ = createEffect((action$, state$) =>
     switchMap((value: any) => {
       const analysisState: AnalysisState = value[1];
 
-      // const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-tick-action/history?symbol=${analysisState.intraDaySpeedSymbol}&date=${analysisState.toDate}`;
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/market-tick-action/intra-day-speed?symbol=${analysisState.intraDaySpeedSymbol}&date=${analysisState.toDate}`;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/market-tick-action/history?symbol=${analysisState.intraDaySpeedSymbol}&date=${analysisState.toDate}`;
+      // const url = `${process.env.NEXT_PUBLIC_ENDPOINT_DEFAULT_URL}/market-tick-action/intra-day-speed?symbol=${analysisState.intraDaySpeedSymbol}&date=${analysisState.toDate}`;
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),

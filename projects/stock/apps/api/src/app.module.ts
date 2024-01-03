@@ -94,6 +94,5 @@ export class AppModule
         text: `Successfully bootstrap`,
       });
     }
-    this.logger.error('Test', new Error('test error'), { a: 1, b: 2 });
   }
 }
