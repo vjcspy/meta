@@ -48,7 +48,7 @@ export class MarketTickActionConsumer {
 
     try {
       if (!existed) {
-        this.logger.info(`First run for date ${msg}`);
+        this.logger.info(`First run generate tick action for date ${msg}`);
         existed = await prisma.marketTickJobInfo.create({
           data: {
             try_count: 1,
@@ -60,7 +60,7 @@ export class MarketTickActionConsumer {
         });
       }
 
-      if (existed.isSuccess) {
+      if (existed.isSuccess && !moment.utc().isSame(date, 'date')) {
         this.logger.info(`Skipping run for date ${msg} due to isSuccess`);
         return;
       }
