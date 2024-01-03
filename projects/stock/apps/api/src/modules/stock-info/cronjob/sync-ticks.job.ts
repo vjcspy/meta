@@ -2,7 +2,9 @@ import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CronScheduleModel } from '@modules/core/model/CronSchedule.model';
 import { prisma } from '@modules/core/util/prisma';
 import { MarketCatHelper } from '@modules/stock-info/helper/market-cat.helper';
+import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
+import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
@@ -19,6 +21,7 @@ export class SyncTicksJob {
     private cronScheduleModel: CronScheduleModel,
     private slackHelper: SlackHelper,
     private catHelper: MarketCatHelper,
+    private priceHelper: StockPriceHelper,
   ) {}
 
   // * * * * * *
@@ -101,6 +104,16 @@ export class SyncTicksJob {
   async syncDefaultCat() {
     try {
       if (isMainProcess()) {
+        // check has price for VNINDEX today
+        const prices = await this.priceHelper.getHistory(
+          StockInfoValue.VNINDEX_CODE,
+          moment().format('YYYY-MM-DD'),
+        );
+
+        if (prices.length !== 1) {
+          return;
+        }
+
         const defaultCat = await this.catHelper.getDefaultCat();
 
         if (

@@ -63,13 +63,13 @@ export class SyncPricesJob {
   })
   async syncPrice() {
     if (!isMainProcess()) return;
+    // VNINDEX
+    await this.syncPricePublisher.publishOne(StockInfoValue.VNINDEX_CODE);
+
     const size = await this.syncPricePublisher.publish([
       StockInfoValue.HOSE_EXCHANGE,
       StockInfoValue.HNX_EXCHANGE,
     ]);
-
-    // VNINDEX
-    await this.syncPricePublisher.publishOne('HOSTC');
     this.logger.info(
       `Published sync stock price current day with size ${size.size}`,
     );

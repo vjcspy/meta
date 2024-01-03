@@ -1,5 +1,6 @@
 import { prisma } from '@modules/core/util/prisma';
 import { MarketCatHelper } from '@modules/stock-info/helper/market-cat.helper';
+import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
 import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import type { TickRecord } from '@modules/stock-info/stock-info.type';
 import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
@@ -51,6 +52,7 @@ export class TickActionAnalyzeHelper {
     private tickHelper: TickHelper,
     private marketCatHelper: MarketCatHelper,
     private liveRequest: LiveRequest,
+    private priceHelper: StockPriceHelper,
   ) {}
 
   private isFetchDataFromLive() {
@@ -116,11 +118,14 @@ export class TickActionAnalyzeHelper {
       );
     }
 
+    /* Lich su de so sanh la ngay co du lieu lich su gan nha */
     const tickHistoryAvgData =
       await prisma.marketTickActionHistoryAnalyze.findFirst({
         where: {
           symbol,
-          date: moment.utc(date).toDate(),
+          date: {
+            lt: moment.utc(date).toDate(),
+          },
         },
         orderBy: {
           date: 'desc',
@@ -140,6 +145,12 @@ export class TickActionAnalyzeHelper {
     };
   }
 
+  /**
+   * Generate tick every minute for default category and every symbols
+   *
+   * @param date
+   * @returns {Promise<void>}
+   */
   async runForDate(date: string) {
     this.logger.info(`Start analyzing tick action data for date ${date}`);
 
@@ -159,32 +170,32 @@ export class TickActionAnalyzeHelper {
       throw new Error(`Not found ticks for date ${date}`);
     }
 
-    this.logger.info('Deleting date data before run');
-    await prisma.marketTickActionInfo.deleteMany({
-      where: {
-        ts: {
-          gt: moment
-            .utc(date)
-            .set({
-              hour: 0,
-              minute: 0,
-            })
-            .unix(),
-          lt: moment
-            .utc(date)
-            .add(1, 'day')
-            .set({
-              hour: 0,
-            })
-            .unix(),
-        },
-      },
-    });
-
     await this.marketTickActionAnalyze(ticks, date);
   }
 
+  /**
+   * Job chạy cuối ngày để tính toán dữ liệu trung bình cho ngày hôm đó,
+   * khi cần so sánh 1 ngày với lịch sử thì lấy ngày lịch sử gần nhất
+   *
+   * @param date
+   * @returns {Promise<void>}
+   */
   async analyzeHistoryDataForDate(date: string) {
+    // re-check de dam bao co VNINDEX price cho ngay can tao
+    const prices = await this.priceHelper.getHistory(
+      StockInfoValue.VNINDEX_CODE,
+      date,
+    );
+
+    if (prices.length !== 1) {
+      const error = new AppError(
+        `Error when analyzeHistoryDataForDate. Invalid history price for ${StockInfoValue.VNINDEX_CODE} at date ${date}`,
+      );
+      this.logger.error(error.message, error);
+
+      throw error;
+    }
+
     // remove all record before run
     this.logger.info(
       `Will remove all record in Market History Analyze for date ${date}`,
@@ -197,39 +208,40 @@ export class TickActionAnalyzeHelper {
     });
 
     // Phai dam bao du 1500 record tinh tu ngay hien tai
-    // Job se chay vao cuoi ngay, nen cung can dam bao ngay do co record
-    this.logger.info(`Analyze market history data for date ${date}`);
+    // Job se chay vao DAU NGAY GIAO DICH, nen cung can dam bao ngay do co giao dich (thuc chat la minh se di tu price history cuar VNINDEX)
 
-    // check existed record in this day
-    this.logger.info(`Check if has record for current date ${date}`);
-    const isHasRecordCurrentDate = await prisma.marketTickActionInfo.findFirst({
-      where: {
-        ts: {
-          gt: moment
-            .utc(date)
-            .set({
-              hour: 0,
-            })
-            .unix(),
-          lt: moment
-            .utc(date)
-            .add(1, 'day')
-            .set({
-              hour: 0,
-            })
-            .unix(),
-        },
-      },
-    });
-
-    if (!isHasRecordCurrentDate?.ts) {
-      const error = new AppError(
-        'Current day not have any records, please run analyze first',
-      );
-      this.logger.error(error.message, error);
-      error.setNoRetry();
-      throw error;
-    }
+    // this.logger.info(`Analyze market history data for date ${date}`);
+    //
+    // // check existed record in this day
+    // this.logger.info(`Check if has record for current date ${date}`);
+    // const isHasRecordCurrentDate = await prisma.marketTickActionInfo.findFirst({
+    //   where: {
+    //     ts: {
+    //       gt: moment
+    //         .utc(date)
+    //         .set({
+    //           hour: 0,
+    //         })
+    //         .unix(),
+    //       lt: moment
+    //         .utc(date)
+    //         .add(1, 'day')
+    //         .set({
+    //           hour: 0,
+    //         })
+    //         .unix(),
+    //     },
+    //   },
+    // });
+    //
+    // if (!isHasRecordCurrentDate?.ts) {
+    //   const error = new AppError(
+    //     'Current day not have any records, please run analyze first',
+    //   );
+    //   this.logger.error(error.message, error);
+    //   error.setNoRetry();
+    //   throw error;
+    // }
 
     const defaultCat = await this.getDefaultCat();
 
@@ -243,9 +255,9 @@ export class TickActionAnalyzeHelper {
         ts: {
           lt: moment
             .utc(date)
-            .add(1, 'day')
             .set({
-              hour: 0,
+              hour: 23,
+              minute: 59,
             })
             .unix(),
         },
@@ -308,9 +320,10 @@ export class TickActionAnalyzeHelper {
         ts: {
           lt: moment
             .utc(date)
-            .add(1, 'day')
+            .subtract(1, 'day')
             .set({
-              hour: 0,
+              hour: 23,
+              minute: 59,
             })
             .unix(),
         },
@@ -466,12 +479,34 @@ export class TickActionAnalyzeHelper {
     });
 
     const marketData = values(marketGroupedByTs);
+    this.logger.info(`Delete data current date ${date} before save`);
+    await prisma.marketTickActionInfo.deleteMany({
+      where: {
+        ts: {
+          gt: moment
+            .utc(date)
+            .set({
+              hour: 0,
+              minute: 0,
+            })
+            .unix(),
+          lt: moment
+            .utc(date)
+            .add(1, 'day')
+            .set({
+              hour: 0,
+            })
+            .unix(),
+        },
+      },
+    });
+
     this.logger.info(
       `Start save to DB Market Action Analyze data for date ${date}`,
     );
     try {
-      await prisma.$transaction(
-        marketData.map((record) =>
+      await prisma.$transaction([
+        ...marketData.map((record) =>
           prisma.marketTickActionInfo.create({
             data: {
               ts: record.ts,
@@ -515,7 +550,7 @@ export class TickActionAnalyzeHelper {
             },
           }),
         ),
-      );
+      ]);
     } catch (e) {
       this.logger.error(`Failed create market tick action data`, e);
 

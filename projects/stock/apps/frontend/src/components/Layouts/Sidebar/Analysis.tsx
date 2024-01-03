@@ -41,17 +41,17 @@ const SidebarAnalysis = () => {
             </span>
           </div>
         </Link>
-        <Link href="/analysis/tick/intraday-sum" className="group">
-          <div className="flex items-center">
-            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
-              ∑ Intra-day (1-N)
-            </span>
-          </div>
-        </Link>
         <Link href="/analysis/tick/intraday-speed" className="group">
           <div className="flex items-center">
             <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
               Δ Intra-day (1-N)
+            </span>
+          </div>
+        </Link>
+        <Link href="/analysis/tick/intraday-sum" className="group">
+          <div className="flex items-center">
+            <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">
+              ∑ Intra-day (1-N)
             </span>
           </div>
         </Link>
