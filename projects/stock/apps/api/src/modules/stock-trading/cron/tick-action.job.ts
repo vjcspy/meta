@@ -22,7 +22,7 @@ export class TickActionJob {
     private marketTickActionAnalyzePublisher: MarketTickActionAnalyzePublisher,
   ) {}
 
-  @Cron('0 0 18 * * *', {
+  @Cron('0 5 20 * * *', {
     name: SyncValues.JOB_SYNC_PRICE_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
@@ -43,10 +43,14 @@ export class TickActionJob {
       });
 
       await this.marketTickActionAnalyzePublisher.publish();
+    } else {
+      this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+        text: `skipping generate tick action info because not found VNINDEX price for ${date}`,
+      });
     }
   }
 
-  @Cron('0 30 18 * * *', {
+  @Cron('0 15 20 * * *', {
     name: SyncValues.JOB_SYNC_PRICE_KEY,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
@@ -67,6 +71,10 @@ export class TickActionJob {
       });
 
       await this.marketTickHistoryAnalyzePublisher.publishCurrentDay();
+    } else {
+      this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+        text: `skipping generate history analyze tick action(AVG) because not found VNINDEX price for ${date}`,
+      });
     }
   }
 
