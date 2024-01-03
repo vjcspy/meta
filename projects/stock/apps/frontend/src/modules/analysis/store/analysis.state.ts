@@ -24,6 +24,10 @@ export interface AnalysisState {
   selectedMarketCat?: MarketSymbolCategory;
   marketFromDate: string;
   marketToDate: string;
+
+  /* intra-day speed*/
+  intraDaySpeedSymbol?: string;
+  intraDaySpeedData?: any;
 }
 export const analysisInitialState: AnalysisState = {
   fromDate: moment(getLatestWorkingDay())

@@ -148,11 +148,33 @@ export const analysisSlice = createSlice({
       _,
       __: PayloadAction<{ symbol: string; data: ApiResponse }>,
     ) => undefined,
+
+    /* ____________________________________ Intra-day speed ____________________________________ */
+    setIntraDaySpeedSymbol: (
+      state,
+      action: PayloadAction<{ symbol: string }>,
+    ) => {
+      const { symbol } = action.payload;
+      if (symbol.length === 3) {
+        localStorage.setItem(SYMBOL_CACHE_KEY, symbol);
+        state.symbol = symbol;
+      }
+      state.intraDaySpeedSymbol = symbol;
+    },
+    loadIntraDaySpeed: () => undefined,
+    loadIntraDaySpeedDataSuccess: (
+      state,
+      action: PayloadAction<{ data: ApiResponse }>,
+    ) => {
+      state.intraDaySpeedData = action.payload.data.data;
+    },
+
     /* ____________________________________ general ____________________________________ */
     setSymbol(state, { payload }) {
       const { symbol } = payload;
       localStorage.setItem(SYMBOL_CACHE_KEY, symbol);
       state.symbol = symbol;
+      state.intraDaySpeedSymbol = symbol;
       return state;
     },
     setFromDate(state, action) {

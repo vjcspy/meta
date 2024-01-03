@@ -1,3 +1,4 @@
+import { loadIntraDaySpeed$ } from '@modules/analysis/store/effects/intradaySpeed';
 import { loadAnalysisTableData$ } from '@modules/analysis/store/effects/loadAnalaysisTableData';
 import { loadPrices$ } from '@modules/analysis/store/effects/loadPrices';
 import {
@@ -72,5 +73,6 @@ export const configAnalysisEffects = (storeManager: any) => {
     loadMarketTickIntraDay$,
     loadMarketIntraDayTick$,
     loadVNIndex$,
+    loadIntraDaySpeed$,
   ]);
 };

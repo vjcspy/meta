@@ -28,7 +28,7 @@ export type NestLikeConsoleFormatOptions = {
 };
 
 export const nestLikeConsoleFormat = (
-  appName = '_',
+  appName: string = '_',
   options: NestLikeConsoleFormatOptions = {
     colors: !process.env.NO_COLOR,
     prettyPrint: false,
@@ -36,13 +36,12 @@ export const nestLikeConsoleFormat = (
   },
 ): Format =>
   format.printf(({ context, level, timestamp, message, ms, ...meta }) => {
-    if (typeof timestamp !== 'undefined') {
+    if (typeof timestamp === 'undefined') {
       // Only format the timestamp to a locale representation if it's ISO 8601 format. Any format
       // that is not a valid date string will throw, just ignore it (it will be printed as-is).
       try {
-        if (timestamp === new Date(timestamp).toISOString()) {
-          timestamp = new Date(timestamp).toLocaleString();
-        }
+        // eslint-disable-next-line no-param-reassign
+        timestamp = new Date().toLocaleString();
       } catch (error) {
         // eslint-disable-next-line no-empty
       }
@@ -57,7 +56,7 @@ export const nestLikeConsoleFormat = (
     const metadata =
       _.size(meta?.metadata) === 1 ? meta.metadata[0] : undefined;
 
-    let formattedMeta;
+    let formattedMeta: any;
     const _level = meta[Symbol.for('level')];
     const checkShowMeta = (options.showMeta || _level !== 'info') && metadata;
     if (checkShowMeta) {
@@ -70,14 +69,11 @@ export const nestLikeConsoleFormat = (
         : stringifiedMeta;
     }
 
-    return (
-      `${color(`[${appName}]`)} ` +
-      `${yellow(level.charAt(0).toUpperCase() + level.slice(1))}\t${
-        typeof timestamp !== 'undefined' ? `${timestamp} ` : ''
-      }${
-        typeof context !== 'undefined' ? `${yellow(`[${context}]`)} ` : ''
-      }${color(message)}${typeof ms !== 'undefined' ? ` ${yellow(ms)}` : ''}${
-        checkShowMeta ? `\n${formattedMeta}` : ''
-      }`
-    );
+    return `${yellow(level.charAt(0).toUpperCase() + level.slice(1))} ${
+      typeof timestamp !== 'undefined' ? `${timestamp} ` : ''
+    }${color(`[${appName}]`)} ${
+      typeof context !== 'undefined' ? `${yellow(`[${context}]`)} ` : ''
+    }${color(message)}${typeof ms !== 'undefined' ? ` ${yellow(ms)}` : ''}${
+      checkShowMeta ? `\n${formattedMeta}` : ''
+    }`;
   });

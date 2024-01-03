@@ -3,7 +3,8 @@
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "esModuleInterop": true
   },
   "include": ["./src"]
 }
