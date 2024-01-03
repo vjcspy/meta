@@ -26,7 +26,12 @@ export default combineHOC(
 
   return (
     <>
-      <SymbolList symbols={symbols} toDate={true} timeRes={true} />
+      <SymbolList
+        symbols={symbols}
+        toDate={true}
+        tradeValue={true}
+        timeRes={true}
+      />
       <IntraDaySpeedChart intraDaySpeedData={props.state.intraDaySpeedData} />
     </>
   );
