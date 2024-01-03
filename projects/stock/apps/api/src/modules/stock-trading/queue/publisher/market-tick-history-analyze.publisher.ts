@@ -43,9 +43,11 @@ export class MarketTickHistoryAnalyzePublisher {
   }
 
   public async publishCurrentDay() {
+    const currentDate = moment.utc().format('YYYY-MM-DD');
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
-      moment.utc().format('YYYY-MM-DD'),
+      currentDate,
+      currentDate,
     );
 
     const days = prices.map((p) => moment(p.date).format('YYYY-MM-DD'));

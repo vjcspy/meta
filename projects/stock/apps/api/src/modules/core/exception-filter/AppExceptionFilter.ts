@@ -27,7 +27,8 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     if (message === undefined && exception instanceof Error) {
       message = exception.message;
-    } else if (message === undefined) {
+    }
+    if (message === undefined) {
       message = 'Internal server error';
     }
 
