@@ -38,7 +38,7 @@ export class MarketTickActionController {
 
   @Get('history-test-one')
   testHistoryOne() {
-    this.marketTickAnalyzeConsumer.handler('2023-12-29');
+    this.tickActionAnalyzeHelper.analyzeHistoryDataForDate('2023-12-29');
   }
 
   @Get('intra-day-speed')

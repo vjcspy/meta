@@ -35,6 +35,7 @@ export class TickActionJob {
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
+      date,
     );
 
     if (prices.length === 1) {
@@ -62,6 +63,7 @@ export class TickActionJob {
     const date = moment().format('YYYY-MM-DD');
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
+      date,
       date,
     );
 

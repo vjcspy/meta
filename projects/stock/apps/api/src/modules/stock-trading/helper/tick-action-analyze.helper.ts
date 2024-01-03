@@ -185,6 +185,7 @@ export class TickActionAnalyzeHelper {
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
+      date,
     );
 
     if (prices.length !== 1) {
