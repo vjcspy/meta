@@ -22,8 +22,8 @@ export class TickActionJob {
     private marketTickActionAnalyzePublisher: MarketTickActionAnalyzePublisher,
   ) {}
 
-  @Cron('0 5 20 * * *', {
-    name: SyncValues.JOB_SYNC_PRICE_KEY,
+  @Cron('0 15 20 * * *', {
+    name: 'TickActionJob.generateTickActionInfo',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async generateTickActionInfo() {
@@ -50,8 +50,8 @@ export class TickActionJob {
     }
   }
 
-  @Cron('0 15 20 * * *', {
-    name: SyncValues.JOB_SYNC_PRICE_KEY,
+  @Cron('0 25 20 * * *', {
+    name: 'TickActionJob.createHistory',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async createHistory() {
@@ -92,7 +92,7 @@ export class TickActionJob {
   }
 
   @Cron('0 * 9-14 * * 1-5', {
-    name: SyncValues.JOB_SYNC_PRICE_KEY,
+    name: 'TickActionJob.generateTickActionToDay',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async generateTickActionToDay() {
