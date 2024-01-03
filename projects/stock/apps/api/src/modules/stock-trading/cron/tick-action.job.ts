@@ -39,13 +39,13 @@ export class TickActionJob {
 
     if (prices.length === 1) {
       this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-        text: `Start generate tick history avg data for date ${date}`,
+        text: `Start generate tick action (minute) data for date ${date}`,
       });
 
       await this.marketTickActionAnalyzePublisher.publish();
     } else {
       this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-        text: `skipping generate tick action info because not found VNINDEX price for ${date}`,
+        text: `skipping generate tick action (minute) info because not found VNINDEX price for ${date}`,
       });
     }
   }
