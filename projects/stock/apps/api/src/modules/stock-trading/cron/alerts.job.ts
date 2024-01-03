@@ -3,7 +3,7 @@ import { gte } from '@modules/core/util/json-rule-engine/operator/gte';
 import { lte } from '@modules/core/util/json-rule-engine/operator/lte';
 import { prisma } from '@modules/core/util/prisma';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
-import { XLogger } from '@nest/base';
+import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { isJSON } from 'chitility/dist/util/isJSON';
@@ -29,6 +29,10 @@ export class AlertsJob {
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async checkAlert() {
+    if (!isMainProcess()) {
+      return;
+    }
+
     const alerts = await prisma.stockAlert.findMany({});
 
     forEach(alerts, async (alert) => {
