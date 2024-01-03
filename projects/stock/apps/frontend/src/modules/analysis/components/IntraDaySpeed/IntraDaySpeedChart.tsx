@@ -9,7 +9,8 @@ import { mergeTickActionInfo } from '@stock/packages-com/dist/tick/merge-tick-ac
 import { combineHOC } from '@web/ui-extension/dist';
 import type { ChartData } from 'chart.js';
 import { compact, first, forEach, isNumber, keys, round } from 'lodash-es';
-import * as moment from 'moment-timezone';
+import moment from 'moment/moment';
+import momentz from 'moment-timezone';
 import React, { useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
@@ -200,7 +201,7 @@ export default combineHOC(withTimeRes)((props) => {
         props?.intraDaySpeedData?.tickHistoryAvgData?.date,
       );
 
-      return `Last tick ${moment
+      return `Last tick ${momentz
         .unix(lastTick?.ts)
         .tz(TIMEZONE)
         .format('YYYY-MM-DD HH:mm:ss')} - compare with date ${lastDate.format(
