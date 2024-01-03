@@ -15,7 +15,6 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     let errorName = 'UnknownError';
 
-    let messageRes: any = {};
     if (exception instanceof HttpException) {
       try {
         errorName = exception.constructor.name;
@@ -23,7 +22,7 @@ export class AppExceptionFilter implements ExceptionFilter {
         // ignore
       }
 
-      messageRes = exception.getResponse();
+      message = exception.getResponse();
     }
 
     if (message === undefined && exception instanceof Error) {
@@ -38,7 +37,6 @@ export class AppExceptionFilter implements ExceptionFilter {
       path: request.url,
       message,
       error: errorName,
-      ...messageRes,
       statusCode: undefined,
     });
   }
