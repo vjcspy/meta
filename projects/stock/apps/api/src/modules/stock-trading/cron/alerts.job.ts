@@ -25,7 +25,7 @@ export class AlertsJob {
   // | minutes
   // seconds (optional)
   @Cron('0 * * * * *', {
-    name: SyncValues.JOB_SYNC_PRICE_KEY,
+    name: 'AlertsJob.checkAlert',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async checkAlert() {

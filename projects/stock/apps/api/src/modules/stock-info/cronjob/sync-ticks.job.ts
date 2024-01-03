@@ -33,7 +33,7 @@ export class SyncTicksJob {
   // | minutes
   // seconds (optional)
   @Cron('0 0 16,17,23 * * *', {
-    name: SyncValues.SYNC_TICKS_JOB_KEY,
+    name: 'SyncTicksJob.sync',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   sync() {
@@ -98,7 +98,7 @@ export class SyncTicksJob {
   // | minutes
   // seconds (optional)
   @Cron('0 * 9-14 * * 1-5', {
-    name: `${SyncValues.JOB_SYNC_PRICE_KEY}_EVERY_1_MINS`,
+    name: `SyncTicksJob.syncDefaultCat`,
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncDefaultCat() {
