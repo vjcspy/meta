@@ -7,8 +7,6 @@ export default combineHOC(withTickAtPriceWorker)((props) => {
     props.actions.calSummaryData(props.data);
   }, [props?.data]);
 
-  console.log(props.state.summaryData);
-
   if (!props?.state?.summaryData) {
     return <></>;
   }

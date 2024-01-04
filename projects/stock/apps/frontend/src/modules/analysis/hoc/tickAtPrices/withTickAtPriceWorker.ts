@@ -24,7 +24,6 @@ export default createUiHOC(() => {
   const calSummaryData = useCallback(
     (data: TickPriceRecord[]) => {
       if (data?.length > 0) {
-        console.log(data);
         emmit(data);
       }
     },
