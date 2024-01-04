@@ -1,5 +1,7 @@
+import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { prisma } from '@modules/core/util/prisma';
 import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
+import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
 import { MARKET_TICK_ACTION_TYPE } from '@modules/stock-trading/value/market-tick-action.value';
 import {
@@ -18,6 +20,7 @@ export class MarketTickActionConsumer {
 
   constructor(
     private readonly marketTickAnalyzeHelper: TickActionAnalyzeHelper,
+    private slackHelper: SlackHelper,
   ) {}
 
   @RabbitSubscribe({
@@ -71,6 +74,9 @@ export class MarketTickActionConsumer {
           new Error(`Max try for date ${msg}`),
         );
 
+        this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+          text: `Error max try when generate tick minute data for date ${msg}`,
+        });
         return;
       }
 
@@ -89,6 +95,9 @@ export class MarketTickActionConsumer {
         },
       });
     } catch (e) {
+      this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+        text: `Error when generate tick minute data for date ${msg}`,
+      });
       this.logger.error('Failed when processing consumer', e);
       await prisma.marketTickJobInfo.update({
         where: {
