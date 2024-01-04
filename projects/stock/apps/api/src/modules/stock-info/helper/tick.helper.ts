@@ -125,7 +125,8 @@ export class TickHelper {
       const _tickData: TickRecord = {
         time: moment.unix(tick[0]).format('HH:mm:ss'),
         vol: tick[1],
-        p: Math.round(Number(tick[2]) / 100) * 100,
+        // p: Math.round(Number(tick[2]) / 100) * 100,
+        p: tick[2],
         a: tick[3],
       };
 
