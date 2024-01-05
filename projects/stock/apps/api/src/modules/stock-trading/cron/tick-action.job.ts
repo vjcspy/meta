@@ -5,13 +5,15 @@ import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
 import { MarketTickActionAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-action-analyze.publisher';
 import { MarketTickHistoryAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-history-analyze.publisher';
-import { isMainProcess } from '@nest/base/dist';
+import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';
 
 @Injectable()
 export class TickActionJob {
+  private readonly logger = new XLogger(TickActionJob.name);
+
   private _cache_is_trade_today = {};
 
   constructor(
@@ -123,6 +125,7 @@ export class TickActionJob {
       );
     } catch (e) {
       // swallow error
+      this.logger.error('Error when generateTickActionToDay (every minute)', e);
     }
   }
 }
