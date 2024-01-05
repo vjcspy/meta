@@ -92,7 +92,7 @@ export const initLoggerInstance = (config: {
                   ),
                   filename: `logs/combined.error.log`,
                   level: 'error',
-                  maxsize: 5000000, // Kích thước tối đa của file (1MB)
+                  maxsize: 50 * 10 ** 6, // Kích thước tối đa của file (50MB)
                   maxFiles: 5, // Số lượng file log tối đa (lưu trữ lịch sử)
                   tailable: true,
                 }),
@@ -107,7 +107,7 @@ export const initLoggerInstance = (config: {
                   ),
                   filename: `logs/combined.warn.log`,
                   level: 'warn',
-                  maxsize: 5000000, // Kích thước tối đa của file (1MB)
+                  maxsize: 50 * 10 ** 6, // Kích thước tối đa của file (50MB)
                   maxFiles: 5, // Số lượng file log tối đa (lưu trữ lịch sử)
                   tailable: true,
                 }),
@@ -121,7 +121,7 @@ export const initLoggerInstance = (config: {
                     }),
                   ),
                   filename: 'logs/combined.log',
-                  maxsize: 5000000, // Kích thước tối đa của file (1MB)
+                  maxsize: 50 * 10 ** 6, // Kích thước tối đa của file (50MB)
                   maxFiles: 5, // Số lượng file log tối đa (lưu trữ lịch sử)
                   tailable: true,
                 }),
