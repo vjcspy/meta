@@ -480,33 +480,32 @@ export class TickActionAnalyzeHelper {
     });
 
     const marketData = values(marketGroupedByTs);
-    this.logger.info(`Delete data current date ${date} before save`);
-    await prisma.marketTickActionInfo.deleteMany({
-      where: {
-        ts: {
-          gt: moment
-            .utc(date)
-            .set({
-              hour: 0,
-              minute: 0,
-            })
-            .unix(),
-          lt: moment
-            .utc(date)
-            .add(1, 'day')
-            .set({
-              hour: 0,
-            })
-            .unix(),
-        },
-      },
-    });
 
     this.logger.info(
       `Start save to DB Market Action Analyze data for date ${date}`,
     );
     try {
       await prisma.$transaction([
+        prisma.marketTickActionInfo.deleteMany({
+          where: {
+            ts: {
+              gt: moment
+                .utc(date)
+                .set({
+                  hour: 0,
+                  minute: 0,
+                })
+                .unix(),
+              lt: moment
+                .utc(date)
+                .add(1, 'day')
+                .set({
+                  hour: 0,
+                })
+                .unix(),
+            },
+          },
+        }),
         ...marketData.map((record) =>
           prisma.marketTickActionInfo.create({
             data: {
