@@ -24,7 +24,7 @@ export const initLoggerInstance = (config: {
       createLogger({
         format: winston.format.combine(
           winston.format.timestamp({
-            format: 'YYYY-MM-DD hh:mm:ss',
+            format: 'isoDateTime',
           }),
           winston.format.json({
             space: 4,
