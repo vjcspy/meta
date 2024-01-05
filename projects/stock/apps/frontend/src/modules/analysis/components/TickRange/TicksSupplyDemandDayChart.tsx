@@ -222,7 +222,7 @@ const TicksSupplyDemandDayChart = React.memo(
         },
       };
     }, [tickRageData, market, type, view, vnindexes]);
-    console.log(chartJsConfig);
+
     if (!Array.isArray(tickRageData) || tickRageData.length === 0) {
       return <></>;
     }

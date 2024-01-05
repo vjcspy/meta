@@ -4,7 +4,6 @@ import 'flatpickr/dist/flatpickr.css';
 
 import StyledComponentsRegistry from '@src/components/AntdRegistry';
 import App from '@src/components/App';
-import type { Metadata } from 'next';
 import { Noto_Sans_Mende_Kikakui } from 'next/font/google';
 
 const inter = Noto_Sans_Mende_Kikakui({
@@ -12,10 +11,10 @@ const inter = Noto_Sans_Mende_Kikakui({
   weight: ['400'],
   display: 'swap',
 });
-export const metadata: Metadata = {
-  title: 'Meta',
-  description: 'Meta',
-};
+// export const metadata: Metadata = {
+//   title: 'Meta',
+//   description: 'Meta',
+// };
 
 export default function RootLayout({ children }: { children: any }) {
   return (

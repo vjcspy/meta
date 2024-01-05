@@ -41,7 +41,7 @@ export const nestLikeConsoleFormat = (
       // that is not a valid date string will throw, just ignore it (it will be printed as-is).
       try {
         // eslint-disable-next-line no-param-reassign
-        timestamp = new Date().toLocaleString();
+        timestamp = new Date().toISOString();
       } catch (error) {
         // eslint-disable-next-line no-empty
       }
