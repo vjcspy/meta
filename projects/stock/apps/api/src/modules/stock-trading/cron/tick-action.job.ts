@@ -9,7 +9,6 @@ import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';
-import { date } from 'yup';
 
 @Injectable()
 export class TickActionJob {
@@ -115,10 +114,12 @@ export class TickActionJob {
     try {
       if (
         currentDate.isAfter(targetTime) &&
-        (await this.hasTradeToDay(currentDate.format('YYYY-MM-DD')))
+        !(await this.hasTradeToDay(currentDate.format('YYYY-MM-DD')))
       ) {
         this.logger.log(
-          `Skipping generateTickActionToDay because no trade for date ${date}`,
+          `Skipping generateTickActionToDay because no trade for date ${currentDate.format(
+            'YYYY-MM-DD',
+          )}`,
         );
         return;
       }
