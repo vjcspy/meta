@@ -9,6 +9,7 @@ import { isMainProcess, XLogger } from '@nest/base';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment';
+import { date } from 'yup';
 
 @Injectable()
 export class TickActionJob {
@@ -87,6 +88,7 @@ export class TickActionJob {
       const prices = await this.priceHelper.getHistory(
         StockInfoValue.VNINDEX_CODE,
         date,
+        date,
       );
 
       this._cache_is_trade_today[date] = prices.length === 1;
@@ -115,6 +117,9 @@ export class TickActionJob {
         currentDate.isAfter(targetTime) &&
         (await this.hasTradeToDay(currentDate.format('YYYY-MM-DD')))
       ) {
+        this.logger.log(
+          `Skipping generateTickActionToDay because no trade for date ${date}`,
+        );
         return;
       }
 
