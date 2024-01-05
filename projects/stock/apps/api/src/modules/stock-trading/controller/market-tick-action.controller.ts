@@ -1,5 +1,6 @@
 import { OkResponse } from '@modules/core/model/ok-response';
 import { GetMarketTickActionRequest } from '@modules/stock-trading/controller/market-tick.action.dto';
+import { TickActionJob } from '@modules/stock-trading/cron/tick-action.job';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
 import { MarketTickActionConsumer } from '@modules/stock-trading/queue/consumer/market-tick-action.consumer';
 import { MarketTickAnalyzeHistoryConsumer } from '@modules/stock-trading/queue/consumer/market-tick-analyze-history.consumer';
@@ -15,11 +16,12 @@ export class MarketTickActionController {
     private readonly marketTickHistoryAnalyzePublisher: MarketTickHistoryAnalyzePublisher,
     private readonly marketTickActionConsumer: MarketTickActionConsumer,
     private readonly marketTickAnalyzeConsumer: MarketTickAnalyzeHistoryConsumer,
+    private readonly tickActionJob: TickActionJob,
   ) {}
 
   @Get('test')
   test() {
-    this.marketTickAnalyzePublisher.publish();
+    this.tickActionJob.generateTickActionToDay();
   }
 
   @Get('test-one')

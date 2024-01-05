@@ -117,7 +117,7 @@ export class TickActionJob {
       }
 
       // Call directly helper to refresh data
-      TickActionAnalyzeHelper.NEED_FETCH_DATA = false;
+      TickActionAnalyzeHelper.NEED_FETCH_DATA = true;
       await this.tickActionAnalyzeHelper.runForDate(
         currentDate.format('YYYY-MM-DD'),
       );
