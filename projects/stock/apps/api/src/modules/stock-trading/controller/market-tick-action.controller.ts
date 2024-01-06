@@ -33,8 +33,13 @@ export class MarketTickActionController {
     this.marketTickActionConsumer.pubSubHandler('2023-12-29');
   }
 
-  @Get('history-test')
-  testHistory() {
+  @Get('tick-test-all')
+  tickTestAll() {
+    this.marketTickAnalyzePublisher.publish();
+  }
+
+  @Get('history-test-all')
+  historyTestAll() {
     this.marketTickHistoryAnalyzePublisher.publish();
   }
 

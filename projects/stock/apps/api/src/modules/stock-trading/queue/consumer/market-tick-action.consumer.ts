@@ -96,9 +96,12 @@ export class MarketTickActionConsumer {
       });
     } catch (e) {
       this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-        text: `Error when generate tick minute data for date ${msg}`,
+        text: `Error when generate tick minute data for date ${msg}, will retry, error: ${e?.toString()}`,
       });
-      this.logger.error('Failed when processing consumer', e);
+      this.logger.error(
+        `Error when generate tick minute data for date ${msg}`,
+        e,
+      );
       await prisma.marketTickJobInfo.update({
         where: {
           date_type_symbol: {

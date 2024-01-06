@@ -94,9 +94,12 @@ export class MarketTickAnalyzeHistoryConsumer {
         },
       });
     } catch (e) {
-      this.logger.error('Failed when processing consumer', e);
+      this.logger.error(
+        `Error when generate tick history avg data for date ${msg}`,
+        e,
+      );
       this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-        text: `Error when generate tick history avg data for date ${msg}`,
+        text: `Error when generate tick history avg data for date ${msg}, will retry, error: ${e?.toString()}`,
       });
       await prisma.marketTickJobInfo.update({
         where: {

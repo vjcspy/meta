@@ -617,6 +617,19 @@ model MarketTickActionHistoryAnalyze {
   @@map("market_tick_action_history_analyze")
 }
 
+model MarketTickActionDayAnalyze {
+  id Int @id @default(autoincrement())
+
+  symbol String @db.VarChar(10)
+  ts     Int // Timestamp
+
+  type String @db.VarChar()
+  m    Int    @db.SmallInt
+
+  @@unique([symbol, ts, type])
+  @@map("market_tick_action_day_analyze")
+}
+
 model MarketTickActionInfo {
   ts Int @id // Timestamp
 

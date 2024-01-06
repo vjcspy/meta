@@ -57,4 +57,28 @@ export class LiveRequest {
       throw e;
     }
   }
+
+  // async getTickActionIntraDay(symbol: string, date: string) {
+  //   try {
+  //     this.logger.info(
+  //       `Start getTickActionIntraDay for symbol ${symbol} date ${date}`,
+  //     );
+  //     const res = await this.httpService.axiosRef.get(
+  //       `${LiveRequest.BASE}/market-tick-action/intra-day-speed?symbol=${symbol}&date=${date}`,
+  //     );
+  //     this.checkThrowError(res);
+  //     this.logger.info(
+  //       `Successfully getTickActionIntraDay for symbol ${symbol} date ${date}`,
+  //     );
+  //
+  //     return res.data?.data;
+  //   } catch (e) {
+  //     this.logger.error(
+  //       `Failed getTickHistory for symbol ${symbol} date ${date}`,
+  //       e,
+  //     );
+  //
+  //     throw e;
+  //   }
+  // }
 }
