@@ -27,7 +27,7 @@ export class MarketTickHistoryAnalyzePublisher {
       '2023-09-15',
     );
 
-    const days = prices.map((p) => moment(p.date).format('YYYY-MM-DD'));
+    const days = prices.map((p) => moment.utc(p.date).format('YYYY-MM-DD'));
     this.logger.info(
       `Start publish ${days.length} days for calculate Market Action Info`,
     );
@@ -50,7 +50,7 @@ export class MarketTickHistoryAnalyzePublisher {
       currentDate,
     );
 
-    const days = prices.map((p) => moment(p.date).format('YYYY-MM-DD'));
+    const days = prices.map((p) => moment.utc(p.date).format('YYYY-MM-DD'));
     this.logger.info(
       `Start publish current ${days.length} days for calculate Market Action Info`,
     );
