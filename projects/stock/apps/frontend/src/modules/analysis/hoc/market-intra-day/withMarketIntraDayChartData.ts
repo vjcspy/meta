@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 export default createUiHOC(() => {
   const [chartData, setChartData] = useState<MarketIntraDayChartData>();
+  const [isResolved, setResolved] = useState(false);
 
   useEffect(() => {
     const subscriber = MarketIntraDay.getResolvedTickChartObserver().subscribe(
@@ -12,6 +13,8 @@ export default createUiHOC(() => {
         if (MarketIntraDay.isResolveIntraDayChartData.isResolved) {
           setChartData(MarketIntraDay.marketIntraDayChartData);
         }
+
+        setResolved(MarketIntraDay.isResolveIntraDayChartData.isResolved);
       },
     );
 
@@ -23,6 +26,7 @@ export default createUiHOC(() => {
   return {
     state: {
       chartData,
+      isResolved,
     },
   };
 });
