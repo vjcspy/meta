@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'ms_dev',
+      name: 'mc_dev',
       script: './dist/main.js',
       instances: '6',
       instance_var: 'INSTANCE_ID',

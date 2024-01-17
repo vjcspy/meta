@@ -1,0 +1,50 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Candlestick {
+    open_time                    BigInt @id @map(name: "open_time")
+    open                         Float
+    high                         Float
+    low                          Float
+    close                        Float
+    volume                       Float
+    close_time                   BigInt
+    quote_asset_volume           Float
+    number_of_trades             Int
+    taker_buy_volume             Float
+    taker_buy_quote_asset_volume Float
+    // ignore                       String
+
+    @@map("candlesticks")
+}
+
+model BinanceTrade {
+    aggregate_trade_id BigInt  @id @map(name: "aggregate_trade_id")
+    price              Float
+    quantity           Float
+    first_trade_id     BigInt
+    last_trade_id      BigInt
+    timestamp          BigInt
+    was_buyer_maker    Boolean
+
+    @@map("um_aggregate_trades")
+}
+
+model HistoryDataFetcherState {
+    id            Int      @id @default(autoincrement())
+    type          String
+    start_time    BigInt
+    end_time      BigInt?
+    number_of_try Int      @db.SmallInt
+    last_error    String?
+    created_at    DateTime @default(now())
+    updated_at    DateTime @updatedAt
+
+    @@map("history_data_fetcher_state")
+}
