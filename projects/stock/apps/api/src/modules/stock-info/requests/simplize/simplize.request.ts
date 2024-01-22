@@ -33,7 +33,7 @@ export class SimplizeRequest {
     pageSize: number,
   ): Observable<AxiosResponse<any>> {
     return this.httpService.get(
-      `https://api.simplize.vn/api/historical/quote/prices/${symbol}?page=0&size=${pageSize}`,
+      `https://api.simplize.vn/api/historical/quote/prices/${symbol}?page=0&size=${pageSize}${symbol === 'VNINDEX' ? '&type=index' : ''}`,
       {
         headers: {
           accept: 'application/json, text/plain, */*',
