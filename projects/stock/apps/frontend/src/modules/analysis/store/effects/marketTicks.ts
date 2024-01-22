@@ -1,7 +1,6 @@
 import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
 import type { AnalysisState } from '@modules/analysis/store/analysis.state';
 import { MarketTicks } from '@modules/analysis/util/ticks/market-ticks';
-import { CommonValue } from '@modules/analysis/value/common.value';
 import { APP_ACTIONS } from '@modules/app/store/app.actions';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
@@ -114,7 +113,7 @@ export const loadVNIndex$ = createEffect((action$, state$) =>
       const analysisState: AnalysisState = d[1];
       const { marketFromDate, marketToDate } = analysisState;
 
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/histories?code=${CommonValue.VNINDEX_CODE}&from=${marketFromDate}&to=${marketToDate}`;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/simple-histories?code=VNINDEX&from=${marketFromDate}&to=${marketToDate}`;
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),

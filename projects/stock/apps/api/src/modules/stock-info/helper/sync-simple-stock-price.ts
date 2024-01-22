@@ -3,6 +3,7 @@ import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
 import { SimpleStockPriceDTO } from '@modules/stock-info/requests/simplize/simplize-response.dto';
+import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { XLogger } from '@nest/base/dist';
 import { Injectable } from '@nestjs/common';
@@ -22,6 +23,10 @@ export class SyncSimpleStockPrice {
   ) {}
 
   async syncSimpleStockPrice(symbol: string, forceSyncFromBeginning = false) {
+    if (symbol === StockInfoValue.VNINDEX_CODE) {
+      // eslint-disable-next-line no-param-reassign
+      symbol = 'VNINDEX';
+    }
     const syncDate = moment.utc().startOf('day');
     const syncStatus = await this.syncStatus.getStatusByKey(
       this.getKey(symbol),
