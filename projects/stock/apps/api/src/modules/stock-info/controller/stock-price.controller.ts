@@ -1,6 +1,7 @@
 import { OkResponse } from '@modules/core/model/ok-response';
 import {
   GetStockPriceHistoryDto,
+  SimpleStockPriceHistoryResponse,
   StockPriceHistoryResponse,
 } from '@modules/stock-info/controller/stock-price.dto';
 import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
@@ -113,6 +114,30 @@ export class StockPriceController {
     return new OkResponse(
       undefined,
       plainToInstance(StockPriceHistoryResponse, histories, {
+        excludeExtraneousValues: true,
+      }),
+    );
+  }
+
+  @Get('simple-histories')
+  async simpleHistories(
+    @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
+  ): Promise<StockPriceHistoryResponse[]> {
+    const { code, from, to } = stockPriceHistoryDto;
+    this.logger.log(
+      `Get Simple price history of ${code} from ${from} to ${to}`,
+    );
+
+    const histories = await this.stockPriceHelper.getSimpleHistory(
+      code,
+      from,
+      to,
+    );
+
+    // @ts-ignore
+    return new OkResponse(
+      undefined,
+      plainToInstance(SimpleStockPriceHistoryResponse, histories, {
         excludeExtraneousValues: true,
       }),
     );

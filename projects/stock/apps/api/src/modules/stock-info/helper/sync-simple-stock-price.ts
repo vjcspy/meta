@@ -133,7 +133,7 @@ export class SyncSimpleStockPrice {
       }
     } catch (e) {
       await this.syncStatus.saveErrorStatus(this.getKey(symbol), e);
-      this.logger.error('Error sync simple stock price', e);
+      this.logger.error(`Error sync simple stock price for ${symbol}`, e);
     }
   }
 
