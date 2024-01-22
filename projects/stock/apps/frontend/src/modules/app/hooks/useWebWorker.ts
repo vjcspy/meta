@@ -39,17 +39,12 @@ export const useWebWorker = <T>(
 
   const calDebounce = useMemo(
     () =>
-      debounce(
-        (data: T) => {
-          if (workerRef.current?.postMessage) {
-            console.log(
-              `${formatContext(context)} Send data to service worker`,
-            );
-            workerRef.current?.postMessage(data);
-          }
-        },
-        config?.debounceTime ?? 500,
-      ),
+      debounce((data: T) => {
+        if (workerRef.current?.postMessage) {
+          console.log(`${formatContext(context)} Send data to service worker`);
+          workerRef.current?.postMessage(data);
+        }
+      }, config?.debounceTime ?? 500),
     [workerRef?.current],
   );
 

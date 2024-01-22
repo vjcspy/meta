@@ -96,7 +96,10 @@ export default combineHOC(
 
   return (
     <>
-      <Row title={`Market Ticks Chart`} oneCol={false}>
+      <Row
+        title={`Market Ticks Chart: isResolved ${props.state?.isResolved}`}
+        oneCol={false}
+      >
         {!hasSymbolInCurrentCat && (
           <div className="mb-5 grid grid-cols-1 gap-6">
             <span className="text-danger">

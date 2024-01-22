@@ -41,7 +41,12 @@ const TickAtPricesChart = React.memo(
                   const total = d.reduce(
                     (i: number, c: { a: string; vol: number; p: number }) => {
                       return (
-                        i + (c.a[0] == 'B' ? c.vol : c.a[0] == 'S' ? -c.vol : 0)
+                        i +
+                        (c.a[0] == 'B'
+                          ? c.vol * c.p
+                          : c.a[0] == 'S'
+                            ? -c.vol * c.p
+                            : 0)
                       );
                     },
                     0,

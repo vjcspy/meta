@@ -33,7 +33,7 @@ export class TickActionJob {
       return;
     }
 
-    const date = moment().format('YYYY-MM-DD');
+    const date = moment.utc().format('YYYY-MM-DD');
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
@@ -62,7 +62,7 @@ export class TickActionJob {
       return;
     }
 
-    const date = moment().format('YYYY-MM-DD');
+    const date = moment.utc().format('YYYY-MM-DD');
     const prices = await this.priceHelper.getHistory(
       StockInfoValue.VNINDEX_CODE,
       date,

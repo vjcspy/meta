@@ -42,7 +42,7 @@ export class TickActionAnalyzeHelper {
 
   static SHARK_TRADE_VALUE = 400;
 
-  static HISTORY_RECORDS = 1200;
+  static HISTORY_RECORDS = 1000;
 
   static NEED_FETCH_DATA = true;
 
@@ -381,7 +381,7 @@ export class TickActionAnalyzeHelper {
     return avg;
   }
 
-  private async getDefaultCat() {
+  async getDefaultCat() {
     if (this._defaultCat) {
       return this._defaultCat;
     }

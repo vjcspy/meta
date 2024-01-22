@@ -99,6 +99,7 @@ function resolveChartTicks(
   let sum_shark_sell = 0;
   let diff_sum_shark = 0;
 
+  /* cộng dồn history data dần theo ts */
   historyData = sortBy(values(historyData), 'ts');
   forEach(historyData, (tickTime) => {
     sum_sheep_buy += tickTime.sheep_buy;

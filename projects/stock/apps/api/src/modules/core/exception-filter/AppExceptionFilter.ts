@@ -32,13 +32,15 @@ export class AppExceptionFilter implements ExceptionFilter {
       message = 'Internal server error';
     }
 
-    response.status(status).json({
-      success: false,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-      message,
-      error: errorName,
-      statusCode: undefined,
-    });
+    if (typeof response?.status === 'function') {
+      response?.status(status).json({
+        success: false,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        message,
+        error: errorName,
+        statusCode: undefined,
+      });
+    }
   }
 }

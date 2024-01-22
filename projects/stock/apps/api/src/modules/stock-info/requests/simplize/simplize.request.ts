@@ -27,4 +27,28 @@ export class SimplizeRequest {
       },
     );
   }
+
+  getStockPrice(
+    symbol: string,
+    pageSize: number,
+  ): Observable<AxiosResponse<any>> {
+    return this.httpService.get(
+      `https://api.simplize.vn/api/historical/quote/prices/${symbol}?page=0&size=${pageSize}`,
+      {
+        headers: {
+          accept: 'application/json, text/plain, */*',
+          'accept-language': 'vi,en-US;q=0.9,en;q=0.8',
+          'sec-ch-ua':
+            '"Google Chrome";v="95", "Chromium";v="95", ";Not A Brand";v="99"',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"macOS"',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-origin',
+          'Referrer-Policy': 'strict-origin-when-cross-origin',
+        },
+        method: 'GET',
+      },
+    );
+  }
 }

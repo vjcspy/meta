@@ -18,6 +18,7 @@ const loadedTick$ = new BehaviorSubject<any>(undefined);
 
 /*
  * Leverage observable to handle resolve chart data( for debounce,filter. etc...)
+ * Gọi để trigger resolve chart data
  * */
 const triggerResolveChartData$ = new Subject<{
   date: string;
@@ -269,6 +270,8 @@ export class MarketIntraDay {
       isLoading: true,
       symbols,
     };
+    // Fire event for view known chart data is resolving
+    resolvedMarketIntraDayChart$.next(undefined);
 
     const payload = {
       ticks: ticks,

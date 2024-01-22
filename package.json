@@ -21,13 +21,16 @@
     "dev:proxy": "turbo run dev --no-daemon --filter=@main/apps-proxy-sls",
     "lint": "turbo run lint --no-daemon --filter=@main/apps-*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "watch": "turbo run watch --parallel --no-daemon"
+    "watch": "turbo run watch --parallel --no-daemon",
+    "binance": "___________________________BINANCE___________________________",
+    "binance:dev": "turbo run dev --no-daemon --filter=@binance/apps-*",
+    "binance:build": "turbo run build --no-daemon --filter=@binance/apps-*"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",
     "@nestjs/core": "^10.3.0",
     "@nestjs/platform-express": "^10.3.0",
-    "axios": "^1.6.2",
+    "axios": "^1.6.5",
     "date-fns": "latest",
     "immutable": "latest",
     "lodash": "latest",
@@ -37,12 +40,13 @@
     "node-fetch": "^2.7.0",
     "reflect-metadata": "latest",
     "rxjs": "^7.8.1",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "@prisma/client": "latest"
   },
   "devDependencies": {
     "@types/lodash": "latest",
     "@types/lodash-es": "latest",
-    "@types/node": "^18.19.3",
+    "@types/node": "^18.19.6",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -64,17 +68,18 @@
     "eslint-plugin-react": "latest",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "latest",
-    "eslint-plugin-tailwindcss": "^3.13.0",
+    "eslint-plugin-tailwindcss": "^3.13.1",
     "eslint-plugin-testing-library": "^6.2.0",
     "eslint-plugin-unused-imports": "latest",
     "nodemon": "^3.0.2",
     "prettier": "latest",
+    "prisma": "latest",
     "rimraf": "latest",
-    "sass": "^1.69.5",
+    "sass": "^1.69.7",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "4.2.0",
-    "turbo": "^1.11.2",
+    "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },
   "engines": {
@@ -85,7 +90,8 @@
     "overrides": {
       "@nestjs/common": "^10.3.0",
       "@nestjs/core": "^10.3.0",
-      "@nestjs/platform-express": "^10.3.0"
+      "@nestjs/platform-express": "^10.3.0",
+      "reflect-metadata": "0.2.1"
     }
   }
 }

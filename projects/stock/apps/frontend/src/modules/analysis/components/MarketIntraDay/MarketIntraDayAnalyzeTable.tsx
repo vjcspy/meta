@@ -40,19 +40,6 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         width: 100,
       },
       {
-        title: 'sheep sell',
-        dataIndex: 'firstSheepSell',
-        key: 'firstSheepSell',
-        sorter: (a, b) => a.firstSheepSell - b.firstSheepSell,
-        render: (value) => {
-          if (value < Infinity) {
-            return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
-          }
-          return '';
-        },
-        width: 70,
-      },
-      {
         title: 'shark sell',
         dataIndex: 'firstSharkSell',
         key: 'firstSharkSell',
@@ -66,16 +53,9 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         width: 70,
       },
       {
-        title: 'sheep buy',
-        dataIndex: 'firstSheepBuy',
-        key: 'firstSheepBuy',
-        sorter: (a, b) => a.firstSheepBuy - b.firstSheepBuy,
-        render: (value) => {
-          if (value < Infinity) {
-            return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
-          }
-          return '';
-        },
+        title: '# shark sell',
+        dataIndex: 'sharkSellCount',
+        key: 'sharkSellCount',
         width: 70,
       },
       {
@@ -98,15 +78,35 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         width: 70,
       },
       {
-        title: '# shark sell',
-        dataIndex: 'sharkSellCount',
-        key: 'sharkSellCount',
+        title: 'sheep buy',
+        dataIndex: 'firstSheepBuy',
+        key: 'firstSheepBuy',
+        sorter: (a, b) => a.firstSheepBuy - b.firstSheepBuy,
+        render: (value) => {
+          if (value < Infinity) {
+            return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
+          }
+          return '';
+        },
         width: 70,
       },
       {
         title: '# sheep buy',
         dataIndex: 'sheepBuyCount',
         key: 'sheepBuyCount',
+        width: 70,
+      },
+      {
+        title: 'sheep sell',
+        dataIndex: 'firstSheepSell',
+        key: 'firstSheepSell',
+        sorter: (a, b) => a.firstSheepSell - b.firstSheepSell,
+        render: (value) => {
+          if (value < Infinity) {
+            return momentTimezone.unix(value).tz(TIMEZONE).format('HH:mm');
+          }
+          return '';
+        },
         width: 70,
       },
       {

@@ -2,9 +2,11 @@ import { OkResponse } from '@modules/core/model/ok-response';
 import { GetMarketTickActionRequest } from '@modules/stock-trading/controller/market-tick.action.dto';
 import { TickActionJob } from '@modules/stock-trading/cron/tick-action.job';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
+import { TickActionDayAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-day-analyze.helper';
 import { MarketTickActionConsumer } from '@modules/stock-trading/queue/consumer/market-tick-action.consumer';
 import { MarketTickAnalyzeHistoryConsumer } from '@modules/stock-trading/queue/consumer/market-tick-analyze-history.consumer';
 import { MarketTickActionAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-action-analyze.publisher';
+import { MarketTickActionDayAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-action-day-analyze.publisher';
 import { MarketTickHistoryAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-history-analyze.publisher';
 import { Controller, Get, Query } from '@nestjs/common';
 
@@ -17,6 +19,8 @@ export class MarketTickActionController {
     private readonly marketTickActionConsumer: MarketTickActionConsumer,
     private readonly marketTickAnalyzeConsumer: MarketTickAnalyzeHistoryConsumer,
     private readonly tickActionJob: TickActionJob,
+    private readonly actionDayAnalyzePublisher: MarketTickActionDayAnalyzePublisher,
+    private readonly actionDayAnalyzeHelper: TickActionDayAnalyzeHelper,
   ) {}
 
   @Get('test')
@@ -33,9 +37,24 @@ export class MarketTickActionController {
     this.marketTickActionConsumer.pubSubHandler('2023-12-29');
   }
 
-  @Get('history-test')
-  testHistory() {
+  @Get('tick-test-all')
+  tickTestAll() {
+    this.marketTickAnalyzePublisher.publish();
+  }
+
+  @Get('history-test-all')
+  historyTestAll() {
     this.marketTickHistoryAnalyzePublisher.publish();
+  }
+
+  @Get('day-test-all')
+  dayTestAll() {
+    this.actionDayAnalyzePublisher.publish();
+  }
+
+  @Get('day-test-one')
+  dayTestOne() {
+    this.actionDayAnalyzeHelper.runWithCheckJobInfo('2024-01-02');
   }
 
   @Get('history-test-one')

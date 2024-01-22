@@ -34,7 +34,7 @@ export const analysisInitialState: AnalysisState = {
     .subtract(3, 'months')
     .format('YYYY-MM-DD'),
   toDate: getLatestWorkingDay(),
-  tradeValueFilter: [0, 400, 10000],
+  tradeValueFilter: [0, 567, 10000],
   timeRes: TimeResolution['3M'],
 
   /* __________ market __________ */

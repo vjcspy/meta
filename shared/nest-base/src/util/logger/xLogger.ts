@@ -100,8 +100,8 @@ export class XLogger {
         metadata = {};
       }
 
-      metadata.xCorrelationId = xAppContext().getXCorrelationId();
-      metadata.isUserRequest = xAppContext().isUserRequest();
+      // metadata.xCorrelationId = xAppContext().getXCorrelationId();
+      // metadata.isUserRequest = xAppContext().isUserRequest();
     }
 
     return metadata;

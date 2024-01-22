@@ -136,7 +136,7 @@ export class TradingStrategyHelper {
       symbol: bulkSubmitData.symbol,
       trading_strategy_id: strategy.id,
       type: 1,
-      date: moment(d.date).toDate(),
+      date: moment.utc(d.date).toDate(),
       meta: { price: d.price },
     }));
     try {
