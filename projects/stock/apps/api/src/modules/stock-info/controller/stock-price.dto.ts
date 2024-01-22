@@ -126,3 +126,78 @@ export class StockPriceHistoryResponse {
   @Transform(({ value }) => Number(value.toString()))
   fSellQty: number;
 }
+
+export class SimpleStockPriceHistoryResponse {
+  @Expose()
+  @Transform(({ value }) => format(value, 'yyyy-MM-dd'))
+  date: Date;
+
+  @Expose({
+    name: 'priceHigh',
+  })
+  high: number;
+
+  @Expose({
+    name: 'priceLow',
+  })
+  low: number;
+
+  @Expose({
+    name: 'priceClose',
+  })
+  close: number;
+
+  @Expose({
+    name: 'priceOpen',
+  })
+  open: number;
+
+  // Gia chua dieu chinh, su dung trong 1 so truong hop phan tich
+  @Expose({
+    name: 'priceHigh',
+  })
+  rHigh: number;
+
+  @Expose({
+    name: 'priceLow',
+  })
+  rLow: number;
+
+  @Expose({
+    name: 'priceClose',
+  })
+  rClose: number;
+
+  @Expose({
+    name: 'priceOpen',
+  })
+  rOpen: number;
+
+  @Expose({})
+  @Transform(({ value }) => Number(value.toString()))
+  volume: number;
+
+  @Expose({
+    name: 'buyForeignValue',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fBuyVal: number;
+
+  @Expose({
+    name: 'buyForeignQuantity',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fBuyQty: number;
+
+  @Expose({
+    name: 'sellForeignValue',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fSellVal: number;
+
+  @Expose({
+    name: 'sellForeignQuantity',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  fSellQty: number;
+}
