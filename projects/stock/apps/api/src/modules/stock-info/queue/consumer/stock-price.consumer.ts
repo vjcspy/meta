@@ -1,3 +1,4 @@
+import { SyncSimpleStockPrice } from '@modules/stock-info/helper/sync-simple-stock-price';
 import { STOCK_PRICE_SYNC } from '@modules/stock-info/observers/stock-price/stock-price.actions';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { EventManagerReactive, XLogger } from '@nest/base';
@@ -8,7 +9,10 @@ import { Injectable } from '@nestjs/common';
 export class StockPriceConsumer {
   private readonly logger = new XLogger(StockPriceConsumer.name);
 
-  constructor(private readonly eventManager: EventManagerReactive) {}
+  constructor(
+    private readonly eventManager: EventManagerReactive,
+    private readonly syncSimpleStockPrice: SyncSimpleStockPrice,
+  ) {}
 
   @RabbitSubscribe({
     exchange: SyncValues.EXCHANGE_KEY,
@@ -29,7 +33,33 @@ export class StockPriceConsumer {
             resolve,
           }),
         );
+        this.syncSimpleStockPrice.syncSimpleStockPrice(
+          msg.code,
+          msg.fromBeginning,
+        );
       }
+    });
+  }
+
+  @RabbitSubscribe({
+    exchange: SyncValues.EXCHANGE_KEY,
+    routingKey: SyncValues.STOCK_PRICE_SYNC_KEY,
+    queue: `${SyncValues.STOCK_PRICE_SYNC_KEY}_SIMPLE_QUEUE`,
+    queueOptions: {
+      durable: true,
+    },
+  })
+  public async simpleSubHandler(msg: any) {
+    this.logger.info(`Got message ${JSON.stringify(msg)}`);
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      if (typeof msg === 'object') {
+        await this.syncSimpleStockPrice.syncSimpleStockPrice(
+          msg.code,
+          msg.fromBeginning,
+        );
+      }
+      resolve(undefined);
     });
   }
 }

@@ -4,6 +4,7 @@ import {
   StockPriceHistoryResponse,
 } from '@modules/stock-info/controller/stock-price.dto';
 import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
+import { SyncSimpleStockPrice } from '@modules/stock-info/helper/sync-simple-stock-price';
 import { STOCK_PRICE_SYNC } from '@modules/stock-info/observers/stock-price/stock-price.actions';
 import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-price.publisher';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
@@ -27,11 +28,30 @@ export class StockPriceController {
     private readonly stockPriceRepo: StockPriceRepo,
     private readonly xAppRequestContext: XAppRequestContext,
     private readonly stockPriceHelper: StockPriceHelper,
+    private readonly syncSimpleStockPrice: SyncSimpleStockPrice,
   ) {
     this.logger = new XLogger(
       StockPriceController.name,
       this.xAppRequestContext,
     );
+  }
+
+  @Get('test-sync-simple')
+  testSyncSimple(@Query('symbol') symbol: string) {
+    if (!symbol) {
+      throw new HttpException('Symbol not found', HttpStatus.BAD_REQUEST);
+    }
+
+    this.syncSimpleStockPrice.syncSimpleStockPrice(symbol);
+
+    return new OkResponse();
+  }
+
+  @Get('sync-all-simple')
+  syncAllSimple() {
+    this.stockPricePublisher.publish([], true);
+
+    return 'ok';
   }
 
   @Get('test')

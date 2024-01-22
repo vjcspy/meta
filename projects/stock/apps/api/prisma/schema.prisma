@@ -698,3 +698,25 @@ model MarketTickJobInfo {
   @@unique([date, type, symbol])
   @@map("market_tick_job_info")
 }
+
+model SimpleStockPrice {
+  id                     Int      @id @default(autoincrement())
+  date                   DateTime @db.Date
+  symbol                 String   @db.VarChar(10)
+  priceHigh              Int
+  priceLow               Int
+  priceOpen              Int
+  priceClose             Int
+  netChange              Int
+  pctChange              Float    @db.Real
+  volume                 Int
+  buyForeignQuantity     Int
+  buyForeignValue        Int // Luu dang trieu
+  sellForeignQuantity    Int
+  sellForeignValue       Int // Luu dang trieu
+  foreignNetBuySellValue Int // Luu dang trieu
+  currentForeignRoom     BigInt?  @db.BigInt
+
+  @@unique([symbol, date])
+  @@map("simple_stock_price")
+}
