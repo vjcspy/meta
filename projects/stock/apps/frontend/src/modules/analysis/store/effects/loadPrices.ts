@@ -1,5 +1,6 @@
 import { ANALYSIS_ACTIONS } from '@modules/analysis/store/analysis.actions';
 import type { AnalysisState } from '@modules/analysis/store/analysis.state';
+import { CommonValue } from '@modules/analysis/value/common.value';
 import { APP_ACTIONS } from '@modules/app/store/app.actions';
 import type { ApiResponse } from '@modules/app/type/api-response';
 import { catchGeneralErrorPipe } from '@modules/app/util/pipe/catchGeneralError';
@@ -17,7 +18,12 @@ export const loadPrices$ = createEffect((action$, state$) =>
     withLatestFrom(state$, (_i, state: IRootState) => [_i, state.analysis]),
     switchMap((value: any) => {
       const analysisState: AnalysisState = value[1];
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/histories?code=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
+      let url: string;
+      if (analysisState.symbol === CommonValue.VNINDEX_CODE) {
+        url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/histories?code=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
+      } else {
+        url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/simple-histories?code=${analysisState.symbol}&from=${analysisState.fromDate}&to=${analysisState.toDate}`;
+      }
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),
