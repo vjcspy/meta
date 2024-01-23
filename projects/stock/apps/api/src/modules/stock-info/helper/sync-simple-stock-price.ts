@@ -90,7 +90,7 @@ export class SyncSimpleStockPrice {
         });
       }
 
-      if (res && Array.isArray(res?.data?.data)) {
+      if (res && Array.isArray(res?.data?.data) && res.data.data.length > 0) {
         const prices: SimpleStockPriceDTO[] = plainToInstance(
           SimpleStockPriceDTO,
           res.data.data as any[],
@@ -108,6 +108,12 @@ export class SyncSimpleStockPrice {
             data: map(prices, (d) => ({ ...d, symbol })),
           });
         } else {
+          if (!latest_price) {
+            this.logger.warn(
+              'Something went wrong when update latest simple price',
+            );
+          }
+
           this.logger.info(
             `Will update latest simple stock price for symbol ${symbol} with date ${moment(latest_price.date).format('YYYY-MM-DD')}`,
           );
@@ -135,6 +141,8 @@ export class SyncSimpleStockPrice {
         this.logger.info(
           `Successfully sync simple stock price for symbol ${symbol}`,
         );
+      } else {
+        this.logger.info(`No simple price data for ${symbol}`);
       }
     } catch (e) {
       await this.syncStatus.saveErrorStatus(this.getKey(symbol), e);

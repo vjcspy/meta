@@ -36,6 +36,10 @@ export interface SymbolTickAnalyzeRecord {
   sell_value: number;
 }
 
+/*
+ * Generate tick action for market and symbol
+ * Table: MarketTickSymbolActionInfo, MarketTickActionInfo
+ * */
 @Injectable()
 export class TickActionAnalyzeHelper {
   private readonly logger = new XLogger(TickActionAnalyzeHelper.name);

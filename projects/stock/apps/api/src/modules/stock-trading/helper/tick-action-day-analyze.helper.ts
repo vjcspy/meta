@@ -10,6 +10,9 @@ import { Injectable } from '@nestjs/common';
 import { forEach, round } from 'lodash';
 import * as moment from 'moment';
 
+/*
+ * Tính tốc độ giao dịch theo từng phút
+ * */
 @Injectable()
 export class TickActionDayAnalyzeHelper {
   private readonly logger = new XLogger(TickActionDayAnalyzeHelper.name);

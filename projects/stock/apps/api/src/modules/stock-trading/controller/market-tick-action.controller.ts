@@ -62,6 +62,11 @@ export class MarketTickActionController {
     this.tickActionAnalyzeHelper.analyzeHistoryDataForDate('2023-12-29');
   }
 
+  /**
+   * Trả về tick action đã analyze theo phút và giao dịch trung bình ngày trước liền kề
+   * @param request
+   * @returns {Promise<OkResponse>}
+   */
   @Get('intra-day-speed')
   async history(@Query() request: GetMarketTickActionRequest) {
     const data = await this.tickActionAnalyzeHelper.getHistoryDataForDate(
