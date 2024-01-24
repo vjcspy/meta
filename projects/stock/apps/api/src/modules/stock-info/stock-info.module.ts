@@ -12,6 +12,7 @@ import { RefreshTickConsumer } from '@modules/stock-info/queue/consumer/refresh-
 import { SyncTicksConsumer } from '@modules/stock-info/queue/consumer/sync-ticks.consumer';
 import { STOCK_INFO_REPOS } from '@modules/stock-info/repo';
 import { StockPriceRequest } from '@modules/stock-info/requests/bsc/price.request';
+import { FireantRequest } from '@modules/stock-info/requests/fireant/fireant.request';
 import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { isMainProcess } from '@nest/base';
@@ -49,6 +50,7 @@ import { Global, Module } from '@nestjs/common';
     ...STOCK_INFO_HELPERS,
     StockPriceRequest,
     SimplizeRequest,
+    FireantRequest,
     // must to manually handle cause use DI
     SyncTicksConsumer,
     RefreshTickConsumer,
