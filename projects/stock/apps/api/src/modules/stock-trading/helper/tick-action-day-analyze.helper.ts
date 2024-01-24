@@ -10,6 +10,9 @@ import { Injectable } from '@nestjs/common';
 import { forEach, round } from 'lodash';
 import * as moment from 'moment';
 
+/*
+ * Tính tốc độ giao dịch theo từng phút
+ * */
 @Injectable()
 export class TickActionDayAnalyzeHelper {
   private readonly logger = new XLogger(TickActionDayAnalyzeHelper.name);
@@ -40,7 +43,12 @@ export class TickActionDayAnalyzeHelper {
     private readonly tickActionAnalyzeHelper: TickActionAnalyzeHelper,
   ) {}
 
-  async runWithCheckJobInfo(date: string) {
+  /**
+   * Chỉ chạy ở LOCAL để analyze data, ở live, đang lấy dữ liệu realtime và tính toán luôn trên FE
+   * @param date
+   * @returns {Promise<void>}
+   */
+  async runOneTimePerDayWithCheckJobInfo(date: string) {
     this.logger.info(`Run with check job info for symbol date ${date}`);
 
     const existed = await prisma.marketTickJobInfo.findUnique({
@@ -120,8 +128,32 @@ export class TickActionDayAnalyzeHelper {
     }
   }
 
-  async run(date: string) {
-    this.logger.info(`Run for date ${date}`);
+  /**
+   * Lưu ý là nếu mình muốn analyze 1 khoảng thời gian dài thì sẽ dùng function khác để generate cho từng ngày
+   *
+   * Ở live, table này mình chỉ refresh dữ liệu ngày hiện tại, múc đích là làm realtime alert thôi
+   * Ở LOCAL sẽ generate ra vào cuối ngày cho nhiều ngày để query và filter trên LOCAL DB
+   *
+   * @param date
+   * @returns {Promise<void>}
+   */
+  async runEveryMinutePerDay(date: string) {
+    this.logger.info(`Refresh tick action for date ${date}`);
+    try {
+      await prisma.marketTickActionDayAnalyze.deleteMany({});
+      await this.run(date);
+    } catch (e) {
+      this.logger.error(
+        `Error when refresh tick action day analyze for date ${date}`,
+        e,
+      );
+    }
+  }
+
+  private async run(date: string) {
+    this.logger.info(
+      `Starting generate tick action day analyze for date ${date}`,
+    );
     // check if this day has resolved tick action
     const jobInfo = await prisma.marketTickJobInfo.findUnique({
       where: {

@@ -37,7 +37,8 @@ export class MarketTickAnalyzeHistoryConsumer {
       this.logger.error('Msg not valid', new Error());
       return;
     }
-    const date = moment.utc(msg).toDate();
+    const mDate = moment.utc(msg);
+    const date = mDate.toDate();
 
     let existed = await prisma.marketTickJobInfo.findUnique({
       where: {
@@ -93,6 +94,11 @@ export class MarketTickAnalyzeHistoryConsumer {
           last_error: null,
         },
       });
+      if (mDate.isSame(moment.utc(), 'day')) {
+        this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
+          text: `Successfully generate tick history avg data for date ${msg}`,
+        });
+      }
     } catch (e) {
       this.logger.error(
         `Error when generate tick history avg data for date ${msg}`,

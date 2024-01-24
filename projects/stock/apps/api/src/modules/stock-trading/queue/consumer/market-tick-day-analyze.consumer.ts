@@ -25,7 +25,9 @@ export class MarketTickDayAnalyzeConsumer {
   async handler(msg: any) {
     try {
       this.logger.info(`Received msg ${msg}`);
-      await this.marketTickActionDayHelper.runWithCheckJobInfo(msg);
+      await this.marketTickActionDayHelper.runOneTimePerDayWithCheckJobInfo(
+        msg,
+      );
     } catch (e) {
       this.logger.error(`Error when consume msg ${msg}`, e);
     }

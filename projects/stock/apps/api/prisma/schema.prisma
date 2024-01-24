@@ -593,6 +593,9 @@ model StockAlert {
 //   @@map("market_tick_action_analyze")
 // }
 //
+
+// Chạy hằng ngày(cuối ngày) để cho ra dữ liệu giao dịch trung bình của ngày hôm đó
+// Thông tin trong bảng này chính là base để so sánh, ví dụ như ngày hôm nay giao dịch nhiều bao nhiêu thì phải so sánh trung bình 5 ngày trước đó chứ không thể so sánh với 1 ngày bất kì xa xôi nào được
 model MarketTickActionHistoryAnalyze {
   id Int @id @default(autoincrement())
 
@@ -617,6 +620,8 @@ model MarketTickActionHistoryAnalyze {
   @@map("market_tick_action_history_analyze")
 }
 
+// Phân tích hành vi trong ngày,
+// Dựa vào type để biết được là hành vi nào, m là gấp bao nhiêu lần so với bình thường
 model MarketTickActionDayAnalyze {
   id Int @id @default(autoincrement())
 
@@ -630,6 +635,7 @@ model MarketTickActionDayAnalyze {
   @@map("market_tick_action_day_analyze")
 }
 
+// Bảng này là thông tin sum cho toàn bộ các cổ phiếu trong default category
 model MarketTickActionInfo {
   ts Int @id // Timestamp
 
@@ -653,6 +659,8 @@ model MarketTickActionInfo {
   @@map("market_tick_action_info")
 }
 
+// Quan hệ n-1 với bảng chính MarketTickActionInfo
+// Thông tin cụ thể cho từng mã
 model MarketTickSymbolActionInfo {
   id Int @id @default(autoincrement())
 

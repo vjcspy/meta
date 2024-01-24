@@ -9,6 +9,7 @@ import { MarketTickActionAnalyzePublisher } from '@modules/stock-trading/queue/p
 import { MarketTickActionDayAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-action-day-analyze.publisher';
 import { MarketTickHistoryAnalyzePublisher } from '@modules/stock-trading/queue/publisher/market-tick-history-analyze.publisher';
 import { Controller, Get, Query } from '@nestjs/common';
+import * as moment from 'moment/moment';
 
 @Controller('market-tick-action')
 export class MarketTickActionController {
@@ -28,13 +29,20 @@ export class MarketTickActionController {
     this.tickActionJob.generateTickActionToDay();
   }
 
-  @Get('test-one')
-  testOne() {
-    this.marketTickActionConsumer.pubSubHandler('2023-12-25');
-    this.marketTickActionConsumer.pubSubHandler('2023-12-26');
-    this.marketTickActionConsumer.pubSubHandler('2023-12-27');
-    this.marketTickActionConsumer.pubSubHandler('2023-12-28');
-    this.marketTickActionConsumer.pubSubHandler('2023-12-29');
+  @Get('build-info-last-10days')
+  buildLast10Day() {
+    for (let i = 0; i < 15; i++) {
+      this.marketTickActionConsumer.pubSubHandler(
+        moment.utc().subtract(i, 'day').format('YYYY-MM-DD'),
+      );
+    }
+    // this.marketTickActionConsumer.pubSubHandler('2023-12-25');
+    // this.marketTickActionConsumer.pubSubHandler('2023-12-26');
+    // this.marketTickActionConsumer.pubSubHandler('2023-12-27');
+    // this.marketTickActionConsumer.pubSubHandler('2023-12-28');
+    // this.marketTickActionConsumer.pubSubHandler('2024-01-23');
+
+    return new OkResponse();
   }
 
   @Get('tick-test-all')
@@ -54,21 +62,44 @@ export class MarketTickActionController {
 
   @Get('day-test-one')
   dayTestOne() {
-    this.actionDayAnalyzeHelper.runWithCheckJobInfo('2024-01-02');
+    this.actionDayAnalyzeHelper.runOneTimePerDayWithCheckJobInfo(
+      moment.utc().format('YYYY-MM-DD'),
+    );
   }
 
-  @Get('history-test-one')
+  @Get('build-history-today')
   testHistoryOne() {
-    this.tickActionAnalyzeHelper.analyzeHistoryDataForDate('2023-12-29');
+    this.tickActionAnalyzeHelper.analyzeHistoryDataForDate(
+      moment().format('YYYY-MM-DD'),
+    );
+    this.tickActionAnalyzeHelper.analyzeHistoryDataForDate(
+      moment().subtract(1, 'day').format('YYYY-MM-DD'),
+    );
   }
 
+  /**
+   * Trả về tick action đã analyze theo phút và giao dịch trung bình ngày trước liền kề
+   * @param request
+   * @returns {Promise<OkResponse>}
+   */
   @Get('intra-day-speed')
-  async history(@Query() request: GetMarketTickActionRequest) {
+  async history(
+    @Query() request: GetMarketTickActionRequest,
+  ): Promise<OkResponse> {
     const data = await this.tickActionAnalyzeHelper.getHistoryDataForDate(
       request.symbol,
       request.date,
     );
 
     return new OkResponse(undefined, data);
+  }
+
+  @Get('tick-day-analyze-one-min')
+  runEveryMinutePerDay() {
+    this.actionDayAnalyzeHelper.runEveryMinutePerDay(
+      moment.utc().format('YYYY-MM-DD'),
+    );
+
+    return new OkResponse();
   }
 }
