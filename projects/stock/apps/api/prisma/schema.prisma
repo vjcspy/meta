@@ -708,22 +708,23 @@ model MarketTickJobInfo {
 }
 
 model SimpleStockPrice {
-  id                     Int      @id @default(autoincrement())
-  date                   DateTime @db.Date
-  symbol                 String   @db.VarChar(10)
-  priceHigh              Int
-  priceLow               Int
-  priceOpen              Int
-  priceClose             Int
-  netChange              Int
-  pctChange              Float    @db.Real
-  volume                 Int
-  buyForeignQuantity     Int
-  buyForeignValue        Int // Luu dang trieu
-  sellForeignQuantity    Int
-  sellForeignValue       Int // Luu dang trieu
-  foreignNetBuySellValue Int // Luu dang trieu
-  currentForeignRoom     BigInt?  @db.BigInt
+  id                  Int      @id @default(autoincrement())
+  date                DateTime @db.Date
+  symbol              String   @db.VarChar(10)
+  priceBasic          Int // Gia dong cua ngay hom qua, dua vao do de biet duoc % change
+  priceHigh           Int
+  priceLow            Int
+  priceOpen           Int
+  priceClose          Int
+  priceAverage        Int
+  volume              Int
+  value               Int // 10**6
+  dealVolume          Int
+  buyForeignQuantity  Int
+  buyForeignValue     Int // 10**6
+  sellForeignQuantity Int
+  sellForeignValue    Int // 10**6
+  currentForeignRoom  BigInt?  @db.BigInt
 
   @@unique([symbol, date])
   @@map("simple_stock_price")

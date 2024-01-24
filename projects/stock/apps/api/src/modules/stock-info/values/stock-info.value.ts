@@ -1,4 +1,6 @@
 export class StockInfoValue {
+  static TIMEZONE = 'Asia/Ho_Chi_Minh';
+
   static VNINDEX_CODE = 'HOSTC';
 
   static HOSE_EXCHANGE = 'HOSE';

@@ -1,8 +1,8 @@
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
-import { SimplizeRequest } from '@modules/stock-info/requests/simplize/simplize.request';
-import { SimpleStockPriceDTO } from '@modules/stock-info/requests/simplize/simplize-response.dto';
+import { FireantRequest } from '@modules/stock-info/requests/fireant/fireant.request';
+import { FireantStockPriceDTO } from '@modules/stock-info/requests/fireant/fireant-reponse.dto';
 import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
 import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { XLogger } from '@nest/base/dist';
@@ -10,14 +10,13 @@ import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { map, maxBy } from 'lodash';
 import * as moment from 'moment';
-import { firstValueFrom, retry } from 'rxjs';
 
 @Injectable()
 export class SyncSimpleStockPrice {
   private readonly logger = new XLogger(SyncSimpleStockPrice.name);
 
   constructor(
-    private simplizeRequest: SimplizeRequest,
+    private fireantRequest: FireantRequest,
     private syncStatus: SyncStatus,
     private slackHelper: SlackHelper,
   ) {}
@@ -73,10 +72,9 @@ export class SyncSimpleStockPrice {
       this.logger.info(
         `Will get simple stock price data from downstream for stock ${symbol}`,
       );
-      const res = await firstValueFrom(
-        this.simplizeRequest
-          .getStockPrice(symbol, !isSyncFromBeginning ? 30 : 500)
-          .pipe(retry(3)),
+      const res = await this.fireantRequest.getPriceHistory(
+        symbol,
+        !isSyncFromBeginning ? 20 : 300,
       );
 
       if (isSyncFromBeginning) {
@@ -90,10 +88,10 @@ export class SyncSimpleStockPrice {
         });
       }
 
-      if (res && Array.isArray(res?.data?.data) && res.data.data.length > 0) {
-        const prices: SimpleStockPriceDTO[] = plainToInstance(
-          SimpleStockPriceDTO,
-          res.data.data as any[],
+      if (res && Array.isArray(res?.data) && res.data.length > 0) {
+        const prices: FireantStockPriceDTO[] = plainToInstance(
+          FireantStockPriceDTO,
+          res.data as any[],
           {
             excludeExtraneousValues: true,
             exposeUnsetFields: false,
@@ -105,7 +103,7 @@ export class SyncSimpleStockPrice {
             `Will save simple stock price for symbol ${symbol} with ${prices.length} records`,
           );
           await prisma.simpleStockPrice.createMany({
-            data: map(prices, (d) => ({ ...d, symbol })),
+            data: map(prices, (d) => ({ ...d, symbol })) as any,
           });
         } else {
           if (!latest_price) {
@@ -117,10 +115,6 @@ export class SyncSimpleStockPrice {
           this.logger.info(
             `Will update latest simple stock price for symbol ${symbol} with date ${moment(latest_price.date).format('YYYY-MM-DD')}`,
           );
-          const data: any = {
-            ...latest_price,
-            symbol,
-          };
           await prisma.simpleStockPrice.upsert({
             where: {
               symbol_date: {
@@ -128,8 +122,8 @@ export class SyncSimpleStockPrice {
                 date: latest_price.date,
               },
             },
-            create: data,
-            update: data,
+            create: latest_price,
+            update: latest_price,
           });
         }
 
