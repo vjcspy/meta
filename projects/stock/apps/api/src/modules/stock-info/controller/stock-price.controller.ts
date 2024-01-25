@@ -86,38 +86,38 @@ export class StockPriceController {
     return 'ok';
   }
 
-  @Get('history')
-  async history(
-    @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
-  ): Promise<StockPriceHistoryResponse[]> {
-    const { code, from, to } = stockPriceHistoryDto;
-    this.logger.log(`Get History of ${code} from ${from} to ${to}`);
-
-    const histories = await this.stockPriceHelper.getHistory(code, from, to);
-
-    // @ts-ignore
-    return plainToInstance(StockPriceHistoryResponse, histories, {
-      excludeExtraneousValues: true,
-    });
-  }
-
-  @Get('histories')
-  async histories(
-    @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
-  ): Promise<StockPriceHistoryResponse[]> {
-    const { code, from, to } = stockPriceHistoryDto;
-    this.logger.log(`Get History of ${code} from ${from} to ${to}`);
-
-    const histories = await this.stockPriceHelper.getHistory(code, from, to);
-
-    // @ts-ignore
-    return new OkResponse(
-      undefined,
-      plainToInstance(StockPriceHistoryResponse, histories, {
-        excludeExtraneousValues: true,
-      }),
-    );
-  }
+  // @Get('history')
+  // async history(
+  //   @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
+  // ): Promise<StockPriceHistoryResponse[]> {
+  //   const { code, from, to } = stockPriceHistoryDto;
+  //   this.logger.log(`Get History of ${code} from ${from} to ${to}`);
+  //
+  //   const histories = await this.stockPriceHelper.getHistory(code, from, to);
+  //
+  //   // @ts-ignore
+  //   return plainToInstance(StockPriceHistoryResponse, histories, {
+  //     excludeExtraneousValues: true,
+  //   });
+  // }
+  //
+  // @Get('histories')
+  // async histories(
+  //   @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
+  // ): Promise<StockPriceHistoryResponse[]> {
+  //   const { code, from, to } = stockPriceHistoryDto;
+  //   this.logger.log(`Get History of ${code} from ${from} to ${to}`);
+  //
+  //   const histories = await this.stockPriceHelper.getHistory(code, from, to);
+  //
+  //   // @ts-ignore
+  //   return new OkResponse(
+  //     undefined,
+  //     plainToInstance(StockPriceHistoryResponse, histories, {
+  //       excludeExtraneousValues: true,
+  //     }),
+  //   );
+  // }
 
   @Get('simple-histories')
   async simpleHistories(

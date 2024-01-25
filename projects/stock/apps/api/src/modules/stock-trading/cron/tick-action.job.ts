@@ -38,8 +38,8 @@ export class TickActionJob {
     }
 
     const date = moment.utc().format('YYYY-MM-DD');
-    const prices = await this.priceHelper.getHistory(
-      StockInfoValue.VNINDEX_CODE,
+    const prices = await this.priceHelper.getSimpleHistory(
+      StockInfoValue.VNINDEX_CODE_NEW,
       date,
       date,
     );
@@ -71,8 +71,8 @@ export class TickActionJob {
     }
 
     const date = moment.utc().format('YYYY-MM-DD');
-    const prices = await this.priceHelper.getHistory(
-      StockInfoValue.VNINDEX_CODE,
+    const prices = await this.priceHelper.getSimpleHistory(
+      StockInfoValue.VNINDEX_CODE_NEW,
       date,
       date,
     );
@@ -92,7 +92,7 @@ export class TickActionJob {
 
   private async hasTradeToDay(date: string) {
     if (!this._cache_is_trade_today.hasOwnProperty(date)) {
-      const prices = await this.priceHelper.getHistory(
+      const prices = await this.priceHelper.getSimpleHistory(
         StockInfoValue.VNINDEX_CODE,
         date,
         date,

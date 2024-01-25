@@ -520,8 +520,10 @@ model StockInfoTicks {
 }
 
 model StockTradingAnalysis {
-  id             Int     @id @default(autoincrement())
-  symbol         String  @unique @db.VarChar(10)
+  id     Int    @id @default(autoincrement())
+  symbol String @unique @db.VarChar(10)
+
+  trade_value_5  Int?    @default(0) @db.Integer // 10**6
   trade_value_7  BigInt? @default(0) @db.BigInt
   trade_value_14 BigInt? @default(0) @db.BigInt
   trade_value_30 BigInt? @default(0) @db.BigInt

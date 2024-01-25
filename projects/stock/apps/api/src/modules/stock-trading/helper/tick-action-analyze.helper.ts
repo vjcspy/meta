@@ -186,7 +186,7 @@ export class TickActionAnalyzeHelper {
    */
   async analyzeHistoryDataForDate(date: string) {
     // re-check de dam bao co VNINDEX price cho ngay can tao
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
       date,
