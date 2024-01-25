@@ -22,7 +22,7 @@ export class MarketTickActionAnalyzePublisher {
   ) {}
 
   async publish() {
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       '2023-09-05',
       // '2023-12-25',

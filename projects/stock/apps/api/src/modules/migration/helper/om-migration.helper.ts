@@ -302,7 +302,7 @@ export class OmMigrationHelper {
 
   private async getHistoryRefer() {
     this.logger.info('Will get history reference');
-    let histories = await this.stockPriceHelper.getHistory(
+    let histories = await this.stockPriceHelper.getSimpleHistory(
       'BFC',
       '2022-04-14',
       '2023-04-21',
@@ -320,7 +320,7 @@ export class OmMigrationHelper {
 
   private async getHistoryReferOM() {
     this.logger.info('Will get history reference');
-    let histories = await this.stockPriceHelper.getHistory(
+    let histories = await this.stockPriceHelper.getSimpleHistory(
       'BFC',
       '2023-07-28',
       '2023-09-01',

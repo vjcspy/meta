@@ -110,7 +110,7 @@ export class TickController {
         moment().toDate(),
       );
 
-      const price = await this.stockPriceHelper.getHistory(
+      const price = await this.stockPriceHelper.getSimpleHistory(
         infoQuery.symbol,
         moment().toDate(),
         moment().toDate(),
