@@ -16,5 +16,5 @@ export class CommonValue {
   static RE_FETCH_TICKS_WINDOW_TIME = 60000;
 
   static DEFAULT_MARKET_SYMBOL_CAT = 'DEFAULT_MARKET_CAT_KEY';
-  static VNINDEX_CODE = 'HOSTC';
+  static VNINDEX_CODE = 'VNINDEX';
 }
