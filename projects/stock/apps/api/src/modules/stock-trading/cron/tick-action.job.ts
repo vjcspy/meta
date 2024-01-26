@@ -39,7 +39,7 @@ export class TickActionJob {
 
     const date = moment.utc().format('YYYY-MM-DD');
     const prices = await this.priceHelper.getSimpleHistory(
-      StockInfoValue.VNINDEX_CODE_NEW,
+      StockInfoValue.VNINDEX_CODE,
       date,
       date,
     );
@@ -72,7 +72,7 @@ export class TickActionJob {
 
     const date = moment.utc().format('YYYY-MM-DD');
     const prices = await this.priceHelper.getSimpleHistory(
-      StockInfoValue.VNINDEX_CODE_NEW,
+      StockInfoValue.VNINDEX_CODE,
       date,
       date,
     );

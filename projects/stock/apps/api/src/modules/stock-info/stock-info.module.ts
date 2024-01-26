@@ -6,6 +6,7 @@ import { TickController } from '@modules/stock-info/controller/tick.controller';
 import { CRONJOB_SERVICES } from '@modules/stock-info/cronjob';
 import { STOCK_INFO_HELPERS } from '@modules/stock-info/helper';
 import { MODELS } from '@modules/stock-info/model';
+import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { OBSERVER_SERVICES } from '@modules/stock-info/observers';
 import { QUEUE_CONSUMERS, QUEUE_PUBLISHER } from '@modules/stock-info/queue';
 import { RefreshTickConsumer } from '@modules/stock-info/queue/consumer/refresh-tick.consumer';
@@ -61,7 +62,7 @@ import { Global, Module } from '@nestjs/common';
     TickController,
     MarketCatController,
   ],
-  exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS],
+  exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS, SyncStatus],
 })
 export class StockInfoModule implements OnModuleInit {
   constructor(private slackHelper: SlackHelper) {}

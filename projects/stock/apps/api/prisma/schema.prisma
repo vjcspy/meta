@@ -523,7 +523,6 @@ model StockTradingAnalysis {
   id     Int    @id @default(autoincrement())
   symbol String @unique @db.VarChar(10)
 
-  trade_value_5  Int?    @default(0) @db.Integer // 10**6
   trade_value_7  BigInt? @default(0) @db.BigInt
   trade_value_14 BigInt? @default(0) @db.BigInt
   trade_value_30 BigInt? @default(0) @db.BigInt
@@ -730,4 +729,15 @@ model SimpleStockPrice {
 
   @@unique([symbol, date])
   @@map("simple_stock_price")
+}
+
+model StockTradingAnalysisHistory {
+  id     Int      @id @default(autoincrement())
+  symbol String   @db.VarChar(10)
+  date   DateTime @db.Date
+
+  deal_value_5 Int @default(0) @db.Integer // 10**6
+
+  @@unique([symbol, date])
+  @@map("stock_trading_analysis_history")
 }

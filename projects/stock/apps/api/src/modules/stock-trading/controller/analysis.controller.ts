@@ -97,4 +97,10 @@ export class AnalysisController {
 
     return {};
   }
+
+  @Get('nodejs-analyze-test')
+  nodeJstest() {
+    this.stockTradingAnalysisPublisher.publishNodeJsGenerateAnalysisHistory();
+    return new OkResponse();
+  }
 }

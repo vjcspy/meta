@@ -1,3 +1,4 @@
+import { AnalysisConsumer } from '@modules/stock-trading/queue/consumer/analysis.consumer';
 import { MarketTickActionConsumer } from '@modules/stock-trading/queue/consumer/market-tick-action.consumer';
 import { MarketTickAnalyzeHistoryConsumer } from '@modules/stock-trading/queue/consumer/market-tick-analyze-history.consumer';
 import { MarketTickDayAnalyzeConsumer } from '@modules/stock-trading/queue/consumer/market-tick-day-analyze.consumer';
@@ -14,4 +15,5 @@ export const TRADING_QUEUE = [
   MarketTickAnalyzeHistoryConsumer,
   MarketTickActionDayAnalyzePublisher,
   MarketTickDayAnalyzeConsumer,
+  AnalysisConsumer,
 ];
