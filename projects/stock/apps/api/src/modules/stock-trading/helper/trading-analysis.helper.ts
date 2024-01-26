@@ -82,7 +82,7 @@ export class TradingAnalysisHelper {
       where: {
         symbol,
         date: {
-          lt: endDate,
+          lte: endDate,
         },
       },
       take: TradingAnalysisHelper.HISTORY_DAYS,
