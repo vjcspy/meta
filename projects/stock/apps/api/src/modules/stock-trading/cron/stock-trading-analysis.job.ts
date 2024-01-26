@@ -31,7 +31,7 @@ export class StockTradingAnalysisJob {
 
     const date = getCurrentDate();
     const prices = await this.priceHelper.getSimpleHistory(
-      StockInfoValue.VNINDEX_CODE_NEW,
+      StockInfoValue.VNINDEX_CODE,
       date,
       date,
     );
@@ -41,7 +41,9 @@ export class StockTradingAnalysisJob {
         text: `Start generate stock trading analysis data for date ${date}`,
       });
 
-      await this.stockTradingAnalysisPublisher.publishForDefaultCatRunInApi();
+      await this.stockTradingAnalysisPublisher.publishNodeJsGenerateAnalysisForDate(
+        date,
+      );
     } else {
       this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
         text: `skipping generate stock trading analysis because not found VNINDEX price for ${date}`,

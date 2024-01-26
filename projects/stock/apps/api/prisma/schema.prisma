@@ -730,3 +730,14 @@ model SimpleStockPrice {
   @@unique([symbol, date])
   @@map("simple_stock_price")
 }
+
+model StockTradingAnalysisHistory {
+  id     Int      @id @default(autoincrement())
+  symbol String   @db.VarChar(10)
+  date   DateTime @db.Date
+
+  deal_value_5 Int @default(0) @db.Integer // 10**6
+
+  @@unique([symbol, date])
+  @@map("stock_trading_analysis_history")
+}

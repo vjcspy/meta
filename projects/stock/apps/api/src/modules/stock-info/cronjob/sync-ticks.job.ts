@@ -106,7 +106,7 @@ export class SyncTicksJob {
       if (isMainProcess()) {
         // check has price for VNINDEX today
         const prices = await this.priceHelper.getSimpleHistory(
-          StockInfoValue.VNINDEX_CODE_NEW,
+          StockInfoValue.VNINDEX_CODE,
           moment().format('YYYY-MM-DD'),
         );
 
