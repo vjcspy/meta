@@ -92,6 +92,28 @@ export class TradingAnalysisHelper {
     return analysisHistory;
   }
 
+  async getLastAnalysisHistory(symbol: string, date: string) {
+    const analysisHistory = await prisma.stockTradingAnalysisHistory.findFirst({
+      where: {
+        date: {
+          lt: moment.utc(date).toDate(),
+        },
+        symbol,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+
+    if (!analysisHistory) {
+      throw new NotFoundException(
+        `Not found analysis history for symbol ${symbol} at date ${date}`,
+      );
+    }
+
+    return analysisHistory;
+  }
+
   private async analyzeHistoryForDate(symbol: string, date: string) {
     const endDate = moment.utc(date).toDate();
 

@@ -9,6 +9,7 @@ import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper'
 import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
+import { TradingAnalysisHelper } from '@modules/stock-trading/helper/trading-analysis.helper';
 import { XLogger } from '@nest/base';
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { isTradingTime } from '@stock/packages-com/dist/util/isTradingTime';
@@ -26,6 +27,7 @@ export class TickController {
     private syncTickPublisher: SyncTicksPublisher,
     private syncTickHelper: SyncTicksHelper,
     private stockPriceHelper: StockPriceHelper,
+    private tradingAnalysisHelper: TradingAnalysisHelper,
   ) {}
 
   @Get('history')
@@ -105,7 +107,13 @@ export class TickController {
     );
     const his = await this.tickHelper.getTickBackDate(symbol, date, size);
 
-    return new OkResponse(undefined, his);
+    // Du rat khong muon tra analysis data vao day nhung no se giam tinh toan tren FE dong thoi khop voi cach tinh toan tren server
+    // Vi can so sanh voi ngay lich su nen se lay last analysis history
+    const analysis = this.tradingAnalysisHelper.getLastAnalysisHistory(
+      symbol,
+      date,
+    );
+    return new OkResponse(undefined, { ...his, analysis });
   }
 
   @Get('refresh-tick')
