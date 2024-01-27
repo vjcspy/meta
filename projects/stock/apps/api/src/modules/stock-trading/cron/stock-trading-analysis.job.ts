@@ -21,7 +21,7 @@ export class StockTradingAnalysisJob {
    * @returns {Promise<void>}
    */
   @Cron('0 30 20 * * *', {
-    name: 'TickActionJob.generateTickActionInfo',
+    name: 'StockTradingAnalysisJob.generateTickActionInfo',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async generateTickActionInfo() {

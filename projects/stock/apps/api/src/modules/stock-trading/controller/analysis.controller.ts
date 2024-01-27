@@ -1,9 +1,11 @@
 import { OkResponse } from '@modules/core/model/ok-response';
+import { SymbolDateDtoQuery } from '@modules/stock-info/controller/cor.dto';
 import {
   GetStockTradingAnalysisRequest,
   StockTradingAnalysisResponse,
   UpdateStockTradingAnalysisDto,
 } from '@modules/stock-trading/controller/analysis.dto';
+import { TradingAnalysisHelper } from '@modules/stock-trading/helper/trading-analysis.helper';
 import { StockTradingAnalysisPublisher } from '@modules/stock-trading/queue/publisher/stock-trading-analysis.publisher';
 import { StockTradingAnalysisRepo } from '@modules/stock-trading/repo/stock-trading-analysis.repo';
 import { XLogger } from '@nest/base';
@@ -25,6 +27,7 @@ export class AnalysisController {
   constructor(
     private readonly stockTradingAnalysisRepo: StockTradingAnalysisRepo,
     private readonly stockTradingAnalysisPublisher: StockTradingAnalysisPublisher,
+    private readonly tradingAnalysisHelper: TradingAnalysisHelper,
   ) {}
 
   @Patch('analysis')
@@ -102,5 +105,15 @@ export class AnalysisController {
   nodeJstest() {
     this.stockTradingAnalysisPublisher.publishNodeJsGenerateAnalysisHistory();
     return new OkResponse();
+  }
+
+  @Get('analysis-history')
+  async getAnalysisHistory(@Query() rq: SymbolDateDtoQuery) {
+    const data = await this.tradingAnalysisHelper.getAnalysisHistory(
+      rq.symbol,
+      rq.date,
+    );
+
+    return new OkResponse(undefined, data);
   }
 }

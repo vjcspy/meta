@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { getCurrentDate } from '@modules/core/util/getCurrentDate';
 import { prisma } from '@modules/core/util/prisma';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import type { TickRecord } from '@modules/stock-info/stock-info.type';
@@ -88,11 +89,15 @@ export class TickHelper {
     return [];
   }
 
-  async getHistoriesV2(symbol: string, from: string, to: string) {
+  async getHistoriesV2(
+    symbol: string,
+    from: string,
+    to: string = getCurrentDate(),
+  ) {
     const fromDate = moment.utc(from).toDate();
     const toDate = moment.utc(to).toDate();
 
-    let histories = await prisma.stockInfoTicks.findMany({
+    const histories = await prisma.stockInfoTicks.findMany({
       where: {
         symbol,
         date: {
@@ -102,6 +107,26 @@ export class TickHelper {
       },
     });
 
+    return this.mapTickHistories(histories);
+  }
+
+  async getTickBackDate(symbol: string, date: string, size: number) {
+    const toDate = moment.utc(date).toDate();
+
+    const histories = await prisma.stockInfoTicks.findMany({
+      where: {
+        symbol,
+        date: {
+          lte: toDate,
+        },
+      },
+      take: size,
+    });
+
+    return this.mapTickHistories(histories);
+  }
+
+  private mapTickHistories(histories) {
     if (histories.length > 0) {
       histories = map(histories, (h) => {
         if (Array.isArray(h?.meta)) {
@@ -112,8 +137,8 @@ export class TickHelper {
 
         return h;
       });
-      histories = uniqBy(histories, (h) => h.date.getTime());
-      histories = sortBy(histories, (h) => h.date.getTime());
+      histories = uniqBy(histories, (h: any) => h.date.getTime());
+      histories = sortBy(histories, (h: any) => h.date.getTime());
 
       return histories;
     }

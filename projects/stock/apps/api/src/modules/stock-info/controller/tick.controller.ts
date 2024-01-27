@@ -1,6 +1,7 @@
 import { OkResponse } from '@modules/core/model/ok-response';
 import { GetSymbolInfoQuery } from '@modules/stock-info/controller/cor.dto';
 import {
+  GetTickBackDateRequest,
   GetTickHistoriesRequest,
   GetTickHistoryRequest,
 } from '@modules/stock-info/controller/tick.dto';
@@ -87,6 +88,22 @@ export class TickController {
       },
     );
     const his = await this.tickHelper.getHistoriesV2(symbol, from, to);
+
+    return new OkResponse(undefined, his);
+  }
+
+  @Get('histories-back-date')
+  async getHistoryBackDate(@Query() request: GetTickBackDateRequest) {
+    const { date, size, symbol } = request;
+    this.logger.info(
+      `process get tick getHistoryBackDate for symbol ${request.symbol}`,
+      {
+        symbol,
+        date,
+        size,
+      },
+    );
+    const his = await this.tickHelper.getTickBackDate(symbol, date, size);
 
     return new OkResponse(undefined, his);
   }

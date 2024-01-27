@@ -3,7 +3,7 @@ import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { StockTradingBaseHelper } from '@modules/stock-trading/helper/stock-trading-base.helper';
 import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
 import { XLogger } from '@nest/base';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { forEach, isNumber, round } from 'lodash';
 import * as moment from 'moment/moment';
 
@@ -73,6 +73,23 @@ export class TradingAnalysisHelper {
       date: mDate,
     });
     this.logger.info('Success generate analysis history data');
+  }
+
+  async getAnalysisHistory(symbol: string, date: string) {
+    const analysisHistory = await prisma.stockTradingAnalysisHistory.findFirst({
+      where: {
+        date: moment.utc(date).toDate(),
+        symbol,
+      },
+    });
+
+    if (!analysisHistory) {
+      throw new NotFoundException(
+        `Not found analysis history for symbol ${symbol} at date ${date}`,
+      );
+    }
+
+    return analysisHistory;
   }
 
   private async analyzeHistoryForDate(symbol: string, date: string) {
