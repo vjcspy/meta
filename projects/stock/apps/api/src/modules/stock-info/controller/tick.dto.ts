@@ -1,5 +1,5 @@
 import { IsDateYYYYMMDD } from '@modules/core/util/validator/IsDateYYYYMMDD';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GetTickHistoryRequest {
   @IsNotEmpty()
@@ -20,7 +20,21 @@ export class GetTickHistoriesRequest {
   @IsDateYYYYMMDD()
   from: string;
 
+  @IsOptional()
+  @IsDateYYYYMMDD()
+  to?: string;
+}
+
+export class GetTickBackDateRequest {
+  @IsNotEmpty()
+  @IsString()
+  symbol: string;
+
   @IsNotEmpty()
   @IsDateYYYYMMDD()
-  to: string;
+  date: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  size: number;
 }

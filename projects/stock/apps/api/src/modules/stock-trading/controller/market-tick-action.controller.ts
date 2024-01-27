@@ -1,6 +1,5 @@
 import { OkResponse } from '@modules/core/model/ok-response';
 import { GetMarketTickActionRequest } from '@modules/stock-trading/controller/market-tick.action.dto';
-import { TickActionJob } from '@modules/stock-trading/cron/tick-action.job';
 import { TickActionAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-analyze.helper';
 import { TickActionDayAnalyzeHelper } from '@modules/stock-trading/helper/tick-action-day-analyze.helper';
 import { MarketTickActionConsumer } from '@modules/stock-trading/queue/consumer/market-tick-action.consumer';
@@ -19,15 +18,9 @@ export class MarketTickActionController {
     private readonly marketTickHistoryAnalyzePublisher: MarketTickHistoryAnalyzePublisher,
     private readonly marketTickActionConsumer: MarketTickActionConsumer,
     private readonly marketTickAnalyzeConsumer: MarketTickAnalyzeHistoryConsumer,
-    private readonly tickActionJob: TickActionJob,
     private readonly actionDayAnalyzePublisher: MarketTickActionDayAnalyzePublisher,
     private readonly actionDayAnalyzeHelper: TickActionDayAnalyzeHelper,
   ) {}
-
-  @Get('test')
-  test() {
-    this.tickActionJob.generateTickActionToDay();
-  }
 
   @Get('build-info-last-10days')
   buildLast10Day() {
