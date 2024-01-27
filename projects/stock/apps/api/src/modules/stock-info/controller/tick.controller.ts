@@ -107,13 +107,7 @@ export class TickController {
     );
     const his = await this.tickHelper.getTickBackDate(symbol, date, size);
 
-    // Du rat khong muon tra analysis data vao day nhung no se giam tinh toan tren FE dong thoi khop voi cach tinh toan tren server
-    // Vi can so sanh voi ngay lich su nen se lay last analysis history
-    const analysis = this.tradingAnalysisHelper.getLastAnalysisHistory(
-      symbol,
-      date,
-    );
-    return new OkResponse(undefined, { ...his, analysis });
+    return new OkResponse(undefined, his);
   }
 
   @Get('refresh-tick')
