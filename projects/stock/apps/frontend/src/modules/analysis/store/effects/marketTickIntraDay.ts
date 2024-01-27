@@ -9,7 +9,6 @@ import type { IRootState } from '@src/store';
 import { createEffect } from '@stock/packages-redux/src/createEffect';
 import { ofType } from '@stock/packages-redux/src/ofType';
 import { forEach, map as arrayMap } from 'lodash-es';
-import moment from 'moment/moment';
 import {
   debounceTime,
   EMPTY,
@@ -36,6 +35,7 @@ export const loadMarketTickIntraDay$ = createEffect((action$, state$) =>
         Array.isArray(selectedMarketCat?.symbols) &&
         selectedMarketCat.symbols.length > 0
       ) {
+        // Ensure date correct
         MarketIntraDay.setTickDate(date);
 
         const needLoadSymbols: string[] = [];
@@ -94,11 +94,7 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
           };
           MarketIntraDay.log(`Will load market tick data for symbol ${symbol}`);
 
-          const url = `${
-            process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL
-          }/tick/histories-v2?symbol=${symbol}&from=${moment(date)
-            .subtract(MarketIntraDay.BACK_DATE + 2, 'days')
-            .format('YYYY-MM-DD')}&to=${date}`;
+          const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/tick/histories-back-date?symbol=${symbol}&size=${MarketIntraDay.BACK_DATE + 1}&date=${date}`;
 
           return from(fetch(url)).pipe(
             switchMap((res) => from(res.json())),
