@@ -120,6 +120,9 @@ export class TickHelper {
           lte: toDate,
         },
       },
+      orderBy: {
+        date: 'desc',
+      },
       take: size,
     });
 
