@@ -101,7 +101,11 @@ export const loadMarketIntraDayTick$ = createEffect((action$, state$) =>
             validateApiResponsePipe(),
             map((data: ApiResponse) => {
               if (data?.success === true) {
-                MarketIntraDay.saveTick({ symbol, ticks: data.data });
+                MarketIntraDay.saveTick({
+                  symbol,
+                  ticks: data.data.ticks,
+                  analysis: data.data.analysis,
+                });
                 return ANALYSIS_ACTIONS.loadMarketIntraDayTickSuccess({
                   symbol,
                   data,
