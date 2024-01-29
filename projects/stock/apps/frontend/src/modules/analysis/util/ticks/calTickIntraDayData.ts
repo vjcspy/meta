@@ -29,9 +29,9 @@ function resolveChartTicks(
     forEach(meta, (tick: any) => {
       const timeString = tick.time;
       date.set({
-        hour: moment(timeString, 'HH:mm:ss').hour(),
-        minute: moment(timeString, 'HH:mm:ss').minute(),
-        second: moment(timeString, 'HH:mm:ss').second(),
+        hour: moment.utc(timeString, 'HH:mm:ss').hour(),
+        minute: moment.utc(timeString, 'HH:mm:ss').minute(),
+        second: moment.utc(timeString, 'HH:mm:ss').second(),
       });
       const roundedTime = group_by_time_period(date, timeRes);
       const ts = roundedTime.unix();
@@ -152,13 +152,13 @@ export const calTickIntraDayData = (data: {
 
   const tickDays = data.ticks[0].ticks.length;
 
-  const currentDate = moment(data.date);
+  const currentDate = moment.utc(data.date);
   const historyTicks: any[] = [];
   const currentTicks: any[] = [];
   forEach(data.ticks, (symbolTick) => {
     const _hisTicks = filter(
       symbolTick.ticks,
-      (_d) => !moment(_d.date).isSame(currentDate, 'day'),
+      (_d) => !moment.utc(_d.date).isSame(currentDate, 'day'),
     );
 
     historyTicks.push(..._hisTicks);
