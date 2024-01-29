@@ -7,6 +7,7 @@ import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
 import { combineHOC } from '@web/ui-extension/dist';
 import type { ChartData } from 'chart.js';
+import { dropRightWhile, find } from 'lodash-es';
 import momentTimezone from 'moment-timezone';
 import React, { useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -67,23 +68,35 @@ export default combineHOC(
         },
         {
           label: 'current',
-          data: props.state.chartData.currentIntraDayData.map((d) => {
-            if (viewChart.sellShark) {
-              return d.sum_shark_sell;
-            } else if (viewChart.sellSheep) {
-              return d.sum_sheep_sell;
-            } else if (viewChart.buyShark) {
-              return d.sum_shark_buy;
-            } else if (viewChart.buySheep) {
-              return d.sum_sheep_buy;
-            } else if (viewChart.diffShark) {
-              return d.diff_sum_shark;
-            } else if (viewChart.diffSheep) {
-              return d.diff_sum_sheep;
-            }
+          data: dropRightWhile(
+            props.state.chartData.historyIntraDayData.map((h) => {
+              const d = find(
+                props?.state?.chartData?.currentIntraDayData,
+                (_d) => _d.ts === h.ts,
+              );
 
-            return 0;
-          }),
+              if (!d) {
+                return 0;
+              }
+
+              if (viewChart.sellShark) {
+                return d.sum_shark_sell;
+              } else if (viewChart.sellSheep) {
+                return d.sum_sheep_sell;
+              } else if (viewChart.buyShark) {
+                return d.sum_shark_buy;
+              } else if (viewChart.buySheep) {
+                return d.sum_sheep_buy;
+              } else if (viewChart.diffShark) {
+                return d.diff_sum_shark;
+              } else if (viewChart.diffSheep) {
+                return d.diff_sum_sheep;
+              }
+
+              return 0;
+            }),
+            (value) => value === 0,
+          ),
           borderColor: CommonValue.INTRADAY_CURRENT_COLOR,
           backgroundColor: CommonValue.INTRADAY_CURRENT_COLOR,
           fill: false,
@@ -92,7 +105,7 @@ export default combineHOC(
     };
 
     return data;
-  }, [props.state.chartData, viewChart]);
+  }, [props.state?.chartData?.currentIntraDayData, viewChart]);
 
   return (
     <>

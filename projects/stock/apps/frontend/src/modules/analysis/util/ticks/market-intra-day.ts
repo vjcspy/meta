@@ -42,6 +42,11 @@ const resolvedMarketIntraDayChart$ = new BehaviorSubject<any>(undefined);
 export interface MarketIntraDayTickRecord {
   symbol: string;
   ticks: any;
+  analysis: {
+    symbol: string;
+    date: string;
+    deal_value_5: number;
+  };
 }
 
 export interface MarketIntraDayResolvedChartInfo {
