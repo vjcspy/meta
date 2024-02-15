@@ -13,6 +13,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaClient } from '@prisma/client';
+import * as https from 'https';
 import * as process from 'process';
 
 import { AppController } from './app.controller';
@@ -90,6 +91,7 @@ export class AppModule
 
   onApplicationBootstrap(): any {
     if (isProduction()) {
+      https.globalAgent.options.rejectUnauthorized = false;
       this.slackHelper.postMessage(SlackHelper.DEFAULT_CHANNEL_NAME, {
         text: `Successfully bootstrap`,
       });
