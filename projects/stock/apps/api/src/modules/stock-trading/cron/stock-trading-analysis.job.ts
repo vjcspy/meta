@@ -17,14 +17,16 @@ export class StockTradingAnalysisJob {
   ) {}
 
   /**
-   * Run tick analyze vào cuối ngày và cập nhật vào job status
+   * Chạy job để cập nhật vào bảng stock_trading_analysis_history vào cuối ngày.
+   *
+   * Table này làm nhiệm vụ tính toán các chỉ số trong ngày hôm đó
    * @returns {Promise<void>}
    */
   @Cron('0 30 20 * * *', {
-    name: 'StockTradingAnalysisJob.generateTickActionInfo',
+    name: 'StockTradingAnalysisJob.generateNodeJSAnalysisHistory',
     timeZone: 'Asia/Ho_Chi_Minh',
   })
-  async generateTickActionInfo() {
+  async generateNodeJSAnalysisHistory(): Promise<void> {
     if (!isMainProcess()) {
       return;
     }

@@ -22,6 +22,11 @@ export class MarketTickActionController {
     private readonly actionDayAnalyzeHelper: TickActionDayAnalyzeHelper,
   ) {}
 
+  /**
+   * Hiện tại không sử dụng nữa
+   * @deprecated
+   * @returns {OkResponse}
+   */
   @Get('build-info-last-10days')
   buildLast10Day() {
     for (let i = 0; i < 15; i++) {
@@ -43,11 +48,19 @@ export class MarketTickActionController {
     this.marketTickAnalyzePublisher.publish();
   }
 
+  /**
+   * Generate history avg data để lấy so sánh với ngày hiện tại
+   */
   @Get('history-test-all')
   historyTestAll() {
     this.marketTickHistoryAnalyzePublisher.publish();
   }
 
+  /**
+   * Hiện tại không sử dụng nữa
+   *
+   * @deprecated
+   */
   @Get('day-test-all')
   dayTestAll() {
     this.actionDayAnalyzePublisher.publish();
