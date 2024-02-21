@@ -101,6 +101,10 @@ export class AnalysisController {
     return {};
   }
 
+  /**
+   * Generate stock trading analysis history run on nodejs data
+   * @returns {OkResponse}
+   */
   @Get('nodejs-analyze-test')
   nodeJstest() {
     this.stockTradingAnalysisPublisher.publishNodeJsGenerateAnalysisHistory();
