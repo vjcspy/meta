@@ -179,4 +179,10 @@ export class SimpleStockPriceHistoryResponse {
   })
   @Transform(({ value }) => Number(value.toString()))
   fSellQty: number;
+
+  @Expose({
+    name: 'value',
+  })
+  @Transform(({ value }) => Number(value.toString()))
+  value: number;
 }
