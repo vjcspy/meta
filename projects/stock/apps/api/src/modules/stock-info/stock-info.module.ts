@@ -1,5 +1,6 @@
 import { SlackHelper } from '@modules/core/helper/slack.helper';
 import { CorController } from '@modules/stock-info/controller/cor.controller';
+import { FlagController } from '@modules/stock-info/controller/flag.controller';
 import { MarketCatController } from '@modules/stock-info/controller/market-cat.controller';
 import { StockPriceController } from '@modules/stock-info/controller/stock-price.controller';
 import { TickController } from '@modules/stock-info/controller/tick.controller';
@@ -61,6 +62,7 @@ import { Global, Module } from '@nestjs/common';
     StockPriceController,
     TickController,
     MarketCatController,
+    FlagController,
   ],
   exports: [...STOCK_INFO_REPOS, ...STOCK_INFO_HELPERS, SyncStatus],
 })
