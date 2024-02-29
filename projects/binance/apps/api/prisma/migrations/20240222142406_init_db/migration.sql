@@ -1,5 +1,8 @@
 -- CreateTable
 CREATE TABLE "candlesticks" (
+    "id" BIGSERIAL NOT NULL,
+    "symbol" TEXT NOT NULL,
+    "interval" VARCHAR(3) NOT NULL,
     "open_time" BIGINT NOT NULL,
     "open" DOUBLE PRECISION NOT NULL,
     "high" DOUBLE PRECISION NOT NULL,
@@ -12,7 +15,7 @@ CREATE TABLE "candlesticks" (
     "taker_buy_volume" DOUBLE PRECISION NOT NULL,
     "taker_buy_quote_asset_volume" DOUBLE PRECISION NOT NULL,
 
-    CONSTRAINT "candlesticks_pkey" PRIMARY KEY ("open_time")
+    CONSTRAINT "candlesticks_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -41,3 +44,6 @@ CREATE TABLE "history_data_fetcher_state" (
 
     CONSTRAINT "history_data_fetcher_state_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "candlesticks_symbol_open_time_interval_key" ON "candlesticks"("symbol", "open_time", "interval");
