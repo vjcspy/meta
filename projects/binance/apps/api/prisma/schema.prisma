@@ -51,3 +51,19 @@ model HistoryDataFetcherState {
 
   @@map("history_data_fetcher_state")
 }
+
+model StrategyHistoryTestResult {
+  id      Int    @id @default(autoincrement())
+  type    String
+  start   String
+  end     String
+  pass    Int    @default(0) @db.SmallInt
+  fail    Int    @default(0) @db.SmallInt
+  unknown Int    @default(0) @db.SmallInt
+  profit  Float
+  data    String
+
+  created_at DateTime @default(now())
+
+  @@map("strategy_history_test_result")
+}

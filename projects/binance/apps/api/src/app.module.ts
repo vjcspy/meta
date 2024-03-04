@@ -1,14 +1,11 @@
 import { BaseModule, getNodeEnv, XLogger } from '@nest/base';
-import { RabbitMQModule } from '@nest/rabbitmq';
 import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaClient } from '@prisma/client';
-import * as process from 'process';
 
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { StrategyHistoryTestResultController } from './controller/strategy-history-test-result.controller';
 
 @Module({
   imports: [
@@ -26,27 +23,8 @@ import { AppService } from './app.service';
       ],
     }),
     BaseModule,
-    ...(process.env.CRON_ENABLE === 'true' ? [ScheduleModule.forRoot()] : []),
-    RabbitMQModule.register({
-      uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
-      // Nếu không khai báo name thì mặc định là đang config cho default connection
-      // name:'default',
-      exchanges: [],
-      // Default channel sẽ luôn được tạo và sử dụng name của connection trừ trường hợp tự khai báo 1 default channel
-      channels: {
-        'channel-1': {
-          prefetchCount: 1,
-          default: true,
-        },
-        'channel-2': {
-          prefetchCount: 2,
-        },
-      },
-      // Muốn handler nào được chạy thì cần phải khai báo, nếu khai báo handler ở đây thì không cần redeclare ở provider nữa
-      handlers: [],
-    }),
   ],
-  controllers: [AppController],
+  controllers: [StrategyHistoryTestResultController],
   providers: [AppService],
 })
 export class AppModule
@@ -60,7 +38,6 @@ export class AppModule
   }
 
   async onModuleInit() {
-    // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
     try {
       await this.$connect();
       this.logger.log('Successfully connected to PostgresDB');
