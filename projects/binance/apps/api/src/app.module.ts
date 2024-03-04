@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaClient } from '@prisma/client';
 
 import { AppService } from './app.service';
+import { IpController } from './controller/ip.controller';
 import { StrategyHistoryTestResultController } from './controller/strategy-history-test-result.controller';
 
 @Module({
@@ -24,7 +25,7 @@ import { StrategyHistoryTestResultController } from './controller/strategy-histo
     }),
     BaseModule,
   ],
-  controllers: [StrategyHistoryTestResultController],
+  controllers: [StrategyHistoryTestResultController, IpController],
   providers: [AppService],
 })
 export class AppModule
