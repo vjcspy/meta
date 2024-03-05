@@ -53,15 +53,14 @@ model HistoryDataFetcherState {
 }
 
 model StrategyHistoryTestResult {
-  id      Int     @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   type    String
   start   String
   end     String
-  pass    Int     @default(0) @db.SmallInt
-  fail    Int     @default(0) @db.SmallInt
-  unknown Int     @default(0) @db.SmallInt
+  pass    Int    @default(0) @db.SmallInt
+  fail    Int    @default(0) @db.SmallInt
+  unknown Int    @default(0) @db.SmallInt
   profit  Float
-  code    String?
   data    String
 
   created_at DateTime @default(now())
