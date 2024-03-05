@@ -20,15 +20,15 @@ export class StrategyHistoryTestResultDTO {
 
   @Expose()
   @IsInt()
-  pass: number;
+  pass_count: number;
 
   @Expose()
   @IsInt()
-  fail: number;
+  fail_count: number;
 
   @Expose()
   @IsInt()
-  unknown: number;
+  unknown_count: number;
 
   @Expose()
   @IsNumber()
