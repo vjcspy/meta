@@ -3,6 +3,10 @@ import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class StrategyHistoryTestResultDTO {
   @Expose()
+  @IsOptional()
+  id: number;
+
+  @Expose()
   @IsString()
   type: string;
 
