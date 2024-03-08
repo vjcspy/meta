@@ -31,14 +31,14 @@ services:
       - POSTGRES_PASSWORD=root
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3.13-management
     hostname: "${STACK_NAME}-rabbitmq"
     container_name: "${STACK_NAME}-rabbitmq"
     ports:
       - "5673:5672"
       - "15673:15672"
     volumes:
-      - rabbitmq:/var/lib/rabbitmq/mnesia
+      - rabbitmq3:/var/lib/rabbitmq/
       # - ./docker_data/rabbitmq/log/:/var/log/rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=rabbitmq
@@ -59,5 +59,5 @@ services:
 
 volumes:
   postgres:
-  rabbitmq:
+  rabbitmq3:
 #  mongo:

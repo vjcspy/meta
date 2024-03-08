@@ -22,7 +22,7 @@ export class MarketTickHistoryAnalyzePublisher {
   ) {}
 
   public async publish() {
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       '2023-09-15',
     );
@@ -44,7 +44,7 @@ export class MarketTickHistoryAnalyzePublisher {
 
   public async publishCurrentDay() {
     const currentDate = moment.utc().format('YYYY-MM-DD');
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       currentDate,
       currentDate,

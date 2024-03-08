@@ -1,13 +1,15 @@
 import { OkResponse } from '@modules/core/model/ok-response';
+import type { StockPriceHistoryResponse } from '@modules/stock-info/controller/stock-price.dto';
 import {
   GetStockPriceHistoryDto,
-  StockPriceHistoryResponse,
+  SimpleStockPriceHistoryResponse,
 } from '@modules/stock-info/controller/stock-price.dto';
 import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper';
-import { STOCK_PRICE_SYNC } from '@modules/stock-info/observers/stock-price/stock-price.actions';
+import { SyncSimpleStockPrice } from '@modules/stock-info/helper/sync-simple-stock-price';
 import { StockPricePublisher } from '@modules/stock-info/queue/publisher/stock-price.publisher';
-import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
-import { EventManagerReactive, XAppRequestContext, XLogger } from '@nest/base';
+import { StockInfoValue } from '@modules/stock-info/values/stock-info.value';
+import { LiveRequest } from '@modules/stock-trading/requests/live/live.request';
+import { XAppRequestContext, XLogger } from '@nest/base';
 import {
   Controller,
   Get,
@@ -16,17 +18,18 @@ import {
   Query,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { forEach } from 'lodash';
 
 @Controller('stock-price')
 export class StockPriceController {
   private logger: XLogger;
 
   constructor(
-    private readonly eventManager: EventManagerReactive,
     private readonly stockPricePublisher: StockPricePublisher,
-    private readonly stockPriceRepo: StockPriceRepo,
     private readonly xAppRequestContext: XAppRequestContext,
     private readonly stockPriceHelper: StockPriceHelper,
+    private readonly syncSimpleStockPrice: SyncSimpleStockPrice,
+    private readonly liveRequest: LiveRequest,
   ) {
     this.logger = new XLogger(
       StockPriceController.name,
@@ -34,21 +37,15 @@ export class StockPriceController {
     );
   }
 
-  @Get('test')
-  test(@Query('symbol') symbol: string) {
+  @Get('test-sync-simple')
+  testSyncSimple(@Query('symbol') symbol: string) {
     if (!symbol) {
       throw new HttpException('Symbol not found', HttpStatus.BAD_REQUEST);
     }
 
-    this.eventManager.dispatch(
-      STOCK_PRICE_SYNC({
-        code: symbol,
-        resolve: () => {},
-        fromBeginning: true,
-      }),
-    );
+    this.syncSimpleStockPrice.syncSimpleStockPrice(symbol);
 
-    return 'ok';
+    return new OkResponse();
   }
 
   @Get('sync-all')
@@ -65,34 +62,57 @@ export class StockPriceController {
     return 'ok';
   }
 
-  @Get('history')
-  async history(
-    @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
-  ): Promise<StockPriceHistoryResponse[]> {
-    const { code, from, to } = stockPriceHistoryDto;
-    this.logger.log(`Get History of ${code} from ${from} to ${to}`);
-
-    const histories = await this.stockPriceHelper.getHistory(code, from, to);
-
-    // @ts-ignore
-    return plainToInstance(StockPriceHistoryResponse, histories, {
-      excludeExtraneousValues: true,
+  @Get('sync-all-default-cat')
+  async syncAllDefaultCat() {
+    const defaultCat = await this.liveRequest.getDefaultCat();
+    forEach(defaultCat?.symbols, (symbol: string) => {
+      this.stockPricePublisher.publishOne(symbol, true);
     });
+    this.stockPricePublisher.publishOne(StockInfoValue.VNINDEX_CODE, true);
+    return 'ok';
   }
 
+  // @Get('history')
+  // async history(
+  //   @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
+  // ): Promise<StockPriceHistoryResponse[]> {
+  //   const { code, from, to } = stockPriceHistoryDto;
+  //   this.logger.log(`Get History of ${code} from ${from} to ${to}`);
+  //
+  //   const histories = await this.stockPriceHelper.getHistory(code, from, to);
+  //
+  //   // @ts-ignore
+  //   return plainToInstance(StockPriceHistoryResponse, histories, {
+  //     excludeExtraneousValues: true,
+  //   });
+  // }
+  //
   @Get('histories')
   async histories(
     @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
   ): Promise<StockPriceHistoryResponse[]> {
-    const { code, from, to } = stockPriceHistoryDto;
-    this.logger.log(`Get History of ${code} from ${from} to ${to}`);
+    return this.simpleHistories(stockPriceHistoryDto);
+  }
 
-    const histories = await this.stockPriceHelper.getHistory(code, from, to);
+  @Get('simple-histories')
+  async simpleHistories(
+    @Query() stockPriceHistoryDto: GetStockPriceHistoryDto,
+  ): Promise<StockPriceHistoryResponse[]> {
+    const { code, from, to } = stockPriceHistoryDto;
+    this.logger.log(
+      `Get Simple price history of ${code} from ${from} to ${to}`,
+    );
+
+    const histories = await this.stockPriceHelper.getSimpleHistory(
+      code,
+      from,
+      to,
+    );
 
     // @ts-ignore
     return new OkResponse(
       undefined,
-      plainToInstance(StockPriceHistoryResponse, histories, {
+      plainToInstance(SimpleStockPriceHistoryResponse, histories, {
         excludeExtraneousValues: true,
       }),
     );

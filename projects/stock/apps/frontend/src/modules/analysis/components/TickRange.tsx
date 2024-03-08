@@ -62,7 +62,7 @@ export default combineHOC(
         const price: any = find(props.state.prices, (p: any) =>
           moment(p.date).isSame(moment(tickData.date), 'day'),
         );
-        return { ...tickData, close: price?.rClose ?? 0 };
+        return { ...tickData, close: price?.close ?? 0 };
       });
     }
 

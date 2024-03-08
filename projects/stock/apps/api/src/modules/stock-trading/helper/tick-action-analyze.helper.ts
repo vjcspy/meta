@@ -36,6 +36,10 @@ export interface SymbolTickAnalyzeRecord {
   sell_value: number;
 }
 
+/*
+ * Generate tick action for market and symbol
+ * Table: MarketTickSymbolActionInfo, MarketTickActionInfo
+ * */
 @Injectable()
 export class TickActionAnalyzeHelper {
   private readonly logger = new XLogger(TickActionAnalyzeHelper.name);
@@ -182,7 +186,7 @@ export class TickActionAnalyzeHelper {
    */
   async analyzeHistoryDataForDate(date: string) {
     // re-check de dam bao co VNINDEX price cho ngay can tao
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
       date,
@@ -251,6 +255,8 @@ export class TickActionAnalyzeHelper {
       `Will get ${TickActionAnalyzeHelper.HISTORY_RECORDS} records history for market`,
     );
 
+    // TODO: nếu chỉ fix con số để lấy N rows nào đó thì có trường hợp lấy từ 1 khoảng thời gian trong ngày nào đó,
+    //  nó không phản ảnh cả ngày thành ra có thể có sai sót khi tính giá trung bình( cuối phiên giao dịch nhiều hơn đầu phiên)
     const histories = await prisma.marketTickActionInfo.findMany({
       where: {
         ts: {
@@ -335,7 +341,8 @@ export class TickActionAnalyzeHelper {
       },
     });
 
-    if (histories.length !== TickActionAnalyzeHelper.HISTORY_RECORDS) {
+    if (histories.length < TickActionAnalyzeHelper.HISTORY_RECORDS - 400) {
+      // Do 1 số cổ phiếu giao dịch ít nên 1 ngày không đủ 200 records
       const error = new AppError(
         `Not have enough ${TickActionAnalyzeHelper.HISTORY_RECORDS} history records for symbol ${symbol} at date ${date} (${histories.length})`,
       );

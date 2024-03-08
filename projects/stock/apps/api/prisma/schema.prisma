@@ -520,8 +520,9 @@ model StockInfoTicks {
 }
 
 model StockTradingAnalysis {
-  id             Int     @id @default(autoincrement())
-  symbol         String  @unique @db.VarChar(10)
+  id     Int    @id @default(autoincrement())
+  symbol String @unique @db.VarChar(10)
+
   trade_value_7  BigInt? @default(0) @db.BigInt
   trade_value_14 BigInt? @default(0) @db.BigInt
   trade_value_30 BigInt? @default(0) @db.BigInt
@@ -593,6 +594,9 @@ model StockAlert {
 //   @@map("market_tick_action_analyze")
 // }
 //
+
+// Chạy hằng ngày(cuối ngày) để cho ra dữ liệu giao dịch trung bình của ngày hôm đó
+// Thông tin trong bảng này chính là base để so sánh, ví dụ như ngày hôm nay giao dịch nhiều bao nhiêu thì phải so sánh trung bình 5 ngày trước đó chứ không thể so sánh với 1 ngày bất kì xa xôi nào được
 model MarketTickActionHistoryAnalyze {
   id Int @id @default(autoincrement())
 
@@ -617,6 +621,8 @@ model MarketTickActionHistoryAnalyze {
   @@map("market_tick_action_history_analyze")
 }
 
+// Phân tích hành vi trong ngày,
+// Dựa vào type để biết được là hành vi nào, m là gấp bao nhiêu lần so với bình thường
 model MarketTickActionDayAnalyze {
   id Int @id @default(autoincrement())
 
@@ -630,6 +636,7 @@ model MarketTickActionDayAnalyze {
   @@map("market_tick_action_day_analyze")
 }
 
+// Bảng này là thông tin sum cho toàn bộ các cổ phiếu trong default category
 model MarketTickActionInfo {
   ts Int @id // Timestamp
 
@@ -653,6 +660,8 @@ model MarketTickActionInfo {
   @@map("market_tick_action_info")
 }
 
+// Quan hệ n-1 với bảng chính MarketTickActionInfo
+// Thông tin cụ thể cho từng mã
 model MarketTickSymbolActionInfo {
   id Int @id @default(autoincrement())
 
@@ -697,4 +706,38 @@ model MarketTickJobInfo {
 
   @@unique([date, type, symbol])
   @@map("market_tick_job_info")
+}
+
+model SimpleStockPrice {
+  id                  Int      @id @default(autoincrement())
+  date                DateTime @db.Date
+  symbol              String   @db.VarChar(10)
+  priceBasic          Int // Gia dong cua ngay hom qua, dua vao do de biet duoc % change
+  priceHigh           Int
+  priceLow            Int
+  priceOpen           Int
+  priceClose          Int
+  priceAverage        Int
+  volume              Int
+  value               Int // 10**6
+  dealVolume          Int
+  buyForeignQuantity  Int
+  buyForeignValue     Int // 10**6
+  sellForeignQuantity Int
+  sellForeignValue    Int // 10**6
+  currentForeignRoom  BigInt?  @db.BigInt
+
+  @@unique([symbol, date])
+  @@map("simple_stock_price")
+}
+
+model StockTradingAnalysisHistory {
+  id     Int      @id @default(autoincrement())
+  symbol String   @db.VarChar(10)
+  date   DateTime @db.Date
+
+  deal_value_5 Int @default(0) @db.Integer // 10**6
+
+  @@unique([symbol, date])
+  @@map("stock_trading_analysis_history")
 }

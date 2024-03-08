@@ -44,8 +44,6 @@ const chartLines = {
   sheepSellVal: false,
   buyVal: true,
   sellVal: true,
-  buyCount: false,
-  sellCount: false,
 };
 
 export default combineHOC(withTimeRes)((props) => {
@@ -105,33 +103,6 @@ export default combineHOC(withTimeRes)((props) => {
           borderWidth: 1,
           tension: 0,
         },
-        chartLine.buyCount && {
-          label: 'buy count',
-          data: groupedData.map((d: any) =>
-            round(
-              d.buy_count / (historyAvgData.avg_buy_count * timeResMultiple),
-              2,
-            ),
-          ),
-          fill: false,
-          borderColor: CommonValue.BUY_COUNT_COLOR,
-          borderWidth: 1,
-          tension: 0,
-        },
-        chartLine.sellCount && {
-          label: 'sell count',
-          data: groupedData.map((d: any) =>
-            round(
-              d.sell_count / (timeResMultiple * historyAvgData.avg_sell_count),
-              2,
-            ),
-          ),
-          fill: false,
-          borderColor: CommonValue.SELL_COUNT_COLOR,
-          borderWidth: 1,
-          tension: 0,
-        },
-
         chartLine.sharkBuyVal && {
           label: 'shark buy val',
           data: groupedData.map((d: any) =>
@@ -240,35 +211,6 @@ export default combineHOC(withTimeRes)((props) => {
                 }
               />
               <span className=" text-white-dark">sell val</span>
-            </label>
-          </div>
-          <div>
-            <label className="flex cursor-pointer items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={chartLine.buyCount}
-                onChange={() =>
-                  setChartLine({ ...chartLine, buyCount: !chartLine.buyCount })
-                }
-              />
-              <span className=" text-white-dark">buy count</span>
-            </label>
-          </div>
-          <div>
-            <label className="flex cursor-pointer items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={chartLine.sellCount}
-                onChange={() =>
-                  setChartLine({
-                    ...chartLine,
-                    sellCount: !chartLine.sellCount,
-                  })
-                }
-              />
-              <span className=" text-white-dark">sell count</span>
             </label>
           </div>
 

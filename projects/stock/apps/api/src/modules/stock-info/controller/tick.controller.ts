@@ -1,6 +1,7 @@
 import { OkResponse } from '@modules/core/model/ok-response';
 import { GetSymbolInfoQuery } from '@modules/stock-info/controller/cor.dto';
 import {
+  GetTickBackDateRequest,
   GetTickHistoriesRequest,
   GetTickHistoryRequest,
 } from '@modules/stock-info/controller/tick.dto';
@@ -8,6 +9,7 @@ import { StockPriceHelper } from '@modules/stock-info/helper/stock-price.helper'
 import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { TickHelper } from '@modules/stock-info/helper/tick.helper';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
+import { TradingAnalysisHelper } from '@modules/stock-trading/helper/trading-analysis.helper';
 import { XLogger } from '@nest/base';
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { isTradingTime } from '@stock/packages-com/dist/util/isTradingTime';
@@ -25,6 +27,7 @@ export class TickController {
     private syncTickPublisher: SyncTicksPublisher,
     private syncTickHelper: SyncTicksHelper,
     private stockPriceHelper: StockPriceHelper,
+    private tradingAnalysisHelper: TradingAnalysisHelper,
   ) {}
 
   @Get('history')
@@ -91,6 +94,28 @@ export class TickController {
     return new OkResponse(undefined, his);
   }
 
+  @Get('histories-back-date')
+  async getHistoryBackDate(@Query() request: GetTickBackDateRequest) {
+    const { date, size, symbol } = request;
+    this.logger.info(
+      `process get tick getHistoryBackDate for symbol ${request.symbol}`,
+      {
+        symbol,
+        date,
+        size,
+      },
+    );
+    const his = await this.tickHelper.getTickBackDate(symbol, date, size);
+
+    // Du rat khong muon tra analysis data vao day nhung no se giam tinh toan tren FE dong thoi khop voi cach tinh toan tren server
+    // Vi can so sanh voi ngay lich su nen se lay last analysis history
+    const analysis = await this.tradingAnalysisHelper.getLastAnalysisHistory(
+      symbol,
+      date,
+    );
+    return new OkResponse(undefined, { ticks: his, analysis });
+  }
+
   @Get('refresh-tick')
   async refreshTick(@Query() infoQuery: GetSymbolInfoQuery) {
     if (!isTradingTime()) {
@@ -110,7 +135,7 @@ export class TickController {
         moment().toDate(),
       );
 
-      const price = await this.stockPriceHelper.getHistory(
+      const price = await this.stockPriceHelper.getSimpleHistory(
         infoQuery.symbol,
         moment().toDate(),
         moment().toDate(),

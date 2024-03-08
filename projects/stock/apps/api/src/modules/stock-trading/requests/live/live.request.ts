@@ -1,9 +1,13 @@
+import { MarketCatValue } from '@modules/stock-info/values/market-cat.value';
 import { XLogger } from '@nest/base';
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import type { AxiosResponse } from 'axios';
+import { find } from 'lodash';
 
-@Injectable()
+@Injectable({
+  scope: Scope.DEFAULT,
+})
 export class LiveRequest {
   private readonly logger = new XLogger(LiveRequest.name);
 
@@ -32,6 +36,14 @@ export class LiveRequest {
 
       throw e;
     }
+  }
+
+  async getDefaultCat() {
+    const list = await this.getCategoryList();
+    return find(
+      list,
+      (r: any) => r.key === MarketCatValue.DEFAULT_MARKET_CAT_KEY,
+    );
   }
 
   async getTickHistory(symbol: string, date: string) {

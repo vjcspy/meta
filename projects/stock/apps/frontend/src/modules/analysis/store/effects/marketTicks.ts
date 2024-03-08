@@ -113,7 +113,7 @@ export const loadVNIndex$ = createEffect((action$, state$) =>
       const analysisState: AnalysisState = d[1];
       const { marketFromDate, marketToDate } = analysisState;
 
-      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/histories?code=HOSTC&from=${marketFromDate}&to=${marketToDate}`;
+      const url = `${process.env.NEXT_PUBLIC_ENDPOINT_LIVE_URL}/stock-price/simple-histories?code=VNINDEX&from=${marketFromDate}&to=${marketToDate}`;
 
       return from(fetch(url)).pipe(
         switchMap((res) => from(res.json())),

@@ -24,6 +24,10 @@ export class TickActionJob {
     private marketTickActionAnalyzePublisher: MarketTickActionAnalyzePublisher,
   ) {}
 
+  /**
+   * Run tick analyze vào cuối ngày và cập nhật vào job status
+   * @returns {Promise<void>}
+   */
   @Cron('0 15 20 * * *', {
     name: 'TickActionJob.generateTickActionInfo',
     timeZone: 'Asia/Ho_Chi_Minh',
@@ -34,7 +38,7 @@ export class TickActionJob {
     }
 
     const date = moment.utc().format('YYYY-MM-DD');
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
       date,
@@ -53,6 +57,10 @@ export class TickActionJob {
     }
   }
 
+  /**
+   * Run avg data history cho ngày hôm nay
+   * @returns {Promise<void>}
+   */
   @Cron('0 25 20 * * *', {
     name: 'TickActionJob.createHistory',
     timeZone: 'Asia/Ho_Chi_Minh',
@@ -63,7 +71,7 @@ export class TickActionJob {
     }
 
     const date = moment.utc().format('YYYY-MM-DD');
-    const prices = await this.priceHelper.getHistory(
+    const prices = await this.priceHelper.getSimpleHistory(
       StockInfoValue.VNINDEX_CODE,
       date,
       date,
@@ -84,7 +92,7 @@ export class TickActionJob {
 
   private async hasTradeToDay(date: string) {
     if (!this._cache_is_trade_today.hasOwnProperty(date)) {
-      const prices = await this.priceHelper.getHistory(
+      const prices = await this.priceHelper.getSimpleHistory(
         StockInfoValue.VNINDEX_CODE,
         date,
         date,
@@ -96,6 +104,10 @@ export class TickActionJob {
     return this._cache_is_trade_today[date];
   }
 
+  /**
+   * Run analyze tick action từng phút cho market (default category)
+   * @returns {Promise<void>}
+   */
   @Cron('0 * 9-14 * * 1-5', {
     name: 'TickActionJob.generateTickActionToDay',
     timeZone: 'Asia/Ho_Chi_Minh',

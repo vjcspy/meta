@@ -1,3 +1,4 @@
+import { prisma } from '@modules/core/util/prisma';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import { Injectable } from '@nestjs/common';
 import * as moment from 'moment/moment';
@@ -22,5 +23,34 @@ export class StockPriceHelper {
     }
 
     return this.stockPriceRepo.getHistory(symbol, fromDate, toDate);
+  }
+
+  async getSimpleHistory(
+    symbol: string,
+    from: string | Date,
+    to: string | Date = moment.utc().toDate(),
+  ) {
+    let fromDate = from;
+    let toDate = to;
+    if (typeof fromDate === 'string') {
+      fromDate = moment.utc(from).toDate();
+    }
+
+    if (typeof toDate === 'string') {
+      toDate = moment.utc(to).toDate();
+    }
+
+    return prisma.simpleStockPrice.findMany({
+      where: {
+        symbol,
+        date: {
+          lte: toDate,
+          gte: fromDate,
+        },
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
   }
 }

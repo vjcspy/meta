@@ -1,4 +1,6 @@
+import MarketIntraDayTickAnalysisTable from '@modules/analysis/components/MarketIntraDay/MarketIntraDayTickAnalysisTable';
 import withMarketIntraDayChartData from '@modules/analysis/hoc/market-intra-day/withMarketIntraDayChartData';
+import { MarketIntraDay } from '@modules/analysis/util/ticks/market-intra-day';
 import Row from '@src/components/form/Row';
 import { TIMEZONE } from '@src/value/common.value';
 import { analyzeTickHistory } from '@stock/packages-com/dist/tick/analyze-tick-history';
@@ -8,7 +10,7 @@ import InputNumber from 'antd/es/input-number';
 import Slider from 'antd/es/slider';
 import type { ColumnsType } from 'antd/es/table';
 import Table from 'antd/es/table';
-import { forEach } from 'lodash-es';
+import { forEach, last } from 'lodash-es';
 import momentTimezone from 'moment-timezone';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -25,8 +27,8 @@ interface DataType {
 }
 
 export default combineHOC(withMarketIntraDayChartData)((props) => {
-  const [sellRate, setSellRate] = useState(1.7);
-  const [buyRate, setBuyRate] = useState(4.3);
+  const [sellRate, setSellRate] = useState(5);
+  const [buyRate, setBuyRate] = useState(5);
   const [symbolSearch, setSymbolSearch] = useState<string>();
 
   const [dataSource, setDataSource] = useState<any>();
@@ -56,6 +58,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         title: '# shark sell',
         dataIndex: 'sharkSellCount',
         key: 'sharkSellCount',
+        sorter: (a, b) => a.sharkSellCount - b.sharkSellCount,
         width: 70,
       },
       {
@@ -75,6 +78,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         title: '# shark buy',
         dataIndex: 'sharkBuyCount',
         key: 'sharkBuyCount',
+        sorter: (a, b) => a.sharkBuyCount - b.sharkBuyCount,
         width: 70,
       },
       {
@@ -94,6 +98,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         title: '# sheep buy',
         dataIndex: 'sheepBuyCount',
         key: 'sheepBuyCount',
+        sorter: (a, b) => a.sheepBuyCount - b.sheepBuyCount,
         width: 70,
       },
       {
@@ -112,6 +117,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
       {
         title: '# sheep sell',
         dataIndex: 'sheepSellCount',
+        sorter: (a, b) => a.sheepSellCount - b.sheepSellCount,
         key: 'sharkSellCount',
         width: 70,
       },
@@ -126,38 +132,39 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
       forEach(
         props.state.chartData.currentIntraDayDataByTick,
         (current, symbol) => {
-          const history =
-            props.state.chartData?.historyIntraDayDataByTick[symbol];
-
-          if (history) {
-            alertByTicks[symbol] = analyzeTickHistory(
-              current,
-              history,
-              sellRate,
-              buyRate,
-            );
+          if (symbolSearch && symbol.indexOf(symbolSearch.toUpperCase()) < 0) {
+            return true;
           }
+          const analysis = MarketIntraDay.ticks.find(
+            (t) => t.symbol === symbol,
+          )?.analysis;
+          if (!analysis) {
+            console.warn(`could not found analysis for symbol ${symbol}`);
+
+            return false;
+          }
+
+          const deal_value_5 = analysis.deal_value_5 * 10 ** 6;
+
+          alertByTicks[symbol] = analyzeTickHistory(
+            current,
+            deal_value_5,
+            sellRate,
+            buyRate,
+          );
         },
       );
 
       const dt: (DataType & { key: string })[] = [];
       forEach(alertByTicks, (data, symbol) => {
-        if (
-          symbolSearch &&
-          symbolSearch.length > 0 &&
-          symbol.indexOf(symbolSearch) === -1
-        ) {
-          return;
-        }
-
         const { alerts } = data;
         dt.push({
           key: symbol,
           symbol,
-          firstSharkBuy: alerts.shark_buy[0]?.ts ?? Infinity,
-          firstSharkSell: alerts.shark_sell[0]?.ts ?? Infinity,
-          firstSheepSell: alerts.sheep_sell[0]?.ts ?? Infinity,
-          firstSheepBuy: alerts.sheep_buy[0]?.ts ?? Infinity,
+          firstSharkBuy: (last(alerts.shark_buy) as any)?.ts ?? Infinity,
+          firstSharkSell: (last(alerts.shark_sell) as any)?.ts ?? Infinity,
+          firstSheepSell: (last(alerts.sheep_sell) as any)?.ts ?? Infinity,
+          firstSheepBuy: (last(alerts.sheep_buy) as any)?.ts ?? Infinity,
           sharkBuyCount: alerts.shark_buy.length,
           sharkSellCount: alerts.shark_sell.length,
           sheepBuyCount: alerts.sheep_buy.length,
@@ -175,10 +182,10 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         <div className="grid grid-cols-1 gap-6 pt-2 md:grid-cols-2 lg:grid-cols-4">
           <div className="grid grid-cols-4">
             <div className="col-span-3">
-              <label>Sell Rate</label>
+              <label>Sell Rate %</label>
               <Slider
                 min={1}
-                max={5}
+                max={100}
                 onChange={(newVal) => setSellRate(newVal)}
                 value={sellRate}
               />
@@ -186,7 +193,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
             <div className="mt-5">
               <InputNumber
                 min={1}
-                max={5}
+                max={100}
                 style={{ margin: '0 16px' }}
                 value={sellRate}
                 onChange={(newVal) =>
@@ -197,7 +204,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
           </div>
           <div className="grid grid-cols-4">
             <div className="col-span-3">
-              <label>Buy Rate</label>
+              <label>Buy Rate %</label>
               <Slider
                 min={1}
                 max={5}
@@ -221,6 +228,7 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
         {dataSource && (
           <div className="mt-5 grid grid-cols-1 text-xs">
             <div className="grid grid-cols-1 text-xs">
+              <h2>GROUPED</h2>
               <Table
                 pagination={false}
                 columns={columns}
@@ -263,6 +271,10 @@ export default combineHOC(withMarketIntraDayChartData)((props) => {
             </div>
           </div>
         )}
+        <MarketIntraDayTickAnalysisTable
+          buyRate={buyRate}
+          sellRate={sellRate}
+        />
       </Row>
     </>
   );
