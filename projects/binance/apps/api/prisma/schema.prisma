@@ -67,3 +67,16 @@ model StrategyHistoryTestResult {
 
   @@map("strategy_history_test_result")
 }
+
+model Flag {
+  id    Int    @id @default(autoincrement())
+  type  String @default("_") @db.VarChar()
+  key   String @db.VarChar()
+  value String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([type, key])
+  @@map("flag")
+}
