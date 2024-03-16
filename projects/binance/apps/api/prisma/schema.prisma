@@ -60,6 +60,7 @@ model StrategyHistoryTestResult {
   pass_count    Int     @default(0) @db.SmallInt
   fail_count    Int     @default(0) @db.SmallInt
   unknown_count Int     @default(0) @db.SmallInt
+  risk_count    Int     @default(0) @db.SmallInt
   profit        Float
   data          String?
   result        String?
