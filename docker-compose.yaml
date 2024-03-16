@@ -18,6 +18,7 @@ services:
   #      - MYSQL_PORT=3306
 
   postgres:
+    restart: always
     image: postgres:latest
     container_name: "${STACK_NAME}-postgres"
     hostname: "${STACK_NAME}-postgres"
@@ -31,6 +32,7 @@ services:
       - POSTGRES_PASSWORD=root
 
   rabbitmq:
+    restart: always
     image: rabbitmq:3.13-management
     hostname: "${STACK_NAME}-rabbitmq"
     container_name: "${STACK_NAME}-rabbitmq"
