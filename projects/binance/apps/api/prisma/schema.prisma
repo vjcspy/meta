@@ -62,6 +62,7 @@ model StrategyHistoryTestResult {
   unknown_count Int     @default(0) @db.SmallInt
   risk_count    Int     @default(0) @db.SmallInt
   profit        Float
+  profit_base   Float   @default(0)
   data          String?
   result        String?
   note          String?
