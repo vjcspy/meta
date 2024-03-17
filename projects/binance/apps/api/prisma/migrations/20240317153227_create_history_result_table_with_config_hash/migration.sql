@@ -15,7 +15,11 @@ CREATE TABLE "strategy_history_test_result" (
     "data" TEXT,
     "result" TEXT,
     "note" TEXT,
+    "config_hash" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "strategy_history_test_result_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE INDEX "strategy_history_test_result_config_hash_idx" ON "strategy_history_test_result" USING HASH ("config_hash");
