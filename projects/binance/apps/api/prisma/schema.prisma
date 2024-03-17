@@ -68,9 +68,11 @@ model StrategyHistoryTestResult {
   data          String?
   result        String?
   note          String?
+  config_hash   String
 
   created_at DateTime @default(now())
 
+  @@index([config_hash], type: Hash)
   @@map("strategy_history_test_result")
 }
 
