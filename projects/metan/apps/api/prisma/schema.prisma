@@ -7,37 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Candlestick {
-  id                           BigInt @id @default(autoincrement())
-  symbol                       String
-  interval                     String @db.VarChar(3)
-  open_time                    BigInt
-  open                         Float
-  high                         Float
-  low                          Float
-  close                        Float
-  volume                       Float
-  close_time                   BigInt
-  quote_asset_volume           Float
-  number_of_trades             Int
-  taker_buy_volume             Float
-  taker_buy_quote_asset_volume Float
+model kline {
+  id         BigInt @id @default(autoincrement())
+  symbol     String
+  interval   String @db.VarChar(3)
+  open_time  BigInt
+  open       Float
+  high       Float
+  low        Float
+  close      Float
+  volume     Float
+  close_time BigInt
 
   @@unique([symbol, open_time, interval])
-  @@map("candlesticks")
+  @@map("klines")
 }
 
-model BinanceTrade {
-  aggregate_trade_id BigInt  @id @map(name: "aggregate_trade_id")
-  price              Float
-  quantity           Float
-  first_trade_id     BigInt
-  last_trade_id      BigInt
-  timestamp          BigInt
-  was_buyer_maker    Boolean
-
-  @@map("um_aggregate_trades")
-}
+// model BinanceTrade {
+//   aggregate_trade_id BigInt  @id @map(name: "aggregate_trade_id")
+//   price              Float
+//   quantity           Float
+//   first_trade_id     BigInt
+//   last_trade_id      BigInt
+//   timestamp          BigInt
+//   was_buyer_maker    Boolean
+//
+//   @@map("um_aggregate_trades")
+// }
 
 model HistoryDataFetcherState {
   id            Int      @id @default(autoincrement())

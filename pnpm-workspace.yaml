@@ -5,7 +5,7 @@ packages:
 #  - "projects/main/apps/proxy-sls"
 #  - "projects/main/apps/slack-sls"
   #  ________ Projects BINANCE ________
-  - "projects/binance/apps/api"
+  - "projects/metan/apps/api"
   #  ________ Projects STOCK ________
 #  - "projects/stock/apps/api"
 #  - "projects/stock/apps/frontend"
