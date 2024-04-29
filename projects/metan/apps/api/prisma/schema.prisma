@@ -10,7 +10,7 @@ datasource db {
 model kline {
   id         BigInt @id @default(autoincrement())
   symbol     String
-  interval   String @db.VarChar(3)
+  interval   String @db.VarChar(10)
   open_time  BigInt
   open       Float
   high       Float
