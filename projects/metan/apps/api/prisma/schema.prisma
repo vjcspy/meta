@@ -84,3 +84,15 @@ model Flag {
   @@unique([type, key])
   @@map("flag")
 }
+
+model MexcTransaction {
+  id        Int    @id @default(autoincrement())
+  price     Float
+  volume    Float
+  direction Int    @db.SmallInt
+  position  Int    @db.SmallInt // open position, 1: open position,2:close position,3:position no change,volume is the additional position when O is 1
+  auto      Int    @db.SmallInt // is auto 1 yes, 0 no
+  ts        BigInt
+
+  @@map("mex_transaction")
+}
