@@ -60,6 +60,8 @@ model StrategyHistoryTestResult {
   sl            Float
   tp            Float
   profit        Float
+  best_profit   Float   @default(0)
+  best_leverage Float   @default(0)
   profit_base   Float   @default(0)
   data          String?
   result        String?
