@@ -21,10 +21,7 @@
     "dev:proxy": "turbo run dev --no-daemon --filter=@main/apps-proxy-sls",
     "lint": "turbo run lint --no-daemon --filter=@main/apps-*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "watch": "turbo run watch --parallel --no-daemon",
-    "binance": "___________________________BINANCE___________________________",
-    "binance:dev": "turbo run dev --no-daemon --filter=@binance/apps-*",
-    "binance:build": "turbo run build --no-daemon --filter=@binance/apps-*"
+    "watch": "turbo run watch --parallel --no-daemon"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",
