@@ -95,7 +95,7 @@ export class AlertsJob {
                             type: 'section',
                             text: {
                               type: 'mrkdwn',
-                              text: `<https://stock.ngocdiep.top/stock-trading/alert-disable/${alert.id}|Disable alert>`,
+                              text: `<https://stock.dinhkhoile.com/stock-trading/alert-disable/${alert.id}|Disable alert>`,
                             },
                           },
                         ],

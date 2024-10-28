@@ -11,7 +11,7 @@ import { find } from 'lodash';
 export class LiveRequest {
   private readonly logger = new XLogger(LiveRequest.name);
 
-  static BASE = 'https://stock.ngocdiep.top';
+  static BASE = 'https://stock.dinhkhoile.com';
 
   constructor(private readonly httpService: HttpService) {}
 
