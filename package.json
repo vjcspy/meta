@@ -9,6 +9,7 @@
     "projects/bedkingdom/apps/*"
   ],
   "scripts": {
+    "start:prod": "pnpm --filter @stock/apps-api start:prod",
     "build": "pnpm run stock:build",
     "stock": "___________________________STOCK___________________________",
     "stock:build": "turbo run build --no-daemon --filter=@stock/apps-*",
