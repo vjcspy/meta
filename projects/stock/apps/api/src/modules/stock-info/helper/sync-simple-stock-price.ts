@@ -41,20 +41,12 @@ export class SyncSimpleStockPrice {
       }
 
       if (syncStatus.number_of_try > 3) {
-        this.logger.error(
-          `Too many sync failures ${symbol} date ${syncDate.format(
-            'YYYY-MM-DD',
-          )}`,
-          new Error(
-            `Too many sync failures ${symbol} date ${syncDate.format(
-              'YYYY-MM-DD',
-            )}`,
-          ),
-        );
+        const message = `Too many sync failures ${symbol} date ${syncDate.format(
+          'YYYY-MM-DD',
+        )}`;
+        this.logger.error(message, new Error(message));
         this.slackHelper.postMessage(SyncValues.SLACK_CHANNEL_NAME, {
-          text: `Too many sync simple stock price failures ${symbol} date ${syncDate.format(
-            'YYYY-MM-DD',
-          )}`,
+          text: message,
         });
         return;
       }
