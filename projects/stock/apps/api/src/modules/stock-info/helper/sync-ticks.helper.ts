@@ -40,7 +40,7 @@ export class SyncTicksHelper {
       }
 
       if (syncStatus.number_of_try > 3) {
-        const message = `Too many sync failures ${symbol} date ${syncDate.format(
+        const message = `SyncTicksHelper.syncTicks Too many sync failures ${symbol} date ${syncDate.format(
           'YYYY-MM-DD',
         )}`;
         this.logger.error(message, new Error(message));

@@ -41,7 +41,7 @@ export class SyncSimpleStockPrice {
       }
 
       if (syncStatus.number_of_try > 3) {
-        const message = `Too many sync failures ${symbol} date ${syncDate.format(
+        const message = `SyncSimpleStockPrice.SyncSimpleStockPrice Too many sync failures ${symbol} date ${syncDate.format(
           'YYYY-MM-DD',
         )}`;
         this.logger.error(message, new Error(message));
