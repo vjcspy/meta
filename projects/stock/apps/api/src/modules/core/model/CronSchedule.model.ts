@@ -49,8 +49,8 @@ export class CronScheduleModel {
           typeof schedule?.meta === 'object'
             ? schedule.meta
             : typeof schedule?.meta === 'string'
-            ? JSON.parse(schedule.meta)
-            : {};
+              ? JSON.parse(schedule.meta)
+              : {};
 
         if (typeof successMeta === 'object') {
           await prisma.cronSchedule.update({

@@ -1,6 +1,6 @@
+import { IsDateYYYYMMDD } from '@modules/core/util/validator/IsDateYYYYMMDD';
 import { Expose, Transform } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
-import {IsDateYYYYMMDD} from "@modules/core/util/validator/IsDateYYYYMMDD";
 
 export class CorResponse {
   @Expose()
@@ -51,7 +51,6 @@ export class SymbolDateDtoQuery {
   @IsDateYYYYMMDD()
   date: string;
 }
-
 
 export class SymbolInfoResponse {
   @Expose({
