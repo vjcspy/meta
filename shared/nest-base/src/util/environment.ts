@@ -7,7 +7,7 @@ export function getAppName() {
  * @returns {string}
  */
 export function getInstanceId() {
-  return process.env.INSTANCE_ID ? `PM2_${process.env.INSTANCE_ID}` : '_';
+  return process.env.POD_NAME ? `${process.env.POD_NAME}` : '';
 }
 
 export function isMainProcess() {

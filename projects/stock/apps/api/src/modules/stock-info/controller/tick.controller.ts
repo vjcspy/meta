@@ -116,6 +116,11 @@ export class TickController {
     return new OkResponse(undefined, { ticks: his, analysis });
   }
 
+  /**
+   * Frontend calls to manually refresh tick
+   * @param infoQuery
+   * @returns {Promise<OkResponse>}
+   */
   @Get('refresh-tick')
   async refreshTick(@Query() infoQuery: GetSymbolInfoQuery) {
     if (!isTradingTime()) {

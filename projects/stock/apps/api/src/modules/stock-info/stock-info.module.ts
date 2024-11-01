@@ -70,8 +70,8 @@ export class StockInfoModule implements OnModuleInit {
   constructor(private slackHelper: SlackHelper) {}
 
   onModuleInit(): any {
-    /*
-     * TODO: temporary add consumer related to DI issue
+    /**
+     * @todo: temporary add consumer related to DI issue
      * */
     RabbitMQModule.addHandler([SyncTicksConsumer]);
 

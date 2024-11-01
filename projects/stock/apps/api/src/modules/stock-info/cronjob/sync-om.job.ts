@@ -8,6 +8,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import * as moment from 'moment/moment';
 
+/**
+ * @deprecated
+ * */
 @Injectable()
 export class SyncOmJob {
   private readonly logger = new Logger(SyncOmJob.name);
