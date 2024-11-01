@@ -11,10 +11,10 @@
     "deploy:prod": "NODE_ENV=production sls deploy --stage production --verbose --aws-s3-accelerate",
     "remove:prod": "NODE_ENV=production sls remove --stage production",
     "clean": "rimraf dist .webpack .serverless",
-    "lint": "eslint --ext ts,tsx ."
+    "lint": "eslint --ext ts,tsx --fix ."
   },
   "devDependencies": {
-    "@serverless/typescript": "latest",
+    "@serverless/typescript": "^3.38.0",
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.15",
@@ -28,7 +28,7 @@
     "rimraf": "^3.0.2",
     "serverless": "^3.26.0",
     "serverless-dotenv-plugin": "^4.0.2",
-    "serverless-esbuild": "latest",
+    "serverless-esbuild": "^1.54.5",
     "serverless-offline": "^12.0.3",
     "sls-config": "workspace:*",
     "tsconfig": "workspace:*",

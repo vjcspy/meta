@@ -9,7 +9,7 @@ import type { Request, Response } from 'express';
 
 export const slackPostMessageController = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   console.log('slackPostMessageController');
   if (!initializeSlack()) {
