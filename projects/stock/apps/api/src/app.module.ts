@@ -1,5 +1,6 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
+import { isCronEnable } from '@modules/core/util/isCronEnable';
 import { HealthcheckModule } from '@modules/healthcheck/healthcheck.module';
 import { StockModule } from '@modules/stock/stock.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
@@ -36,7 +37,7 @@ import { AppService } from './app.service';
       ],
     }),
     BaseModule,
-    ...(process.env.CRON_ENABLE === 'true' ? [ScheduleModule.forRoot()] : []),
+    ...(isCronEnable() ? [ScheduleModule.forRoot()] : []),
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
       // Nếu không khai báo name thì mặc định là đang config cho default connection
@@ -60,7 +61,6 @@ import { AppService } from './app.service';
     StockInfoModule,
     StockTradingModule,
     TestbedModule,
-    // MigrationModule,
     TCBSModule,
   ],
   controllers: [AppController],
@@ -80,7 +80,10 @@ export class AppModule
   }
 
   async onModuleInit() {
-    // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
+    if (isCronEnable()) {
+      this.logger.info('Cron is enabled');
+    }
+
     try {
       await this.$connect();
       this.logger.log('Successfully connected to PostgresDB');
