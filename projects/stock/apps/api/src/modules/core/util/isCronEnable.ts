@@ -1,5 +1,4 @@
-import { isEmpty } from 'lodash-es';
-import process from 'process';
+import { isEmpty } from 'lodash';
 
 /**
  * Cron only run in POD Ordinal 0 (K8s StatefulSet)

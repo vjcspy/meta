@@ -9,7 +9,12 @@ import { TCBSModule } from '@modules/tbcs/tcbs.module';
 import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule, getNodeEnv, isProduction, XLogger } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
-import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
+import type {
+  OnApplicationBootstrap,
+  OnApplicationShutdown,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -68,7 +73,11 @@ import { AppService } from './app.service';
 })
 export class AppModule
   extends PrismaClient
-  implements OnModuleInit, OnApplicationBootstrap
+  implements
+    OnModuleInit,
+    OnApplicationBootstrap,
+    OnModuleDestroy,
+    OnApplicationShutdown
 {
   private readonly logger = new XLogger(AppModule.name);
 
@@ -89,6 +98,13 @@ export class AppModule
       this.logger.log('Successfully connected to PostgresDB');
     } catch (e) {
       this.logger.error('Could not connect to PostgresDB', e);
+      // Gửi thông báo lỗi qua Slack nếu đang ở production
+      if (isProduction()) {
+        this.slackHelper.postMessage(SlackHelper.DEFAULT_CHANNEL_NAME, {
+          text: `❌ Database connection failed: ${e.message}`,
+        });
+      }
+      throw e;
     }
   }
 
@@ -99,5 +115,15 @@ export class AppModule
         text: `Successfully bootstrap`,
       });
     }
+  }
+
+  async onModuleDestroy() {
+    await this.$disconnect();
+    this.logger.log('Database connection closed');
+  }
+
+  async onApplicationShutdown(signal?: string) {
+    this.logger.log(`Application shutdown (signal: ${signal})`);
+    await this.$disconnect();
   }
 }

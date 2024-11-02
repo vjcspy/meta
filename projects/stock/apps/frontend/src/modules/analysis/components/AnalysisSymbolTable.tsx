@@ -103,7 +103,9 @@ export default combineHOC(
           return (
             adjustMarketCat && (
               <Switch
+                // @ts-ignore
                 checkedChildren={<CheckOutlined />}
+                // @ts-ignore
                 unCheckedChildren={<CloseOutlined />}
                 checked={
                   props.state.selectedMarketCat.symbols.indexOf(value) > -1
