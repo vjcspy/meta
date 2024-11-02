@@ -90,7 +90,9 @@ export class AppModule
 
   async onModuleInit() {
     if (isCronEnable()) {
-      this.logger.info('Cron is enabled');
+      this.logger.log('Cron is enabled');
+    } else {
+      this.logger.log('Cron is disabled');
     }
 
     try {
