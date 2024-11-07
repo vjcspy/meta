@@ -25,7 +25,7 @@ importers:
         version: 10.4.6(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(@nestjs/core@10.4.6)
       '@prisma/client':
         specifier: latest
-        version: 5.21.1(prisma@5.21.1)
+        version: 5.22.0(prisma@5.21.1)
       axios:
         specifier: ^1.7.7
         version: 1.7.7
@@ -166,8 +166,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       turbo:
-        specifier: ^1.13.4
-        version: 1.13.4
+        specifier: ^2.2.3
+        version: 2.2.3
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -598,10 +598,10 @@ importers:
     dependencies:
       '@golevelup/nestjs-common':
         specifier: latest
-        version: 2.0.0(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))
+        version: 2.0.1(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))
       '@golevelup/nestjs-discovery':
         specifier: latest
-        version: 4.0.1(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(@nestjs/core@10.4.6)
+        version: 4.0.2(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(@nestjs/core@10.4.6)
       '@golevelup/nestjs-modules':
         specifier: latest
         version: 0.7.1(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(rxjs@7.8.1)
@@ -1160,6 +1160,7 @@ packages:
   '@babel/plugin-proposal-async-generator-functions@7.20.7':
     resolution: {integrity: sha512-xMbiLsn/8RK7Wq7VeVytytS2L6qE69bXPB10YCmMdDZbKF4okCqY74pI/jJQ/8U0b/F6NrT2+14b8/P9/3AMGA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-async-generator-functions instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -1172,42 +1173,49 @@ packages:
   '@babel/plugin-proposal-class-static-block@7.21.0':
     resolution: {integrity: sha512-XP5G9MWNUskFuP30IfFSEFB0Z6HzLIUcjYM4bYOPHXl7eiJ9HFv8tWj6TXTN5QODiEhDZAeI4hLok2iHFFV4hw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-static-block instead.
     peerDependencies:
       '@babel/core': ^7.12.0
 
   '@babel/plugin-proposal-dynamic-import@7.18.6':
     resolution: {integrity: sha512-1auuwmK+Rz13SJj36R+jqFPMJWyKEDd7lLSdOj4oJK0UTgGueSAtkrCvz9ewmgyU/P941Rv2fQwZJN8s6QruXw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-dynamic-import instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-export-namespace-from@7.18.9':
     resolution: {integrity: sha512-k1NtHyOMvlDDFeb9G5PhUXuGj8m/wiwojgQVEhJ/fsVsMCpLyOP4h0uGEjYJKrRI+EVPlb5Jk+Gt9P97lOGwtA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-export-namespace-from instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-json-strings@7.18.6':
     resolution: {integrity: sha512-lr1peyn9kOdbYc0xr0OdHTZ5FMqS6Di+H0Fz2I/JwMzGmzJETNeOFq2pBySw6X/KFL5EWDjlJuMsUGRFb8fQgQ==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-json-strings instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-logical-assignment-operators@7.20.7':
     resolution: {integrity: sha512-y7C7cZgpMIjWlKE5T7eJwp+tnRYM89HmRvWM5EQuB5BoHEONjmQ8lSNmBUwOyy/GFRsohJED51YBF79hE1djug==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-logical-assignment-operators instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-nullish-coalescing-operator@7.18.6':
     resolution: {integrity: sha512-wQxQzxYeJqHcfppzBDnm1yAY0jSRkUXR2z8RePZYrKwMKgMlE8+Z6LUno+bd6LvbGh8Gltvy74+9pIYkr+XkKA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-numeric-separator@7.18.6':
     resolution: {integrity: sha512-ozlZFogPqoLm8WBr5Z8UckIoE4YQ5KESVcNudyXOR8uqIkliTEgJ3RoketfG6pmzLdeZF0H/wjE9/cCEitBl7Q==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -1220,30 +1228,35 @@ packages:
   '@babel/plugin-proposal-optional-catch-binding@7.18.6':
     resolution: {integrity: sha512-Q40HEhs9DJQyaZfUjjn6vE8Cv4GmMHCYuMGIWUnlxH6400VGxOuwWsPt4FxXxJkC/5eOzgn0z21M9gMT4MOhbw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-catch-binding instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-optional-chaining@7.21.0':
     resolution: {integrity: sha512-p4zeefM72gpmEe2fkUr/OnOXpWEf8nAgk7ZYVqqfFiyIG7oFfVZcCrU64hWn5xp4tQ9LkV4bTIa5rD0KANpKNA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-private-methods@7.18.6':
     resolution: {integrity: sha512-nutsvktDItsNn4rpGItSNV2sz1XwS+nfU0Rg8aCx3W3NOKVzdMjJRu0O5OkgDp3ZGICSTbgRpxZoWsxoKRvbeA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-private-property-in-object@7.21.0':
     resolution: {integrity: sha512-ha4zfehbJjc5MmXBlHec1igel5TJXXLDDRbuJ4+XT2TJcyD9/V1919BA8gMvsdHcNMBy4WBUBiRb3nw/EQUtBw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-unicode-property-regex@7.18.6':
     resolution: {integrity: sha512-2BShG/d5yoZyXZfVePH91urL5wTG6ASZU9M4o03lKK8u8UW1y08OMttBSOADTcJrnPMpvDXRG3G8fyLh4ovs8w==}
     engines: {node: '>=4'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-unicode-property-regex instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -1905,13 +1918,13 @@ packages:
   '@floating-ui/utils@0.1.6':
     resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
 
-  '@golevelup/nestjs-common@2.0.0':
-    resolution: {integrity: sha512-D9RLXgkqn9SDLnZ2VoMER9l/+g5CM9Z7sZXa+10+0rZs6yevMepoiWmMVsFoUXLzYG2GwfixHLExwUr3XBCHFw==}
+  '@golevelup/nestjs-common@2.0.1':
+    resolution: {integrity: sha512-XYi6K1ITNwIyH/nGNPaaQlZ6bEwvHuUe5OBTFhCCesDk0ibFXHaO+UoLD6iHQz7qDWmqzwiY0DkhujvE+S5z8g==}
     peerDependencies:
       '@nestjs/common': ^10.3.0
 
-  '@golevelup/nestjs-discovery@4.0.1':
-    resolution: {integrity: sha512-HFXBJayEkYcU/bbxOztozONdWaZR34ZeJ2zRbZIWY8d5K26oPZQTvJ4L0STW3XVRGWtoE0WBpmx2YPNgYvcmJQ==}
+  '@golevelup/nestjs-discovery@4.0.2':
+    resolution: {integrity: sha512-0JRJe4KpONdQ2U+ajteHrc71LgYzAR70KEzwI+9EDogK+ufn2VVn5qpDg+z85MhxaB3EEFLsAx0uDx98wqswuQ==}
     peerDependencies:
       '@nestjs/common': ^10.3.0
       '@nestjs/core': ^10.3.0
@@ -2466,8 +2479,8 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@prisma/client@5.21.1':
-    resolution: {integrity: sha512-3n+GgbAZYjaS/k0M03yQsQfR1APbr411r74foknnsGpmhNKBG49VuUkxIU6jORgvJPChoD4WC4PqoHImN1FP0w==}
+  '@prisma/client@5.22.0':
+    resolution: {integrity: sha512-M0SVXfyHnQREBKxCgyo7sffrKttwE6R8PMq330MIUF0pTwjUhLbW84pFDlf06B27XyCR++VtjugEnIHdr07SVA==}
     engines: {node: '>=16.13'}
     peerDependencies:
       prisma: '*'
@@ -8818,38 +8831,38 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
-  turbo-darwin-64@1.13.4:
-    resolution: {integrity: sha512-A0eKd73R7CGnRinTiS7txkMElg+R5rKFp9HV7baDiEL4xTG1FIg/56Vm7A5RVgg8UNgG2qNnrfatJtb+dRmNdw==}
+  turbo-darwin-64@2.2.3:
+    resolution: {integrity: sha512-Rcm10CuMKQGcdIBS3R/9PMeuYnv6beYIHqfZFeKWVYEWH69sauj4INs83zKMTUiZJ3/hWGZ4jet9AOwhsssLyg==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@1.13.4:
-    resolution: {integrity: sha512-eG769Q0NF6/Vyjsr3mKCnkG/eW6dKMBZk6dxWOdrHfrg6QgfkBUk0WUUujzdtVPiUIvsh4l46vQrNVd9EOtbyA==}
+  turbo-darwin-arm64@2.2.3:
+    resolution: {integrity: sha512-+EIMHkuLFqUdJYsA3roj66t9+9IciCajgj+DVek+QezEdOJKcRxlvDOS2BUaeN8kEzVSsNiAGnoysFWYw4K0HA==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@1.13.4:
-    resolution: {integrity: sha512-Bq0JphDeNw3XEi+Xb/e4xoKhs1DHN7OoLVUbTIQz+gazYjigVZvtwCvgrZI7eW9Xo1eOXM2zw2u1DGLLUfmGkQ==}
+  turbo-linux-64@2.2.3:
+    resolution: {integrity: sha512-UBhJCYnqtaeOBQLmLo8BAisWbc9v9daL9G8upLR+XGj6vuN/Nz6qUAhverN4Pyej1g4Nt1BhROnj6GLOPYyqxQ==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@1.13.4:
-    resolution: {integrity: sha512-BJcXw1DDiHO/okYbaNdcWN6szjXyHWx9d460v6fCHY65G8CyqGU3y2uUTPK89o8lq/b2C8NK0yZD+Vp0f9VoIg==}
+  turbo-linux-arm64@2.2.3:
+    resolution: {integrity: sha512-hJYT9dN06XCQ3jBka/EWvvAETnHRs3xuO/rb5bESmDfG+d9yQjeTMlhRXKrr4eyIMt6cLDt1LBfyi+6CQ+VAwQ==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@1.13.4:
-    resolution: {integrity: sha512-OFFhXHOFLN7A78vD/dlVuuSSVEB3s9ZBj18Tm1hk3aW1HTWTuAw0ReN6ZNlVObZUHvGy8d57OAGGxf2bT3etQw==}
+  turbo-windows-64@2.2.3:
+    resolution: {integrity: sha512-NPrjacrZypMBF31b4HE4ROg4P3nhMBPHKS5WTpMwf7wydZ8uvdEHpESVNMOtqhlp857zbnKYgP+yJF30H3N2dQ==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@1.13.4:
-    resolution: {integrity: sha512-u5A+VOKHswJJmJ8o8rcilBfU5U3Y1TTAfP9wX8bFh8teYF1ghP0EhtMRLjhtp6RPa+XCxHHVA2CiC3gbh5eg5g==}
+  turbo-windows-arm64@2.2.3:
+    resolution: {integrity: sha512-fnNrYBCqn6zgKPKLHu4sOkihBI/+0oYFr075duRxqUZ+1aLWTAGfHZLgjVeLh3zR37CVzuerGIPWAEkNhkWEIw==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@1.13.4:
-    resolution: {integrity: sha512-1q7+9UJABuBAHrcC4Sxp5lOqYS5mvxRrwa33wpIyM18hlOCpRD/fTJNxZ0vhbMcJmz15o9kkVm743mPn7p6jpQ==}
+  turbo@2.2.3:
+    resolution: {integrity: sha512-5lDvSqIxCYJ/BAd6rQGK/AzFRhBkbu4JHVMLmGh/hCb7U3CqSnr5Tjwfy9vc+/5wG2DJ6wttgAaA7MoCgvBKZQ==}
     hasBin: true
 
   type-check@0.4.0:
@@ -9236,6 +9249,7 @@ packages:
 
   workbox-google-analytics@6.5.4:
     resolution: {integrity: sha512-8AU1WuaXsD49249Wq0B2zn4a/vvFfHkpcFfqAFHNHwln3jK9QUYmzdkKXGIZl9wyKNP+RRX30vcgcyWMcZ9VAg==}
+    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
 
   workbox-navigation-preload@6.5.4:
     resolution: {integrity: sha512-IIwf80eO3cr8h6XSQJF+Hxj26rg2RPFVUmJLUlM0+A2GzB4HFbQyKkrgD5y2d84g2IbJzP4B4j5dPBRzamHrng==}
@@ -9419,7 +9433,7 @@ snapshots:
   '@acuminous/bitsyntax@0.1.2':
     dependencies:
       buffer-more-ints: 1.0.0
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       safe-buffer: 5.1.2
     transitivePeerDependencies:
       - supports-color
@@ -9892,7 +9906,7 @@ snapshots:
       '@babel/traverse': 7.20.13
       '@babel/types': 7.21.2
       convert-source-map: 1.9.0
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -9912,7 +9926,7 @@ snapshots:
       '@babel/traverse': 7.23.7
       '@babel/types': 7.23.6
       convert-source-map: 2.0.0
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -9983,7 +9997,7 @@ snapshots:
       '@babel/core': 7.20.12
       '@babel/helper-compilation-targets': 7.20.7(@babel/core@7.20.12)
       '@babel/helper-plugin-utils': 7.20.2
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
       semver: 6.3.1
@@ -10831,7 +10845,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.18.6
       '@babel/parser': 7.20.15
       '@babel/types': 7.21.2
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -10846,7 +10860,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.23.6
       '@babel/types': 7.23.6
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -11058,7 +11072,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.2
@@ -11082,13 +11096,13 @@ snapshots:
 
   '@floating-ui/utils@0.1.6': {}
 
-  '@golevelup/nestjs-common@2.0.0(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))':
+  '@golevelup/nestjs-common@2.0.1(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))':
     dependencies:
       '@nestjs/common': 10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1)
       lodash: 4.17.21
-      nanoid: 3.3.6
+      nanoid: 3.3.7
 
-  '@golevelup/nestjs-discovery@4.0.1(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(@nestjs/core@10.4.6)':
+  '@golevelup/nestjs-discovery@4.0.2(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(@nestjs/core@10.4.6)':
     dependencies:
       '@nestjs/common': 10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1)
       '@nestjs/core': 10.4.6(@nestjs/common@10.4.6(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.2.1)(rxjs@7.8.1))(@nestjs/platform-express@10.4.6)(reflect-metadata@0.2.1)(rxjs@7.8.1)
@@ -11279,7 +11293,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -11834,7 +11848,7 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@prisma/client@5.21.1(prisma@5.21.1)':
+  '@prisma/client@5.22.0(prisma@5.21.1)':
     optionalDependencies:
       prisma: 5.21.1
 
@@ -12861,7 +12875,7 @@ snapshots:
       '@typescript-eslint/types': 8.12.2
       '@typescript-eslint/typescript-estree': 8.12.2(typescript@5.6.3)
       '@typescript-eslint/visitor-keys': 8.12.2
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eslint: 8.57.1
     optionalDependencies:
       typescript: 5.6.3
@@ -12887,7 +12901,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 7.18.0(typescript@5.6.3)
       '@typescript-eslint/utils': 7.18.0(eslint@8.57.1)(typescript@5.6.3)
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eslint: 8.57.1
       ts-api-utils: 1.4.0(typescript@5.6.3)
     optionalDependencies:
@@ -12905,7 +12919,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.6.3
@@ -12919,7 +12933,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 7.18.0
       '@typescript-eslint/visitor-keys': 7.18.0
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -12934,7 +12948,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.12.2
       '@typescript-eslint/visitor-keys': 8.12.2
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       fast-glob: 3.3.2
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -15074,7 +15088,7 @@ snapshots:
   eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.12.2(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.12.2(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
       eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.12.2(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.12.2(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.12.2(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
@@ -15269,7 +15283,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -16410,7 +16424,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -19520,7 +19534,7 @@ snapshots:
     dependencies:
       component-emitter: 1.3.1
       cookiejar: 2.1.4
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
       fast-safe-stringify: 2.1.1
       form-data: 4.0.1
       formidable: 2.1.2
@@ -19939,32 +19953,32 @@ snapshots:
       tslib: 1.14.1
       typescript: 5.6.3
 
-  turbo-darwin-64@1.13.4:
+  turbo-darwin-64@2.2.3:
     optional: true
 
-  turbo-darwin-arm64@1.13.4:
+  turbo-darwin-arm64@2.2.3:
     optional: true
 
-  turbo-linux-64@1.13.4:
+  turbo-linux-64@2.2.3:
     optional: true
 
-  turbo-linux-arm64@1.13.4:
+  turbo-linux-arm64@2.2.3:
     optional: true
 
-  turbo-windows-64@1.13.4:
+  turbo-windows-64@2.2.3:
     optional: true
 
-  turbo-windows-arm64@1.13.4:
+  turbo-windows-arm64@2.2.3:
     optional: true
 
-  turbo@1.13.4:
+  turbo@2.2.3:
     optionalDependencies:
-      turbo-darwin-64: 1.13.4
-      turbo-darwin-arm64: 1.13.4
-      turbo-linux-64: 1.13.4
-      turbo-linux-arm64: 1.13.4
-      turbo-windows-64: 1.13.4
-      turbo-windows-arm64: 1.13.4
+      turbo-darwin-64: 2.2.3
+      turbo-darwin-arm64: 2.2.3
+      turbo-linux-64: 2.2.3
+      turbo-linux-arm64: 2.2.3
+      turbo-windows-64: 2.2.3
+      turbo-windows-arm64: 2.2.3
 
   type-check@0.4.0:
     dependencies:
@@ -20201,7 +20215,7 @@ snapshots:
 
   velocityjs@2.0.6:
     dependencies:
-      debug: 4.3.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
