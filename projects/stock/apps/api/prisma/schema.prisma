@@ -429,17 +429,17 @@ model SyncStatus {
   @@map("sync_status")
 }
 
-model OrderMatching {
-  id   Int      @id @default(autoincrement())
-  code String
-  type Int
-  date DateTime
-  page Int
-  meta Json
-
-  @@index([code])
-  @@map("order_matching")
-}
+// model OrderMatching {
+//   id   Int      @id @default(autoincrement())
+//   code String
+//   type Int
+//   date DateTime
+//   page Int
+//   meta Json
+//
+//   @@index([code])
+//   @@map("order_matching")
+// }
 
 model CronSchedule {
   id       Int    @id @default(autoincrement())
