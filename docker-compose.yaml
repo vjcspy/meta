@@ -1,10 +1,10 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:15.8
     container_name: "${STACK_NAME}-postgres"
     hostname: "${STACK_NAME}-postgres"
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
@@ -16,8 +16,8 @@ services:
     hostname: "${STACK_NAME}-rabbitmq"
     container_name: "${STACK_NAME}-rabbitmq"
     ports:
-      - "5673:5672"
-      - "15673:15672"
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq3:/var/lib/rabbitmq/
       # - ./docker_data/rabbitmq/log/:/var/log/rabbitmq
