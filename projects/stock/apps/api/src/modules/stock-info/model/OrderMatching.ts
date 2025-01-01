@@ -27,24 +27,24 @@ export class OrderMatching {
       syncDate = moment.utc(`${moment().year()}/${_day}`, 'YYYY/DD/MM');
 
       // Xoá các bản ghi của ngày hôm đó
-      await prisma.orderMatching.deleteMany({
-        where: {
-          date: syncDate.toDate(),
-          code,
-          type,
-          page,
-        },
-      });
+      // await prisma.orderMatching.deleteMany({
+      //   where: {
+      //     date: syncDate.toDate(),
+      //     code,
+      //     type,
+      //     page,
+      //   },
+      // });
 
-      await prisma.orderMatching.create({
-        data: {
-          code,
-          type,
-          date: syncDate.toDate(),
-          page,
-          meta: res,
-        },
-      });
+      // await prisma.orderMatching.create({
+      //   data: {
+      //     code,
+      //     type,
+      //     date: syncDate.toDate(),
+      //     page,
+      //     meta: res,
+      //   },
+      // });
 
       await this.syncStatus.saveSuccessStatus(this.getJobIdInfo(code, type), {
         key: this.getJobIdInfo(code, type),

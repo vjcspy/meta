@@ -156,4 +156,11 @@ export class TickController {
 
     return new OkResponse();
   }
+
+  @Get('test-sync-tick')
+  async testSyncTick(@Query() infoQuery: GetSymbolInfoQuery) {
+    this.syncTickPublisher.publishRefreshTick(infoQuery.symbol);
+
+    return new OkResponse();
+  }
 }

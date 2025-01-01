@@ -595,6 +595,7 @@ model StockAlert {
 // }
 //
 
+// ________________________________ TICK Analysis ________________________________
 // Chạy hằng ngày(cuối ngày) để cho ra dữ liệu giao dịch trung bình của ngày hôm đó
 // Thông tin trong bảng này chính là base để so sánh, ví dụ như ngày hôm nay giao dịch nhiều bao nhiêu thì phải so sánh trung bình 5 ngày trước đó chứ không thể so sánh với 1 ngày bất kì xa xôi nào được
 model MarketTickActionHistoryAnalyze {
@@ -707,6 +708,8 @@ model MarketTickJobInfo {
   @@unique([date, type, symbol])
   @@map("market_tick_job_info")
 }
+
+//________________________________________________________________
 
 model SimpleStockPrice {
   id                  Int      @id @default(autoincrement())
