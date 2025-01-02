@@ -155,7 +155,7 @@ export class TickActionAnalyzeHelper {
    * @param date
    * @returns {Promise<void>}
    */
-  async runForDate(date: string) {
+  async runForDate(date: string): Promise<void> {
     this.logger.info(`Start analyzing tick action data for date ${date}`);
 
     const defaultCate = await this.getDefaultCat();
