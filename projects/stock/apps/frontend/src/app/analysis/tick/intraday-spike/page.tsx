@@ -2,7 +2,7 @@ import MarketIntraDaySpike from '@modules/analysis/components/MarketIntraDaySpik
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Intra-day Sum',
+  title: 'Tick Intra-day Spike',
 };
 
 export default function Page() {
