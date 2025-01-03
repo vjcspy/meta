@@ -25,7 +25,7 @@ export class TickActionJob {
   ) {}
 
   /**
-   * Run tick analyze vào cuối ngày và cập nhật vào job status
+   * Run tick analyze từng phút vào cuối ngày (để tổng kết dữ liệu cuối cùng) và cập nhật vào job status
    * @returns {Promise<void>}
    */
   @Cron('0 15 20 * * *', {

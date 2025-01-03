@@ -48,10 +48,10 @@ const SidebarAnalysis = () => {
         {/*    </span>*/}
         {/*  </div>*/}
         {/*</Link>*/}
-        <Link href="/analysis/tick/intraday-sum" className="group">
+        <Link href="/analysis/tick/intraday-spike" className="group">
           <div className="flex items-center">
             <span className="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">
-              ∑ Intra-day (1-N)
+              Intraday Spike
             </span>
           </div>
         </Link>

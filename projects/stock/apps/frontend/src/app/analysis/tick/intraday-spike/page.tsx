@@ -1,4 +1,4 @@
-import MarketIntraDay from '@modules/analysis/components/MarketIntraDay';
+import MarketIntraDaySpike from '@modules/analysis/components/MarketIntraDaySpike';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <MarketIntraDay />
+      <MarketIntraDaySpike />
     </>
   );
 }
