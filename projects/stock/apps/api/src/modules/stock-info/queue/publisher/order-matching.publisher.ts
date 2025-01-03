@@ -4,6 +4,9 @@ import { AmqpConnectionManager } from '@nest/rabbitmq';
 import { Injectable, Logger } from '@nestjs/common';
 import * as _ from 'lodash';
 
+/**
+ * @deprecated
+ * */
 @Injectable()
 export class OrderMatchingPublisher {
   private readonly logger = new Logger(OrderMatchingPublisher.name);

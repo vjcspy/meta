@@ -1,5 +1,6 @@
 import { CoreModule } from '@modules/core/core.module';
 import { SlackHelper } from '@modules/core/helper/slack.helper';
+import { isCronEnable } from '@modules/core/util/isCronEnable';
 import { HealthcheckModule } from '@modules/healthcheck/healthcheck.module';
 import { StockModule } from '@modules/stock/stock.module';
 import { StockInfoModule } from '@modules/stock-info/stock-info.module';
@@ -8,7 +9,12 @@ import { TCBSModule } from '@modules/tbcs/tcbs.module';
 import { TestbedModule } from '@modules/testbed/testbed.module';
 import { BaseModule, getNodeEnv, isProduction, XLogger } from '@nest/base';
 import { RabbitMQModule } from '@nest/rabbitmq';
-import type { OnApplicationBootstrap, OnModuleInit } from '@nestjs/common';
+import type {
+  OnApplicationBootstrap,
+  OnApplicationShutdown,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -36,7 +42,7 @@ import { AppService } from './app.service';
       ],
     }),
     BaseModule,
-    ...(process.env.CRON_ENABLE === 'true' ? [ScheduleModule.forRoot()] : []),
+    ...(isCronEnable() ? [ScheduleModule.forRoot()] : []),
     RabbitMQModule.register({
       uri: `amqp://${process.env.RABBITMQ_USERNAME}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`,
       // Nếu không khai báo name thì mặc định là đang config cho default connection
@@ -60,7 +66,6 @@ import { AppService } from './app.service';
     StockInfoModule,
     StockTradingModule,
     TestbedModule,
-    // MigrationModule,
     TCBSModule,
   ],
   controllers: [AppController],
@@ -68,7 +73,11 @@ import { AppService } from './app.service';
 })
 export class AppModule
   extends PrismaClient
-  implements OnModuleInit, OnApplicationBootstrap
+  implements
+    OnModuleInit,
+    OnApplicationBootstrap,
+    OnModuleDestroy,
+    OnApplicationShutdown
 {
   private readonly logger = new XLogger(AppModule.name);
 
@@ -80,12 +89,24 @@ export class AppModule
   }
 
   async onModuleInit() {
-    // this.logger.log(`Rabbit port ${this.configService.get('RABBITMQ_PORT')}`);
+    if (isCronEnable()) {
+      this.logger.log('Cron is enabled');
+    } else {
+      this.logger.log('Cron is disabled');
+    }
+
     try {
       await this.$connect();
       this.logger.log('Successfully connected to PostgresDB');
     } catch (e) {
       this.logger.error('Could not connect to PostgresDB', e);
+      // Gửi thông báo lỗi qua Slack nếu đang ở production
+      if (isProduction()) {
+        this.slackHelper.postMessage(SlackHelper.DEFAULT_CHANNEL_NAME, {
+          text: `❌ Database connection failed: ${e.message}`,
+        });
+      }
+      throw e;
     }
   }
 
@@ -96,5 +117,15 @@ export class AppModule
         text: `Successfully bootstrap`,
       });
     }
+  }
+
+  async onModuleDestroy() {
+    await this.$disconnect();
+    this.logger.log('Database connection closed');
+  }
+
+  async onApplicationShutdown(signal?: string) {
+    this.logger.log(`Application shutdown (signal: ${signal})`);
+    await this.$disconnect();
   }
 }

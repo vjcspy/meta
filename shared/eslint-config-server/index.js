@@ -71,6 +71,7 @@ module.exports = {
         "max-classes-per-file": "off",
         "import/extensions": "off",
         "import/export": "off",
+        "import/no-import-module-exports": "off",
       }
     },
     // Configuration for testing

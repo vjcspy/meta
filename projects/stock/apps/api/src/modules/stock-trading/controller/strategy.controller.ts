@@ -1,5 +1,4 @@
 import { OkResponse } from '@modules/core/model/ok-response';
-import { SymbolDateDtoQuery } from '@modules/stock-info/controller/cor.dto';
 import {
   BulkSubmitActionDto,
   StrategyDto,

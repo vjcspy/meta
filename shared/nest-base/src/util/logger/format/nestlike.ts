@@ -28,7 +28,7 @@ export type NestLikeConsoleFormatOptions = {
 };
 
 export const nestLikeConsoleFormat = (
-  appName: string = '_',
+  appName: string = '',
   options: NestLikeConsoleFormatOptions = {
     colors: !process.env.NO_COLOR,
     prettyPrint: false,
@@ -71,7 +71,7 @@ export const nestLikeConsoleFormat = (
 
     return `${yellow(level.charAt(0).toUpperCase() + level.slice(1))} ${
       typeof timestamp !== 'undefined' ? `${timestamp} ` : ''
-    }${color(`[${appName}]`)} ${
+    }${appName ? color(`[${appName}] `) : ''}${
       typeof context !== 'undefined' ? `${yellow(`[${context}]`)} ` : ''
     }${color(message)}${typeof ms !== 'undefined' ? ` ${yellow(ms)}` : ''}${
       checkShowMeta ? `\n${formattedMeta}` : ''

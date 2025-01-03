@@ -162,6 +162,7 @@ export default combineHOC(withMarketSymbolCategories)((props) => {
         >
           <Space>
             {catName}
+            {/*@ts-ignore*/}
             <SettingOutlined />
           </Space>
         </Button>

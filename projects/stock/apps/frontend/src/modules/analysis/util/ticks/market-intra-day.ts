@@ -96,7 +96,7 @@ export class MarketIntraDay {
   }
 
   static resetTicksData() {
-    MarketIntraDay.log('=>> RESET all Market IntraDay data');
+    MarketIntraDay.log('=>> RESET all Market Tick IntraDay data');
     MarketIntraDay.ticks = [];
     MarketIntraDay.marketIntraDayChartData = undefined;
     MarketIntraDay.loadingInfo = {};

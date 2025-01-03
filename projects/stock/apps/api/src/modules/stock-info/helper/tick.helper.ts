@@ -3,12 +3,20 @@ import { getCurrentDate } from '@modules/core/util/getCurrentDate';
 import { prisma } from '@modules/core/util/prisma';
 import { StockPriceRepo } from '@modules/stock-info/repo/StockPriceRepo';
 import type { TickRecord } from '@modules/stock-info/stock-info.type';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { XLogger } from '@nest/base/dist';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { find, forEach, map, sortBy, uniqBy } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable()
 export class TickHelper {
+  private readonly logger = new XLogger(TickHelper.name);
+
   constructor(private readonly stockPriceRepo: StockPriceRepo) {}
 
   async getHistory(symbol: string, date: string | Date) {
@@ -125,7 +133,13 @@ export class TickHelper {
       },
       take: size,
     });
-
+    if (histories.length !== size) {
+      const error = new BadRequestException(
+        `Không đủ dữ liệu tick cho symbol ${symbol}`,
+      );
+      this.logger.error(`Không đủ dữ liệu tick cho symbol ${symbol}`, error);
+      throw error;
+    }
     return this.mapTickHistories(histories);
   }
 

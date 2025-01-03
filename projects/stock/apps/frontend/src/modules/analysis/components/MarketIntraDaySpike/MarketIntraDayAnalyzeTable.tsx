@@ -1,4 +1,4 @@
-import MarketIntraDayTickAnalysisTable from '@modules/analysis/components/MarketIntraDay/MarketIntraDayTickAnalysisTable';
+import MarketIntraDayTickAnalysisTable from '@modules/analysis/components/MarketIntraDaySpike/MarketIntraDayTickAnalysisTable';
 import withMarketIntraDayChartData from '@modules/analysis/hoc/market-intra-day/withMarketIntraDayChartData';
 import { MarketIntraDay } from '@modules/analysis/util/ticks/market-intra-day';
 import Row from '@src/components/form/Row';

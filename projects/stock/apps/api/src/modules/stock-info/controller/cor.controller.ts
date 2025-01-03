@@ -7,7 +7,6 @@ import {
 } from '@modules/stock-info/controller/cor.dto';
 import { SyncTicksHelper } from '@modules/stock-info/helper/sync-ticks.helper';
 import { COR_START_SYNC_ACTION } from '@modules/stock-info/observers/cor/cor.actions';
-import { OrderMatchingPublisher } from '@modules/stock-info/queue/publisher/order-matching.publisher';
 import { SyncTicksPublisher } from '@modules/stock-info/queue/publisher/sync-ticks.publisher';
 import { CorRepo } from '@modules/stock-info/repo/cor.repo';
 import { EventManagerReactive, XLogger } from '@nest/base';
@@ -27,7 +26,6 @@ export class CorController {
 
   constructor(
     private readonly eventManager: EventManagerReactive,
-    private readonly omPublisher: OrderMatchingPublisher,
     private readonly syncTicksHelper: SyncTicksHelper,
     private readonly syncTicksPublisher: SyncTicksPublisher,
     private readonly corRepo: CorRepo,

@@ -5,6 +5,9 @@ import { EventManagerReactive } from '@nest/base';
 import { RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
 
+/**
+ * @deprecated
+ */
 @Injectable()
 export class OrderMatchingInvestorConsumer {
   constructor(private readonly eventManager: EventManagerReactive) {}

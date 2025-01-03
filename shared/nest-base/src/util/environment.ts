@@ -7,14 +7,16 @@ export function getAppName() {
  * @returns {string}
  */
 export function getInstanceId() {
-  return process.env.INSTANCE_ID ? `PM2_${process.env.INSTANCE_ID}` : '_';
+  return process.env.POD_NAME ? `${process.env.POD_NAME}` : '';
 }
 
+/**
+ * Process đầu tiên chạy job sẽ được coi là main process
+ *
+ * @returns {boolean}
+ */
 export function isMainProcess() {
-  return (
-    process.env.INSTANCE_ID === '0' ||
-    typeof process.env.INSTANCE_ID === 'undefined'
-  );
+  return process.env.INSTANCE_ID === '0' || process.env.POD_ORDINAL === '0';
 }
 
 export function getNodeEnv() {

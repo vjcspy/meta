@@ -19,7 +19,7 @@ const originalOptions: Options = {
   secure: false,
   onProxyReq: (_proxyReq, req: Request) => {
     logger.info(
-      `[Global Functional Middleware]: Proxying ${req.method} request originally made to '${req.originalUrl}'...`
+      `[Global Functional Middleware]: Proxying ${req.method} request originally made to '${req.originalUrl}'...`,
     );
   },
   router: {
@@ -47,5 +47,5 @@ const originalOptions: Options = {
 
 export const bedkingdomStgProxy = createProxyMiddleware(
   ['/proxy/bedkingdom-stg/**'],
-  originalOptions
+  originalOptions,
 );

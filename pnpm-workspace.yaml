@@ -1,9 +1,10 @@
 packages:
-  # - "apps/nestjs"
+#  - "apps/nestjs"
   - "shared/*"
   #  ________ Projects MAIN ________
-  # - "projects/main/apps/proxy-sls"
-  # - "projects/main/apps/slack-sls"
+  - "projects/main/apps/proxy-sls"
+  - "projects/main/apps/slack-sls"
   #  ________ Projects STOCK ________
   - "projects/stock/apps/api"
-  - "projects/stock/packages/com"
+  - "projects/stock/apps/frontend"
+  - "projects/stock/packages/*"
