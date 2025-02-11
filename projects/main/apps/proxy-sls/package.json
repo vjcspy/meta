@@ -20,7 +20,7 @@
     "@types/express": "^4.17.15",
     "@types/node": "^18.7.21",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.16.17",
+    "esbuild": "^0.25.0",
     "eslint-config-server": "workspace:*",
     "execa": "^6.1.0",
     "lint-staged": "^13.1.0",
