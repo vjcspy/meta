@@ -1,3 +1,5 @@
 packages:
-  - "shared/*"
+  #  SHARED
+  - "shared/eslint-config-server"
+  # PROJECTS
   - "projects/unity/apps/server"

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "build",
     "target": "ESNext",
     "module": "CommonJS",
@@ -11,7 +12,12 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@modules/*": [
+        "src/modules/*"
+      ]
+    }
   },
   "include": [
     "src"

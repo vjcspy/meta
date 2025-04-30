@@ -1,0 +1,84 @@
+import { auth, Hash } from '@colyseus/auth';
+import { ENV, ENV_KEY } from '@modules/util/env';
+
+auth.backend_url = `http://localhost:${ENV.get(ENV_KEY.PORT)}`;
+
+const fakeDatabase: any[] = [
+  {
+    email: 'test1@gmail.com',
+    password: '',
+  },
+  {
+    email: 'test2@gmail.com',
+    password: '',
+  },
+];
+
+// https://docs.colyseus.io/auth/module#sign-in-with-email-and-password
+auth.settings.onFindUserByEmail = async (email) => {
+  // console.log('findUserByEmail', email);
+  const user = fakeDatabase.find((entry) => entry.email === email);
+  user.password = await Hash.make('test123456');
+  // console.log('found user', user);
+  return user;
+};
+
+auth.settings.onRegisterWithEmailAndPassword = async (
+  email,
+  password,
+  options,
+) => {
+  const entry = { email, password, ...options };
+  fakeDatabase.push(entry);
+  return entry;
+};
+
+auth.settings.onRegisterAnonymously = async (options) => {
+  const anonymousEntry = { anonymous: true, ...options };
+  return anonymousEntry;
+};
+
+auth.settings.onHashPassword = async (password: string) => Hash.make(password);
+
+// auth.settings.onForgotPassword = async (
+//   email: string,
+//   html: string /* , resetLink: string */,
+// ) => {
+//   await resend.emails.send({
+//     to: email,
+//     subject: '[Your project]: Reset password',
+//     from: 'xxx@your-game.io',
+//     html,
+//   });
+// };
+
+// auth.settings.onResetPassword = async (email: string, password: string) => {
+//   const entry = fakeDatabase.find((entry) => entry.email === email);
+//   entry.password = password;
+//   return true;
+// };
+
+// auth.settings.onSendEmailConfirmation = async (email, html, link) => {
+//   await resend.emails.send({
+//     to: email,
+//     subject: '[Your project]: Confirm your email address',
+//     from: 'no-reply@your-game.io',
+//     html,
+//   });
+// };
+
+// auth.settings.onEmailConfirmed = async (email) => {
+//   const entry = fakeDatabase.find((entry) => entry.email === email);
+//   entry.verified = true;
+//   return true;
+// };
+
+// auth.oauth.addProvider('discord', {
+//   key: 'XXXXXXXXXXXXXXXXXX', // Client ID
+//   secret: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // Client Secret
+//   scope: ['identify', 'email'],
+// });
+
+export const authConfig = () => {
+  console.log('Auth config');
+};

@@ -8,7 +8,7 @@
     "node": ">= 20.9.0"
   },
   "scripts": {
-    "start": "tsx watch src/index.ts",
+    "start": "cross-env NODE_ENV=development tsx watch src/index.ts",
     "loadtest": "tsx loadtest/example.ts --room my_room --numClients 2",
     "build": "npm run clean && tsc",
     "clean": "rimraf build",
@@ -32,6 +32,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@colyseus/auth": "^0.16.6",
     "@colyseus/core": "^0.16.16",
     "@colyseus/monitor": "^0.16.0",
     "@colyseus/playground": "^0.16.0",
@@ -39,6 +40,7 @@
     "@colyseus/tools": "^0.16.0",
     "colyseus": "^0.16.0",
     "eslint-config-server": "workspace:*",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
   }
 }
