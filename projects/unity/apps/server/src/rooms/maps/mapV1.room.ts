@@ -3,7 +3,7 @@ import { Room } from '@colyseus/core';
 import type { Player } from '@modules/declaration/scheme';
 import { SandboxRoomState } from '@modules/declaration/scheme';
 
-export class SandboxRoom extends Room<SandboxRoomState> {
+export class MapV1Room extends Room<SandboxRoomState> {
   state = new SandboxRoomState();
 
   maxClients = 30;

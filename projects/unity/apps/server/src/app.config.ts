@@ -5,7 +5,7 @@ import config from '@colyseus/tools';
 import { authConfig } from '@modules/auth/auth-impl';
 import { matchMaker, RedisPresence } from 'colyseus';
 
-import { SandboxRoom } from './rooms/maps/sandbox/sandbox.room';
+import { MapV1Room } from './rooms/maps/mapV1.room';
 
 /**
  * Import your Room files
@@ -25,7 +25,7 @@ export default config({
     /**
      * Define your room handlers:
      */
-    gameServer.define('sandbox', SandboxRoom);
+    gameServer.define('map_v1', MapV1Room);
   },
 
   initializeExpress: (app) => {
