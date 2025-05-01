@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development tsx watch src/index.ts",
+    "schema-codegen": "schema-codegen src/modules/declaration/scheme.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
+    "schema-help": "schema-codegen --help",
     "loadtest": "tsx loadtest/example.ts --room my_room --numClients 2",
     "build": "npm run clean && tsc",
     "clean": "rimraf build",

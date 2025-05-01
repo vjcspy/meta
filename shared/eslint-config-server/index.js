@@ -72,7 +72,8 @@ module.exports = {
         "import/extensions": "off",
         "import/export": "off",
         "import/no-import-module-exports": "off",
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/dot-notation": "off",
       }
     },
     // Configuration for testing

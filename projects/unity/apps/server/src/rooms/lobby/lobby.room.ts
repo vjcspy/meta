@@ -1,10 +1,9 @@
 import type { Client } from '@colyseus/core';
 import { Room } from '@colyseus/core';
+import { MapState } from '@modules/declaration/scheme';
 
-import { LobbyState } from './lobby.state';
-
-export class LobbyRoom extends Room<LobbyState> {
-  state = new LobbyState();
+export class LobbyRoom extends Room<MapState> {
+  state = new MapState();
 
   maxClients = 30;
 

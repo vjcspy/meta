@@ -3,6 +3,9 @@ import { monitor } from '@colyseus/monitor';
 import { playground } from '@colyseus/playground';
 import config from '@colyseus/tools';
 import { authConfig } from '@modules/auth/auth-impl';
+import { matchMaker, RedisPresence } from 'colyseus';
+
+import { SandboxRoom } from './rooms/maps/sandbox/sandbox.room';
 
 /**
  * Import your Room files
@@ -11,11 +14,18 @@ import { authConfig } from '@modules/auth/auth-impl';
 authConfig();
 
 export default config({
-  initializeGameServer: (_gameServer) => {
+  options: {
+    devMode: true,
+    presence: new RedisPresence('vm:6379'),
+  },
+  initializeGameServer: (gameServer) => {
+    // https://docs.colyseus.io/server/matchmaker#restricting-the-client-side-from-creating-rooms
+    matchMaker.controller.exposedMethods = ['join', 'joinById', 'reconnect'];
+
     /**
      * Define your room handlers:
      */
-    // gameServer.define('my_room', MyRoom);
+    gameServer.define('sandbox', SandboxRoom);
   },
 
   initializeExpress: (app) => {
