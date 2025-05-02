@@ -10,14 +10,14 @@ import { MapIndex } from '../../../rooms/maps';
 export const enter = async (req: Request, res: Response) => {
   const { mapId, forceNewInstance } = req.query;
   const useData: UserData = (req as any).auth;
+  console.log('[MapMaker.enter] Enter with userData', useData);
 
-  // TODO: Create new api to get current existing map
   if (!forceNewInstance) {
     // Check xem đang có instance nào của map đó không
     const existingRoom = await matchMaker.query({
       name: MapIndex.MAP_V1,
     });
-    console.log('existingRoom', existingRoom);
+    console.log('[MapMaker.enter] existingRoom', existingRoom);
     const existingMap = _.find(
       existingRoom,
       (room) => room.metadata.creatorId === useData.id,
@@ -41,6 +41,5 @@ export const enter = async (req: Request, res: Response) => {
       ip: '123', // TODO: get real IP
     },
   );
-  // console.log(`reservation: ${JSON.stringify(reservation)}`);
   return res.json(reservation);
 };

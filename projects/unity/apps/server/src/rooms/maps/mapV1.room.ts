@@ -26,12 +26,11 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
   }
 
   onLeave(client: any) {
-    console.log(`[Sandbox] ${client.sessionId} left`);
     this.state.removePlayer(client.sessionId);
     this.broadcast('player_left', client.sessionId);
   }
 
   onDispose() {
-    console.log('[Sandbox] Dispose');
+    console.log('[MapV1Room] Dispose');
   }
 }

@@ -32,28 +32,34 @@ export class MapV1State extends Schema {
   @type({ map: Player })
   players = new MapSchema<Player>();
 
-  createPlayer(sessionId: string, id: string) {
+  createPlayer(sessionId: string, userId: string) {
     const newPayer = new Player();
-    newPayer.id = id;
+    newPayer.id = userId;
     newPayer.sessionId = sessionId;
-    console.log('New player created', newPayer.id);
-    this.players.set(id, newPayer);
+    console.log(
+      `[MapV1State.createPlayer] Player created with sessionId=${sessionId}`,
+      newPayer.id,
+    );
+    if (!this.players.has(sessionId)) {
+      this.players.set(sessionId, newPayer);
+    } else {
+      console.warn(
+        '[MapV1State.createPlayer] Player already exists with sessionId=',
+        sessionId,
+      );
+    }
   }
 
   removePlayer(sessionId: string) {
-    this.players.delete(sessionId);
-  }
-}
-
-export class MapState extends Schema {
-  @type({ map: Player })
-  players = new MapSchema<Player>();
-
-  createPlayer(sessionId: string) {
-    this.players.set(sessionId, new Player());
-  }
-
-  removePlayer(sessionId: string) {
-    this.players.delete(sessionId);
+    console.log(
+      `[MapV1State.removePlayer] Client with sessionId=${sessionId} left`,
+    );
+    if (this.players.has(sessionId)) {
+      this.players.delete(sessionId);
+    } else {
+      console.warn(
+        `[MapV1State.removePlayer] Player with sessionId=${sessionId} does not exist to remove`,
+      );
+    }
   }
 }

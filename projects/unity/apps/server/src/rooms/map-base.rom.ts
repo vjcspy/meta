@@ -19,26 +19,46 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
     this.presence.publish(`room:${this.roomId}`, JSON.stringify(event));
   }
 
+  protected publishEventToRoom(roomId: string, event: MapPresenceMessage) {
+    this.presence.publish(`room:${roomId}`, JSON.stringify(event));
+  }
+
   protected subscribeEvent(eventHandler: (event: MapPresenceMessage) => void) {
-    this.presence.subscribe(`room:${this.roomId}`, (messageStr: string) => {
+    const { roomId } = this;
+    this.presence.subscribe(`room:${roomId}`, (messageStr: string) => {
+      console.log(
+        `[MapBaseRom.Event] Received event from room ${roomId}:`,
+        messageStr,
+      );
       const message: MapPresenceMessage = JSON.parse(messageStr);
       eventHandler(message);
     });
   }
 
   onCreate(options: MapOptions) {
+    console.log(
+      `[MapBaseRom.onCreate] Create new room with id=${this.roomId} with options`,
+      options,
+    );
     this.setMetadata({
       mapId: options.mapId,
       creatorId: options.creatorId,
     } as MapMetadata);
 
+    this.registerEventHandler();
+  }
+
+  private registerEventHandler() {
+    // Disconnect client if it is already in another room
     this.subscribeEvent((message: MapPresenceMessage) => {
       if (message.type === MapBaseRom.ROOM_EVENT_FORCE_DISCONNECT) {
         const targetClient = this.clients.find(
           (c) => c.sessionId === message.payload,
         );
         if (targetClient) {
-          console.log(`Force disconnecting client: ${targetClient.sessionId}`);
+          console.log(
+            `[MapBaseRom.Event] Force disconnecting client: ${targetClient.sessionId}`,
+          );
           targetClient.leave(1000);
         }
       }
@@ -47,18 +67,27 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
 
   async onAuth(client: Client, options: MapOptions, context: AuthContext) {
     const userdata: UserData = await JWT.verify(context.token);
-    console.log('Verified user data', userdata);
+    console.log('[MapBaseRom.onAuth] Verified user data', userdata);
 
     // Check if the user is already in a different room
     if (userdata?.id) {
       const clientPersistManager = ClientPersistManager.getInstance();
-      const clientPersist = clientPersistManager.getClientPersist(userdata.id);
+      const clientPersist = await clientPersistManager.getClientPersist(
+        userdata.id,
+      );
       if (clientPersist && clientPersist.currentSession) {
+        console.log(
+          `[MapBaseRom.onAuth] Client already connected with session`,
+          clientPersist.currentSession,
+        );
         const { currentSession } = clientPersist;
-        if (currentSession.roomId !== this.roomId) {
-          this.publishEvent({
+        if (currentSession.sessionId !== client.sessionId) {
+          console.log(
+            "[MapBaseRom.onAuth] Current session doesn't match will trigger to disconnect last session",
+          );
+          this.publishEventToRoom(currentSession.roomId, {
             type: MapBaseRom.ROOM_EVENT_FORCE_DISCONNECT,
-            payload: client.sessionId,
+            payload: currentSession.sessionId,
           });
         }
       }
@@ -68,6 +97,10 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
   }
 
   onJoin(client: any, options: MapOptions, auth: UserData) {
+    console.log(
+      `[MapBaseRom.onJoin] Client ${client.sessionId} joined room ${this.roomId}`,
+      options,
+    );
     this.clientPersistManager.setClientPersist(auth.id, {
       userId: auth.id,
       currentSession: {
@@ -76,5 +109,9 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
         mapId: options.mapId,
       },
     });
+  }
+
+  onDispose(): void | Promise<any> {
+    this.presence.unsubscribe(`room:${this.roomId}`);
   }
 }

@@ -15,15 +15,24 @@ export class ClientPersistManager {
   }
 
   setClientPersist(userId: string, clientPersist: IClientPersist): void {
+    console.log(
+      '[ClientPersistManager] Setting client persist for userId:',
+      userId,
+      clientPersist,
+    );
     this._presence.set(
       `client-persist:${userId}`,
       JSON.stringify(clientPersist),
     );
   }
 
-  getClientPersist(userId: string): IClientPersist | null {
-    const clientPersist = this._presence.get(`client-persist:${userId}`);
+  async getClientPersist(userId: string): Promise<IClientPersist> {
+    const clientPersist = await this._presence.get(`client-persist:${userId}`);
     if (clientPersist) {
+      console.log(
+        `[ClientPersistManager] Client ${userId} persisted in client persist:`,
+        clientPersist,
+      );
       return JSON.parse(clientPersist);
     }
     return null;
