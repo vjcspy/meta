@@ -25,9 +25,10 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
     this.state.createPlayer(client.sessionId, auth.id);
   }
 
-  onLeave(client: any) {
+  async onLeave(client: any, consented?: boolean) {
+    await super.onLeave(client, consented);
     this.state.removePlayer(client.sessionId);
-    this.broadcast('player_left', client.sessionId);
+    // this.broadcast('player_left', client.sessionId);
   }
 
   onDispose() {

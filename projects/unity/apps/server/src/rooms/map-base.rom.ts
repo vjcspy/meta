@@ -71,8 +71,7 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
 
     // Check if the user is already in a different room
     if (userdata?.id) {
-      const clientPersistManager = ClientPersistManager.getInstance();
-      const clientPersist = await clientPersistManager.getClientPersist(
+      const clientPersist = await this.clientPersistManager.getClientPersist(
         userdata.id,
       );
       if (clientPersist && clientPersist.currentSession) {
@@ -109,6 +108,31 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
         mapId: options.mapId,
       },
     });
+  }
+
+  async onLeave(client: any, consented?: boolean) {
+    const userdata: UserData = client.auth;
+
+    if (!userdata?.id) {
+      console.error('[MapBaseRom.onLeave] User data is not available');
+    }
+
+    console.log(`[MapBaseRom.onLeave] Client with id ${userdata.id} left room`);
+    const clientPersist = await this.clientPersistManager.getClientPersist(
+      userdata.id,
+    );
+
+    if (clientPersist?.currentSession.sessionId === client.sessionId) {
+      console.log(
+        `[MapBaseRom.onLeave] Resetting client persist for userId ${userdata.id} and sessionId ${client.sessionId}`,
+      );
+      this.clientPersistManager.setClientPersist(userdata.id, {
+        userId: userdata.id,
+        currentSession: null,
+      });
+    } else {
+      console.warn('[MapBaseRom.onLeave] User data is not valid to reset');
+    }
   }
 
   onDispose(): void | Promise<any> {
