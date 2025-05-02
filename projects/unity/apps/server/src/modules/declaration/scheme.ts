@@ -13,6 +13,14 @@ export class PlayerVisualization extends Schema {
   @type('uint8') state: number = 0;
 }
 
+export class Position extends Schema {
+  @type(Vector3)
+  value: Vector3 = new Vector3();
+
+  @type('number')
+  timestamp: number = 0; // milliseconds
+}
+
 // _______________________________ GameObject schema class _______________________________
 export class Player extends Schema {
   sessionId: string = '';
@@ -20,8 +28,8 @@ export class Player extends Schema {
   @type('string')
   id: string = '';
 
-  @type(Vector3)
-  position: Vector3 = new Vector3();
+  @type(Position)
+  position: Position = new Position();
 
   @type(Vector3)
   facingDirection: Vector3 = new Vector3();

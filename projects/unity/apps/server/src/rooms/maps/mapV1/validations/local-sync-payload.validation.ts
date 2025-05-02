@@ -1,21 +1,28 @@
-export const localSyncPayloadValidation = (data: any) => {
+export const localSyncPayloadValidation = (data: any): boolean => {
+  if (typeof data !== 'object' || data === null) {
+    return false;
+  }
+
+  // Validate position
+  const pos = data.position;
   if (
-    typeof data !== 'object' ||
-    data === null ||
-    typeof data.x !== 'number' ||
-    !Number.isFinite(data.x) ||
-    typeof data.y !== 'number' ||
-    !Number.isFinite(data.y) ||
-    typeof data.z !== 'number' ||
-    !Number.isFinite(data.z) ||
-    (data.animationState !== undefined &&
-      typeof data.animationState !== 'number')
+    typeof pos !== 'object' ||
+    pos === null ||
+    typeof pos.x !== 'number' ||
+    !Number.isFinite(pos.x) ||
+    typeof pos.y !== 'number' ||
+    !Number.isFinite(pos.y) ||
+    typeof pos.z !== 'number' ||
+    !Number.isFinite(pos.z) ||
+    typeof pos.timestamp !== 'number' ||
+    !Number.isFinite(pos.timestamp)
   ) {
     return false;
   }
 
-  if (data.facingDirection) {
-    const fd = data.facingDirection;
+  // Validate facingDirection (optional but if present must be valid)
+  const fd = data.facingDirection;
+  if (fd !== undefined) {
     if (
       typeof fd !== 'object' ||
       fd === null ||
@@ -28,6 +35,15 @@ export const localSyncPayloadValidation = (data: any) => {
     ) {
       return false;
     }
+  }
+
+  // Validate animationState (optional)
+  if (
+    data.animationState !== undefined &&
+    (typeof data.animationState !== 'number' ||
+      !Number.isFinite(data.animationState))
+  ) {
+    return false;
   }
 
   return true;

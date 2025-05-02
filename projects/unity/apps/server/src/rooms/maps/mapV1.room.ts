@@ -56,9 +56,10 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
       }
 
       // // Cập nhật position
-      player.position.x = data.x;
-      player.position.y = data.y;
-      player.position.z = data.z;
+      player.position.value.x = data.position.x;
+      player.position.value.y = data.position.y;
+      player.position.value.z = data.position.z;
+      player.position.timestamp = data.position.timestamp;
 
       if (data.facingDirection) {
         player.facingDirection.x = data.facingDirection.x;

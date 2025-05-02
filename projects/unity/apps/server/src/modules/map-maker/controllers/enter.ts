@@ -9,37 +9,41 @@ import { MapIndex } from '../../../rooms/maps';
 
 export const enter = async (req: Request, res: Response) => {
   const { mapId, forceNewInstance } = req.query;
-  const useData: UserData = (req as any).auth;
-  console.log('[MapMaker.enter] Enter with userData', useData);
+  const userData: UserData = (req as any).auth;
+
+  console.log('[MapMaker.enter] Enter with userData', userData);
+
+  const roomName = MapIndex.MAP_V1;
 
   if (!forceNewInstance) {
-    // Check xem đang có instance nào của map đó không
-    const existingRoom = await matchMaker.query({
-      name: MapIndex.MAP_V1,
-    });
-    console.log('[MapMaker.enter] existingRoom', existingRoom);
-    const existingMap = _.find(
-      existingRoom,
-      (room) => room.metadata.creatorId === useData.id,
-    );
+    const existingRooms = await matchMaker.query({ name: roomName });
+    console.log('[MapMaker.enter] existingRoom', existingRooms);
 
+    const existingMap = _.find(
+      existingRooms,
+      (room) => room.metadata.creatorId === userData.id,
+    );
     if (existingMap) {
       const reservation = await matchMaker.joinById(existingMap.roomId, {});
       return res.json(reservation);
     }
   }
 
-  const reservation = await matchMaker.create(
-    MapIndex.MAP_V1,
-    {
-      mapId,
-      creatorId: useData.id,
-    } as MapOptions,
-    {
-      token: extractToken(req.headers.authorization),
-      headers: req.headers,
-      ip: '123', // TODO: get real IP
-    },
-  );
+  const payload: MapOptions = {
+    mapId: mapId as string,
+    creatorId: userData.id,
+  };
+
+  const clientOptions = {
+    token: extractToken(req.headers.authorization),
+    headers: req.headers,
+    ip: '123', // TODO: get real IP
+  };
+
+  const reservation =
+    mapId === 'sandbox'
+      ? await matchMaker.joinOrCreate(roomName, payload, clientOptions)
+      : await matchMaker.create(roomName, payload, clientOptions);
+
   return res.json(reservation);
 };
