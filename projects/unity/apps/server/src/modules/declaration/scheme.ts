@@ -23,6 +23,9 @@ export class Player extends Schema {
   @type(Vector3)
   position: Vector3 = new Vector3();
 
+  @type(Vector3)
+  facingDirection: Vector3 = new Vector3();
+
   @type(PlayerVisualization)
   visualization: PlayerVisualization = new PlayerVisualization();
 }
