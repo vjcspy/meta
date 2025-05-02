@@ -1,17 +1,10 @@
-export class ClientPersist {
-  private _sessionId: string;
+export interface IClientPersistSession {
+  sessionId: string;
+  roomId: string;
+  mapId?: string;
+}
 
-  constructor(private userId: string) {}
-
-  get sessionId(): string {
-    return this._sessionId;
-  }
-
-  set sessionId(sessionId: string) {
-    this._sessionId = sessionId;
-  }
-
-  public isSessionIdValid(sessionId: string): boolean {
-    return this._sessionId === sessionId;
-  }
+export interface IClientPersist {
+  userId: string;
+  currentSession?: IClientPersistSession;
 }

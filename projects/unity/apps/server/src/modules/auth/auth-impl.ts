@@ -3,6 +3,11 @@ import { ENV, ENV_KEY } from '@modules/util/env';
 
 auth.backend_url = `http://localhost:${ENV.get(ENV_KEY.PORT)}`;
 
+export type UserData = {
+  id: string;
+  email: string;
+};
+
 const fakeDatabase: any[] = [
   {
     id: 'test1@gmail.com',

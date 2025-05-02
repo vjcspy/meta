@@ -1,46 +1,28 @@
-import { JWT } from '@colyseus/auth';
-import { Room } from '@colyseus/core';
-import type { Player } from '@modules/declaration/scheme';
-import { SandboxRoomState } from '@modules/declaration/scheme';
+import type { UserData } from '@modules/auth/auth-impl';
+import type { MapOptions } from '@modules/declaration/map';
+import { MapV1State } from '@modules/declaration/scheme';
 
-export class MapV1Room extends Room<SandboxRoomState> {
-  state = new SandboxRoomState();
+import { MapBaseRom } from '../map-base.rom';
 
-  maxClients = 30;
+export class MapV1Room extends MapBaseRom<MapV1State> {
+  state = new MapV1State();
 
-  static async onAuth(token: string, options: any, context: any) {
-    // validate the token
-    // console.log('Authen with ', token, options, context);
-    const userdata = await JWT.verify(token);
-    console.log('Userdata ', userdata);
-    return userdata;
+  autoDispose: false;
+
+  protected _disposeIfEmpty(): boolean {
+    return false;
   }
 
-  onCreate(options: any) {
-    // this.setSimulationInterval((deltaTime) => {
-    //   this.state.update(deltaTime);
-    // });
-    console.log('[Sandbox] Room created with options', options);
-  }
+  // #private: true;
 
-  onJoin(client: any, options: any, auth: any) {
-    const userId = auth.id;
-    console.log('UserId', userId);
-    const isAlreadyJoined = this.state.players.values().some((p: Player) => {
-      console.log('compare player', p.id);
-      return p.id === userId;
-    });
+  seatReservationTime = 30;
 
-    if (isAlreadyJoined) {
-      console.log(
-        `[Sandbox] ${userId} already joined! Kicking duplicate session.`,
-      );
-      client.leave(1000, 'You are already connected.');
-      return;
-    }
+  maxClients = 50;
 
-    console.log(`[Sandbox] ${client.sessionId} joined with`, options, auth);
-    this.state.createPlayer(client.sessionId, userId); // nên lưu userId để check trùng lặp
+  onJoin(client: any, options: MapOptions, auth: UserData) {
+    super.onJoin(client, options, auth);
+
+    this.state.createPlayer(client.sessionId, auth.id);
   }
 
   onLeave(client: any) {

@@ -15,6 +15,8 @@ export class PlayerVisualization extends Schema {
 
 // _______________________________ GameObject schema class _______________________________
 export class Player extends Schema {
+  sessionId: string = '';
+
   @type('string')
   id: string = '';
 
@@ -26,15 +28,16 @@ export class Player extends Schema {
 }
 
 // _______________________________ Room schema class _______________________________
-export class SandboxRoomState extends Schema {
+export class MapV1State extends Schema {
   @type({ map: Player })
   players = new MapSchema<Player>();
 
   createPlayer(sessionId: string, id: string) {
     const newPayer = new Player();
     newPayer.id = id;
+    newPayer.sessionId = sessionId;
     console.log('New player created', newPayer.id);
-    this.players.set(sessionId, newPayer);
+    this.players.set(id, newPayer);
   }
 
   removePlayer(sessionId: string) {

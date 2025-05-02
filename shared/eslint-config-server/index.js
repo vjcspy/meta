@@ -50,7 +50,7 @@ module.exports = {
         "simple-import-sort/imports": "error", // Import configuration for `eslint-plugin-simple-import-sort`
         "simple-import-sort/exports": "error", // Export configuration for `eslint-plugin-simple-import-sort`
         "unused-imports/no-unused-imports": "error",
-        "unused-imports/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+        "unused-imports/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
         "@typescript-eslint/ban-ts-comment": "off", // Cho phep su dung ts-ignore,
         "@typescript-eslint/no-explicit-any": "off", // Cho phep su dung any
         "no-prototype-builtins": "off", // Cho phep su dung hasOwnProperty
