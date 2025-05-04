@@ -3,7 +3,6 @@ import type {
   MonsterAdditionalData,
   PlayerAdditionalData,
 } from '@modules/declaration/types/map';
-import { Vector3Value } from '@modules/declaration/values/entity';
 import { logger } from '@modules/utils/logger';
 
 // _______________________________ Base schema class for all game objects _______________________________
@@ -48,7 +47,7 @@ export class Position extends Schema {
   public static factory(value: Vector3): Position {
     const i = new Position();
     i.value = value;
-    i.facingDirection = Vector3Value.DEFAULT_FACING_DIRECTION;
+    i.facingDirection = Vector3.factory(1, 0, 0);
     return i;
   }
 }
