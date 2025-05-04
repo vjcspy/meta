@@ -27,8 +27,8 @@ export class MonsterBehavior implements IBehavior {
 
     // Update position
     state.position.value.x = Math.max(minX, Math.min(maxX, newX));
-    if (state.facingDirection.x !== direction) {
-      state.facingDirection.x = direction;
+    if (state.position.facingDirection.x !== direction) {
+      state.position.facingDirection.x = direction;
     }
     state.position.timestamp = clock.elapsedTime;
   }

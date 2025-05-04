@@ -1,4 +1,8 @@
-export const localSyncPayloadValidation = (data: any): boolean => {
+import type { LocalPlayerPayload } from '@modules/declaration/dto/client-message/local-player-payload';
+
+export const localSyncPayloadValidation = (
+  data: LocalPlayerPayload,
+): boolean => {
   if (typeof data !== 'object' || data === null) {
     return false;
   }

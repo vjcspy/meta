@@ -1,4 +1,5 @@
 import type { MapMonsterDB } from '@modules/declaration/dto/db/map/monster';
+import type { MapNpcDB } from '@modules/declaration/dto/db/map/npc';
 import type { IBehavior } from '@modules/map/simulation/behavior/behavior.base';
 
 export type MapOptions = {
@@ -19,7 +20,7 @@ export type MapPresenceMessage = {
 export type MapData = {
   id: string;
   name: string;
-  npcs: any[];
+  npcs: MapNpcDB[];
   monsters: MapMonsterDB[];
 };
 

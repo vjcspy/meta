@@ -15,9 +15,9 @@
     "test": "mocha -r tsx test/**_test.ts --exit --timeout 15000",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "codegen": "____________________________ CODEGEN ____________________________",
-    "clean-csharp": "rimraf ../server/codegen-csharp",
-    "generate-schema": "schema-codegen src/modules/declaration/schemas/schema.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
-    "schema-codegen": "npm run clean-csharp && npm run generate-schema",
+    "_clean-csharp": "rimraf ../server/codegen-csharp",
+    "_generate-schema": "schema-codegen src/modules/declaration/schemas/schema.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
+    "schema-codegen": "npm run _clean-csharp && npm run _generate-schema",
     "schema-help": "schema-codegen --help"
   },
   "author": "",

@@ -1,5 +1,6 @@
 import type { Client } from '@colyseus/core/build/Transport';
 import type { UserData } from '@modules/auth/auth-impl';
+import type { LocalPlayerPayload } from '@modules/declaration/dto/client-message/local-player-payload';
 import { MapV1State } from '@modules/declaration/schemas/schema';
 import type { MapOptions } from '@modules/declaration/types/map';
 import { MapHelper } from '@modules/map/helpers/map.helper';
@@ -36,13 +37,13 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
     }
   }
 
-  onJoin(client: any, options: MapOptions, auth: UserData) {
+  onJoin(client: Client, options: MapOptions, auth: UserData) {
     super.onJoin(client, options, auth);
 
     this.state.createPlayer(client.sessionId, auth.id);
   }
 
-  async onLeave(client: any, consented?: boolean) {
+  async onLeave(client: Client, consented?: boolean) {
     await super.onLeave(client, consented);
     this.state.removePlayer(client.sessionId);
     // this.broadcast('player_left', client.sessionId);
@@ -53,34 +54,37 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
   }
 
   protected registerMessageHandler() {
-    this.onMessage(MessageType.LOCAL_SYNC, (client: Client, data: any) => {
-      const player = this.state.players.get(client.sessionId);
-      if (!player) return;
+    this.onMessage<LocalPlayerPayload>(
+      MessageType.LOCAL_SYNC,
+      (client: Client, data: LocalPlayerPayload) => {
+        const player = this.state.players.get(client.sessionId);
+        if (!player) return;
 
-      if (!localSyncPayloadValidation(data)) {
-        console.warn(
-          `[MapV1Room] Invalid ${MessageType.LOCAL_SYNC} payload from ${client.sessionId}`,
-        );
-        return;
-      }
+        if (!localSyncPayloadValidation(data)) {
+          console.warn(
+            `[MapV1Room] Invalid ${MessageType.LOCAL_SYNC} payload from ${client.sessionId}`,
+          );
+          return;
+        }
 
-      // // Cập nhật position
-      player.position.value.x = data.position.x;
-      player.position.value.y = data.position.y;
-      player.position.value.z = data.position.z;
-      player.position.timestamp = data.position.timestamp;
+        // // Cập nhật position
+        player.position.value.x = data.position.x;
+        player.position.value.y = data.position.y;
+        player.position.value.z = data.position.z;
+        player.position.timestamp = data.position.timestamp;
 
-      if (data.facingDirection) {
-        player.facingDirection.x = data.facingDirection.x;
-        player.facingDirection.y = data.facingDirection.y;
-        player.facingDirection.z = data.facingDirection.z;
-      }
+        if (data.facingDirection) {
+          player.position.facingDirection.x = data.facingDirection.x;
+          player.position.facingDirection.y = data.facingDirection.y;
+          player.position.facingDirection.z = data.facingDirection.z;
+        }
 
-      // Cập nhật animation state
-      if (data.animationState !== undefined) {
-        player.visualization.state = data.animationState;
-      }
-    });
+        // Cập nhật animation state
+        if (data.animationState !== undefined) {
+          player.visualization.state = data.animationState;
+        }
+      },
+    );
   }
 
   private simulate() {

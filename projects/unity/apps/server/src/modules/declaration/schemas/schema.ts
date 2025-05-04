@@ -3,6 +3,7 @@ import type {
   MonsterAdditionalData,
   PlayerAdditionalData,
 } from '@modules/declaration/types/map';
+import { Vector3Value } from '@modules/declaration/values/entity';
 import { logger } from '@modules/utils/logger';
 
 // _______________________________ Base schema class for all game objects _______________________________
@@ -38,12 +39,16 @@ export class Position extends Schema {
   @type(Vector3)
   value: Vector3 = new Vector3();
 
+  @type(Vector3)
+  facingDirection: Vector3 = new Vector3();
+
   @type('number')
   timestamp: number = 0; // milliseconds
 
   public static factory(value: Vector3): Position {
     const i = new Position();
     i.value = value;
+    i.facingDirection = Vector3Value.DEFAULT_FACING_DIRECTION;
     return i;
   }
 }
@@ -68,9 +73,6 @@ export class SyncObject extends Schema {
 export class EntityGameObject extends SyncObject {
   @type(EntityVisualization)
   visualization: EntityVisualization = new EntityVisualization();
-
-  @type(Vector3)
-  facingDirection: Vector3 = new Vector3();
 }
 
 /**
@@ -93,7 +95,6 @@ export class Monster extends EntityGameObject {
     const i = new Monster();
     i.id = id;
     i.position = position;
-    i.facingDirection = facingDirection;
     i.visualization = visualization;
     return i;
   }

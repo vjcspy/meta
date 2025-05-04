@@ -4,7 +4,7 @@ export enum ENV_KEY {
 }
 
 export class ENV {
-  static get(key: ENV_KEY, defaultValue: any = null): any {
+  static get(key: ENV_KEY, defaultValue: string = null): any {
     return process.env[key] || defaultValue;
   }
 }

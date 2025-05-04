@@ -108,7 +108,7 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
     return userdata;
   }
 
-  onJoin(client: any, options: MapOptions, auth: UserData) {
+  onJoin(client: Client, options: MapOptions, auth: UserData) {
     logger.log(
       `[MapBaseRom.onJoin] Client ${client.sessionId} joined room ${this.roomId}`,
       options,
@@ -123,7 +123,7 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
     });
   }
 
-  async onLeave(client: any, consented?: boolean) {
+  async onLeave(client: Client, consented?: boolean) {
     const userdata: UserData = client.auth;
 
     if (!userdata?.id) {
