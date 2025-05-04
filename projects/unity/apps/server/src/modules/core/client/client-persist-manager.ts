@@ -1,4 +1,4 @@
-import type { IClientPersist } from '@modules/core/client/client-persist';
+import type { ClientPersist } from '@modules/declaration/types/client-persist';
 import type { Presence } from 'colyseus';
 import { matchMaker } from 'colyseus';
 
@@ -14,7 +14,7 @@ export class ClientPersistManager {
     return ClientPersistManager._instance;
   }
 
-  setClientPersist(userId: string, clientPersist: IClientPersist): void {
+  setClientPersist(userId: string, clientPersist: ClientPersist): void {
     console.log(
       '[ClientPersistManager] Setting client persist for userId:',
       userId,
@@ -26,7 +26,7 @@ export class ClientPersistManager {
     );
   }
 
-  async getClientPersist(userId: string): Promise<IClientPersist> {
+  async getClientPersist(userId: string): Promise<ClientPersist> {
     const clientPersist = await this._presence.get(`client-persist:${userId}`);
     if (clientPersist) {
       console.log(

@@ -48,7 +48,7 @@ export class Position extends Schema {
   }
 }
 
-export class GameObject extends Schema {
+export class SyncObject extends Schema {
   @type('string')
   id: string = '';
 
@@ -62,7 +62,7 @@ export class GameObject extends Schema {
   position: Position = new Position();
 }
 
-export class EntityGameObject extends GameObject {
+export class EntityGameObject extends SyncObject {
   @type(EntityVisualization)
   visualization: EntityVisualization = new EntityVisualization();
 
@@ -109,7 +109,7 @@ export class MapV1State extends Schema {
   createPlayer(sessionId: string, userId: string) {
     const newPayer = new Player();
     newPayer.id = userId;
-    newPayer.__additionalData.sessionId = sessionId;
+    newPayer.__additionalData = { ...newPayer.__additionalData, sessionId };
     logger.info(
       `[MapV1State.createPlayer] Player created with sessionId=${sessionId}`,
       newPayer.id,
