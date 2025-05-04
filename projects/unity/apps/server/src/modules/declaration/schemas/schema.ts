@@ -64,12 +64,12 @@ export class SyncObject extends Schema {
   // server can create this id to sync with client
   @type('string')
   serverSyncId: string = '';
-
-  @type(Position)
-  position: Position = new Position();
 }
 
 export class EntityGameObject extends SyncObject {
+  @type(Position)
+  position: Position = new Position();
+
   @type(EntityVisualization)
   visualization: EntityVisualization = new EntityVisualization();
 }
