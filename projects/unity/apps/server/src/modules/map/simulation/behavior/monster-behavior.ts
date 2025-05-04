@@ -5,31 +5,43 @@ import type { Clock } from 'colyseus';
 
 export class MonsterBehavior implements IBehavior {
   OnUpdate(state: Monster, clock: Clock): void {
-    const { elapsedTime, deltaTime } = clock;
+    const { deltaTime } = clock;
 
     const monsterDB = state.__additionalData.mapMonsterDB;
     const { position: initialPosition } = monsterDB; // Vector3
     const { speed, moveRadius } = monsterDB.behavior; // number
 
-    const { value: currentPos } = state.position; // Vector3
-    // const { facingDirection: currentFacingDirection } = state;
+    const currentPos = state.position.value; // Vector3
+    const facingDir = state.position.facingDirection; // Vector3
 
-    // Tính hướng di chuyển (xem như sóng sin để dễ mô phỏng chuyển động qua lại)
-    const direction = Math.sin(elapsedTime * 0.001) >= 0 ? 1 : -1;
+    // Nếu không có hướng ban đầu, mặc định sang phải
+    if (facingDir.x === 0) {
+      facingDir.x = 1;
+    }
 
-    // Tính vị trí mới theo hướng và tốc độ
-    const displacement = speed * deltaTime * direction;
+    // Tính displacement
+    const displacement = (speed * deltaTime * facingDir.x) / 1000;
     const newX = currentPos.x + displacement;
 
-    // Clamp lại trong khoảng [initialPosition.x - moveRadius, initialPosition.x + moveRadius]
     const minX = initialPosition.x - moveRadius;
     const maxX = initialPosition.x + moveRadius;
 
-    // Update position
-    state.position.value.x = Math.max(minX, Math.min(maxX, newX));
-    if (state.position.facingDirection.x !== direction) {
-      state.position.facingDirection.x = direction;
+    // Nếu chạm biên thì đổi hướng
+    if (newX <= minX) {
+      facingDir.x = 1; // quay sang phải
+      currentPos.x = minX;
+    } else if (newX >= maxX) {
+      facingDir.x = -1; // quay sang trái
+      currentPos.x = maxX;
+    } else {
+      currentPos.x = newX;
     }
-    state.position.timestamp = clock.elapsedTime;
+
+    if (state.visualization.state !== 1) {
+      state.visualization.state = 1; // set trạng thái đang di chuyển
+    }
+
+    // Cập nhật timestamp
+    state.position.timestamp = clock.elapsedTime / 1000;
   }
 }

@@ -42,7 +42,7 @@ export class Position extends Schema {
   facingDirection: Vector3 = new Vector3();
 
   @type('number')
-  timestamp: number = 0; // milliseconds
+  timestamp: number = 0; // in seconds to compatible with Unity
 
   public static factory(value: Vector3): Position {
     const i = new Position();
