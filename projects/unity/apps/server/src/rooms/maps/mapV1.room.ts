@@ -1,9 +1,10 @@
 import type { Client } from '@colyseus/core/build/Transport';
 import type { UserData } from '@modules/auth/auth-impl';
-import type { MapOptions } from '@modules/declaration/map';
-import { MapV1State } from '@modules/declaration/scheme';
+import { MapV1State } from '@modules/declaration/schemas/schema';
+import type { MapOptions } from '@modules/declaration/types/map';
+import { MapMonsterHelper } from '@modules/map/helpers/map-monster.helper';
+import { MapBaseRom } from '@modules/map/models/map-base.rom';
 
-import { MapBaseRom } from '../map-base.rom';
 import { MessageType } from './mapV1/message-type';
 import { localSyncPayloadValidation } from './mapV1/validations/local-sync-payload.validation';
 
@@ -22,9 +23,16 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
 
   maxClients = 50;
 
-  onCreate(options: MapOptions) {
+  async onCreate(options: MapOptions) {
     super.onCreate(options);
     this.registerMessageHandler();
+
+    const mapData = await this.getMapData(options.mapId);
+    if (mapData) {
+      this.state.monsters = MapMonsterHelper.buildSchema(mapData.monsters);
+    }
+
+    // this.setSimulationInterval(this.simulate.bind(this), 1000 / 10);
   }
 
   onJoin(client: any, options: MapOptions, auth: UserData) {

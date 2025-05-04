@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development tsx watch src/index.ts",
-    "schema-codegen": "schema-codegen src/modules/declaration/scheme.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
+    "schema-codegen": "schema-codegen src/modules/declaration/schemas/schema.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
     "schema-help": "schema-codegen --help",
     "loadtest": "tsx loadtest/example.ts --room my_room --numClients 2",
     "build": "npm run clean && tsc",
@@ -44,6 +44,6 @@
     "eslint-config-server": "workspace:*",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
-    "uuid": "^9.0.0"
+    "uuid": "^11.1.0"
   }
 }

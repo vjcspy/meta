@@ -1,6 +1,6 @@
 import type { UserData } from '@modules/auth/auth-impl';
 import { extractToken } from '@modules/auth/util';
-import type { MapOptions } from '@modules/declaration/map';
+import type { MapOptions } from '@modules/declaration/types/map';
 import { matchMaker } from 'colyseus';
 import type { Request, Response } from 'express';
 import _ from 'lodash';
