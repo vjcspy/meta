@@ -9,8 +9,8 @@ import type {
   MapOptions,
   MapPresenceMessage,
 } from '@modules/declaration/types/map';
-import { MapId } from '@modules/declaration/values/map-id';
-import { logger } from '@modules/util/logger';
+import { MapId } from '@modules/declaration/values/mapId';
+import { logger } from '@modules/utils/logger';
 
 export abstract class MapBaseRom<T extends object> extends Room<T> {
   protected clientPersistManager: ClientPersistManager =

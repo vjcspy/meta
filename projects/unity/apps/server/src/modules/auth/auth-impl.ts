@@ -1,5 +1,5 @@
 import { auth, Hash } from '@colyseus/auth';
-import { ENV, ENV_KEY } from '@modules/util/env';
+import { ENV, ENV_KEY } from '@modules/utils/env';
 
 auth.backend_url = `http://localhost:${ENV.get(ENV_KEY.PORT)}`;
 

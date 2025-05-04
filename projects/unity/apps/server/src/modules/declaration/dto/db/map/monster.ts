@@ -5,4 +5,7 @@ export type MapMonsterDB = {
     y: number;
     z: number;
   };
+  respawn?: {
+    delay: number;
+  };
 };

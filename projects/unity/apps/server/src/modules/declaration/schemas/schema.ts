@@ -1,5 +1,9 @@
 import { MapSchema, Schema, type } from '@colyseus/schema';
-import { logger } from '@modules/util/logger';
+import type {
+  MonsterAdditionalData,
+  PlayerAdditionalData,
+} from '@modules/declaration/types/map';
+import { logger } from '@modules/utils/logger';
 
 // _______________________________ Base schema class for all game objects _______________________________
 export class Vector3 extends Schema {
@@ -66,9 +70,14 @@ export class EntityGameObject extends GameObject {
   facingDirection: Vector3 = new Vector3();
 }
 
-// _______________________________ GameObject schema class _______________________________
+/**
+ * _______________________________ GameObject schema class _______________________________
+ *
+ * Quyết định dùng luôn object này làm state của gameObject, vì cơ bản nó đã chứa state để sync
+ * Ngoài ra, nó còn có các additional state, for example, we have a lot of different monsters, and each type has it own state
+ */
 export class Player extends EntityGameObject {
-  sessionId: string = '';
+  __additionalData: PlayerAdditionalData;
 }
 
 export class Monster extends EntityGameObject {
@@ -85,6 +94,8 @@ export class Monster extends EntityGameObject {
     i.visualization = visualization;
     return i;
   }
+
+  __additionalData: MonsterAdditionalData;
 }
 
 // _______________________________ Room schema class _______________________________
@@ -98,7 +109,7 @@ export class MapV1State extends Schema {
   createPlayer(sessionId: string, userId: string) {
     const newPayer = new Player();
     newPayer.id = userId;
-    newPayer.sessionId = sessionId;
+    newPayer.__additionalData.sessionId = sessionId;
     logger.info(
       `[MapV1State.createPlayer] Player created with sessionId=${sessionId}`,
       newPayer.id,
@@ -114,13 +125,13 @@ export class MapV1State extends Schema {
   }
 
   removePlayer(sessionId: string) {
-    console.log(
+    logger.log(
       `[MapV1State.removePlayer] Client with sessionId=${sessionId} left`,
     );
     if (this.players.has(sessionId)) {
       this.players.delete(sessionId);
     } else {
-      console.warn(
+      logger.warn(
         `[MapV1State.removePlayer] Player with sessionId=${sessionId} does not exist to remove`,
       );
     }

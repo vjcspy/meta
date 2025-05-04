@@ -5,11 +5,11 @@ import { monitor } from '@colyseus/monitor';
 import { playground } from '@colyseus/playground';
 import config from '@colyseus/tools';
 import { authConfig } from '@modules/auth/auth-impl';
+import { MapIndex } from '@modules/declaration/values/mapId';
 import { mapMakerRouter } from '@modules/map-maker/controllers';
 import { errorHandler } from '@modules/middlewares/errorHandler';
 import { matchMaker, RedisPresence } from 'colyseus';
 
-import { MapIndex } from './rooms/maps';
 import { MapV1Room } from './rooms/maps/mapV1.room';
 
 /**

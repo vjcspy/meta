@@ -32,7 +32,7 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
       this.state.monsters = MapMonsterHelper.buildSchema(mapData.monsters);
     }
 
-    // this.setSimulationInterval(this.simulate.bind(this), 1000 / 10);
+    this.setSimulationInterval(this.simulate, 1000 / 10);
   }
 
   onJoin(client: any, options: MapOptions, auth: UserData) {
@@ -79,6 +79,12 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
       if (data.animationState !== undefined) {
         player.visualization.state = data.animationState;
       }
+    });
+  }
+
+  private simulate() {
+    this.state.monsters.forEach((monster) => {
+      monster.__additionalData.behavior.OnUpdate(monster, this.clock);
     });
   }
 }

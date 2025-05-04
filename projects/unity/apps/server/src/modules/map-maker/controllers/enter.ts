@@ -1,11 +1,10 @@
 import type { UserData } from '@modules/auth/auth-impl';
 import { extractToken } from '@modules/auth/util';
 import type { MapOptions } from '@modules/declaration/types/map';
+import { MapIndex } from '@modules/declaration/values/mapId';
 import { matchMaker } from 'colyseus';
 import type { Request, Response } from 'express';
 import _ from 'lodash';
-
-import { MapIndex } from '../../../rooms/maps';
 
 export const enter = async (req: Request, res: Response) => {
   const { mapId, forceNewInstance } = req.query;

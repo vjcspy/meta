@@ -1,4 +1,5 @@
 import type { MapMonsterDB } from '@modules/declaration/dto/db/map/monster';
+import type { IBehavior } from '@modules/map/simulation/behavior/behavior.base';
 
 export type MapOptions = {
   mapId: string;
@@ -20,4 +21,13 @@ export type MapData = {
   name: string;
   npcs: any[];
   monsters: MapMonsterDB[];
+};
+
+export type PlayerAdditionalData = {
+  sessionId: string;
+};
+
+export type MonsterAdditionalData = {
+  mapMonsterDB: MapMonsterDB;
+  behavior: IBehavior;
 };

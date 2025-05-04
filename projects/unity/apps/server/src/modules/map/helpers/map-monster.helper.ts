@@ -7,7 +7,8 @@ import {
   Vector3,
 } from '@modules/declaration/schemas/schema';
 import { Vector3Value } from '@modules/declaration/values/entity';
-import { randomId } from '@modules/util/uuid';
+import { BehaviorHelper } from '@modules/map/helpers/behavior.helper';
+import { randomId } from '@modules/utils/uuid';
 
 export class MapMonsterHelper {
   static buildSchema(mapMonsters: MapMonsterDB[]): MapSchema<Monster> {
@@ -30,6 +31,10 @@ export class MapMonsterHelper {
       );
 
       monster.serverId = serverId;
+      monster.__additionalData = {
+        mapMonsterDB: monsterDB,
+        behavior: BehaviorHelper.getBehavior(monsterDB.id),
+      };
       monsters.set(serverId, monster);
     });
 
