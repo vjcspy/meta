@@ -9,13 +9,16 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development tsx watch src/index.ts",
-    "schema-codegen": "schema-codegen src/modules/declaration/schemas/schema.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
-    "schema-help": "schema-codegen --help",
     "loadtest": "tsx loadtest/example.ts --room my_room --numClients 2",
     "build": "npm run clean && tsc",
     "clean": "rimraf build",
     "test": "mocha -r tsx test/**_test.ts --exit --timeout 15000",
-    "lint": "eslint \"src/**/*.ts\" --fix"
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "codegen": "____________________________ CODEGEN ____________________________",
+    "clean-csharp": "rimraf ../server/codegen-csharp",
+    "generate-schema": "schema-codegen src/modules/declaration/schemas/schema.ts --csharp --output ../server/codegen-csharp/ --namespace Etheron.Colyseus.Schemas",
+    "schema-codegen": "npm run clean-csharp && npm run generate-schema",
+    "schema-help": "schema-codegen --help"
   },
   "author": "",
   "license": "UNLICENSED",

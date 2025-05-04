@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import type { Monster } from '@modules/declaration/schemas/schema';
 import type { IBehavior } from '@modules/map/simulation/behavior/behavior.base';
 import type { Clock } from 'colyseus';
@@ -23,12 +24,12 @@ export class MonsterBehavior implements IBehavior {
     // Clamp lại trong khoảng [initialPosition.x - moveRadius, initialPosition.x + moveRadius]
     const minX = initialPosition.x - moveRadius;
     const maxX = initialPosition.x + moveRadius;
-    // Cập nhật vị trí và hướng
-    state.position.value.x = Math.max(minX, Math.min(maxX, newX));
 
-    // Cập nhật hướng nhìn (nếu hướng thay đổi)
+    // Update position
+    state.position.value.x = Math.max(minX, Math.min(maxX, newX));
     if (state.facingDirection.x !== direction) {
       state.facingDirection.x = direction;
     }
+    state.position.timestamp = clock.elapsedTime;
   }
 }

@@ -32,7 +32,7 @@ export class MapMonsterHelper {
         EntityVisualization.factory(0),
       );
 
-      monster.serverId = serverId;
+      monster.serverSyncId = serverId;
       monster.__additionalData = {
         mapMonsterDB: monsterDB,
         behavior: BehaviorHelper.getBehavior(monsterDB.id),

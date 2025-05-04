@@ -49,14 +49,17 @@ export class Position extends Schema {
 }
 
 export class SyncObject extends Schema {
+  // id trong database, giá trị này không thay đổi
   @type('string')
   id: string = '';
 
+  // client can create this id
   @type('string')
-  clientId: string = '';
+  clientSyncId: string = '';
 
+  // server can create this id to sync with client
   @type('string')
-  serverId: string = '';
+  serverSyncId: string = '';
 
   @type(Position)
   position: Position = new Position();
