@@ -7,11 +7,11 @@ import { logger } from '@modules/utils/logger';
 
 // _______________________________ Base schema class for all game objects _______________________________
 export class Vector3 extends Schema {
-  @type('number') x: number = 0;
+  @type('float32') x: number = 0;
 
-  @type('number') y: number = 0;
+  @type('float32') y: number = 0;
 
-  @type('number') z: number = 0; // nên thêm nếu là 3D game
+  @type('float32') z: number = 0; // nên thêm nếu là 3D game
 
   public static factory(x: number, y: number, z: number): Vector3 {
     const vector3 = new Vector3();
@@ -41,7 +41,7 @@ export class Position extends Schema {
   @type(Vector3)
   facingDirection: Vector3 = new Vector3();
 
-  @type('number')
+  @type('float32')
   timestamp: number = 0; // in seconds to compatible with Unity
 
   public static factory(value: Vector3): Position {

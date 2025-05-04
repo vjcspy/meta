@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import type { Monster } from '@modules/declaration/schemas/schema';
 import type { IBehavior } from '@modules/map/simulation/behavior/behavior.base';
+import { roundFloat } from '@modules/utils/float';
 import type { Clock } from 'colyseus';
 
 export class MonsterBehavior implements IBehavior {
   OnUpdate(state: Monster, clock: Clock): void {
-    const { deltaTime } = clock;
+    const { deltaTime, elapsedTime } = clock;
 
     const monsterDB = state.__additionalData.mapMonsterDB;
     const { position: initialPosition } = monsterDB; // Vector3
@@ -19,9 +20,12 @@ export class MonsterBehavior implements IBehavior {
       facingDir.x = 1;
     }
 
+    // Pre-calculate speed per second
+    const velocityPerMs = speed / 1000;
+
     // Tính displacement
-    const displacement = (speed * deltaTime * facingDir.x) / 1000;
-    const newX = currentPos.x + displacement;
+    const displacement = velocityPerMs * deltaTime * facingDir.x;
+    let newX = currentPos.x + displacement;
 
     const minX = initialPosition.x - moveRadius;
     const maxX = initialPosition.x + moveRadius;
@@ -29,19 +33,21 @@ export class MonsterBehavior implements IBehavior {
     // Nếu chạm biên thì đổi hướng
     if (newX <= minX) {
       facingDir.x = 1; // quay sang phải
-      currentPos.x = minX;
+      newX = minX;
     } else if (newX >= maxX) {
       facingDir.x = -1; // quay sang trái
-      currentPos.x = maxX;
-    } else {
-      currentPos.x = newX;
+      newX = maxX;
     }
 
+    // Làm tròn kết quả trước khi gán
+    currentPos.x = roundFloat(newX);
+
+    // Set trạng thái đang di chuyển nếu cần
     if (state.visualization.state !== 1) {
-      state.visualization.state = 1; // set trạng thái đang di chuyển
+      state.visualization.state = 1;
     }
 
-    // Cập nhật timestamp
-    state.position.timestamp = clock.elapsedTime / 1000;
+    // Cập nhật timestamp per second
+    state.position.timestamp = elapsedTime / 1000;
   }
 }
