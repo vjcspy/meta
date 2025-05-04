@@ -1,4 +1,4 @@
-// import 'express-async-errors';
+import 'express-async-errors';
 
 import { auth } from '@colyseus/auth';
 import { monitor } from '@colyseus/monitor';

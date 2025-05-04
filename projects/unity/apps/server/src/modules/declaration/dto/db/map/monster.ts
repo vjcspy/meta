@@ -8,4 +8,8 @@ export type MapMonsterDB = {
   respawn?: {
     delay: number;
   };
+  behavior: {
+    speed: number;
+    moveRadius: number;
+  };
 };

@@ -2,6 +2,7 @@ import type { Client } from '@colyseus/core/build/Transport';
 import type { UserData } from '@modules/auth/auth-impl';
 import { MapV1State } from '@modules/declaration/schemas/schema';
 import type { MapOptions } from '@modules/declaration/types/map';
+import { MapHelper } from '@modules/map/helpers/map.helper';
 import { MapMonsterHelper } from '@modules/map/helpers/map-monster.helper';
 import { MapBaseRom } from '@modules/map/models/map-base.rom';
 
@@ -25,14 +26,14 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
 
   async onCreate(options: MapOptions) {
     super.onCreate(options);
-    this.registerMessageHandler();
 
-    const mapData = await this.getMapData(options.mapId);
+    const mapData = await MapHelper.loadMapData(options.mapId);
     if (mapData) {
       this.state.monsters = MapMonsterHelper.buildSchema(mapData.monsters);
+      this.setSimulationInterval(this.simulate.bind(this), 1000 / 10);
+    } else {
+      throw new Error(`Map with id '${options.mapId}' does not exist`);
     }
-
-    this.setSimulationInterval(this.simulate, 1000 / 10);
   }
 
   onJoin(client: any, options: MapOptions, auth: UserData) {
@@ -51,7 +52,7 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
     console.log('[MapV1Room] Dispose');
   }
 
-  private registerMessageHandler() {
+  protected registerMessageHandler() {
     this.onMessage(MessageType.LOCAL_SYNC, (client: Client, data: any) => {
       const player = this.state.players.get(client.sessionId);
       if (!player) return;

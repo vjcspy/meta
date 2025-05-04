@@ -21,7 +21,9 @@ export class MapMonsterHelper {
         monsterDB.id,
         Position.factory(
           Vector3.factory(
-            monsterDB.position.x,
+            monsterDB.position.x +
+              Math.random() * (2 * monsterDB.behavior.moveRadius) -
+              monsterDB.behavior.moveRadius, // randomize x position
             monsterDB.position.y,
             monsterDB.position.z,
           ),

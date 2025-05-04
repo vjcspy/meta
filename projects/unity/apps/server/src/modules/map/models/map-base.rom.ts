@@ -4,12 +4,10 @@ import type { AuthContext, Client } from '@colyseus/core/build/Transport';
 import type { UserData } from '@modules/auth/auth-impl';
 import { ClientPersistManager } from '@modules/core/client/client-persist-manager';
 import type {
-  MapData,
   MapMetadata,
   MapOptions,
   MapPresenceMessage,
 } from '@modules/declaration/types/map';
-import { MapId } from '@modules/declaration/values/mapId';
 import { logger } from '@modules/utils/logger';
 
 export abstract class MapBaseRom<T extends object> extends Room<T> {
@@ -17,33 +15,6 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
     ClientPersistManager.getInstance();
 
   private static ROOM_EVENT_FORCE_DISCONNECT = 'force-disconnect';
-
-  // ==========================
-  // 🔹 Map Logic
-  // ==========================
-  protected async getMapData(mapId: string): Promise<MapData> {
-    switch (mapId) {
-      case MapId.SANDBOX:
-        return {
-          id: MapId.SANDBOX,
-          name: 'Sandbox',
-          npcs: [],
-          monsters: [
-            {
-              id: 'dummy_bug',
-              position: {
-                x: 0,
-                y: 0,
-                z: 0,
-              },
-            },
-          ],
-        };
-      default:
-        console.warn(`[MapBaseRom.getMapData] MapId ${mapId} is not supported`);
-        return null;
-    }
-  }
 
   // ==========================
   // 🔹 Redis event
@@ -68,7 +39,7 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
     });
   }
 
-  private registerEventHandler() {
+  protected registerEventHandler() {
     // Disconnect client if it is already in another room
     this.subscribeEvent((message: MapPresenceMessage) => {
       if (message.type === MapBaseRom.ROOM_EVENT_FORCE_DISCONNECT) {
@@ -86,6 +57,11 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
   }
 
   // ==========================
+  // 🔹 Server-client sync methods
+  // ==========================
+  protected registerMessageHandler() {}
+
+  // ==========================
   // 🔹 Lifecycle methods
   // ==========================
   onCreate(options: MapOptions) {
@@ -99,6 +75,7 @@ export abstract class MapBaseRom<T extends object> extends Room<T> {
     } as MapMetadata);
 
     this.registerEventHandler();
+    this.registerMessageHandler();
   }
 
   async onAuth(client: Client, options: MapOptions, context: AuthContext) {
