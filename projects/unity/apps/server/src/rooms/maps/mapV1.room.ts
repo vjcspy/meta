@@ -25,9 +25,10 @@ export class MapV1Room extends MapBaseRom<MapV1State> {
 
   maxClients = 50;
 
+  patchRate = 1000 / 30;
+
   async onCreate(options: MapOptions) {
     super.onCreate(options);
-
     const mapData = await MapHelper.loadMapData(options.mapId);
     if (mapData) {
       this.state.monsters = MapMonsterHelper.buildSchema(mapData.monsters);
