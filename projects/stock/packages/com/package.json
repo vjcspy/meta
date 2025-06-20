@@ -19,8 +19,5 @@
     "tsconfig": "workspace:*"
   },
   "dependencies": {
-  },
-  "peerDependencies": {
-    "lodash-es": "latest"
   }
 }
