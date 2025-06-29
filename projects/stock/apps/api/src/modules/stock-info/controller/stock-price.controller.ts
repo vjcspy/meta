@@ -43,7 +43,7 @@ export class StockPriceController {
       throw new HttpException('Symbol not found', HttpStatus.BAD_REQUEST);
     }
 
-    this.syncSimpleStockPrice.syncSimpleStockPrice(symbol);
+    this.syncSimpleStockPrice.syncSimpleStockPrice(symbol, true);
 
     return new OkResponse();
   }

@@ -19,6 +19,10 @@ export class TradingAnalysisHelper {
     private syncStatus: SyncStatus,
   ) {}
 
+  /**
+   * @Deprecated Will combine into `stock_trading_analysis` table
+   *
+   * */
   async analysisHistoryForDate(date: string) {
     this.logger.info(`Start analysis history for date ${date}`);
     const mDate = moment.utc(date).toDate();
