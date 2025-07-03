@@ -3,7 +3,7 @@ import { SyncValues } from '@modules/stock-info/values/sync.values';
 import { XLogger } from '@nest/base';
 import { Nack, RabbitSubscribe } from '@nest/rabbitmq';
 import { Injectable } from '@nestjs/common';
-import { auditTime, groupBy, mergeMap, Subject } from 'rxjs';
+import { auditTime, delay, groupBy, mergeMap, Subject } from 'rxjs';
 
 @Injectable()
 export class RefreshTickConsumer {
@@ -15,9 +15,10 @@ export class RefreshTickConsumer {
     RefreshTickConsumer.refreshTick$
       .pipe(
         groupBy((symbol) => symbol),
-        mergeMap((group: any) => {
+        mergeMap((group) => {
           return group.pipe(auditTime(SyncValues.REFRESH_WINDOW_TIME));
         }),
+        delay(500),
       )
       .subscribe((symbol: any) => {
         this.logger.info(`refresh tick for: ${symbol}`, { symbol });
