@@ -15,30 +15,34 @@ export class SlackHelper {
   constructor(private readonly httpService: HttpService) {}
 
   postMessage(channelName: string, messageOptions: any) {
-    if (this.getSlackUrl() && this.getSlackToken()) {
-      if (messageOptions?.text && getNodeEnv()) {
-        messageOptions.text = `[${getAppName()}|${getNodeEnv()}|${getInstanceId()}] ${
-          messageOptions.text
-        }`;
+    try {
+      if (this.getSlackUrl() && this.getSlackToken()) {
+        if (messageOptions?.text && getNodeEnv()) {
+          messageOptions.text = `[${getAppName()}|${getNodeEnv()}|${getInstanceId()}] ${
+            messageOptions.text
+          }`;
+        }
+        this.httpService
+          .post(`${this.getSlackUrl()}/post-message`, {
+            token: this.getSlackToken(),
+            payload: {
+              channel_name: channelName,
+              messageOptions,
+            },
+          })
+          .pipe(
+            map((res) => {
+              if (this.isLogResponse) {
+                console.log(res);
+              }
+            }),
+          )
+          .subscribe();
+      } else {
+        this.logger.warn('Please config slack');
       }
-      this.httpService
-        .post(`${this.getSlackUrl()}/post-message`, {
-          token: this.getSlackToken(),
-          payload: {
-            channel_name: channelName,
-            messageOptions,
-          },
-        })
-        .pipe(
-          map((res) => {
-            if (this.isLogResponse) {
-              console.log(res);
-            }
-          }),
-        )
-        .subscribe();
-    } else {
-      this.logger.warn('Please config slack');
+    } catch (e) {
+      this.logger.error('Error posting message to Slack', e);
     }
   }
 
