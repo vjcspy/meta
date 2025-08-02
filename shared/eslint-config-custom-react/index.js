@@ -79,6 +79,6 @@ export default tseslint.config([
                 '@typescript-eslint/no-unused-vars': 'off',
             },
         },
-        globalIgnores(['node_modules/**', '.next/**', 'out/**', 'build/**', 'dist/**'])
+        globalIgnores(['node_modules/**', '.next/**', 'out/**', 'build/**', 'dist/**', '.storybook/**', 'stories/**', 'vite.config.ts'])
     ]
 );
