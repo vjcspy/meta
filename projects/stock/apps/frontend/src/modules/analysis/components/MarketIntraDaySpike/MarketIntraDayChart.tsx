@@ -116,7 +116,6 @@ export default combineHOC(
         {!hasSymbolInCurrentCat && (
           <div className="mb-5 grid grid-cols-1 gap-6">
             <span className="text-danger">
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Current market category don't have any symbol
             </span>
           </div>

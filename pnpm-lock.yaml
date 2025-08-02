@@ -386,17 +386,9 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
-  shared/eslint-config-nextjs:
-    dependencies:
-      eslint:
-        specifier: '>= 9'
-        version: 9.32.0(jiti@1.21.0)
+  shared/eslint-config-nextjs: {}
 
-  shared/eslint-config-server:
-    dependencies:
-      eslint:
-        specifier: '>= 9'
-        version: 9.32.0(jiti@1.21.0)
+  shared/eslint-config-server: {}
 
   shared/nest-base:
     dependencies:
