@@ -1,10 +1,12 @@
 packages:
-#  - "apps/nestjs"
-  - "shared/*"
+  - "apps/nextjs"
+  - "shared/eslint-config-custom-react"
+  - "shared/eslint-config-nextjs"
+  - "shared/react-component"
   #  ________ Projects MAIN ________
   #- "projects/main/apps/proxy-sls"
   #- "projects/main/apps/slack-sls"
   #  ________ Projects STOCK ________
-  - "projects/stock/apps/api"
-  - "projects/stock/apps/frontend"
-  - "projects/stock/packages/*"
+#  - "projects/stock/apps/api"
+#  - "projects/stock/apps/frontend"
+#  - "projects/stock/packages/*"
