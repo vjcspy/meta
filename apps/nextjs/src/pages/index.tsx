@@ -1,16 +1,20 @@
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-foreground">
-            Shadcn UI Button Components
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Showcase of button variants and sizes with Storybook integration
-          </p>
+        <div className="flex justify-between items-start">
+          <div className="text-center space-y-4 flex-1">
+            <h1 className="text-4xl font-bold text-foreground">
+              Shadcn UI Button Components
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Showcase of button variants and sizes with Storybook integration
+            </p>
+          </div>
+          <ModeToggle />
         </div>
 
         {/* Button Variants */}
