@@ -1,3 +1,3 @@
-import eslintConfig from 'eslint-config-custom-react';
+import customReactConfig from 'eslint-config-custom-react';
 
-export default eslintConfig;
+export default customReactConfig;

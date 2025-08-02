@@ -1,69 +1,124 @@
-# React + TypeScript + Vite
+# React Component Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A shared React component library built with shadcn/ui, TypeScript, and Storybook.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 **shadcn/ui Integration** - Beautiful, accessible components
+- 📚 **Storybook** - Interactive component documentation
+- 🔧 **TypeScript** - Full type safety
+- 🎯 **ESLint** - Custom React configuration
+- 🏗️ **Vite** - Fast build system
+- 🎨 **Tailwind CSS** - Utility-first styling
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This package is part of the monorepo workspace. Install dependencies:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build the library
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm build
 ```
+
+### Start Storybook
+
+```bash
+pnpm storybook
+```
+
+### Lint code
+
+```bash
+pnpm lint
+pnpm lint:fix
+```
+
+## Usage
+
+### In NextJS App
+
+1. Add to your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "react-component": "workspace:*"
+  }
+}
+```
+
+2. Import components:
+
+```tsx
+import { Button } from 'react-component';
+import 'react-component/styles';
+
+function App() {
+  return (
+    <Button variant="default" size="lg">
+      Click me
+    </Button>
+  );
+}
+```
+
+### Available Components
+
+#### Button
+
+```tsx
+import { Button } from 'react-component';
+
+// Variants
+<Button variant="default">Default</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="link">Link</Button>
+
+// Sizes
+<Button size="sm">Small</Button>
+<Button size="default">Default</Button>
+<Button size="lg">Large</Button>
+<Button size="icon">🔥</Button>
+```
+
+## Adding New Components
+
+1. Create component in `src/components/ui/`
+2. Export from `src/index.ts`
+3. Add Storybook stories in `stories/`
+4. Update this README
+
+## Tailwind CSS Integration
+
+The package includes a complete Tailwind CSS setup with:
+
+- CSS custom properties for theming
+- Dark mode support
+- shadcn/ui design tokens
+
+Make sure your consuming app includes the package styles:
+
+```tsx
+import 'react-component/styles';
+```
+
+## TypeScript
+
+All components are fully typed with TypeScript. The build process generates declaration files for proper IDE support.
+
+## Contributing
+
+1. Follow the existing code style
+2. Add Storybook stories for new components
+3. Ensure TypeScript types are properly exported
+4. Test components in the NextJS app
