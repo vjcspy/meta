@@ -33,7 +33,6 @@ export class StockPriceRepo {
     }
 
     if (firstTime) {
-      // eslint-disable-next-line no-restricted-syntax
       // for (const price of records) {
       //   try {
       //     await prisma.stockPrice.create({
@@ -48,7 +47,6 @@ export class StockPriceRepo {
         data: records,
       });
     } else {
-      // eslint-disable-next-line no-restricted-syntax
       for (const price of records) {
         await prisma.stockPrice.upsert({
           where: {

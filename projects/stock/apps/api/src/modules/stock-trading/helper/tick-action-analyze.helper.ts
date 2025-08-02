@@ -472,7 +472,7 @@ export class TickActionAnalyzeHelper {
           };
         }
         const transactions = this.formatRecord(value);
-        // eslint-disable-next-line no-restricted-syntax,guard-for-in
+
         for (const key in transactions) {
           marketGroupedByTs[ts][key] += transactions[key];
         }

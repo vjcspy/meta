@@ -55,7 +55,6 @@ const isValidTradeValue = (
 
   if (typeof tradeValue === 'object') {
     if (tradeValue.max >= 10000) {
-      // eslint-disable-next-line no-param-reassign
       tradeValue.max = Infinity;
     }
     return (
@@ -88,7 +87,6 @@ export const mergeByRes = (
         return;
       }
 
-      // eslint-disable-next-line prefer-const
       let { buy, sell, oc, buyVal, sellVal, ocVal } = mergedRes[ts];
       if (tick.a === 'B') {
         buy += tick.vol;
