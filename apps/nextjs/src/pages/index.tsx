@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -15,7 +15,9 @@ export default function Home() {
 
         {/* Button Variants */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">Button Variants</h2>
+          <h2 className="text-2xl font-semibold text-foreground">
+            Button Variants
+          </h2>
           <div className="flex flex-wrap gap-4">
             <Button variant="default">Default</Button>
             <Button variant="destructive">Destructive</Button>
@@ -28,7 +30,9 @@ export default function Home() {
 
         {/* Button Sizes */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">Button Sizes</h2>
+          <h2 className="text-2xl font-semibold text-foreground">
+            Button Sizes
+          </h2>
           <div className="flex items-center gap-4">
             <Button size="sm">Small</Button>
             <Button size="default">Default</Button>
@@ -39,7 +43,9 @@ export default function Home() {
 
         {/* Button States */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">Button States</h2>
+          <h2 className="text-2xl font-semibold text-foreground">
+            Button States
+          </h2>
           <div className="flex gap-4">
             <Button>Normal</Button>
             <Button disabled>Disabled</Button>
@@ -48,18 +54,20 @@ export default function Home() {
 
         {/* Interactive Examples */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">Interactive Examples</h2>
+          <h2 className="text-2xl font-semibold text-foreground">
+            Interactive Examples
+          </h2>
           <div className="flex gap-4">
-            <Button onClick={() => alert('Primary clicked!')}>Click Me</Button>
-            <Button 
-              variant="outline" 
-              onClick={() => console.log('Outline clicked!')}
+            <Button onClick={() => alert("Primary clicked!")}>Click Me</Button>
+            <Button
+              variant="outline"
+              onClick={() => console.log("Outline clicked!")}
             >
               Log to Console
             </Button>
-            <Button 
-              variant="destructive" 
-              onClick={() => confirm('Are you sure?')}
+            <Button
+              variant="destructive"
+              onClick={() => confirm("Are you sure?")}
             >
               Confirm Action
             </Button>
@@ -72,12 +80,16 @@ export default function Home() {
             View detailed documentation and interactive examples in Storybook
           </p>
           <Button variant="outline" asChild>
-            <a href="http://localhost:6006" target="_blank" rel="noopener noreferrer">
+            <a
+              href="http://localhost:6006"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Open Storybook
             </a>
           </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }
