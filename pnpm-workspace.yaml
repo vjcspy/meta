@@ -1,8 +1,6 @@
 packages:
   - "apps/nextjs"
   - "shared/eslint-config-custom-react"
-  - "shared/eslint-config-nextjs"
-  - "shared/react-component"
   - "shared/tsconfig"
   #  ________ Projects MAIN ________
   #- "projects/main/apps/proxy-sls"
