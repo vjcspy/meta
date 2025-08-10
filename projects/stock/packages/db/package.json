@@ -1,0 +1,26 @@
+{
+  "name": "@stock/db",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint --fix --ext ts,tsx .",
+    "prisma": "___________________________ PRISMA ___________________________",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "dotenv -e .env prisma migrate dev",
+    "prisma:deploy": "dotenv -e .env.production -- prisma migrate deploy"
+  },
+  "devDependencies": {
+    "eslint-config-server": "workspace:*",
+    "tsconfig": "workspace:*",
+    "dotenv-cli": "^10.0.0"
+  },
+  "dependencies": {
+  }
+}

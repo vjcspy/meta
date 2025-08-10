@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model StockInfoStock {
+  id             Int       @id @default(autoincrement())
+  refId          Int?
+  catId          Int?
+  code           String    @unique() @db.VarChar(255)
+  exchange       String    @db.VarChar(255)
+  industryName1  String?   @db.VarChar(255)
+  industryName2  String?   @db.VarChar(255)
+  industryName3  String?   @db.VarChar(255)
+  totalShares    BigInt
+  name           String    @db.VarChar(255)
+  firstTradeDate DateTime? @db.Date
+
+  @@map("stock_info_stocks")
+}
+
+model StockInfoTick {
+  id     Int      @id @default(autoincrement())
+  symbol String   @db.VarChar(10)
+  date   DateTime @db.Date
+  meta   Json
+
+  @@map("stock_info_ticks")
+}
+
+model StockInfoPrice {
+  id                  Int      @id @default(autoincrement())
+  date                DateTime @db.Date
+  symbol              String   @db.VarChar(10)
+  priceBasic          Int // Gia dong cua ngay hom qua, dua vao do de biet duoc % change
+  priceHigh           Int
+  priceLow            Int
+  priceOpen           Int
+  priceClose          Int
+  priceAverage        Int
+  volume              Int
+  value               Int // 10**6
+  dealVolume          Int
+  buyForeignQuantity  Int
+  buyForeignValue     Int // 10**6
+  sellForeignQuantity Int
+  sellForeignValue    Int // 10**6
+  currentForeignRoom  BigInt?  @db.BigInt
+
+  @@unique([symbol, date])
+  @@map("stock_info_prices")
+}
