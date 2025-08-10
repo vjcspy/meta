@@ -55,3 +55,36 @@ model StockInfoPrice {
   @@unique([symbol, date])
   @@map("stock_info_prices")
 }
+
+model StockTradingAnalysis {
+  id     Int    @id @default(autoincrement())
+  symbol String @unique @db.VarChar(10)
+
+  trade_value_7  BigInt? @default(0) @db.BigInt
+  trade_value_14 BigInt? @default(0) @db.BigInt
+  trade_value_30 BigInt? @default(0) @db.BigInt
+
+  cap BigInt? @default(0) @db.BigInt // Von Hoa
+
+  l16_hullma_trend                Int @default(0) @db.SmallInt // hullma 16 trend, 0 not sure, 1 up, -1 down
+  l16_hullma_day_in_trend         Int @default(0) @db.SmallInt // how many days in current trend?
+  l16_hullma_highest_diff_percent Int @default(0) @db.SmallInt // Neu dang o downtrend, thi gia giam max tu luc up trend lan truoc la bao nhieu
+  cur_gap_percent                 Int @default(0) @db.SmallInt
+
+  foreign_buy_30  Int @default(0) @db.SmallInt
+  foreign_sell_30 Int @default(0) @db.SmallInt
+  foreign_diff_30 Int @default(0) @db.SmallInt
+
+  foreign_buy_15  Int @default(0) @db.SmallInt
+  foreign_sell_15 Int @default(0) @db.SmallInt
+  foreign_diff_15 Int @default(0) @db.SmallInt
+
+  foreign_buy_7  Int @default(0) @db.SmallInt
+  foreign_sell_7 Int @default(0) @db.SmallInt
+  foreign_diff_7 Int @default(0) @db.SmallInt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("stock_trading_analysis")
+}
