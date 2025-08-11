@@ -103,7 +103,7 @@ export class SyncTicksJob {
   })
   async syncDefaultCat() {
     try {
-      if (isMainProcess()) {
+      if (isMainProcess() && 1 < 0) {
         // check has price for VNINDEX today
         const prices = await this.priceHelper.getSimpleHistory(
           StockInfoValue.VNINDEX_CODE,

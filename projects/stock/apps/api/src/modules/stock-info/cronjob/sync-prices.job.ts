@@ -86,7 +86,7 @@ export class SyncPricesJob {
     timeZone: 'Asia/Ho_Chi_Minh',
   })
   async syncAlertPrice() {
-    if (!isMainProcess()) return;
+    if (!isMainProcess() && 1 > 0) return;
     const alerts = await prisma.stockAlert.findMany({});
     const cors = await prisma.cor_entity.findMany({});
 
