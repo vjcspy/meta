@@ -14,7 +14,7 @@
     "prisma": "___________________________ PRISMA ___________________________",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "dotenv -e .env prisma migrate dev",
-    "prisma:deploy": "dotenv -e .env.production -- prisma migrate deploy"
+    "prisma:deploy": "dotenv -e .env -- prisma migrate deploy"
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",
