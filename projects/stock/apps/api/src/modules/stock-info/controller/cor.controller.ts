@@ -34,7 +34,7 @@ export class CorController {
   @Get('sync')
   async syncCor() {
     this.logger.info('Remove all cor before sync');
-    await prisma.cor_entity.deleteMany();
+    // await prisma.cor_entity.deleteMany();
     this.eventManager.dispatch(COR_START_SYNC_ACTION);
 
     return new OkResponse();
