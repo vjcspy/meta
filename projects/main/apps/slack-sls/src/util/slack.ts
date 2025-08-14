@@ -112,7 +112,7 @@ export const postMessage: any = async (options: any) => {
       });
     } catch (e) {
       console.error(e);
-      throw new Error(`Error Post message to channel ${channelId}`);
+      throw new Error(`Error Post message to channel ${e}`);
     }
   } else {
     throw new Error('SLACK_ERROR');
