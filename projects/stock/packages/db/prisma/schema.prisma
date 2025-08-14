@@ -8,6 +8,22 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model StockInfoSyncStatus {
+  id            Int      @id @default(autoincrement())
+  key           String   @unique // key
+  is_success    Boolean // success
+  number_of_try Int?
+  error         String?
+  date          DateTime
+  meta          Json?
+  page          Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([key])
+  @@map("stock_info_sync_status")
+}
+
 model StockInfoStock {
   id             Int       @id @default(autoincrement())
   refId          Int?
