@@ -24,7 +24,7 @@ After the plan is finalized and approved:
 - Update the `CHANGELOG.md` file in the `devdocs` directory with a brief description of your changes.
 - Use the following format for the CHANGELOG entry:
     ```
-    [YYYYMMDDHHMM] Brief description of change ([details](path/to/ticket-file.md))
+    [YYYY-MM-DD] Brief description of change ([details](path/to/ticket-file.md))
     ```
 
 ---

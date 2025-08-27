@@ -1,4 +1,4 @@
-# 📋 [TICKET-ID: YYYYMMDDHHMM] - [Task/Ticket Name]
+# 📋 [TICKET-ID: YYYY-MM-DD] - [Task/Ticket Name]
 
 ## 🎯 Objective
 > Briefly describe the key objective to be achieved with this ticket.
@@ -43,15 +43,15 @@ src/
 
 ## 🚧 Outstanding Issues & Follow-up
 
-### ⚠️ Known Issues
+### ⚠️ Known Issues (Optional)
 - [ ] [Issue 1 – Describe and note impact]
 - [ ] [Issue 2 – Describe and note impact]
 
-### 🔮 Future Improvements
+### 🔮 Future Improvements (Optional)
 - [ ] [Suggestion 1 – e.g., Optimize query performance]
 - [ ] [Suggestion 2 – e.g., Add caching layer]
 
-### 📌 Technical Debt
+### 📌 Technical Debt (Optional)
 - [Describe any technical debt incurred]
 
 ## 🔍 Review Checklist
@@ -61,11 +61,9 @@ src/
 - [ ] Code adheres to coding standards
 - [ ] CHANGELOG.md is updated with a brief description of your changes
 
-## 💬 Notes & Comments
+## 💬 Notes & Comments (Optional)
 > Add any additional notes or important context here
 
 ---
-**Last updated**: [YYYY-MM-DD HH:MM]  
-**Updated by**: [@username]
-
+**Last updated**: [YYYY-MM-DD]  
 ---
