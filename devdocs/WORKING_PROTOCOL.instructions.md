@@ -11,22 +11,4 @@ Before taking any action, **think carefully and provide a detailed step-by-step 
 
 ---
 
-### 2. Documentation Template  
-After the plan is finalized and approved:  
-- **Follow the template in `devdocs/TEMPLATE.md`.**
-- Create or update documentation in the `devdocs` folder as per the template.
-- This ensures a standardized approach to planning, implementation, and documentation.
-
----
-
-### 3. Changelog Update  
-**Only** when I state that the ticket is completed and explicitly ask you to update the changelog, you must:  
-- Update the `CHANGELOG.md` file in the `devdocs` directory with a brief description of your changes.
-- Use the following format for the CHANGELOG entry:
-    ```
-    [YYYY-MM-DD] Brief description of change ([details](path/to/ticket-file.md))
-    ```
-
----
-
 **Do not perform any actions outside this protocol. Await my instructions at each step.**

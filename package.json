@@ -10,6 +10,7 @@
     "projects/bedkingdom/apps/*"
   ],
   "scripts": {
+    "dev": "pnpm --filter @stock/apps-web dev",
     "start:prod": "pnpm --filter @stock/apps-api start:prod",
     "build": "pnpm run stock:build",
     "stock": "___________________________STOCK___________________________",
