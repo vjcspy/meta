@@ -23,18 +23,20 @@ export class VietStockCredentials {
         '3C423246818F0E3528187CCAAC8884C7DC2AC16F9370B0F46310C7C97868240303DA0954B5ABFD2F42DBFAD6F7E849A820ED218753FBE20CFE166B2C0CF57CB3781FC08C58FD42AB62243B08DB47839FD9C85C2C1492899C1E2EAA852FB5384C5967E0EA4C74D4E0A3D959F9FED70743D68F7E7139D3C4B3B60DC6D726AE60D2';
       let usrTk = 'wAoBVyA7RUuS5D/peNITBQ==';
 
-      const re = new RegExp(
-        '(.*)(ASP.NET_SessionId=.*;)(.*)(__RequestVerificationToken=.*;)(.*)(vts_usr_lg=.*;)(.*)(vst_usr_lg_token=.*;)(.*)',
-      );
-      const r = re.exec(loggedCrds.cookies);
-      if (r.length === 10) {
-        const _getValue = (cValue: string) =>
-          cValue.slice(cValue.indexOf('=') + 1, cValue.length - 1);
-        sid = _getValue(r[1]);
-        rvt = _getValue(r[4]);
-        vtsUsrLg = _getValue(r[6]);
-        usrTk = _getValue(r[8]);
+      if (loggedCrds.cookies === '') {
+        throw new Error('could not get cookies');
       }
+
+      const cookieMap = Object.fromEntries(
+        loggedCrds.cookies.split(';').map((part) => {
+          const [key, ...val] = part.trim().split('=');
+          return [key, val.join('=')];
+        }),
+      );
+      sid = cookieMap['ASP.NET_SessionId'];
+      rvt = cookieMap.__RequestVerificationToken;
+      vtsUsrLg = cookieMap.CookieLogin;
+      usrTk = cookieMap.vst_usr_lg_token;
 
       const csrfAfterLogin = await this.retrieveCookiesAndCsrf(
         loggedCrds.cookies,

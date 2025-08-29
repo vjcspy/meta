@@ -23,7 +23,7 @@ export const retrieveCor = async (
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-origin',
         'x-requested-with': 'XMLHttpRequest',
-        cookie: `ASP.NET_SessionId=${sid}; __RequestVerificationToken=${rvt}; language=vi-VN; Theme=Light; isShowLogin=true; vts_usr_lg=${vtsUsrLg}; vst_usr_lg_token=${usrTk}`,
+        cookie: `ASP.NET_SessionId=${sid}; __RequestVerificationToken=${rvt}; language=vi-VN; Theme=Light; isShowLogin=true; CookieLogin=${vtsUsrLg}; vst_usr_lg_token=${usrTk}`,
         Referer:
           'https://finance.vietstock.vn/doanh-nghiep-a-z/danh-sach-niem-yet?page=1',
         'Referrer-Policy': 'strict-origin-when-cross-origin',
