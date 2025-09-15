@@ -4,7 +4,7 @@ import "@/styles/globals.css";
 
 import type { AppProps } from "next/app";
 
-import { FloatingDashboardActions } from "@/components/floating-dashboard-actions";
+import { DashboardCommands } from "@/components/dashboard-commands";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
       disableTransitionOnChange
     >
       <Component {...pageProps} />
-      <FloatingDashboardActions />
+      <DashboardCommands />
     </ThemeProvider>
   );
 }

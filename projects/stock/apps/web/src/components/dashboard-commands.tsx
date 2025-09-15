@@ -27,7 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function FloatingDashboardActions() {
+export function DashboardCommands() {
   const [open, setOpen] = React.useState(false);
   const [cmdOpen, setCmdOpen] = React.useState(false);
   const [page, setPage] = React.useState<"root" | "theme">("root");
@@ -54,16 +54,12 @@ export function FloatingDashboardActions() {
       <div className="fixed bottom-6 right-6 z-50">
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
-            <Button
-              size="icon"
-              className="shadow-xl"
-              aria-label="Dashboard actions"
-            >
+            <Button size="icon" className="shadow-xl" aria-label="CMD">
               <MoreVertical className="size-5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" sideOffset={8} className="w-56">
-            <DropdownMenuLabel>Dashboard actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Commands</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
