@@ -1,6 +1,6 @@
 "use client";
 
-import { CommandIcon, MoreVertical, Palette } from "lucide-react";
+import { ChevronLeft, CommandIcon, MoreVertical, Palette } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
 
@@ -30,6 +30,7 @@ import {
 export function FloatingDashboardActions() {
   const [open, setOpen] = React.useState(false);
   const [cmdOpen, setCmdOpen] = React.useState(false);
+  const [page, setPage] = React.useState<"root" | "theme">("root");
   const { setTheme } = useTheme();
 
   // Keyboard shortcut: Ctrl/Cmd + Shift + P
@@ -41,6 +42,7 @@ export function FloatingDashboardActions() {
       if (isCtrlCmd && e.shiftKey && (e.key === "P" || e.key === "p")) {
         e.preventDefault();
         setCmdOpen((v) => !v);
+        setPage("root");
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -79,7 +81,12 @@ export function FloatingDashboardActions() {
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuSub>
-            <DropdownMenuItem onClick={() => setCmdOpen(true)}>
+            <DropdownMenuItem
+              onClick={() => {
+                setCmdOpen(true);
+                setPage("root");
+              }}
+            >
               <CommandIcon className="mr-2 size-4" />
               Quick actions
               <CommandShortcut>Ctrl+Shift+P</CommandShortcut>
@@ -89,57 +96,98 @@ export function FloatingDashboardActions() {
       </div>
 
       {/* Command Palette */}
-      <CommandDialog open={cmdOpen} onOpenChange={setCmdOpen}>
+      <CommandDialog
+        open={cmdOpen}
+        onOpenChange={(v) => {
+          setCmdOpen(v);
+          if (!v) setPage("root");
+        }}
+      >
         <CommandDialog.Content>
           <CommandRoot label="Quick actions">
-            <CommandInput placeholder="Type a command or search..." />
+            <CommandInput
+              placeholder={
+                page === "root" ? "Type a command or search..." : "Theme…"
+              }
+              onKeyDown={(e: any) => {
+                // Go back to root when input is empty and user presses Backspace
+                const target = e.target as HTMLInputElement;
+                if (
+                  e.key === "Backspace" &&
+                  target.value === "" &&
+                  page !== "root"
+                ) {
+                  setPage("root");
+                  e.preventDefault();
+                }
+              }}
+            />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Dashboard">
-                <CommandItem
-                  onSelect={() => {
-                    window.dispatchEvent(
-                      new CustomEvent("dashboard:reset-zoom"),
-                    );
-                    setCmdOpen(false);
-                  }}
-                >
-                  Reset all chart zoom
-                </CommandItem>
-                <CommandItem
-                  onSelect={() => {
-                    window.location.href = "/dashboard";
-                  }}
-                >
-                  Go to Dashboard
-                </CommandItem>
-              </CommandGroup>
-              <CommandGroup heading="Theme">
-                <CommandItem
-                  onSelect={() => {
-                    setTheme("light");
-                    setCmdOpen(false);
-                  }}
-                >
-                  Set theme: Light
-                </CommandItem>
-                <CommandItem
-                  onSelect={() => {
-                    setTheme("dark");
-                    setCmdOpen(false);
-                  }}
-                >
-                  Set theme: Dark
-                </CommandItem>
-                <CommandItem
-                  onSelect={() => {
-                    setTheme("system");
-                    setCmdOpen(false);
-                  }}
-                >
-                  Set theme: System
-                </CommandItem>
-              </CommandGroup>
+
+              {page === "root" ? (
+                <>
+                  <CommandGroup heading="Dashboard">
+                    <CommandItem
+                      onSelect={() => {
+                        window.dispatchEvent(
+                          new CustomEvent("dashboard:reset-zoom"),
+                        );
+                        setCmdOpen(false);
+                      }}
+                    >
+                      Reset all chart zoom
+                    </CommandItem>
+                    <CommandItem
+                      onSelect={() => {
+                        window.location.href = "/dashboard";
+                      }}
+                    >
+                      Go to Dashboard
+                    </CommandItem>
+                  </CommandGroup>
+
+                  <CommandGroup heading="Preferences">
+                    <CommandItem onSelect={() => setPage("theme")}>
+                      Theme
+                    </CommandItem>
+                  </CommandGroup>
+                </>
+              ) : null}
+
+              {page === "theme" ? (
+                <>
+                  <CommandGroup heading="Theme">
+                    <CommandItem onSelect={() => setPage("root")}>
+                      <ChevronLeft className="mr-2 size-4" /> Back
+                    </CommandItem>
+                    <CommandItem
+                      onSelect={() => {
+                        setTheme("light");
+                        setCmdOpen(false);
+                      }}
+                    >
+                      Light
+                    </CommandItem>
+                    <CommandItem
+                      onSelect={() => {
+                        setTheme("dark");
+                        setCmdOpen(false);
+                      }}
+                    >
+                      Dark
+                    </CommandItem>
+                    <CommandItem
+                      onSelect={() => {
+                        setTheme("system");
+                        setCmdOpen(false);
+                      }}
+                    >
+                      System
+                    </CommandItem>
+                  </CommandGroup>
+                </>
+              ) : null}
             </CommandList>
           </CommandRoot>
         </CommandDialog.Content>
