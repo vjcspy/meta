@@ -15,6 +15,17 @@ import {
 export function ModeToggle() {
   const { setTheme } = useTheme();
 
+  // listen to command palette theme:set event for sync
+  React.useEffect(() => {
+    const handler = (e: any) => {
+      const theme = e?.detail?.theme as "light" | "dark" | "system" | undefined;
+      if (theme) setTheme(theme);
+    };
+    window.addEventListener("theme:set", handler as EventListener);
+    return () =>
+      window.removeEventListener("theme:set", handler as EventListener);
+  }, [setTheme]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

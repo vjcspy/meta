@@ -178,6 +178,21 @@ export default function DashboardPage() {
   const barRef = useRef<any>(null);
   const doughnutRef = useRef<any>(null);
 
+  // Listen to global reset zoom event from command palette
+  useEffect(() => {
+    const handler = () => {
+      lineRef.current?.resetZoom?.();
+      barRef.current?.resetZoom?.();
+      doughnutRef.current?.resetZoom?.();
+    };
+    window.addEventListener("dashboard:reset-zoom", handler as EventListener);
+    return () =>
+      window.removeEventListener(
+        "dashboard:reset-zoom",
+        handler as EventListener,
+      );
+  }, []);
+
   return (
     <div className="min-h-screen w-full overflow-x-hidden overflow-y-auto bg-background">
       <ResponsiveGrid
