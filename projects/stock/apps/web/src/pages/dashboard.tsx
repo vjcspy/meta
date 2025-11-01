@@ -17,6 +17,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 
 import { Button } from "@/components/ui/button";
+import StockCandleFeatureChart from "@/components/dashboard/StockCandleFeatureChart";
 // Use shadcn/ui components via direct import
 import {
   Card,
@@ -60,6 +61,8 @@ export default function DashboardPage() {
         { i: "w1", x: 0, y: 0, w: 6, h: 12, minW: 4, minH: 8 },
         { i: "w2", x: 6, y: 0, w: 6, h: 12, minW: 4, minH: 8 },
         { i: "w3", x: 0, y: 12, w: 6, h: 10, minW: 3, minH: 6 },
+        // Stock Candle Feature Chart full-width by default
+        { i: "w4", x: 0, y: 22, w: 12, h: 20, minW: 4, minH: 15 },
       ],
     }),
     [],
@@ -303,6 +306,11 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Stock Candle Feature (Line-only) */}
+        <div key="w4" className="h-full w-full">
+          <StockCandleFeatureChart />
         </div>
       </ResponsiveGrid>
     </div>

@@ -1,0 +1,102 @@
+"use client";
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Filler,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+// Register core components once
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Filler,
+);
+
+type Series = {
+  id: string;
+  label: string;
+  data: (number | null)[];
+  color?: string;
+};
+
+export type CandleFeatureLineChartProps = {
+  labels: string[];
+  series: Series[];
+};
+
+const DEFAULT_COLORS = [
+  "#3b82f6", // blue-500
+  "#10b981", // emerald-500
+  "#f59e0b", // amber-500
+  "#ef4444", // red-500
+  "#8b5cf6", // violet-500
+  "#14b8a6", // teal-500
+  "#22c55e", // green-500
+  "#f97316", // orange-500
+  "#e11d48", // rose-600
+  "#64748b", // slate-500
+];
+
+export function CandleFeatureLineChart({ labels, series }: CandleFeatureLineChartProps) {
+  const chartRef = useRef<any>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  // Intraday view: disable zoom and pan and omit reset handling
+
+  const data = useMemo(() => {
+    const datasets = series.map((s, i) => ({
+      label: s.label,
+      data: s.data,
+      borderColor: s.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length],
+      backgroundColor: "transparent",
+      borderWidth: 2,
+      tension: 0.3,
+      pointRadius: 1.75,
+      pointHoverRadius: 3,
+      fill: false,
+    }));
+    return { labels, datasets } as const;
+  }, [labels, series]);
+
+  const options = useMemo(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: "nearest", intersect: false },
+    plugins: {
+      legend: { position: "top" as const },
+      title: { display: false, text: "" },
+    },
+    scales: {
+      x: { grid: { color: "rgba(0,0,0,0.05)" } },
+      y: { grid: { color: "rgba(0,0,0,0.05)" } },
+    },
+  }), []);
+
+  return (
+    <div className="h-full w-full p-3">
+      {mounted ? (
+        <Line ref={chartRef} data={data as any} options={options as any} />
+      ) : (
+        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+          Loading chart...
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default CandleFeatureLineChart;

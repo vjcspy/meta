@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getSupabaseClient } from '../utils/supabase/client';
+import {getSupabaseClient} from "@/lib/supabase/client";
 
 type Row = Record<string, any>;
 
@@ -21,6 +21,10 @@ export default function SupabaseDemoPage() {
           data,
           error,
         });
+
+        if (data) {
+          console.log(JSON.stringify(data[0], null, 2))
+        }
 
         if (error) {
           setErrorMsg(error.message);
