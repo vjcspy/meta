@@ -58,31 +58,51 @@ export function CandleFeatureLineChart({ labels, series }: CandleFeatureLineChar
   // Intraday view: disable zoom and pan and omit reset handling
 
   const data = useMemo(() => {
-    const datasets = series.map((s, i) => ({
-      label: s.label,
-      data: s.data,
-      borderColor: s.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length],
-      backgroundColor: "transparent",
-      borderWidth: 2,
-      tension: 0.3,
-      pointRadius: 1.75,
-      pointHoverRadius: 3,
-      fill: false,
-    }));
+    const datasets = series.map((s, i) => {
+      const isPriceAxis = s.id === "close" || s.id.endsWith("_price");
+      return {
+        label: s.label,
+        data: s.data,
+        borderColor: s.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length],
+        backgroundColor: "transparent",
+        borderWidth: 2,
+        tension: 0.3,
+        pointRadius: 1.75,
+        pointHoverRadius: 3,
+        fill: false,
+        // Assign dataset to appropriate Y axis
+        yAxisID: isPriceAxis ? "y" : "y1",
+      };
+    });
     return { labels, datasets } as const;
   }, [labels, series]);
 
   const options = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
-    interaction: { mode: "nearest", intersect: false },
+    // Multi-axis often works best with index mode
+    interaction: { mode: "index", intersect: false },
     plugins: {
       legend: { position: "top" as const },
       title: { display: false, text: "" },
     },
     scales: {
       x: { grid: { color: "rgba(0,0,0,0.05)" } },
-      y: { grid: { color: "rgba(0,0,0,0.05)" } },
+      // Left axis: price-like series
+      y: {
+        type: "linear" as const,
+        display: true,
+        position: "left" as const,
+        grid: { color: "rgba(0,0,0,0.05)" },
+      },
+      // Right axis: non-price series
+      y1: {
+        type: "linear" as const,
+        display: true,
+        position: "right" as const,
+        // Only show grid for the left axis to reduce clutter
+        grid: { drawOnChartArea: false },
+      },
     },
   }), []);
 
