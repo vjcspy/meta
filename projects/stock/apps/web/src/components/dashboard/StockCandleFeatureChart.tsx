@@ -1,6 +1,7 @@
 "use client";
 
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import { debounce } from "es-toolkit";
 import {format, parseISO} from "date-fns";
 import {Button} from "@/components/ui/button";
 import {
@@ -53,14 +54,7 @@ export default function StockCandleFeatureChart() {
     const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
     const [loadUserConfig, setLoadUserConfig] = useState<boolean>(false);
 
-    // Debounce symbol input
-    const [pendingSymbol, setPendingSymbol] = useState<string>(symbol);
-    useEffect(() => {
-        const t = setTimeout(() => setSymbol(pendingSymbol.trim()), 400);
-        return () => clearTimeout(t);
-    }, [pendingSymbol]);
-
-    const refresh = useCallback(async () => {
+    const doRefresh = useCallback(async () => {
         setLoading(true);
         setError(undefined);
         try {
@@ -69,7 +63,7 @@ export default function StockCandleFeatureChart() {
                 .select(
                     "id,symbol,time,interval,open,high,low,close,volume,value,features,date",
                 )
-                .eq("symbol", symbol)
+                .eq("symbol", symbol.trim())
                 .order("time", {ascending: true});
             const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : undefined;
             if (dateStr) {
@@ -92,7 +86,10 @@ export default function StockCandleFeatureChart() {
         }
     }, [supabase, symbol, selectedDate]);
 
-    // Initialize filters from user_config on mount
+    const refresh = useMemo(() => debounce(() => {
+        void doRefresh();
+    }, 500), [doRefresh]);
+
     useEffect(() => {
         const cfg = getUserConfigKey<{
             symbol?: string;
@@ -101,7 +98,6 @@ export default function StockCandleFeatureChart() {
         }>(userConfigKey);
 
         if (cfg?.symbol) {
-            setPendingSymbol(cfg.symbol);
             setSymbol(cfg.symbol);
         }
         if (cfg?.date) {
@@ -119,10 +115,8 @@ export default function StockCandleFeatureChart() {
     }, []);
 
     useEffect(() => {
-        // fetch when a symbol or date changes
         refresh();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [symbol, selectedDate]);
+    }, [symbol, selectedDate, selectedKeys]);
 
     useEffect(() => {
         const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : undefined;
@@ -172,8 +166,8 @@ export default function StockCandleFeatureChart() {
                         aria-label="Symbol"
                         placeholder="Symbol"
                         className="no-drag h-8 w-28 rounded-md border bg-background px-2 text-sm"
-                        value={pendingSymbol}
-                        onChange={(e) => setPendingSymbol(e.target.value)}
+                        value={symbol}
+                        onChange={(e) => setSymbol(e.target.value)}
                     />
 
                     {/* Single intraday date picker (shadcn) */}
@@ -210,7 +204,7 @@ export default function StockCandleFeatureChart() {
                             )}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Button size="sm" onClick={refresh}>
+                    <Button size="sm" onClick={doRefresh}>
                         Refresh
                     </Button>
                 </CardAction>
