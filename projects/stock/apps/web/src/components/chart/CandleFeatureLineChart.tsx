@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -11,6 +10,7 @@ import {
   PointElement,
   Tooltip,
 } from "chart.js";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 // Register core components once
@@ -49,14 +49,17 @@ const DEFAULT_COLORS = [
   "#64748b", // slate-500
 ];
 
-export function CandleFeatureLineChart({ labels, series }: CandleFeatureLineChartProps) {
+export function CandleFeatureLineChart({
+  labels,
+  series,
+}: CandleFeatureLineChartProps) {
   const chartRef = useRef<any>(null);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
-
-  // Intraday view: disable zoom and pan and omit reset handling
-
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
   const data = useMemo(() => {
     const datasets = series.map((s, i) => {
       const isPriceAxis = s.id === "close" || s.id.endsWith("_price");
@@ -77,34 +80,37 @@ export function CandleFeatureLineChart({ labels, series }: CandleFeatureLineChar
     return { labels, datasets } as const;
   }, [labels, series]);
 
-  const options = useMemo(() => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    // Multi-axis often works best with index mode
-    interaction: { mode: "index", intersect: false },
-    plugins: {
-      legend: { position: "top" as const },
-      title: { display: false, text: "" },
-    },
-    scales: {
-      x: { grid: { color: "rgba(0,0,0,0.05)" } },
-      // Left axis: price-like series
-      y: {
-        type: "linear" as const,
-        display: true,
-        position: "left" as const,
-        grid: { color: "rgba(0,0,0,0.05)" },
+  const options = useMemo(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      // Multi-axis often works best with index mode
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "top" as const },
+        title: { display: false, text: "" },
       },
-      // Right axis: non-price series
-      y1: {
-        type: "linear" as const,
-        display: true,
-        position: "right" as const,
-        // Only show grid for the left axis to reduce clutter
-        grid: { drawOnChartArea: false },
+      scales: {
+        x: { grid: { color: "rgba(0,0,0,0.05)" } },
+        // Left axis: price-like series
+        y: {
+          type: "linear" as const,
+          display: true,
+          position: "left" as const,
+          grid: { color: "rgba(0,0,0,0.05)" },
+        },
+        // Right axis: non-price series
+        y1: {
+          type: "linear" as const,
+          display: true,
+          position: "right" as const,
+          // Only show grid for the left axis to reduce clutter
+          grid: { drawOnChartArea: false },
+        },
       },
-    },
-  }), []);
+    }),
+    [],
+  );
 
   return (
     <div className="h-full w-full p-3">

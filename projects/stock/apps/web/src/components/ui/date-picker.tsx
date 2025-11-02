@@ -1,12 +1,16 @@
 "use client";
 
-import * as React from "react";
 import { format } from "date-fns";
 import { ChevronDownIcon } from "lucide-react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export type DatePickerProps = {
   date?: Date;
@@ -24,7 +28,10 @@ export function DatePicker({ date, onChange, label }: DatePickerProps) {
       ) : null}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="no-drag h-8 min-w-36 justify-between font-normal">
+          <Button
+            variant="outline"
+            className="no-drag h-8 min-w-36 justify-between font-normal"
+          >
             {date ? format(date, "yyyy-MM-dd") : "Select date"}
             <ChevronDownIcon className="size-4" />
           </Button>

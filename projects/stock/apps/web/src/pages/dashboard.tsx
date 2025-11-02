@@ -16,8 +16,8 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 
-import { Button } from "@/components/ui/button";
 import StockCandleFeatureChart from "@/components/dashboard/StockCandleFeatureChart";
+import { Button } from "@/components/ui/button";
 // Use shadcn/ui components via direct import
 import {
   Card,

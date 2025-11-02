@@ -1,21 +1,18 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import { FlatCompat } from "@eslint/eslintrc";
+// Official Next.js flat config merged with custom plugins and rules
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 import prettier from "eslint-plugin-prettier";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import storybook from "eslint-plugin-storybook";
 import unusedImports from "eslint-plugin-unused-imports";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const eslintConfig = defineConfig([
+  // Next.js recommended configs
+  ...nextVitals,
+  ...nextTs,
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  // Custom plugins and rules
   {
     plugins: {
       prettier,
@@ -26,6 +23,9 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off", // Turn off in favor of unused-imports rule
       "prettier/prettier": "error",
+      "react-hooks/exhaustive-deps": "off",
+
+      // Import sorting
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
       "import/first": "error",
@@ -41,11 +41,14 @@ const eslintConfig = [
           args: "after-used",
           argsIgnorePattern: "^_",
         },
-      ], // Error on unused variables
+      ],
     },
   },
-  ...compat.extends("prettier"),
+  // ...compat.extends("prettier"),
   ...storybook.configs["flat/recommended"],
-];
+
+  // Override default ignores from eslint-config-next
+  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+]);
 
 export default eslintConfig;

@@ -1,18 +1,27 @@
 "use client";
 
-import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import * as React from "react";
+
 import { cn } from "@/lib/utils";
 
-function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
+function Popover({
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
-function PopoverTrigger({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
+function PopoverTrigger({
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
 }
 
-function PopoverContent({ className, sideOffset = 4, ...props }: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+function PopoverContent({
+  className,
+  sideOffset = 4,
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
@@ -28,4 +37,4 @@ function PopoverContent({ className, sideOffset = 4, ...props }: React.Component
   );
 }
 
-export { Popover, PopoverTrigger, PopoverContent };
+export { Popover, PopoverContent, PopoverTrigger };
