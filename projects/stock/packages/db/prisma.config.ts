@@ -7,8 +7,7 @@ export default defineConfig({
     },
     // @ts-ignore
     datasource: {
-        url: process.env.DATABASE_URL!,
-        shadowDatabaseUrl: "postgresql://root:root@localhost:5432/prisma_shadow",
+        url: process.env.DATABASE_URL!
     },
     experimental: {
         externalTables: true,

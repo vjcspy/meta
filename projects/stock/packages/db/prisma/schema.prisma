@@ -317,10 +317,10 @@ model stock_trading_feature_candles {
   symbol   String   @db.VarChar(10)
   time     DateTime @db.Timestamptz(6)
   interval Int
-  open     Int
-  high     Int
-  low      Int
-  close    Int
+  open     Float    @db.DoublePrecision
+  high     Float    @db.DoublePrecision
+  low      Float    @db.DoublePrecision
+  close    Float    @db.DoublePrecision
   volume   Int
   value    Int
   features Json?
