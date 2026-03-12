@@ -70,6 +70,26 @@ model StockInfoPrice {
   @@map("stock_info_prices")
 }
 
+model StockInfoCandle {
+  id         Int      @id @default(autoincrement())
+  ticker     String   @db.VarChar(20)
+  source     String   @db.VarChar(20)
+  assetType  String   @db.VarChar(20)
+  resolution Int      @db.SmallInt
+  time       DateTime @db.Timestamptz(6)
+  open       Float    @db.DoublePrecision
+  high       Float    @db.DoublePrecision
+  low        Float    @db.DoublePrecision
+  close      Float    @db.DoublePrecision
+  volume     Int
+
+  @@unique([ticker, resolution, time], map: "uk_candle_ticker_resolution_time")
+  @@index([ticker, resolution, time(sort: Desc)], map: "idx_stock_info_candles_ticker_resolution_time")
+  @@index([ticker, time(sort: Desc)], map: "idx_stock_info_candles_ticker_time")
+  @@index([time(sort: Desc)], map: "idx_stock_info_candles_time")
+  @@map("stock_info_candles")
+}
+
 model StockTradingAnalysis {
   id     Int    @id @default(autoincrement())
   symbol String @unique @db.VarChar(10)
