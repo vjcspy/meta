@@ -14,7 +14,8 @@
     "prisma": "___________________________ PRISMA ___________________________",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "dotenv -e .env prisma migrate dev",
-    "prisma:deploy": "dotenv -e .env.prod -- prisma migrate deploy"
+    "prisma:deploy": "dotenv -e .prod.env -- prisma migrate deploy",
+    "prisma:pull-prod": "dotenv -e .prod.env -- npx prisma db pull --print"
   },
   "devDependencies": {
     "eslint-config-server": "workspace:*",
@@ -22,6 +23,7 @@
     "dotenv-cli": "^10.0.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.18.0"
+    "prisma": "^7.5.0",
+    "@prisma/client": "^7.5.0"
   }
 }

@@ -1,19 +1,19 @@
 services:
-#  postgres:
-#    image: postgres:15.8
-#    container_name: "${STACK_NAME}-postgres"
-#    hostname: "${STACK_NAME}-postgres"
-#    ports:
-#      - "5432:5432"
-#    volumes:
-#      - postgres:/var/lib/postgresql/data
-#    environment:
-#      - POSTGRES_USER=root
-#      - POSTGRES_PASSWORD=root
+  postgres:
+    image: postgres:15.8
+    container_name: "${STACK_NAME}-postgres"
+    hostname: "${STACK_NAME}-postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
 
   rabbitmq:
     image: rabbitmq:3.13-management
-    hostname: "${STACK_NAME}-rabbitmq"
+    hostname: meta-stock-rabbitmq
     container_name: "${STACK_NAME}-rabbitmq"
     ports:
       - "5672:5672"

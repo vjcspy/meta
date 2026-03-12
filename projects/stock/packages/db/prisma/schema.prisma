@@ -3,15 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 model StockInfoSyncStatus {
   id            Int      @id @default(autoincrement())
-  key           String   @unique // key
-  is_success    Boolean // success
+  key           String   @unique
+  is_success    Boolean
   number_of_try Int?
   error         String?
   date          DateTime
@@ -28,7 +26,7 @@ model StockInfoStock {
   id             Int       @id @default(autoincrement())
   refId          Int?
   catId          Int?
-  code           String    @unique() @db.VarChar(255)
+  code           String    @unique @db.VarChar(255)
   exchange       String    @db.VarChar(255)
   industryName1  String?   @db.VarChar(255)
   industryName2  String?   @db.VarChar(255)
@@ -103,4 +101,216 @@ model StockTradingAnalysis {
   updated_at DateTime @updatedAt
 
   @@map("stock_trading_analysis")
+}
+
+model flyway_schema_history {
+  installed_rank Int      @id(map: "flyway_schema_history_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "flyway_schema_history_s_idx")
+}
+
+model qrtz_blob_triggers {
+  sched_name    String        @db.VarChar(120)
+  trigger_name  String        @db.VarChar(200)
+  trigger_group String        @db.VarChar(200)
+  blob_data     Bytes?
+  qrtz_triggers qrtz_triggers @relation(fields: [sched_name, trigger_name, trigger_group], references: [sched_name, trigger_name, trigger_group], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([sched_name, trigger_name, trigger_group])
+}
+
+model qrtz_calendars {
+  sched_name    String @db.VarChar(120)
+  calendar_name String @db.VarChar(200)
+  calendar      Bytes
+
+  @@id([sched_name, calendar_name])
+}
+
+model qrtz_cron_triggers {
+  sched_name      String        @db.VarChar(120)
+  trigger_name    String        @db.VarChar(200)
+  trigger_group   String        @db.VarChar(200)
+  cron_expression String        @db.VarChar(120)
+  time_zone_id    String?       @db.VarChar(80)
+  qrtz_triggers   qrtz_triggers @relation(fields: [sched_name, trigger_name, trigger_group], references: [sched_name, trigger_name, trigger_group], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([sched_name, trigger_name, trigger_group])
+}
+
+model qrtz_fired_triggers {
+  sched_name        String   @db.VarChar(120)
+  entry_id          String   @db.VarChar(95)
+  trigger_name      String   @db.VarChar(200)
+  trigger_group     String   @db.VarChar(200)
+  instance_name     String   @db.VarChar(200)
+  fired_time        BigInt
+  sched_time        BigInt
+  priority          Int
+  state             String   @db.VarChar(16)
+  job_name          String?  @db.VarChar(200)
+  job_group         String?  @db.VarChar(200)
+  is_nonconcurrent  Boolean?
+  requests_recovery Boolean?
+
+  @@id([sched_name, entry_id])
+  @@index([sched_name, instance_name, requests_recovery], map: "idx_qrtz_ft_inst_job_req_rcvry")
+  @@index([sched_name, job_name, job_group], map: "idx_qrtz_ft_j_g")
+  @@index([sched_name, job_group], map: "idx_qrtz_ft_jg")
+  @@index([sched_name, trigger_name, trigger_group], map: "idx_qrtz_ft_t_g")
+  @@index([sched_name, trigger_group], map: "idx_qrtz_ft_tg")
+  @@index([sched_name, instance_name], map: "idx_qrtz_ft_trig_inst_name")
+}
+
+model qrtz_job_details {
+  sched_name        String          @db.VarChar(120)
+  job_name          String          @db.VarChar(200)
+  job_group         String          @db.VarChar(200)
+  description       String?         @db.VarChar(250)
+  job_class_name    String          @db.VarChar(250)
+  is_durable        Boolean
+  is_nonconcurrent  Boolean
+  is_update_data    Boolean
+  requests_recovery Boolean
+  job_data          Bytes?
+  qrtz_triggers     qrtz_triggers[]
+
+  @@id([sched_name, job_name, job_group])
+  @@index([sched_name, job_group], map: "idx_qrtz_j_grp")
+  @@index([sched_name, requests_recovery], map: "idx_qrtz_j_req_recovery")
+}
+
+model qrtz_locks {
+  sched_name String @db.VarChar(120)
+  lock_name  String @db.VarChar(40)
+
+  @@id([sched_name, lock_name])
+}
+
+model qrtz_paused_trigger_grps {
+  sched_name    String @db.VarChar(120)
+  trigger_group String @db.VarChar(200)
+
+  @@id([sched_name, trigger_group])
+}
+
+model qrtz_scheduler_state {
+  sched_name        String @db.VarChar(120)
+  instance_name     String @db.VarChar(200)
+  last_checkin_time BigInt
+  checkin_interval  BigInt
+
+  @@id([sched_name, instance_name])
+}
+
+model qrtz_simple_triggers {
+  sched_name      String        @db.VarChar(120)
+  trigger_name    String        @db.VarChar(200)
+  trigger_group   String        @db.VarChar(200)
+  repeat_count    BigInt
+  repeat_interval BigInt
+  times_triggered BigInt
+  qrtz_triggers   qrtz_triggers @relation(fields: [sched_name, trigger_name, trigger_group], references: [sched_name, trigger_name, trigger_group], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([sched_name, trigger_name, trigger_group])
+}
+
+model qrtz_simprop_triggers {
+  sched_name    String        @db.VarChar(120)
+  trigger_name  String        @db.VarChar(200)
+  trigger_group String        @db.VarChar(200)
+  str_prop_1    String?       @db.VarChar(512)
+  str_prop_2    String?       @db.VarChar(512)
+  str_prop_3    String?       @db.VarChar(512)
+  int_prop_1    Int?
+  int_prop_2    Int?
+  long_prop_1   BigInt?
+  long_prop_2   BigInt?
+  dec_prop_1    Decimal?      @db.Decimal(13, 4)
+  dec_prop_2    Decimal?      @db.Decimal(13, 4)
+  bool_prop_1   Boolean?
+  bool_prop_2   Boolean?
+  qrtz_triggers qrtz_triggers @relation(fields: [sched_name, trigger_name, trigger_group], references: [sched_name, trigger_name, trigger_group], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([sched_name, trigger_name, trigger_group])
+}
+
+model qrtz_triggers {
+  sched_name            String                 @db.VarChar(120)
+  trigger_name          String                 @db.VarChar(200)
+  trigger_group         String                 @db.VarChar(200)
+  job_name              String                 @db.VarChar(200)
+  job_group             String                 @db.VarChar(200)
+  description           String?                @db.VarChar(250)
+  next_fire_time        BigInt?
+  prev_fire_time        BigInt?
+  priority              Int?
+  trigger_state         String                 @db.VarChar(16)
+  trigger_type          String                 @db.VarChar(8)
+  start_time            BigInt
+  end_time              BigInt?
+  calendar_name         String?                @db.VarChar(200)
+  misfire_instr         Int?                   @db.SmallInt
+  job_data              Bytes?
+  qrtz_blob_triggers    qrtz_blob_triggers?
+  qrtz_cron_triggers    qrtz_cron_triggers?
+  qrtz_simple_triggers  qrtz_simple_triggers?
+  qrtz_simprop_triggers qrtz_simprop_triggers?
+  qrtz_job_details      qrtz_job_details       @relation(fields: [sched_name, job_name, job_group], references: [sched_name, job_name, job_group], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([sched_name, trigger_name, trigger_group])
+  @@index([sched_name, calendar_name], map: "idx_qrtz_t_c")
+  @@index([sched_name, trigger_group], map: "idx_qrtz_t_g")
+  @@index([sched_name, job_name, job_group], map: "idx_qrtz_t_j")
+  @@index([sched_name, job_group], map: "idx_qrtz_t_jg")
+  @@index([sched_name, trigger_group, trigger_state], map: "idx_qrtz_t_n_g_state")
+  @@index([sched_name, trigger_name, trigger_group, trigger_state], map: "idx_qrtz_t_n_state")
+  @@index([sched_name, next_fire_time], map: "idx_qrtz_t_next_fire_time")
+  @@index([sched_name, misfire_instr, next_fire_time], map: "idx_qrtz_t_nft_misfire")
+  @@index([sched_name, trigger_state, next_fire_time], map: "idx_qrtz_t_nft_st")
+  @@index([sched_name, misfire_instr, next_fire_time, trigger_state], map: "idx_qrtz_t_nft_st_misfire")
+  @@index([sched_name, misfire_instr, next_fire_time, trigger_group, trigger_state], map: "idx_qrtz_t_nft_st_misfire_grp")
+  @@index([sched_name, trigger_state], map: "idx_qrtz_t_state")
+}
+
+model stock_common_configuration {
+  id         BigInt   @id @default(autoincrement())
+  key        String   @unique
+  value      Json?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([key], map: "idx_stock_common_configuration_key")
+}
+
+model stock_trading_feature_candles {
+  id       Int      @default(autoincrement())
+  symbol   String   @db.VarChar(10)
+  time     DateTime @db.Timestamptz(6)
+  interval Int
+  open     Int
+  high     Int
+  low      Int
+  close    Int
+  volume   Int
+  value    Int
+  features Json?
+
+  @@unique([symbol, time], map: "uk_symbol_time")
+  @@index([symbol, time(sort: Desc)], map: "idx_stock_trading_feature_candles_symbol_time")
+  @@index([time(sort: Desc)], map: "idx_stock_trading_feature_candles_time")
+}
+
+model tasks {
+  id        BigInt    @id
+  createdat DateTime? @db.Timestamp(6)
 }
