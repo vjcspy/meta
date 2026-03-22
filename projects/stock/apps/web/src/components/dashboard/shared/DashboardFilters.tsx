@@ -22,6 +22,49 @@ const WIDGET_OPTIONS = [
   { id: "w-tick-summary", label: "Tick Summary" },
 ] as const;
 
+const SYMBOL_OPTIONS = [
+  "VNM",
+  "VCB",
+  "BID",
+  "CTG",
+  "TCB",
+  "MBB",
+  "VPB",
+  "HPG",
+  "MSN",
+  "VIC",
+  "VHM",
+  "VRE",
+  "SAB",
+  "GAS",
+  "PLX",
+  "FPT",
+  "MWG",
+  "PNJ",
+  "ACB",
+  "STB",
+  "SSI",
+  "VND",
+  "HCM",
+  "SHB",
+  "TPB",
+  "LPB",
+  "EIB",
+  "KDH",
+  "NVL",
+  "PDR",
+  "GMD",
+  "GEX",
+  "DGC",
+  "HAG",
+  "HRC",
+  "HSG",
+  "NKG",
+  "TLG",
+  "PVD",
+  "REE",
+];
+
 function parseDate(dateStr: string): Date | undefined {
   const d = new Date(dateStr + "T00:00:00");
   return isNaN(d.getTime()) ? undefined : d;
@@ -107,10 +150,16 @@ export default function DashboardFilters() {
           <input
             aria-label="Symbol"
             placeholder="Symbol"
+            list="symbol-options"
             className="no-drag h-8 w-28 rounded-md border bg-background px-2 text-sm"
             value={localSymbol}
             onChange={handleSymbolChange}
           />
+          <datalist id="symbol-options">
+            {SYMBOL_OPTIONS.map((s) => (
+              <option key={s} value={s} />
+            ))}
+          </datalist>
         </div>
 
         {/* From Date */}

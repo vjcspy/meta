@@ -50,7 +50,7 @@ export default function DashboardWidget({
 
   return (
     <Card
-      className={`flex h-full w-full flex-col overflow-hidden ${className ?? ""}`}
+      className={`flex h-full w-full flex-col gap-0 overflow-hidden py-0 ${className ?? ""}`}
       data-widget-id={widgetId}
       data-can-resize={canResize}
     >
