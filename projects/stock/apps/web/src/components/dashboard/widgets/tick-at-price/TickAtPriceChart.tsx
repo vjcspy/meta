@@ -23,9 +23,21 @@ export default function TickAtPriceChart() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
+
+  // Track container width for responsive chart sizing
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w && w > 0) setContainerWidth(w);
+    });
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, [mounted]);
 
   const classified = useMemo(() => {
     if (!data) return undefined;
@@ -34,9 +46,16 @@ export default function TickAtPriceChart() {
 
   // Render Observable Plot imperatively
   useEffect(() => {
-    if (!mounted || !classified || !containerRef.current) return;
+    if (
+      !mounted ||
+      !classified ||
+      !containerRef.current ||
+      containerWidth === 0
+    )
+      return;
 
     const plot = Plot.plot({
+      width: containerWidth,
       marginTop: 20,
       marginRight: 20,
       marginBottom: 30,
@@ -77,7 +96,7 @@ export default function TickAtPriceChart() {
     return () => {
       plot.remove();
     };
-  }, [mounted, classified]);
+  }, [mounted, classified, containerWidth]);
 
   return (
     <DashboardWidget
@@ -87,21 +106,22 @@ export default function TickAtPriceChart() {
       canMove
       canResize
     >
-      {error ? (
-        <div className="flex h-full items-center justify-center px-4 text-sm text-destructive">
-          {error.message}
-        </div>
-      ) : isLoading ? (
-        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-          Loading tick data...
-        </div>
-      ) : !classified || classified.length === 0 ? (
-        <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-          No tick data available
-        </div>
-      ) : (
-        <div ref={containerRef} className="h-full w-full p-3" />
-      )}
+      {/* Always render container so ResizeObserver can measure width */}
+      <div ref={containerRef} className="relative h-full w-full p-3">
+        {error ? (
+          <div className="absolute inset-0 flex items-center justify-center px-4 text-sm text-destructive">
+            {error.message}
+          </div>
+        ) : isLoading ? (
+          <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
+            Loading tick data...
+          </div>
+        ) : !classified || classified.length === 0 ? (
+          <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
+            No tick data available
+          </div>
+        ) : null}
+      </div>
     </DashboardWidget>
   );
 }
