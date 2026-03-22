@@ -2,11 +2,16 @@
 
 import { useMemo } from "react";
 
-import { useTickDaily } from "./use-tick-daily";
-import { classifyTicks, TICK_ACTION_COLORS, TickAction } from "./classify-ticks";
-import { calcTickSummary } from "./calc-tick-summary";
 import DashboardWidget from "@/components/dashboard/shared/DashboardWidget";
 import { useDashboardStore } from "@/store/dashboard-store";
+
+import { calcTickSummary } from "./calc-tick-summary";
+import {
+  classifyTicks,
+  TICK_ACTION_COLORS,
+  TickAction,
+} from "./classify-ticks";
+import { useTickDaily } from "./use-tick-daily";
 
 function formatVol(vol: number): string {
   if (vol >= 1e6) return `${(vol / 1e6).toFixed(2)}M`;
@@ -48,7 +53,10 @@ export default function TickAtPriceSummary() {
               <div className="mb-1 text-xs text-muted-foreground">
                 Total Buy
               </div>
-              <div className="text-lg font-semibold" style={{ color: TICK_ACTION_COLORS[TickAction.BUY_SHARK] }}>
+              <div
+                className="text-lg font-semibold"
+                style={{ color: TICK_ACTION_COLORS[TickAction.BUY_SHARK] }}
+              >
                 {formatVol(summary.totalBuy)}
               </div>
             </div>
@@ -58,7 +66,10 @@ export default function TickAtPriceSummary() {
               <div className="mb-1 text-xs text-muted-foreground">
                 Total Sell
               </div>
-              <div className="text-lg font-semibold" style={{ color: TICK_ACTION_COLORS[TickAction.SELL_SHARK] }}>
+              <div
+                className="text-lg font-semibold"
+                style={{ color: TICK_ACTION_COLORS[TickAction.SELL_SHARK] }}
+              >
                 {formatVol(summary.totalSell)}
               </div>
             </div>
@@ -68,7 +79,10 @@ export default function TickAtPriceSummary() {
               <div className="mb-1 text-xs text-muted-foreground">
                 Shark Buy
               </div>
-              <div className="font-medium" style={{ color: TICK_ACTION_COLORS[TickAction.BUY_SHARK] }}>
+              <div
+                className="font-medium"
+                style={{ color: TICK_ACTION_COLORS[TickAction.BUY_SHARK] }}
+              >
                 {formatVol(summary.totalSharkBuy)}
               </div>
             </div>
@@ -78,7 +92,10 @@ export default function TickAtPriceSummary() {
               <div className="mb-1 text-xs text-muted-foreground">
                 Shark Sell
               </div>
-              <div className="font-medium" style={{ color: TICK_ACTION_COLORS[TickAction.SELL_SHARK] }}>
+              <div
+                className="font-medium"
+                style={{ color: TICK_ACTION_COLORS[TickAction.SELL_SHARK] }}
+              >
                 {formatVol(summary.totalSharkSell)}
               </div>
             </div>
@@ -88,7 +105,10 @@ export default function TickAtPriceSummary() {
               <div className="mb-1 text-xs text-muted-foreground">
                 Sheep Buy
               </div>
-              <div className="font-medium" style={{ color: TICK_ACTION_COLORS[TickAction.BUY_SHEEP] }}>
+              <div
+                className="font-medium"
+                style={{ color: TICK_ACTION_COLORS[TickAction.BUY_SHEEP] }}
+              >
                 {formatVol(summary.totalSheepBuy)}
               </div>
             </div>
@@ -98,7 +118,10 @@ export default function TickAtPriceSummary() {
               <div className="mb-1 text-xs text-muted-foreground">
                 Sheep Sell
               </div>
-              <div className="font-medium" style={{ color: TICK_ACTION_COLORS[TickAction.SELL_SHEEP] }}>
+              <div
+                className="font-medium"
+                style={{ color: TICK_ACTION_COLORS[TickAction.SELL_SHEEP] }}
+              >
                 {formatVol(summary.totalSheepSell)}
               </div>
             </div>
@@ -110,7 +133,12 @@ export default function TickAtPriceSummary() {
               </div>
               <div
                 className="text-lg font-bold"
-                style={{ color: netFlow >= 0 ? TICK_ACTION_COLORS[TickAction.BUY_SHARK] : TICK_ACTION_COLORS[TickAction.SELL_SHARK] }}
+                style={{
+                  color:
+                    netFlow >= 0
+                      ? TICK_ACTION_COLORS[TickAction.BUY_SHARK]
+                      : TICK_ACTION_COLORS[TickAction.SELL_SHARK],
+                }}
               >
                 {netFlow >= 0 ? "+" : ""}
                 {formatVol(netFlow)}
@@ -122,4 +150,3 @@ export default function TickAtPriceSummary() {
     </DashboardWidget>
   );
 }
-

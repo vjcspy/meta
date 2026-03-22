@@ -14,8 +14,7 @@ function daysAgo(days: number): string {
 }
 
 function daysBetween(from: string, to: string): number {
-  const diff =
-    new Date(to).getTime() - new Date(from).getTime();
+  const diff = new Date(to).getTime() - new Date(from).getTime();
   return Math.round(diff / (1000 * 60 * 60 * 24));
 }
 
@@ -69,7 +68,9 @@ export const useDashboardStore = create<DashboardStore>()(
         })),
       isDateRangeValid: () => {
         const { fromDate, toDate } = get();
-        return fromDate <= toDate && daysBetween(fromDate, toDate) <= MAX_RANGE_DAYS;
+        return (
+          fromDate <= toDate && daysBetween(fromDate, toDate) <= MAX_RANGE_DAYS
+        );
       },
     }),
     { name: "dashboard-state" },

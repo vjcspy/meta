@@ -1,14 +1,9 @@
 "use client";
 
+import { GripVertical, X } from "lucide-react";
 import type { ReactNode } from "react";
-import { X, GripVertical } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDashboardStore } from "@/store/dashboard-store";
 
 export type DashboardWidgetProps = {
@@ -92,9 +87,7 @@ export default function DashboardWidget({
         </div>
       </CardHeader>
 
-      <CardContent className="flex-1 overflow-auto p-0">
-        {children}
-      </CardContent>
+      <CardContent className="flex-1 overflow-auto p-0">{children}</CardContent>
     </Card>
   );
 }

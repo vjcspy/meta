@@ -1,5 +1,5 @@
-import { TickAction } from "./classify-ticks";
 import type { ClassifiedTick, TickActionValue } from "./classify-ticks";
+import { TickAction } from "./classify-ticks";
 
 // --- Types ---
 

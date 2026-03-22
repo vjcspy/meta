@@ -3,15 +3,16 @@
 import * as Plot from "@observablehq/plot";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { useTickDaily } from "./use-tick-daily";
-import {
-  classifyTicks,
-  TickAction,
-  TICK_ACTION_COLORS,
-} from "./classify-ticks";
-import type { TickActionValue } from "./classify-ticks";
 import DashboardWidget from "@/components/dashboard/shared/DashboardWidget";
 import { useDashboardStore } from "@/store/dashboard-store";
+
+import type { TickActionValue } from "./classify-ticks";
+import {
+  classifyTicks,
+  TICK_ACTION_COLORS,
+  TickAction,
+} from "./classify-ticks";
+import { useTickDaily } from "./use-tick-daily";
 
 export default function TickAtPriceChart() {
   const symbol = useDashboardStore((s) => s.symbol);
@@ -23,6 +24,7 @@ export default function TickAtPriceChart() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   const classified = useMemo(() => {

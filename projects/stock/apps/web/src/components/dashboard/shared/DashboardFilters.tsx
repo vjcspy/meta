@@ -13,8 +13,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DashboardWidget from "./DashboardWidget";
 import { useDashboardStore } from "@/store/dashboard-store";
+
+import DashboardWidget from "./DashboardWidget";
 
 const WIDGET_OPTIONS = [
   { id: "w-tick-chart", label: "Tick At-Price Chart" },
@@ -146,4 +147,3 @@ export default function DashboardFilters() {
     </DashboardWidget>
   );
 }
-

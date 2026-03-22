@@ -1,4 +1,4 @@
-import type { TickDailySummary, TickRecord } from "@/lib/jmeta/tick-api";
+import type { TickDailySummary } from "@/lib/jmeta/tick-api";
 
 // --- Enum & Colors ---
 
@@ -57,12 +57,18 @@ export function classifyTicks(
       if (tick.a === "B") {
         result.push({
           ...tick,
-          a: tradeValue > thresholdRaw ? TickAction.BUY_SHARK : TickAction.BUY_SHEEP,
+          a:
+            tradeValue > thresholdRaw
+              ? TickAction.BUY_SHARK
+              : TickAction.BUY_SHEEP,
         });
       } else if (tick.a === "S") {
         result.push({
           ...tick,
-          a: tradeValue > thresholdRaw ? TickAction.SELL_SHARK : TickAction.SELL_SHEEP,
+          a:
+            tradeValue > thresholdRaw
+              ? TickAction.SELL_SHARK
+              : TickAction.SELL_SHEEP,
         });
       } else {
         // AT/ATO/ATC — split volume equally between buy and sell

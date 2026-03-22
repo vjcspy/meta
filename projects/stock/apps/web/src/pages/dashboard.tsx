@@ -11,7 +11,8 @@ const TickAtPriceChart = dynamic(
 );
 
 const TickAtPriceSummary = dynamic(
-  () => import("@/components/dashboard/widgets/tick-at-price/TickAtPriceSummary"),
+  () =>
+    import("@/components/dashboard/widgets/tick-at-price/TickAtPriceSummary"),
   { ssr: false },
 );
 
@@ -34,7 +35,16 @@ export default function DashboardPage() {
   const layouts = useMemo(
     () => ({
       lg: [
-        { i: "w-filters", x: 0, y: 0, w: 12, h: 4, minW: 6, minH: 3, static: true },
+        {
+          i: "w-filters",
+          x: 0,
+          y: 0,
+          w: 12,
+          h: 4,
+          minW: 6,
+          minH: 3,
+          static: true,
+        },
         { i: "w-tick-chart", x: 0, y: 4, w: 8, h: 18, minW: 4, minH: 10 },
         { i: "w-tick-summary", x: 8, y: 4, w: 4, h: 18, minW: 3, minH: 10 },
       ],
