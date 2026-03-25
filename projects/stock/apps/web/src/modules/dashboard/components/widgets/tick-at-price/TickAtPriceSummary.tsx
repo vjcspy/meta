@@ -1,17 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { type CombinedProps, combineHOC } from "@web/ui-extension";
 
-import DashboardWidget from "@/components/dashboard/shared/DashboardWidget";
-import { useDashboardStore } from "@/store/dashboard-store";
-
-import { calcTickSummary } from "./calc-tick-summary";
+import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
+import { withTickData } from "@/modules/dashboard/hoc/withTickData";
 import {
-  classifyTicks,
   TICK_ACTION_COLORS,
   TickAction,
-} from "./classify-ticks";
-import { useTickDaily } from "./use-tick-daily";
+} from "@/modules/dashboard/utils/classify-ticks";
 
 function formatVol(vol: number): string {
   if (vol >= 1e6) return `${(vol / 1e6).toFixed(2)}M`;
@@ -19,16 +15,14 @@ function formatVol(vol: number): string {
   return vol.toLocaleString();
 }
 
-export default function TickAtPriceSummary() {
-  const tradeValueFilter = useDashboardStore((s) => s.tradeValueFilter);
-  const { data, isLoading, error } = useTickDaily();
+type InjectedProps = CombinedProps<[typeof withTickData]>;
 
-  const summary = useMemo(() => {
-    if (!data) return null;
-    const classified = classifyTicks(data, tradeValueFilter);
-    return calcTickSummary(classified);
-  }, [data, tradeValueFilter]);
-
+function TickAtPriceSummaryRender({ state }: InjectedProps) {
+  const {
+    tickSummary: summary,
+    ticksLoading: isLoading,
+    ticksError: error,
+  } = state;
   const netFlow = summary ? summary.totalBuy - summary.totalSell : 0;
 
   return (
@@ -48,7 +42,6 @@ export default function TickAtPriceSummary() {
           <div className="text-sm text-muted-foreground">No data</div>
         ) : (
           <div className="grid grid-cols-2 gap-3 text-sm">
-            {/* Total Buy */}
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Total Buy
@@ -61,7 +54,6 @@ export default function TickAtPriceSummary() {
               </div>
             </div>
 
-            {/* Total Sell */}
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Total Sell
@@ -74,7 +66,6 @@ export default function TickAtPriceSummary() {
               </div>
             </div>
 
-            {/* Shark Buy */}
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Shark Buy
@@ -87,7 +78,6 @@ export default function TickAtPriceSummary() {
               </div>
             </div>
 
-            {/* Shark Sell */}
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Shark Sell
@@ -100,7 +90,6 @@ export default function TickAtPriceSummary() {
               </div>
             </div>
 
-            {/* Sheep Buy */}
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Sheep Buy
@@ -113,7 +102,6 @@ export default function TickAtPriceSummary() {
               </div>
             </div>
 
-            {/* Sheep Sell */}
             <div className="rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Sheep Sell
@@ -126,7 +114,6 @@ export default function TickAtPriceSummary() {
               </div>
             </div>
 
-            {/* Net Flow — full width */}
             <div className="col-span-2 rounded-md border p-3">
               <div className="mb-1 text-xs text-muted-foreground">
                 Net Flow (Buy − Sell)
@@ -150,3 +137,5 @@ export default function TickAtPriceSummary() {
     </DashboardWidget>
   );
 }
+
+export default combineHOC(withTickData)(TickAtPriceSummaryRender);

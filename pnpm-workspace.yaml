@@ -5,6 +5,7 @@ packages:
   - "shared/tsconfig"
   - "shared/chitility"
   - "shared/web-base"
+  - "shared/ui-extension"
   #  ________ Projects MAIN ________
   #- "projects/main/apps/proxy-sls"
   #- "projects/main/apps/slack-sls"

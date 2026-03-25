@@ -18,54 +18,35 @@ function daysBetween(from: string, to: string): number {
   return Math.round(diff / (1000 * 60 * 60 * 24));
 }
 
-// --- Types ---
-
-type DashboardState = {
+type GlobalState = {
   symbol: string;
   fromDate: string;
   toDate: string;
   tradeValueFilter: number;
-  visibleWidgets: Record<string, boolean>;
 };
 
-type DashboardActions = {
+type GlobalActions = {
   setSymbol: (symbol: string) => void;
   setFromDate: (from: string) => void;
   setToDate: (to: string) => void;
   setTradeValueFilter: (value: number) => void;
-  toggleWidget: (widgetId: string) => void;
   isDateRangeValid: () => boolean;
 };
 
-type DashboardStore = DashboardState & DashboardActions;
+export type GlobalStore = GlobalState & GlobalActions;
 
-// --- Store ---
-
-export const useDashboardStore = create<DashboardStore>()(
+export const useGlobalStore = create<GlobalStore>()(
   persist(
     (set, get) => ({
-      // State
       symbol: "HRC",
       fromDate: daysAgo(30),
       toDate: formatDate(new Date()),
       tradeValueFilter: 250,
-      visibleWidgets: {
-        "w-tick-chart": true,
-        "w-tick-summary": true,
-      },
 
-      // Actions
       setSymbol: (symbol) => set({ symbol }),
       setFromDate: (fromDate) => set({ fromDate }),
       setToDate: (toDate) => set({ toDate }),
       setTradeValueFilter: (tradeValueFilter) => set({ tradeValueFilter }),
-      toggleWidget: (widgetId) =>
-        set((state) => ({
-          visibleWidgets: {
-            ...state.visibleWidgets,
-            [widgetId]: !state.visibleWidgets[widgetId],
-          },
-        })),
       isDateRangeValid: () => {
         const { fromDate, toDate } = get();
         return (
@@ -73,6 +54,6 @@ export const useDashboardStore = create<DashboardStore>()(
         );
       },
     }),
-    { name: "dashboard-state" },
+    { name: "global-state" },
   ),
 );

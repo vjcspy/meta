@@ -1,25 +1,34 @@
 "use client";
 
 import * as Plot from "@observablehq/plot";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CombinedProps, combineHOC } from "@web/ui-extension";
+import { useEffect, useRef, useState } from "react";
 
-import DashboardWidget from "@/components/dashboard/shared/DashboardWidget";
-import { useDashboardStore } from "@/store/dashboard-store";
-
-import type { TickActionValue } from "./classify-ticks";
+import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
+import { withTickData } from "@/modules/dashboard/hoc/withTickData";
+import type { TickActionValue } from "@/modules/dashboard/utils/classify-ticks";
 import {
-  classifyTicks,
   TICK_ACTION_COLORS,
   TickAction,
-} from "./classify-ticks";
-import { useTickDaily } from "./use-tick-daily";
+} from "@/modules/dashboard/utils/classify-ticks";
+import { withDateRange } from "@/modules/shared/hoc/withDateRange";
+import { withSymbol } from "@/modules/shared/hoc/withSymbol";
 
-export default function TickAtPriceChart() {
-  const symbol = useDashboardStore((s) => s.symbol);
-  const fromDate = useDashboardStore((s) => s.fromDate);
-  const toDate = useDashboardStore((s) => s.toDate);
-  const tradeValueFilter = useDashboardStore((s) => s.tradeValueFilter);
-  const { data, isLoading, error } = useTickDaily();
+type InjectedProps = CombinedProps<
+  [typeof withSymbol, typeof withDateRange, typeof withTickData]
+>;
+
+/**
+ * Render exception — data purity enforced (all from HOCs), but imperative
+ * Observable Plot rendering retains useRef/useState/useEffect hooks.
+ */
+function TickAtPriceChartRender({ state }: InjectedProps) {
+  const { symbol, fromDate, toDate } = state;
+  const {
+    classifiedTicks: classified,
+    ticksLoading: isLoading,
+    ticksError: error,
+  } = state;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -28,7 +37,6 @@ export default function TickAtPriceChart() {
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
-  // Track container width for responsive chart sizing
   useEffect(() => {
     if (!containerRef.current) return;
     const ro = new ResizeObserver((entries) => {
@@ -39,12 +47,6 @@ export default function TickAtPriceChart() {
     return () => ro.disconnect();
   }, [mounted]);
 
-  const classified = useMemo(() => {
-    if (!data) return undefined;
-    return classifyTicks(data, tradeValueFilter);
-  }, [data, tradeValueFilter]);
-
-  // Render Observable Plot imperatively
   useEffect(() => {
     if (
       !mounted ||
@@ -106,7 +108,6 @@ export default function TickAtPriceChart() {
       canMove
       canResize
     >
-      {/* Always render container so ResizeObserver can measure width */}
       <div ref={containerRef} className="relative h-full w-full p-3">
         {error ? (
           <div className="absolute inset-0 flex items-center justify-center px-4 text-sm text-destructive">
@@ -125,3 +126,9 @@ export default function TickAtPriceChart() {
     </DashboardWidget>
   );
 }
+
+export default combineHOC(
+  withSymbol,
+  withDateRange,
+  withTickData,
+)(TickAtPriceChartRender);

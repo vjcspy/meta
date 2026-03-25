@@ -20,6 +20,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@web/ui-extension": [
+        "../../../../shared/ui-extension/src/lib"
       ]
     },
     "plugins": [

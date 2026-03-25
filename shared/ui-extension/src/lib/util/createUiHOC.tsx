@@ -1,136 +1,77 @@
-import React from 'react';
+import React, { useMemo } from "react";
+import { deepMerge } from "./deepMerge";
 
-// const getPropsName = (displayName: string) => {
-//   const regexPropsName = new RegExp(/^(With)(.*)(Props)$/);
-//   if (regexPropsName.exec(displayName)?.length === 4) {
-//     return true;
-//   } else {
-//     const regexWithoutPropsName = new RegExp(/^(with)(.*)/);
-//     const withoutPropsName = regexWithoutPropsName.exec(displayName);
-//     if (withoutPropsName && withoutPropsName.length === 3) {
-//       return 'With' + withoutPropsName[2] + 'Props';
-//     }
-//   }
-//
-//   return false;
-// };
-//
-// export const createUiHOC = (
-//   hookFn: (props: any) => { [key: string]: any },
-//   displayName: string | string[]
-// ): UiHOC => {
-//   /*
-//    * props1 được Extension truyền vào
-//    * */
-//   const hoc = (
-//     Component: ComponentType<any>,
-//     props1: any
-//   ): ComponentType<any> => {
-//     const UiHOC: React.FC = React.memo((props2) => {
-//       const hookData = hookFn({ ...props1, ...props2 });
-//       return <Component {...hookData} {..._.merge(hookData, props2)} />;
-//     });
-//
-//     const oriDisplayName =
-//       Component.displayName || Component.name || 'Component';
-//     UiHOC.displayName = `${displayName}(${oriDisplayName})`;
-//
-//     return UiHOC;
-//   };
-//   if (_.isString(displayName)) {
-//     HOCManager.getInstance().addHOC(displayName, hoc);
-//     const propsDisplayName = getPropsName(displayName);
-//     if (typeof propsDisplayName === 'string') {
-//       HOCManager.getInstance().addHOC(propsDisplayName, hoc);
-//     }
-//   } else if (_.isArray(displayName)) {
-//     _.forEach(displayName, (name: string) => {
-//       HOCManager.getInstance().addHOC(name, hoc);
-//       const propsDisplayName = getPropsName(name);
-//       if (typeof propsDisplayName === 'string') {
-//         HOCManager.getInstance().addHOC(propsDisplayName, hoc);
-//       }
-//     });
-//   }
-//
-//   return hoc;
-// };
 
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I,
-) => void
-  ? I
-  : never;
+        k: infer I
+    ) => void
+    ? I
+    : never;
 
-export function createUiHOC<TProps, TInjectedKeys extends keyof TProps>(
-  hookFn: (props: any) => Pick<TProps, TInjectedKeys>,
-  displayName: string = 'UiHOC',
-) {
-  return function hoc(Component: React.ComponentType<TProps>) {
-    const UiHOC = (props1: Omit<TProps, TInjectedKeys>) => {
-      const hookData = hookFn({ ...props1 });
+type BrandedHOC<TInjected> = {
+  <TExtraProps>(Component: React.ComponentType<TInjected & TExtraProps>): React.ComponentType<TExtraProps>;
+  __injectedProps?: TInjected; // Brand metadata
+};
 
-      return (
-        <Component
-          {...({
-            ...props1,
-            state: {
-              // @ts-ignore
-              ...props1?.state,
-              // @ts-ignore
-              ...hookData?.state,
-            },
-            actions: {
-              // @ts-ignore
-              ...props1?.actions,
-              // @ts-ignore
-              ...hookData?.actions,
-            },
-          } as any)}
-        />
-      );
+export function createHOC<TInjected>(
+    hookFn: (props: any) => TInjected,
+    displayName?: string
+): BrandedHOC<TInjected> {
+  return ((Component: React.ComponentType<any>) => {
+    const UiHOC = (props1: any) => {
+      const hookData = hookFn(props1);
+
+      const newProps = useMemo(
+          () => deepMerge(props1, hookData),
+          [hookData, props1] );
+      return <Component {...newProps} />;
     };
-
-    UiHOC.displayName = `${displayName}(${
-      Component.displayName || Component.name || ''
-    })`;
+    const oriDisplayName = Component.displayName || Component.name || '';
+    UiHOC.displayName = `${displayName}(${oriDisplayName})`;
 
     return UiHOC;
-  };
+  }) as BrandedHOC<TInjected>;
 }
 
-type HOCType<TProps, TInjectedKeys extends keyof TProps> = (
-  Component: React.ComponentType<any>,
-) => React.ComponentType<Omit<TProps, TInjectedKeys>>;
+type ExtractInjected<T> = T extends BrandedHOC<infer I> ? I : unknown;
 
-type PropsType<HOCFns> = HOCFns extends HOCType<infer P, never>[] ? P : never;
+type ExtractAllInjected<HOCs extends readonly any[]> =
+    HOCs extends readonly [infer First, ...infer Rest]
+        ? ExtractInjected<First> | (Rest extends readonly any[] ? ExtractAllInjected<Rest> : never)
+        : never;
 
-export function combineHOC<Fns extends HOCType<any, any>[]>(
-  ...objs: [...Fns]
-): (
-  component: React.ComponentType<
-    UnionToIntersection<PropsType<Fns>> &
-      Record<Exclude<string, keyof UnionToIntersection<PropsType<Fns>>>, any>
-  >,
-) => any;
+export type CombinedProps<HOCs extends readonly any[]> =
+    UnionToIntersection<ExtractAllInjected<HOCs>>;
 
-export function combineHOC(...objs: [...any]) {
-  return (Component: React.ComponentType<any>) => {
-    const _withHocs = objs.reduce((ComponentWithHoc, hoc) => {
+export function combineHOC<HOCs extends readonly BrandedHOC<any>[]>(
+    ...hocs: [...HOCs]
+) {
+  return <TExtraProps = {}>(
+      Component: React.ComponentType<CombinedProps<HOCs> & TExtraProps>
+  ): React.ComponentType<TExtraProps> => {
+    const _withHocs = [...hocs].reverse().reduce((ComponentWithHoc, hoc) => {
       return hoc(ComponentWithHoc);
-    }, Component);
+    }, Component as any);
 
     _withHocs.OriginComponent = Component;
 
     return _withHocs;
-  };
-}
-//
-// const hoc1 = createUiHOC(() => ({
+  };}
+
+
+// const hoc1 = createHOC(() => ({
 //     a: 1
 // }), 'hoc1');
-// const hoc2 = createUiHOC(() => ({b: "2", c: false}), 'hoc2');
 //
-// combineHOC(hoc1, hoc2)(props => {
-//     return <>{props?.a}{props?.product}</>
-// })
+//
+// const hoc2 = createHOC(() => ({b: "2", c: false}), 'hoc2');
+
+// const TestComponent = (props: CombinedProps<[typeof hoc1, typeof hoc2]>) => {
+//   return <>{props.a}{props.b}</>;
+// };
+
+// combineHOC(hoc1, hoc2)((props => {
+//   return <>{props?.a}{props.b}</>
+// }))
+
+// combineHOC(hoc1, hoc2)
