@@ -125,6 +125,13 @@ export function DashboardCommands() {
                     >
                       Go to Dashboard
                     </CommandItem>
+                    <CommandItem
+                      onSelect={() => {
+                        window.location.href = "/configuration";
+                      }}
+                    >
+                      Go to Configuration
+                    </CommandItem>
                   </CommandGroup>
 
                   <CommandGroup heading="Preferences">
