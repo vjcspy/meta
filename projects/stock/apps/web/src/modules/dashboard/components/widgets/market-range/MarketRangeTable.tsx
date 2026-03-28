@@ -3,7 +3,7 @@
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { type CombinedProps, combineHOC } from "@web/ui-extension";
 import { CircleHelp } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import DatePicker from "@/components/ui/date-picker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -191,16 +191,28 @@ type InjectedProps = CombinedProps<[typeof withMarketRangeResults, typeof withSe
 
 function MarketRangeTableRender({ state, actions }: InjectedProps) {
   const { symbolResults, isLoading, error, selectedDate, selectedDateStr } = state;
-  const effectiveDate = useMemo(
-    () => selectedDateStr ?? symbolResults[0]?.data[symbolResults[0].data.length - 1]?.date,
-    [symbolResults, selectedDateStr],
-  );
+  const availableDates = useMemo(() => {
+    if (!symbolResults.length) return new Set<string>();
+    return new Set(symbolResults[0].data.map((d) => d.date));
+  }, [symbolResults]);
+
+  const effectiveDate = useMemo(() => {
+    if (selectedDateStr && availableDates.has(selectedDateStr)) return selectedDateStr;
+    const dates = symbolResults[0]?.data;
+    return dates?.[dates.length - 1]?.date;
+  }, [symbolResults, selectedDateStr, availableDates]);
 
   useEffect(() => {
+    // Clear stale selection when date range changes and selected date is no longer available
+    if (selectedDateStr && !availableDates.has(selectedDateStr)) {
+      actions.clearSelectedDate();
+      return;
+    }
+    // Auto-select effectiveDate when no date is selected yet
     if (!selectedDateStr && effectiveDate) {
       actions.setSelectedDate(new Date(effectiveDate));
     }
-  }, [selectedDateStr, effectiveDate, actions]);
+  }, [selectedDateStr, effectiveDate, availableDates, actions]);
 
   const rows: RowData[] = useMemo(() => {
     if (!symbolResults.length) return [];
@@ -219,7 +231,17 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const headerAction = <DatePicker label="Date" date={selectedDate} onChange={(d) => actions.setSelectedDate(d)} />;
+  const disabledDays = useCallback(
+    (day: Date) => {
+      if (!availableDates.size) return false;
+      return !availableDates.has(day.toISOString().slice(0, 10));
+    },
+    [availableDates],
+  );
+
+  const headerAction = (
+    <DatePicker label="Date" date={selectedDate} onChange={(d) => actions.setSelectedDate(d)} disabled={disabledDays} />
+  );
 
   const titleSuffix = (
     <Popover>

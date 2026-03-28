@@ -12,9 +12,10 @@ export type DatePickerProps = {
   date?: Date;
   onChange?: (date?: Date) => void;
   label?: string;
+  disabled?: React.ComponentProps<typeof Calendar>["disabled"];
 };
 
-export function DatePicker({ date, onChange, label }: DatePickerProps) {
+export function DatePicker({ date, onChange, label, disabled }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -36,6 +37,7 @@ export function DatePicker({ date, onChange, label }: DatePickerProps) {
               setOpen(false);
             }}
             captionLayout="dropdown"
+            disabled={disabled}
           />
         </PopoverContent>
       </Popover>
