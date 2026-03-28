@@ -109,7 +109,13 @@ export function useTradeValues() {
   const allResolved = queries.every((q) => q.isSuccess);
   const isLoading = queries.some((q) => q.isLoading);
 
-  const tradeValueMap: TradeValueMap = allResolved ? computeTradeValues(queries.map((q) => q.data!)) : new Map();
+  const queriesKey = queries.map((q) => q.dataUpdatedAt).join(",");
+
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
+  const tradeValueMap = useMemo(() => {
+    if (!allResolved) return new Map() as TradeValueMap;
+    return computeTradeValues(queries.map((q) => q.data!));
+  }, [allResolved, queriesKey]);
 
   return { tradeValueMap, isLoading: isLoading && !allResolved };
 }
