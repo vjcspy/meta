@@ -26,6 +26,8 @@ echo "Started at $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 echo ""
 
 # --- stock_info_ticks: ID-based delta (append-only) ---
+# Remote column order: id, symbol, date, meta
+TICK_COLS="id, symbol, date, meta"
 echo "--- stock_info_ticks (id-based delta) ---"
 MAX_TICK_ID=$(local_psql -tA -c "SELECT COALESCE(MAX(id), 0) FROM stock_info_ticks;")
 echo "  Local max(id): $MAX_TICK_ID"
@@ -34,8 +36,8 @@ TICK_COUNT=$(remote_psql -tA -c "SELECT count(*) FROM stock_info_ticks WHERE id 
 echo "  Remote new rows: $TICK_COUNT"
 
 if [ "$TICK_COUNT" -gt 0 ]; then
-  TICK_QUERY="SELECT * FROM stock_info_ticks WHERE id > $MAX_TICK_ID ORDER BY id"
-  remote_copy_stdout "$TICK_QUERY" | local_copy_stdin "stock_info_ticks"
+  TICK_QUERY="SELECT $TICK_COLS FROM stock_info_ticks WHERE id > $MAX_TICK_ID ORDER BY id"
+  remote_copy_stdout "$TICK_QUERY" | local_copy_stdin "stock_info_ticks($TICK_COLS)"
   NEW_MAX=$(local_psql -tA -c "SELECT MAX(id) FROM stock_info_ticks;")
   echo "  Synced $TICK_COUNT rows (id $MAX_TICK_ID -> $NEW_MAX)"
 else
@@ -44,6 +46,8 @@ fi
 echo ""
 
 # --- stock_info_prices: date-based delta + upsert ---
+# Exclude id — remote IDs are not portable (local generates its own via identity)
+PRICE_DATA_COLS='date, symbol, "priceBasic", "priceHigh", "priceLow", "priceOpen", "priceClose", "priceAverage", volume, value, "dealVolume", "buyForeignQuantity", "buyForeignValue", "sellForeignQuantity", "sellForeignValue", "currentForeignRoom"'
 echo "--- stock_info_prices (date-based upsert) ---"
 MAX_PRICE_DATE=$(local_psql -tA -c "SELECT COALESCE(MAX(date)::text, '1970-01-01') FROM stock_info_prices;")
 echo "  Local max(date): $MAX_PRICE_DATE"
@@ -52,15 +56,15 @@ PRICE_COUNT=$(remote_psql -tA -c "SELECT count(*) FROM stock_info_prices WHERE d
 echo "  Remote rows (>= $MAX_PRICE_DATE): $PRICE_COUNT"
 
 if [ "$PRICE_COUNT" -gt 0 ]; then
-  PRICE_QUERY="SELECT * FROM stock_info_prices WHERE date >= '$MAX_PRICE_DATE' ORDER BY id"
+  PRICE_QUERY="SELECT $PRICE_DATA_COLS FROM stock_info_prices WHERE date >= '$MAX_PRICE_DATE' ORDER BY date, symbol"
 
-  local_psql -c "DROP TABLE IF EXISTS _prices_staging; CREATE TABLE _prices_staging (LIKE stock_info_prices INCLUDING ALL);"
-  remote_copy_stdout "$PRICE_QUERY" | local_copy_stdin "_prices_staging"
+  local_psql -c "DROP TABLE IF EXISTS _prices_staging; CREATE TABLE _prices_staging (LIKE stock_info_prices); ALTER TABLE _prices_staging DROP COLUMN id;"
+  remote_copy_stdout "$PRICE_QUERY" | local_copy_stdin "_prices_staging($PRICE_DATA_COLS)"
 
   UPSERTED=$(local_psql -tA -c "
     WITH upsert AS (
-      INSERT INTO stock_info_prices
-      SELECT * FROM _prices_staging
+      INSERT INTO stock_info_prices ($PRICE_DATA_COLS)
+      SELECT $PRICE_DATA_COLS FROM _prices_staging
       ON CONFLICT (symbol, date) DO UPDATE SET
         \"priceBasic\" = EXCLUDED.\"priceBasic\",
         \"priceHigh\" = EXCLUDED.\"priceHigh\",
@@ -87,31 +91,35 @@ fi
 echo ""
 
 # --- stock_info_stocks: full refresh ---
+# Remote column order: id, refId, catId, code, exchange, industryName1, industryName2, industryName3, totalShares, name, firstTradeDate
+STOCK_COLS='id, "refId", "catId", code, exchange, "industryName1", "industryName2", "industryName3", "totalShares", name, "firstTradeDate"'
 echo "--- stock_info_stocks (full refresh) ---"
 STOCKS_COUNT=$(remote_psql -tA -c "SELECT count(*) FROM stock_info_stocks;")
 echo "  Remote rows: $STOCKS_COUNT"
 
 local_psql -c "TRUNCATE stock_info_stocks RESTART IDENTITY CASCADE;"
-STOCKS_QUERY="SELECT * FROM stock_info_stocks ORDER BY id"
-remote_copy_stdout "$STOCKS_QUERY" | local_copy_stdin "stock_info_stocks"
+STOCKS_QUERY="SELECT $STOCK_COLS FROM stock_info_stocks ORDER BY id"
+remote_copy_stdout "$STOCKS_QUERY" | local_copy_stdin "stock_info_stocks($STOCK_COLS)"
 
 LOCAL_STOCKS=$(local_psql -tA -c "SELECT count(*) FROM stock_info_stocks;")
 echo "  Synced $LOCAL_STOCKS rows"
 echo ""
 
 # --- stock_common_configuration: key-based upsert ---
+# Remote column order: id, key, value, created_at, updated_at
+CONFIG_COLS="id, key, value, created_at, updated_at"
 echo "--- stock_common_configuration (key-based upsert) ---"
 CONFIG_COUNT=$(remote_psql -tA -c "SELECT count(*) FROM stock_common_configuration;")
 echo "  Remote rows: $CONFIG_COUNT"
 
-local_psql -c "DROP TABLE IF EXISTS _config_staging; CREATE TABLE _config_staging (LIKE stock_common_configuration INCLUDING ALL);"
-CONFIG_QUERY="SELECT * FROM stock_common_configuration ORDER BY id"
-remote_copy_stdout "$CONFIG_QUERY" | local_copy_stdin "_config_staging"
+local_psql -c "DROP TABLE IF EXISTS _config_staging; CREATE TABLE _config_staging (LIKE stock_common_configuration INCLUDING DEFAULTS);"
+CONFIG_QUERY="SELECT $CONFIG_COLS FROM stock_common_configuration ORDER BY id"
+remote_copy_stdout "$CONFIG_QUERY" | local_copy_stdin "_config_staging($CONFIG_COLS)"
 
 UPSERTED=$(local_psql -tA -c "
   WITH upsert AS (
-    INSERT INTO stock_common_configuration (id, key, value, created_at, updated_at)
-    SELECT id, key, value, created_at, updated_at FROM _config_staging
+    INSERT INTO stock_common_configuration ($CONFIG_COLS)
+    SELECT $CONFIG_COLS FROM _config_staging
     ON CONFLICT (key) DO UPDATE SET
       value = EXCLUDED.value,
       updated_at = EXCLUDED.updated_at

@@ -11,10 +11,11 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { useTradeValues } from "@/modules/configuration/hooks/use-trade-values";
 import { useStocks } from "@/modules/shared/components/use-stocks";
 import type { StockInfo } from "@/modules/shared/lib/jmeta/stock-api";
 
@@ -22,6 +23,9 @@ import type { StockInfo } from "@/modules/shared/lib/jmeta/stock-api";
 
 type StockRow = StockInfo & {
   isTicked: boolean;
+  trade_value_7: number;
+  trade_value_15: number;
+  trade_value_30: number;
 };
 
 type StockCategoryTableProps = {
@@ -35,6 +39,10 @@ type StockCategoryTableProps = {
 const ROW_HEIGHT = 40;
 
 // --- Helpers ---
+
+function fmtNum(v: number): string {
+  return v.toLocaleString("en-US");
+}
 
 function SortIndicator({ isSorted }: { isSorted: false | "asc" | "desc" }) {
   if (isSorted === "asc") return <span className="text-primary">↑</span>;
@@ -103,6 +111,54 @@ function buildColumns(categorySelected: boolean, toggleSymbol: (code: string) =>
       size: 9999, // flex-grow
     },
     {
+      accessorKey: "trade_value_7",
+      header: ({ column }) => (
+        <button
+          type="button"
+          className="flex items-center gap-1"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          GTGD 7 <SortIndicator isSorted={column.getIsSorted()} />
+        </button>
+      ),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{fmtNum(row.original.trade_value_7)}</span>
+      ),
+      size: 90,
+    },
+    {
+      accessorKey: "trade_value_15",
+      header: ({ column }) => (
+        <button
+          type="button"
+          className="flex items-center gap-1"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          GTGD 15 <SortIndicator isSorted={column.getIsSorted()} />
+        </button>
+      ),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{fmtNum(row.original.trade_value_15)}</span>
+      ),
+      size: 90,
+    },
+    {
+      accessorKey: "trade_value_30",
+      header: ({ column }) => (
+        <button
+          type="button"
+          className="flex items-center gap-1"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          GTGD 30 <SortIndicator isSorted={column.getIsSorted()} />
+        </button>
+      ),
+      cell: ({ row }) => (
+        <span className="tabular-nums text-muted-foreground">{fmtNum(row.original.trade_value_30)}</span>
+      ),
+      size: 90,
+    },
+    {
       id: "ticked",
       accessorFn: (row) => row.isTicked,
       header: () => <span className="text-center">✓</span>,
@@ -134,6 +190,7 @@ function buildColumns(categorySelected: boolean, toggleSymbol: (code: string) =>
 
 export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelected }: StockCategoryTableProps) {
   const { data: stocks, isLoading, error } = useStocks();
+  const { tradeValueMap, isLoading: tradeValuesLoading } = useTradeValues();
   const [sorting, setSorting] = useState<SortingState>([
     { id: "ticked", desc: true },
     { id: "code", desc: false },
@@ -144,11 +201,17 @@ export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelec
 
   const tableData: StockRow[] = useMemo(() => {
     if (!stocks) return [];
-    return stocks.map((s) => ({
-      ...s,
-      isTicked: isSymbolTicked(s.code),
-    }));
-  }, [stocks, isSymbolTicked]);
+    return stocks.map((s) => {
+      const tv = tradeValueMap.get(s.code);
+      return {
+        ...s,
+        isTicked: isSymbolTicked(s.code),
+        trade_value_7: tv?.trade_value_7 ?? 0,
+        trade_value_15: tv?.trade_value_15 ?? 0,
+        trade_value_30: tv?.trade_value_30 ?? 0,
+      };
+    });
+  }, [stocks, isSymbolTicked, tradeValueMap]);
 
   const table = useReactTable({
     data: tableData,
@@ -222,11 +285,17 @@ export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelec
           )}
         </div>
         <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
-          <span>
+          <span className="flex items-center gap-2">
             {rows.length.toLocaleString()} stocks
             {globalFilter &&
               tableData.length !== rows.length &&
               ` (filtered from ${tableData.length.toLocaleString()})`}
+            {tradeValuesLoading && (
+              <span className="flex items-center gap-1 text-amber-500">
+                <Loader2 className="size-3 animate-spin" />
+                Loading trade values…
+              </span>
+            )}
           </span>
           {categorySelected && (
             <span className="flex items-center gap-1">
