@@ -13,13 +13,9 @@ import {
   CommandList,
   CommandRoot,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/modules/shared/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { withStocks } from "@/modules/shared/hoc/withStocks";
+import { cn } from "@/modules/shared/lib/utils";
 
 const MAX_RESULTS = 20;
 const MIN_CHARS = 3;
@@ -31,11 +27,7 @@ type SymbolAutocompleteOwnProps = {
 
 type InjectedProps = CombinedProps<[typeof withStocks]>;
 
-function SymbolAutocompleteRender({
-  value,
-  onCommit,
-  state,
-}: SymbolAutocompleteOwnProps & InjectedProps) {
+function SymbolAutocompleteRender({ value, onCommit, state }: SymbolAutocompleteOwnProps & InjectedProps) {
   const { stocks, stocksLoading } = state;
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState(value);
@@ -47,9 +39,7 @@ function SymbolAutocompleteRender({
   const filteredStocks = useMemo(() => {
     if (!stocks.length || inputValue.length < MIN_CHARS) return [];
     const search = inputValue.toUpperCase();
-    return stocks
-      .filter((s) => s.code.toUpperCase().startsWith(search))
-      .slice(0, MAX_RESULTS);
+    return stocks.filter((s) => s.code.toUpperCase().startsWith(search)).slice(0, MAX_RESULTS);
   }, [stocks, inputValue]);
 
   const emptyMessage = useMemo(() => {
@@ -71,9 +61,7 @@ function SymbolAutocompleteRender({
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "Enter" && inputValue.length > 0) {
-        const match = stocks.find(
-          (s) => s.code.toUpperCase() === inputValue.toUpperCase(),
-        );
+        const match = stocks.find((s) => s.code.toUpperCase() === inputValue.toUpperCase());
         if (match) {
           handleSelect(match.code);
           e.preventDefault();
@@ -92,9 +80,7 @@ function SymbolAutocompleteRender({
       setInputValue(value);
       return;
     }
-    const match = stocks.find(
-      (s) => s.code.toUpperCase() === inputValue.toUpperCase(),
-    );
+    const match = stocks.find((s) => s.code.toUpperCase() === inputValue.toUpperCase());
     if (match) {
       handleSelect(match.code);
     } else {
@@ -129,21 +115,10 @@ function SymbolAutocompleteRender({
             {filteredStocks.length > 0 && (
               <CommandGroup>
                 {filteredStocks.map((stock) => (
-                  <CommandItem
-                    key={stock.id}
-                    value={stock.code}
-                    onSelect={() => handleSelect(stock.code)}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 size-3.5",
-                        stock.code === value ? "opacity-100" : "opacity-0",
-                      )}
-                    />
+                  <CommandItem key={stock.id} value={stock.code} onSelect={() => handleSelect(stock.code)}>
+                    <Check className={cn("mr-2 size-3.5", stock.code === value ? "opacity-100" : "opacity-0")} />
                     <span className="font-mono text-sm">{stock.code}</span>
-                    <span className="ml-2 truncate text-xs text-muted-foreground">
-                      {stock.name}
-                    </span>
+                    <span className="ml-2 truncate text-xs text-muted-foreground">{stock.name}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -155,6 +130,4 @@ function SymbolAutocompleteRender({
   );
 }
 
-export default combineHOC(withStocks)<SymbolAutocompleteOwnProps>(
-  SymbolAutocompleteRender,
-);
+export default combineHOC(withStocks)<SymbolAutocompleteOwnProps>(SymbolAutocompleteRender);

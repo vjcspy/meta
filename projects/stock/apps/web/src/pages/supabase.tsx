@@ -13,10 +13,7 @@ export default function SupabaseDemoPage() {
     const run = async () => {
       try {
         const supabase = getSupabaseClient();
-        const { data, error } = await supabase
-          .from("stock_trading_feature_candles")
-          .select("*")
-          .limit(10);
+        const { data, error } = await supabase.from("stock_trading_feature_candles").select("*").limit(10);
 
         console.log("[supabase] fetched rows:", data?.length ?? 0, {
           data,
@@ -46,12 +43,8 @@ export default function SupabaseDemoPage() {
     <div style={{ padding: 20 }}>
       <h1>Supabase Demo</h1>
       {loading && <p>Loading...</p>}
-      {!loading && errorMsg && (
-        <p style={{ color: "red" }}>Error: {errorMsg}</p>
-      )}
-      {!loading && !errorMsg && (
-        <p>Fetched {rows.length} rows from stock_trading_feature_candles.</p>
-      )}
+      {!loading && errorMsg && <p style={{ color: "red" }}>Error: {errorMsg}</p>}
+      {!loading && !errorMsg && <p>Fetched {rows.length} rows from stock_trading_feature_candles.</p>}
     </div>
   );
 }

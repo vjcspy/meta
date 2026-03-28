@@ -11,8 +11,7 @@ type DashboardModuleActions = {
   setSelectedCategoryKey: (key: string | null) => void;
 };
 
-export type DashboardModuleStore = DashboardModuleState &
-  DashboardModuleActions;
+export type DashboardModuleStore = DashboardModuleState & DashboardModuleActions;
 
 export const useDashboardModuleStore = create<DashboardModuleStore>()(
   persist(
@@ -32,8 +31,7 @@ export const useDashboardModuleStore = create<DashboardModuleStore>()(
             [widgetId]: !state.visibleWidgets[widgetId],
           },
         })),
-      setSelectedCategoryKey: (selectedCategoryKey) =>
-        set({ selectedCategoryKey }),
+      setSelectedCategoryKey: (selectedCategoryKey) => set({ selectedCategoryKey }),
     }),
     { name: "dashboard-state" },
   ),

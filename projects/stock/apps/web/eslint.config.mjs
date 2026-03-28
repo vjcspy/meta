@@ -22,6 +22,7 @@ const eslintConfig = defineConfig([
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off", // Turn off in favor of the unused-imports rule
+      "prettier/prettier": ["error", { printWidth: 120 }],
       "react-hooks/exhaustive-deps": "off",
 
       // Import sorting

@@ -1,23 +1,11 @@
 "use client";
 
-import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { type CombinedProps, combineHOC } from "@web/ui-extension";
 import { useMemo } from "react";
 
 import DatePicker from "@/components/ui/date-picker";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
 import { withMarketRangeResults } from "@/modules/dashboard/hoc/withMarketRangeResults";
 import { withSelectedDate } from "@/modules/dashboard/hoc/withSelectedDate";
@@ -47,9 +35,7 @@ function buildColumns(): ColumnDef<RowData>[] {
     {
       accessorKey: "symbol",
       header: "Symbol",
-      cell: ({ row }) => (
-        <span className="font-medium">{row.original.symbol}</span>
-      ),
+      cell: ({ row }) => <span className="font-medium">{row.original.symbol}</span>,
       size: 80,
     },
     {
@@ -175,34 +161,27 @@ function buildColumns(): ColumnDef<RowData>[] {
     {
       id: "cross-sum-buy",
       header: "Σ% B.S/K",
-      cell: ({ row }) =>
-        fmtPct(row.original.data?.pct_sum_buy_sheep_shark ?? 0),
+      cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sheep_shark ?? 0),
       size: 65,
     },
     {
       id: "cross-sum-sell",
       header: "Σ% S.S/K",
-      cell: ({ row }) =>
-        fmtPct(row.original.data?.pct_sum_sell_sheep_shark ?? 0),
+      cell: ({ row }) => fmtPct(row.original.data?.pct_sum_sell_sheep_shark ?? 0),
       size: 65,
     },
   ];
 }
 
-type InjectedProps = CombinedProps<
-  [typeof withMarketRangeResults, typeof withSelectedDate]
->;
+type InjectedProps = CombinedProps<[typeof withMarketRangeResults, typeof withSelectedDate]>;
 
 function MarketRangeTableRender({ state, actions }: InjectedProps) {
-  const { symbolResults, isLoading, error, selectedDate, selectedDateStr } =
-    state;
+  const { symbolResults, isLoading, error, selectedDate, selectedDateStr } = state;
 
   const rows: RowData[] = useMemo(() => {
     if (!symbolResults.length) return [];
 
-    const effectiveDate =
-      selectedDateStr ??
-      symbolResults[0]?.data[symbolResults[0].data.length - 1]?.date;
+    const effectiveDate = selectedDateStr ?? symbolResults[0]?.data[symbolResults[0].data.length - 1]?.date;
 
     return symbolResults.map((sr) => ({
       symbol: sr.symbol,
@@ -218,20 +197,10 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const headerAction = (
-    <DatePicker
-      label="Date"
-      date={selectedDate}
-      onChange={(d) => actions.setSelectedDate(d)}
-    />
-  );
+  const headerAction = <DatePicker label="Date" date={selectedDate} onChange={(d) => actions.setSelectedDate(d)} />;
 
   return (
-    <DashboardWidget
-      widgetId="w-market-range-table"
-      title="Market Range Table"
-      headerAction={headerAction}
-    >
+    <DashboardWidget widgetId="w-market-range-table" title="Market Range Table" headerAction={headerAction}>
       {isLoading && (
         <div className="flex items-center justify-center p-8">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -239,14 +208,10 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
         </div>
       )}
 
-      {error && (
-        <div className="p-4 text-sm text-destructive">Error: {error}</div>
-      )}
+      {error && <div className="p-4 text-sm text-destructive">Error: {error}</div>}
 
       {!isLoading && !error && rows.length === 0 && (
-        <div className="p-8 text-center text-sm text-muted-foreground">
-          Select a category to view market range data
-        </div>
+        <div className="p-8 text-center text-sm text-muted-foreground">Select a category to view market range data</div>
       )}
 
       {!isLoading && !error && rows.length > 0 && (
@@ -261,9 +226,7 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
                       className="whitespace-nowrap px-2 py-1 text-xs"
                       style={{ width: h.getSize() }}
                     >
-                      {h.isPlaceholder
-                        ? null
-                        : flexRender(h.column.columnDef.header, h.getContext())}
+                      {h.isPlaceholder ? null : flexRender(h.column.columnDef.header, h.getContext())}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -273,14 +236,8 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
               {table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className="whitespace-nowrap px-2 py-1 text-xs"
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
+                    <TableCell key={cell.id} className="whitespace-nowrap px-2 py-1 text-xs">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -293,7 +250,4 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
   );
 }
 
-export default combineHOC(
-  withMarketRangeResults,
-  withSelectedDate,
-)(MarketRangeTableRender);
+export default combineHOC(withMarketRangeResults, withSelectedDate)(MarketRangeTableRender);

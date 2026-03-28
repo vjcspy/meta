@@ -6,11 +6,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export type DatePickerProps = {
   date?: Date;
@@ -23,15 +19,10 @@ export function DatePicker({ date, onChange, label }: DatePickerProps) {
 
   return (
     <div className="flex items-center gap-2">
-      {label ? (
-        <span className="px-1 text-xs text-muted-foreground">{label}</span>
-      ) : null}
+      {label ? <span className="px-1 text-xs text-muted-foreground">{label}</span> : null}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className="no-drag h-8 min-w-36 justify-between font-normal"
-          >
+          <Button variant="outline" className="no-drag h-8 min-w-36 justify-between font-normal">
             {date ? format(date, "yyyy-MM-dd") : "Select date"}
             <ChevronDownIcon className="size-4" />
           </Button>

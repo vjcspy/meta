@@ -21,17 +21,7 @@ import { withChartToggles } from "@/modules/dashboard/hoc/withChartToggles";
 import { withMarketRangeResults } from "@/modules/dashboard/hoc/withMarketRangeResults";
 import type { MarketTickChartData } from "@/modules/dashboard/utils/types";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  TimeScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  zoomPlugin,
-);
+ChartJS.register(CategoryScale, LinearScale, TimeScale, PointElement, LineElement, Title, Tooltip, Legend, zoomPlugin);
 
 const COLORS = {
   buySheep: "rgb(45, 61, 202)",
@@ -41,9 +31,7 @@ const COLORS = {
   vnIndex: "rgb(128, 128, 128)",
 } as const;
 
-type InjectedProps = CombinedProps<
-  [typeof withMarketRangeResults, typeof withChartToggles]
->;
+type InjectedProps = CombinedProps<[typeof withMarketRangeResults, typeof withChartToggles]>;
 
 function MarketRangeChartRender({ state, actions }: InjectedProps) {
   const { symbolResults, vnIndexData, isLoading, error } = state;
@@ -191,15 +179,7 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
     });
 
     return { labels: dates, datasets };
-  }, [
-    aggregated,
-    dates,
-    vnIndexMap,
-    showSumSheep,
-    showSumShark,
-    showSheep,
-    showShark,
-  ]);
+  }, [aggregated, dates, vnIndexMap, showSumSheep, showSumShark, showSheep, showShark]);
 
   const chartOptions = useMemo(
     () => ({
@@ -292,11 +272,7 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
   );
 
   return (
-    <DashboardWidget
-      widgetId="w-market-range-chart"
-      title="Market Range Chart"
-      headerAction={headerAction}
-    >
+    <DashboardWidget widgetId="w-market-range-chart" title="Market Range Chart" headerAction={headerAction}>
       {isLoading && (
         <div className="flex items-center justify-center p-8">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -304,9 +280,7 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
         </div>
       )}
 
-      {error && (
-        <div className="p-4 text-sm text-destructive">Error: {error}</div>
-      )}
+      {error && <div className="p-4 text-sm text-destructive">Error: {error}</div>}
 
       {!isLoading && !error && aggregated.length === 0 && (
         <div className="p-8 text-center text-sm text-muted-foreground">
@@ -323,7 +297,4 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
   );
 }
 
-export default combineHOC(
-  withMarketRangeResults,
-  withChartToggles,
-)(MarketRangeChartRender);
+export default combineHOC(withMarketRangeResults, withChartToggles)(MarketRangeChartRender);

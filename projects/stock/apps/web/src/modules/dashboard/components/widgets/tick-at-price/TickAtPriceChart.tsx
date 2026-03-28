@@ -7,16 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
 import { withTickData } from "@/modules/dashboard/hoc/withTickData";
 import type { TickActionValue } from "@/modules/dashboard/utils/classify-ticks";
-import {
-  TICK_ACTION_COLORS,
-  TickAction,
-} from "@/modules/dashboard/utils/classify-ticks";
+import { TICK_ACTION_COLORS, TickAction } from "@/modules/dashboard/utils/classify-ticks";
 import { withDateRange } from "@/modules/shared/hoc/withDateRange";
 import { withSymbol } from "@/modules/shared/hoc/withSymbol";
 
-type InjectedProps = CombinedProps<
-  [typeof withSymbol, typeof withDateRange, typeof withTickData]
->;
+type InjectedProps = CombinedProps<[typeof withSymbol, typeof withDateRange, typeof withTickData]>;
 
 /**
  * Render exception — data purity enforced (all from HOCs), but imperative
@@ -24,11 +19,7 @@ type InjectedProps = CombinedProps<
  */
 function TickAtPriceChartRender({ state }: InjectedProps) {
   const { symbol, fromDate, toDate } = state;
-  const {
-    classifiedTicks: classified,
-    ticksLoading: isLoading,
-    ticksError: error,
-  } = state;
+  const { classifiedTicks: classified, ticksLoading: isLoading, ticksError: error } = state;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -48,13 +39,7 @@ function TickAtPriceChartRender({ state }: InjectedProps) {
   }, [mounted]);
 
   useEffect(() => {
-    if (
-      !mounted ||
-      !classified ||
-      !containerRef.current ||
-      containerWidth === 0
-    )
-      return;
+    if (!mounted || !classified || !containerRef.current || containerWidth === 0) return;
 
     const plot = Plot.plot({
       width: containerWidth,
@@ -66,9 +51,7 @@ function TickAtPriceChartRender({ state }: InjectedProps) {
       color: {
         legend: true,
         domain: Object.values(TickAction),
-        range: Object.values(TickAction).map(
-          (a) => TICK_ACTION_COLORS[a as TickActionValue],
-        ),
+        range: Object.values(TickAction).map((a) => TICK_ACTION_COLORS[a as TickActionValue]),
       },
       style: { background: "transparent" },
       marks: [
@@ -127,8 +110,4 @@ function TickAtPriceChartRender({ state }: InjectedProps) {
   );
 }
 
-export default combineHOC(
-  withSymbol,
-  withDateRange,
-  withTickData,
-)(TickAtPriceChartRender);
+export default combineHOC(withSymbol, withDateRange, withTickData)(TickAtPriceChartRender);

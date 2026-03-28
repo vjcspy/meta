@@ -5,14 +5,9 @@ import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import type { MarketSymbolCategory } from "@/modules/shared/lib/jmeta/market-category-api";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { withMarketCategories } from "@/modules/dashboard/hoc/withMarketCategories";
+import type { MarketSymbolCategory } from "@/modules/shared/lib/jmeta/market-category-api";
 
 import { useMarketCategoryMutations } from "./use-market-categories";
 
@@ -28,9 +23,7 @@ function CategoryForm({
   isLoading: boolean;
 }) {
   const [name, setName] = useState(initial?.name ?? "");
-  const [symbolsText, setSymbolsText] = useState(
-    initial?.symbols.join(", ") ?? "",
-  );
+  const [symbolsText, setSymbolsText] = useState(initial?.symbols.join(", ") ?? "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,10 +37,7 @@ function CategoryForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div>
-        <label
-          htmlFor="cat-name"
-          className="text-xs font-medium text-muted-foreground"
-        >
+        <label htmlFor="cat-name" className="text-xs font-medium text-muted-foreground">
           Category Name
         </label>
         <input
@@ -60,10 +50,7 @@ function CategoryForm({
         />
       </div>
       <div>
-        <label
-          htmlFor="cat-symbols"
-          className="text-xs font-medium text-muted-foreground"
-        >
+        <label htmlFor="cat-symbols" className="text-xs font-medium text-muted-foreground">
           Symbols (comma-separated)
         </label>
         <textarea
@@ -92,16 +79,13 @@ type InjectedProps = CombinedProps<[typeof withMarketCategories]>;
 
 function MarketCategoryDialogRender({ state }: InjectedProps) {
   const categories = state.categories;
-  const { addCategory, updateCategory, deleteCategory } =
-    useMarketCategoryMutations();
+  const { addCategory, updateCategory, deleteCategory } = useMarketCategoryMutations();
 
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [showNewForm, setShowNewForm] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
-  const editingCategory = editingKey
-    ? categories.find((c) => c.key === editingKey)
-    : null;
+  const editingCategory = editingKey ? categories.find((c) => c.key === editingKey) : null;
 
   return (
     <Dialog>
@@ -116,15 +100,10 @@ function MarketCategoryDialogRender({ state }: InjectedProps) {
 
         <div className="mt-4 space-y-2">
           {categories.map((cat) => (
-            <div
-              key={cat.key}
-              className="flex items-center justify-between rounded-md border px-3 py-2"
-            >
+            <div key={cat.key} className="flex items-center justify-between rounded-md border px-3 py-2">
               <div className="min-w-0 flex-1">
                 <div className="text-sm font-medium">{cat.name}</div>
-                <div className="truncate text-xs text-muted-foreground">
-                  {cat.symbols.join(", ")}
-                </div>
+                <div className="truncate text-xs text-muted-foreground">{cat.symbols.join(", ")}</div>
               </div>
               <div className="ml-2 flex items-center gap-1">
                 <button
@@ -168,9 +147,7 @@ function MarketCategoryDialogRender({ state }: InjectedProps) {
 
         {editingCategory && (
           <div className="mt-4 rounded-md border p-3">
-            <h3 className="mb-2 text-sm font-medium">
-              Editing: {editingCategory.name}
-            </h3>
+            <h3 className="mb-2 text-sm font-medium">Editing: {editingCategory.name}</h3>
             <CategoryForm
               initial={editingCategory}
               onSubmit={(data) => {
@@ -202,11 +179,7 @@ function MarketCategoryDialogRender({ state }: InjectedProps) {
 
         <div className="mt-4 flex justify-between">
           {!showNewForm && !editingKey && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowNewForm(true)}
-            >
+            <Button variant="outline" size="sm" onClick={() => setShowNewForm(true)}>
               <Plus className="mr-1 h-3.5 w-3.5" />
               New Category
             </Button>

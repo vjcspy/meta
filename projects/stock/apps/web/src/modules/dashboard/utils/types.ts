@@ -4,10 +4,10 @@ import type { TickDailySummary } from "@/modules/shared/lib/jmeta/tick-api";
 
 export type MarketTickChartData = {
   date: string;
-  bSheep: number;
-  bShark: number;
-  sSheep: number;
-  sShark: number;
+  bSheep: number; // Total buy volume for sheep for one day
+  bShark: number; // Total buy volume for shark for one day
+  sSheep: number; // Total sell volume for sheep for one day
+  sShark: number; // Total sell volume for shark for one day
   /** Cumulative buy sheep */
   sBSheep: number;
   /** Cumulative buy shark */

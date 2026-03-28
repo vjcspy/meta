@@ -16,19 +16,11 @@ CommandDialog.Content = function CommandDialogContent({
   className,
   ...props
 }: React.ComponentProps<typeof DialogContent>) {
-  return (
-    <DialogContent
-      className={cn("p-0 overflow-hidden", className)}
-      {...props}
-    />
-  );
+  return <DialogContent className={cn("p-0 overflow-hidden", className)} {...props} />;
 };
 
 // Command Root
-export function CommandRoot({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command>) {
+export function CommandRoot({ className, ...props }: React.ComponentProps<typeof Command>) {
   return (
     <Command
       data-slot="command"
@@ -42,10 +34,7 @@ export function CommandRoot({
 }
 
 // Command Input
-export function CommandInput({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command.Input>) {
+export function CommandInput({ className, ...props }: React.ComponentProps<typeof Command.Input>) {
   return (
     <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
       <Command.Input
@@ -59,40 +48,15 @@ export function CommandInput({
   );
 }
 
-export function CommandList({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command.List>) {
-  return (
-    <Command.List
-      className={cn(
-        "max-h-[400px] overflow-y-auto overflow-x-hidden p-1",
-        className,
-      )}
-      {...props}
-    />
-  );
+export function CommandList({ className, ...props }: React.ComponentProps<typeof Command.List>) {
+  return <Command.List className={cn("max-h-[400px] overflow-y-auto overflow-x-hidden p-1", className)} {...props} />;
 }
 
-export function CommandEmpty({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command.Empty>) {
-  return (
-    <Command.Empty
-      className={cn(
-        "py-6 text-center text-sm text-muted-foreground",
-        className,
-      )}
-      {...props}
-    />
-  );
+export function CommandEmpty({ className, ...props }: React.ComponentProps<typeof Command.Empty>) {
+  return <Command.Empty className={cn("py-6 text-center text-sm text-muted-foreground", className)} {...props} />;
 }
 
-export function CommandGroup({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command.Group>) {
+export function CommandGroup({ className, ...props }: React.ComponentProps<typeof Command.Group>) {
   return (
     <Command.Group
       className={cn(
@@ -104,22 +68,11 @@ export function CommandGroup({
   );
 }
 
-export function CommandSeparator({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command.Separator>) {
-  return (
-    <Command.Separator
-      className={cn("-mx-1 my-1 h-px bg-border", className)}
-      {...props}
-    />
-  );
+export function CommandSeparator({ className, ...props }: React.ComponentProps<typeof Command.Separator>) {
+  return <Command.Separator className={cn("-mx-1 my-1 h-px bg-border", className)} {...props} />;
 }
 
-export function CommandItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof Command.Item>) {
+export function CommandItem({ className, ...props }: React.ComponentProps<typeof Command.Item>) {
   return (
     <Command.Item
       className={cn(
@@ -131,17 +84,6 @@ export function CommandItem({
   );
 }
 
-export function CommandShortcut({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) {
-  return (
-    <span
-      className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
-        className,
-      )}
-      {...props}
-    />
-  );
+export function CommandShortcut({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+  return <span className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)} {...props} />;
 }

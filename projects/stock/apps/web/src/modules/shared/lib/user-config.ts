@@ -21,10 +21,7 @@ function isObject(val: any): val is Record<string, any> {
   return val !== null && typeof val === "object" && !Array.isArray(val);
 }
 
-function deepMerge<T extends Record<string, any>>(
-  base: T,
-  patch: Record<string, any>,
-): T {
+function deepMerge<T extends Record<string, any>>(base: T, patch: Record<string, any>): T {
   const out: any = { ...base };
   for (const k of Object.keys(patch)) {
     const v = patch[k];
@@ -102,21 +99,16 @@ export function putUserConfig(key: string, data: any): void {
   if (typeof window === "undefined") return;
   const root = getRoot() ?? {};
   const current = getPath(root, key);
-  const nextValue =
-    isObject(data) && isObject(current) ? deepMerge(current, data) : data;
+  const nextValue = isObject(data) && isObject(current) ? deepMerge(current, data) : data;
   const nextRoot = setPath(root, key, nextValue);
   setRoot(nextRoot);
 }
 
 // Convenience helpers for this feature card
 export function getStockCandleFeatureChartConfig(): StockCandleFeatureChartConfig | null {
-  return getUserConfigKey<StockCandleFeatureChartConfig>(
-    "dashboard.stockCandleFeatureChart",
-  );
+  return getUserConfigKey<StockCandleFeatureChartConfig>("dashboard.stockCandleFeatureChart");
 }
 
-export function setStockCandleFeatureChartConfig(
-  partial: StockCandleFeatureChartConfig,
-): void {
+export function setStockCandleFeatureChartConfig(partial: StockCandleFeatureChartConfig): void {
   putUserConfig("dashboard.stockCandleFeatureChart", partial);
 }

@@ -41,10 +41,7 @@ export type ClassifiedTick = {
  * @param tradeValueFilter - Threshold in millions VND (default 250)
  * @returns Flat array of classified ticks
  */
-export function classifyTicks(
-  dailySummaries: TickDailySummary[],
-  tradeValueFilter: number,
-): ClassifiedTick[] {
+export function classifyTicks(dailySummaries: TickDailySummary[], tradeValueFilter: number): ClassifiedTick[] {
   const thresholdRaw = tradeValueFilter * 1e6;
   const result: ClassifiedTick[] = [];
 
@@ -57,18 +54,12 @@ export function classifyTicks(
       if (tick.a === "B") {
         result.push({
           ...tick,
-          a:
-            tradeValue > thresholdRaw
-              ? TickAction.BUY_SHARK
-              : TickAction.BUY_SHEEP,
+          a: tradeValue > thresholdRaw ? TickAction.BUY_SHARK : TickAction.BUY_SHEEP,
         });
       } else if (tick.a === "S") {
         result.push({
           ...tick,
-          a:
-            tradeValue > thresholdRaw
-              ? TickAction.SELL_SHARK
-              : TickAction.SELL_SHEEP,
+          a: tradeValue > thresholdRaw ? TickAction.SELL_SHARK : TickAction.SELL_SHEEP,
         });
       } else {
         // AT/ATO/ATC — split volume equally between buy and sell

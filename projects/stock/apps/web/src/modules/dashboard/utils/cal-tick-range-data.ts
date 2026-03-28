@@ -1,8 +1,5 @@
+import type { MarketTickChartData, SymbolRangeResult } from "@/modules/dashboard/utils/types";
 import type { TickDailySummary } from "@/modules/shared/lib/jmeta/tick-api";
-import type {
-  MarketTickChartData,
-  SymbolRangeResult,
-} from "@/modules/dashboard/utils/types";
 
 // --- Constants ---
 
@@ -85,10 +82,7 @@ export function calTickRangeData(input: {
     const pct_sum_buy_sell_sheep = safeRatio(cumBSheep, cumBSheep + cumSSheep);
     const pct_sum_buy_sell_shark = safeRatio(cumBShark, cumBShark + cumSShark);
     const pct_sum_buy_sheep_shark = safeRatio(cumBSheep, cumBShark + cumBSheep);
-    const pct_sum_sell_sheep_shark = safeRatio(
-      cumSSheep,
-      cumSShark + cumSSheep,
-    );
+    const pct_sum_sell_sheep_shark = safeRatio(cumSSheep, cumSShark + cumSSheep);
 
     data.push({
       date: tick.date,

@@ -10,36 +10,22 @@ import type { WidgetDef } from "./values/widget-registry";
 import { WIDGET_REGISTRY } from "./values/widget-registry";
 
 const TickAtPriceChart = dynamic(
-  () =>
-    import(
-      "@/modules/dashboard/components/widgets/tick-at-price/TickAtPriceChart"
-    ),
+  () => import("@/modules/dashboard/components/widgets/tick-at-price/TickAtPriceChart"),
   { ssr: false },
 );
 
 const TickAtPriceSummary = dynamic(
-  () =>
-    import(
-      "@/modules/dashboard/components/widgets/tick-at-price/TickAtPriceSummary"
-    ),
+  () => import("@/modules/dashboard/components/widgets/tick-at-price/TickAtPriceSummary"),
   { ssr: false },
 );
 
-const MarketRangeTable = dynamic(
-  () =>
-    import(
-      "@/modules/dashboard/components/widgets/market-range/MarketRangeTable"
-    ),
-  { ssr: false },
-);
+const MarketRangeTable = dynamic(() => import("@/modules/dashboard/components/widgets/market-range/MarketRangeTable"), {
+  ssr: false,
+});
 
-const MarketRangeChart = dynamic(
-  () =>
-    import(
-      "@/modules/dashboard/components/widgets/market-range/MarketRangeChart"
-    ),
-  { ssr: false },
-);
+const MarketRangeChart = dynamic(() => import("@/modules/dashboard/components/widgets/market-range/MarketRangeChart"), {
+  ssr: false,
+});
 
 const ResponsiveGrid: any = dynamic(
   async () => {
@@ -71,10 +57,7 @@ const FILTERS_LAYOUT = {
 export default function DashboardPage() {
   const visibleWidgets = useDashboardModuleStore((s) => s.visibleWidgets);
 
-  const layoutKey = useMemo(
-    () => JSON.stringify(visibleWidgets),
-    [visibleWidgets],
-  );
+  const layoutKey = useMemo(() => JSON.stringify(visibleWidgets), [visibleWidgets]);
 
   const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
   const cols = { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 };

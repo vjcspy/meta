@@ -12,9 +12,7 @@ export type MarketSymbolCategory = {
 
 export async function fetchMarketCategories(): Promise<MarketSymbolCategory[]> {
   try {
-    const config = await fetchJMeta<{ value: MarketSymbolCategory[] }>(
-      "/configurations/market-categories",
-    );
+    const config = await fetchJMeta<{ value: MarketSymbolCategory[] }>("/configurations/market-categories");
     return config.value ?? [];
   } catch (e) {
     if (e instanceof JMetaError && e.status === 404) return [];
@@ -22,9 +20,7 @@ export async function fetchMarketCategories(): Promise<MarketSymbolCategory[]> {
   }
 }
 
-export async function saveMarketCategories(
-  categories: MarketSymbolCategory[],
-): Promise<void> {
+export async function saveMarketCategories(categories: MarketSymbolCategory[]): Promise<void> {
   await mutateJMeta("/configurations/market-categories", "PUT", {
     key: "market-categories",
     value: categories,

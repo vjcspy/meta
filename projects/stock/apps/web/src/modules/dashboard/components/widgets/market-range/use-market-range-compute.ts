@@ -3,14 +3,10 @@
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
-import type {
-  MarketRangeCacheEntry,
-  WorkerInput,
-  WorkerOutput,
-} from "@/modules/dashboard/utils/types";
+import type { MarketRangeCacheEntry, WorkerInput, WorkerOutput } from "@/modules/dashboard/utils/types";
 import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
+import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { useGlobalStore } from "@/modules/shared/store/global-store";
 
 /**
@@ -28,41 +24,23 @@ export function useMarketRangeCompute() {
   const queryClient = useQueryClient();
   const workerRef = useRef<Worker | null>(null);
 
-  const selectedCategoryKey = useDashboardModuleStore(
-    (s) => s.selectedCategoryKey,
-  );
+  const selectedCategoryKey = useDashboardModuleStore((s) => s.selectedCategoryKey);
   const visibleWidgets = useDashboardModuleStore((s) => s.visibleWidgets);
   const fromDate = useGlobalStore((s) => s.fromDate);
   const toDate = useGlobalStore((s) => s.toDate);
   const tradeValueFilter = useGlobalStore((s) => s.tradeValueFilter);
   const isValid = useGlobalStore((s) => s.isDateRangeValid());
 
-  const isGated =
-    visibleWidgets["w-market-range-table"] !== false ||
-    visibleWidgets["w-market-range-chart"] !== false;
+  const isGated = visibleWidgets["w-market-range-table"] !== false || visibleWidgets["w-market-range-chart"] !== false;
 
   const { data: categories } = useMarketCategories();
-  const selectedCategory = categories?.find(
-    (c) => c.key === selectedCategoryKey,
-  );
+  const selectedCategory = categories?.find((c) => c.key === selectedCategoryKey);
   const symbols = selectedCategory?.symbols ?? [];
 
-  const enabled =
-    isGated &&
-    !!selectedCategoryKey &&
-    symbols.length > 0 &&
-    !!fromDate &&
-    !!toDate &&
-    isValid;
+  const enabled = isGated && !!selectedCategoryKey && symbols.length > 0 && !!fromDate && !!toDate && isValid;
 
   const cacheKey = useMemo(
-    () => [
-      "market-range-computed",
-      selectedCategoryKey,
-      fromDate,
-      toDate,
-      tradeValueFilter,
-    ],
+    () => ["market-range-computed", selectedCategoryKey, fromDate, toDate, tradeValueFilter],
     [selectedCategoryKey, fromDate, toDate, tradeValueFilter],
   );
 
@@ -75,8 +53,7 @@ export function useMarketRangeCompute() {
     })),
   });
 
-  const allResolved =
-    enabled && tickQueries.length > 0 && tickQueries.every((q) => q.isSuccess);
+  const allResolved = enabled && tickQueries.length > 0 && tickQueries.every((q) => q.isSuccess);
   const anyError = tickQueries.find((q) => q.isError);
 
   useQuery({
@@ -110,12 +87,7 @@ export function useMarketRangeCompute() {
 
   useEffect(() => {
     if (isGated && !workerRef.current) {
-      workerRef.current = new Worker(
-        new URL(
-          "../../../utils/cal-tick-range-data.worker.ts",
-          import.meta.url,
-        ),
-      );
+      workerRef.current = new Worker(new URL("../../../utils/cal-tick-range-data.worker.ts", import.meta.url));
     } else if (!isGated && workerRef.current) {
       workerRef.current.terminate();
       workerRef.current = null;

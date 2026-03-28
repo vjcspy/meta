@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { createHOC } from "@web/ui-extension";
 import { useMemo } from "react";
 
-import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { calcTickSummary } from "@/modules/dashboard/utils/calc-tick-summary";
 import { classifyTicks } from "@/modules/dashboard/utils/classify-ticks";
+import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { useGlobalStore } from "@/modules/shared/store/global-store";
 
 export const withTickData = createHOC(() => {

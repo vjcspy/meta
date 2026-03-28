@@ -49,9 +49,7 @@ export const useGlobalStore = create<GlobalStore>()(
       setTradeValueFilter: (tradeValueFilter) => set({ tradeValueFilter }),
       isDateRangeValid: () => {
         const { fromDate, toDate } = get();
-        return (
-          fromDate <= toDate && daysBetween(fromDate, toDate) <= MAX_RANGE_DAYS
-        );
+        return fromDate <= toDate && daysBetween(fromDate, toDate) <= MAX_RANGE_DAYS;
       },
     }),
     { name: "global-state" },

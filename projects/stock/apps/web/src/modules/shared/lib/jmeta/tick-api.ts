@@ -45,15 +45,11 @@ function normalizeMeta(raw: RawTickTuple[] | null): TickRecord[] | null {
 
 // --- API ---
 
-export async function fetchTickDaily(
-  symbol: string,
-  from: string,
-  to: string,
-): Promise<TickDailySummary[]> {
-  const rawData = await fetchJMeta<RawTickDailySummary[]>(
-    `/ticks/symbol/${encodeURIComponent(symbol)}/daily`,
-    { from, to },
-  );
+export async function fetchTickDaily(symbol: string, from: string, to: string): Promise<TickDailySummary[]> {
+  const rawData = await fetchJMeta<RawTickDailySummary[]>(`/ticks/symbol/${encodeURIComponent(symbol)}/daily`, {
+    from,
+    to,
+  });
 
   return rawData.map((item) => ({
     ...item,

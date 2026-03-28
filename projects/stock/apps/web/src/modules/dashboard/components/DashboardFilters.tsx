@@ -50,21 +50,9 @@ type InjectedProps = CombinedProps<
  * Container component — hosts the market-range orchestrator (singleton mount point).
  */
 function DashboardFiltersRender({ state, actions }: InjectedProps) {
-  const {
-    symbol,
-    fromDate,
-    toDate,
-    isDateRangeValid,
-    tradeValueFilter,
-    visibleWidgets,
-    categories,
-  } = state;
-  const selectedCategoryKey = useDashboardModuleStore(
-    (s) => s.selectedCategoryKey,
-  );
-  const setSelectedCategoryKey = useDashboardModuleStore(
-    (s) => s.setSelectedCategoryKey,
-  );
+  const { symbol, fromDate, toDate, isDateRangeValid, tradeValueFilter, visibleWidgets, categories } = state;
+  const selectedCategoryKey = useDashboardModuleStore((s) => s.selectedCategoryKey);
+  const setSelectedCategoryKey = useDashboardModuleStore((s) => s.setSelectedCategoryKey);
 
   const rangeWarning = !isDateRangeValid
     ? fromDate > toDate
@@ -110,17 +98,9 @@ function DashboardFiltersRender({ state, actions }: InjectedProps) {
           <SymbolAutocomplete value={symbol} onCommit={actions.setSymbol} />
         </div>
 
-        <DatePicker
-          label="From"
-          date={parseDate(fromDate)}
-          onChange={(d) => d && actions.setFromDate(formatDate(d))}
-        />
+        <DatePicker label="From" date={parseDate(fromDate)} onChange={(d) => d && actions.setFromDate(formatDate(d))} />
 
-        <DatePicker
-          label="To"
-          date={parseDate(toDate)}
-          onChange={(d) => d && actions.setToDate(formatDate(d))}
-        />
+        <DatePicker label="To" date={parseDate(toDate)} onChange={(d) => d && actions.setToDate(formatDate(d))} />
 
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground">Filter (M)</span>
@@ -129,9 +109,7 @@ function DashboardFiltersRender({ state, actions }: InjectedProps) {
             type="number"
             className="no-drag h-8 w-24 rounded-md border bg-background px-2 text-sm"
             value={tradeValueFilter}
-            onChange={(e) =>
-              actions.setTradeValueFilter(Number(e.target.value) || 0)
-            }
+            onChange={(e) => actions.setTradeValueFilter(Number(e.target.value) || 0)}
           />
         </div>
 
@@ -153,9 +131,7 @@ function DashboardFiltersRender({ state, actions }: InjectedProps) {
           <MarketCategoryDialog />
         </div>
 
-        {rangeWarning && (
-          <span className="text-xs text-destructive">{rangeWarning}</span>
-        )}
+        {rangeWarning && <span className="text-xs text-destructive">{rangeWarning}</span>}
       </div>
     </DashboardWidget>
   );

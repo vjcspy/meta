@@ -36,9 +36,7 @@ export function DashboardCommands() {
   // Keyboard shortcut: Ctrl/Cmd + Shift + P
   React.useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      const isCtrlCmd = navigator.platform.toLowerCase().includes("mac")
-        ? e.metaKey
-        : e.ctrlKey;
+      const isCtrlCmd = navigator.platform.toLowerCase().includes("mac") ? e.metaKey : e.ctrlKey;
       if (isCtrlCmd && e.shiftKey && (e.key === "P" || e.key === "p")) {
         e.preventDefault();
         setCmdOpen((v) => !v);
@@ -66,15 +64,9 @@ export function DashboardCommands() {
                 <Palette className="mr-2 size-4" /> Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                  Light
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                  Dark
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                  System
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuSub>
             <DropdownMenuItem
@@ -102,17 +94,11 @@ export function DashboardCommands() {
         <CommandDialog.Content>
           <CommandRoot label="Quick actions">
             <CommandInput
-              placeholder={
-                page === "root" ? "Type a command or search..." : "Theme…"
-              }
+              placeholder={page === "root" ? "Type a command or search..." : "Theme…"}
               onKeyDown={(e: any) => {
                 // Go back to root when input is empty and user presses Backspace
                 const target = e.target as HTMLInputElement;
-                if (
-                  e.key === "Backspace" &&
-                  target.value === "" &&
-                  page !== "root"
-                ) {
+                if (e.key === "Backspace" && target.value === "" && page !== "root") {
                   setPage("root");
                   e.preventDefault();
                 }
@@ -126,9 +112,7 @@ export function DashboardCommands() {
                   <CommandGroup heading="Dashboard">
                     <CommandItem
                       onSelect={() => {
-                        window.dispatchEvent(
-                          new CustomEvent("dashboard:reset-zoom"),
-                        );
+                        window.dispatchEvent(new CustomEvent("dashboard:reset-zoom"));
                         setCmdOpen(false);
                       }}
                     >
@@ -144,9 +128,7 @@ export function DashboardCommands() {
                   </CommandGroup>
 
                   <CommandGroup heading="Preferences">
-                    <CommandItem onSelect={() => setPage("theme")}>
-                      Theme
-                    </CommandItem>
+                    <CommandItem onSelect={() => setPage("theme")}>Theme</CommandItem>
                   </CommandGroup>
                 </>
               ) : null}

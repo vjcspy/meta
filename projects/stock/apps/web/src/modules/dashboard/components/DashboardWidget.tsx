@@ -47,9 +47,7 @@ function DashboardWidgetRender({
           <span className="w-4" />
         )}
 
-        <CardTitle
-          className={`select-none truncate text-base ${canMove ? "rgl-drag-handle cursor-move" : ""}`}
-        >
+        <CardTitle className={`select-none truncate text-base ${canMove ? "rgl-drag-handle cursor-move" : ""}`}>
           {title}
         </CardTitle>
 
@@ -73,6 +71,4 @@ function DashboardWidgetRender({
   );
 }
 
-export default combineHOC(withWidgetVisibility)<DashboardWidgetProps>(
-  DashboardWidgetRender,
-);
+export default combineHOC(withWidgetVisibility)<DashboardWidgetProps>(DashboardWidgetRender);

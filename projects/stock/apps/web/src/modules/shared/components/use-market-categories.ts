@@ -34,44 +34,30 @@ export function useMarketCategoryMutations() {
 
   const addCategory = useMutation({
     mutationFn: async (cat: Omit<MarketSymbolCategory, "key">) => {
-      const current =
-        queryClient.getQueryData<MarketSymbolCategory[]>(CATEGORIES_KEY) ?? [];
+      const current = queryClient.getQueryData<MarketSymbolCategory[]>(CATEGORIES_KEY) ?? [];
       const key = slugify(cat.name);
       const updated = [...current, { ...cat, key }];
       await saveMarketCategories(updated);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: CATEGORIES_KEY }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: CATEGORIES_KEY }),
   });
 
   const updateCategory = useMutation({
-    mutationFn: async ({
-      key,
-      updates,
-    }: {
-      key: string;
-      updates: Partial<Omit<MarketSymbolCategory, "key">>;
-    }) => {
-      const current =
-        queryClient.getQueryData<MarketSymbolCategory[]>(CATEGORIES_KEY) ?? [];
-      const updated = current.map((c) =>
-        c.key === key ? { ...c, ...updates } : c,
-      );
+    mutationFn: async ({ key, updates }: { key: string; updates: Partial<Omit<MarketSymbolCategory, "key">> }) => {
+      const current = queryClient.getQueryData<MarketSymbolCategory[]>(CATEGORIES_KEY) ?? [];
+      const updated = current.map((c) => (c.key === key ? { ...c, ...updates } : c));
       await saveMarketCategories(updated);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: CATEGORIES_KEY }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: CATEGORIES_KEY }),
   });
 
   const deleteCategory = useMutation({
     mutationFn: async (key: string) => {
-      const current =
-        queryClient.getQueryData<MarketSymbolCategory[]>(CATEGORIES_KEY) ?? [];
+      const current = queryClient.getQueryData<MarketSymbolCategory[]>(CATEGORIES_KEY) ?? [];
       const updated = current.filter((c) => c.key !== key);
       await saveMarketCategories(updated);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: CATEGORIES_KEY }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: CATEGORIES_KEY }),
   });
 
   return { addCategory, updateCategory, deleteCategory };

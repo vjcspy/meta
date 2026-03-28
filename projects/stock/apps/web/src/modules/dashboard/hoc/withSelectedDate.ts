@@ -4,9 +4,7 @@ import { useCallback, useState } from "react";
 export const withSelectedDate = createHOC(() => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  const selectedDateStr = selectedDate
-    ? selectedDate.toISOString().slice(0, 10)
-    : null;
+  const selectedDateStr = selectedDate ? selectedDate.toISOString().slice(0, 10) : null;
 
   const clearSelectedDate = useCallback(() => setSelectedDate(undefined), []);
 
