@@ -6,9 +6,6 @@
   "types": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "pnpm run clean && pnpm run compile",
-    "clean": "rimraf -rf ./dist",
-    "compile": "tsc -p tsconfig.json",
     "lint": "eslint --fix --ext ts,tsx ."
   },
   "dependencies": {
