@@ -39,7 +39,7 @@ export class RefreshTickConsumer {
       if (typeof msg === 'string') {
         RefreshTickConsumer.refreshTick$.next(msg);
       }
-    } catch (e) {
+    } catch {
       this.logger.info(`Requeue for ${msg}`);
       return new Nack(true);
     }

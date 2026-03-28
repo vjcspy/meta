@@ -1,4 +1,3 @@
-import { prisma } from '@modules/core/util/prisma';
 import { SyncStatus } from '@modules/stock-info/model/SyncStatus';
 import { Injectable } from '@nestjs/common';
 import type { DataObject } from 'chitility';
@@ -16,7 +15,7 @@ export class OrderMatching {
   async saveByCodeAndType(code: string, type: number, dataObject: DataObject) {
     const res: any = dataObject.getData();
     const { data, page } = res;
-    let syncDate = moment().startOf('day');
+    // let syncDate = moment().startOf('day');
     if (Array.isArray(data) && data.length > 0) {
       const _day = res.d;
       if (typeof _day !== 'string') {
@@ -24,7 +23,7 @@ export class OrderMatching {
           'Dữ liệu trả về bị lỗi, không parse được ngày hiện tại',
         );
       }
-      syncDate = moment.utc(`${moment().year()}/${_day}`, 'YYYY/DD/MM');
+      // syncDate = moment.utc(`${moment().year()}/${_day}`, 'YYYY/DD/MM');
 
       // Xoá các bản ghi của ngày hôm đó
       // await prisma.orderMatching.deleteMany({

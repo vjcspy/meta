@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { Expose, Transform, Type } from 'class-transformer';
 import {
   IsDate,

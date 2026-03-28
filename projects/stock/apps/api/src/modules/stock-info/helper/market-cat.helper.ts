@@ -19,7 +19,7 @@ export class MarketCatHelper {
           (r: any) => r.key === MarketCatValue.DEFAULT_MARKET_CAT_KEY,
         );
       }
-    } catch (e) {
+    } catch {
       // swallow error
     }
 

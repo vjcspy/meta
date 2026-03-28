@@ -1,10 +1,16 @@
 packages:
-#  - "apps/nestjs"
-  - "shared/*"
+#  - "apps/nextjs"
+  - "shared/eslint-config-custom-react"
+  - "shared/eslint-config-server"
+  - "shared/tsconfig"
+  - "shared/chitility"
+  - "shared/web-base"
+  - "shared/ui-extension"
   #  ________ Projects MAIN ________
   #- "projects/main/apps/proxy-sls"
   #- "projects/main/apps/slack-sls"
   #  ________ Projects STOCK ________
-  - "projects/stock/apps/api"
-  - "projects/stock/apps/frontend"
-  - "projects/stock/packages/*"
+#  - "projects/stock/apps/api"
+  - "projects/stock/apps/web"
+  - "projects/stock/packages/com"
+  - "projects/stock/packages/db"

@@ -49,7 +49,7 @@ export class OrderMatchingPublisher {
           );
         this.logger.log(`Published sync OM code ${cor.code}`);
       }
-    } catch (e) {
+    } catch {
       this.logger.error(`Publish sync order matching for ${code}}`);
     }
   }
