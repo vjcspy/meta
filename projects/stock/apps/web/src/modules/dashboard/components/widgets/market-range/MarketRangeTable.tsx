@@ -2,9 +2,11 @@
 
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { type CombinedProps, combineHOC } from "@web/ui-extension";
-import { useMemo } from "react";
+import { CircleHelp } from "lucide-react";
+import { useEffect, useMemo } from "react";
 
 import DatePicker from "@/components/ui/date-picker";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
 import { withMarketRangeResults } from "@/modules/dashboard/hoc/withMarketRangeResults";
@@ -30,6 +32,18 @@ function diffClass(v: number): string {
   return "";
 }
 
+function headerWithTooltip(label: string, tooltip: string) {
+  // eslint-disable-next-line react/display-name
+  return () => (
+    <span
+      title={tooltip}
+      className="cursor-help underline decoration-dotted decoration-muted-foreground/50 underline-offset-4"
+    >
+      {label}
+    </span>
+  );
+}
+
 function buildColumns(): ColumnDef<RowData>[] {
   return [
     {
@@ -40,19 +54,19 @@ function buildColumns(): ColumnDef<RowData>[] {
     },
     {
       id: "sheep-buy",
-      header: "S.Buy",
+      header: headerWithTooltip("S.Buy", "Sheep Buy — Khối lượng mua của NĐT cá nhân"),
       cell: ({ row }) => fmtInt(row.original.data?.bSheep ?? 0),
       size: 70,
     },
     {
       id: "sheep-sell",
-      header: "S.Sell",
+      header: headerWithTooltip("S.Sell", "Sheep Sell — Khối lượng bán của NĐT cá nhân"),
       cell: ({ row }) => fmtInt(row.original.data?.sSheep ?? 0),
       size: 70,
     },
     {
       id: "sheep-diff",
-      header: "S.Diff",
+      header: headerWithTooltip("S.Diff", "Sheep Diff — Chênh lệch mua - bán của NĐT cá nhân"),
       cell: ({ row }) => {
         const v = row.original.data?.diff_sheep ?? 0;
         return <span className={diffClass(v)}>{fmtInt(v)}</span>;
@@ -61,25 +75,25 @@ function buildColumns(): ColumnDef<RowData>[] {
     },
     {
       id: "sheep-pct",
-      header: "S.%B/S",
+      header: headerWithTooltip("S.%B/S", "Sheep %Buy/Sell — Tỷ lệ mua/bán của NĐT cá nhân"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_buy_sell_sheep ?? 0),
       size: 65,
     },
     {
       id: "shark-buy",
-      header: "K.Buy",
+      header: headerWithTooltip("K.Buy", "Shark Buy — Khối lượng mua của tổ chức/cá mập"),
       cell: ({ row }) => fmtInt(row.original.data?.bShark ?? 0),
       size: 70,
     },
     {
       id: "shark-sell",
-      header: "K.Sell",
+      header: headerWithTooltip("K.Sell", "Shark Sell — Khối lượng bán của tổ chức/cá mập"),
       cell: ({ row }) => fmtInt(row.original.data?.sShark ?? 0),
       size: 70,
     },
     {
       id: "shark-diff",
-      header: "K.Diff",
+      header: headerWithTooltip("K.Diff", "Shark Diff — Chênh lệch mua - bán của tổ chức/cá mập"),
       cell: ({ row }) => {
         const v = row.original.data?.diff_shark ?? 0;
         return <span className={diffClass(v)}>{fmtInt(v)}</span>;
@@ -88,37 +102,37 @@ function buildColumns(): ColumnDef<RowData>[] {
     },
     {
       id: "shark-pct",
-      header: "K.%B/S",
+      header: headerWithTooltip("K.%B/S", "Shark %Buy/Sell — Tỷ lệ mua/bán của tổ chức/cá mập"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_buy_sell_shark ?? 0),
       size: 65,
     },
     {
       id: "cross-buy",
-      header: "% B.S/K",
+      header: headerWithTooltip("% B.S/K", "% Buy Sheep/Shark — Tỷ lệ mua cá nhân so với tổ chức"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_buy_sheep_shark ?? 0),
       size: 65,
     },
     {
       id: "cross-sell",
-      header: "% S.S/K",
+      header: headerWithTooltip("% S.S/K", "% Sell Sheep/Shark — Tỷ lệ bán cá nhân so với tổ chức"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_sell_sheep_shark ?? 0),
       size: 65,
     },
     {
       id: "sheep-sum-buy",
-      header: "Σ S.Buy",
+      header: headerWithTooltip("Σ S.Buy", "Sum Sheep Buy — Tổng lũy kế mua của NĐT cá nhân"),
       cell: ({ row }) => fmtInt(row.original.data?.sBSheep ?? 0),
       size: 70,
     },
     {
       id: "sheep-sum-sell",
-      header: "Σ S.Sell",
+      header: headerWithTooltip("Σ S.Sell", "Sum Sheep Sell — Tổng lũy kế bán của NĐT cá nhân"),
       cell: ({ row }) => fmtInt(row.original.data?.sSSheep ?? 0),
       size: 70,
     },
     {
       id: "sheep-sum-diff",
-      header: "Σ S.Diff",
+      header: headerWithTooltip("Σ S.Diff", "Sum Sheep Diff — Chênh lệch lũy kế mua - bán của NĐT cá nhân"),
       cell: ({ row }) => {
         const v = row.original.data?.diff_sum_sheep ?? 0;
         return <span className={diffClass(v)}>{fmtInt(v)}</span>;
@@ -127,25 +141,25 @@ function buildColumns(): ColumnDef<RowData>[] {
     },
     {
       id: "sheep-sum-pct",
-      header: "Σ S.%",
+      header: headerWithTooltip("Σ S.%", "Sum Sheep % — Tỷ lệ lũy kế mua/bán của NĐT cá nhân"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sell_sheep ?? 0),
       size: 65,
     },
     {
       id: "shark-sum-buy",
-      header: "Σ K.Buy",
+      header: headerWithTooltip("Σ K.Buy", "Sum Shark Buy — Tổng lũy kế mua của tổ chức/cá mập"),
       cell: ({ row }) => fmtInt(row.original.data?.sBShark ?? 0),
       size: 70,
     },
     {
       id: "shark-sum-sell",
-      header: "Σ K.Sell",
+      header: headerWithTooltip("Σ K.Sell", "Sum Shark Sell — Tổng lũy kế bán của tổ chức/cá mập"),
       cell: ({ row }) => fmtInt(row.original.data?.sSShark ?? 0),
       size: 70,
     },
     {
       id: "shark-sum-diff",
-      header: "Σ K.Diff",
+      header: headerWithTooltip("Σ K.Diff", "Sum Shark Diff — Chênh lệch lũy kế mua - bán của tổ chức/cá mập"),
       cell: ({ row }) => {
         const v = row.original.data?.diff_sum_shark ?? 0;
         return <span className={diffClass(v)}>{fmtInt(v)}</span>;
@@ -154,19 +168,19 @@ function buildColumns(): ColumnDef<RowData>[] {
     },
     {
       id: "shark-sum-pct",
-      header: "Σ K.%",
+      header: headerWithTooltip("Σ K.%", "Sum Shark % — Tỷ lệ lũy kế mua/bán của tổ chức/cá mập"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sell_shark ?? 0),
       size: 65,
     },
     {
       id: "cross-sum-buy",
-      header: "Σ% B.S/K",
+      header: headerWithTooltip("Σ% B.S/K", "Sum % Buy Sheep/Shark — Tỷ lệ lũy kế mua cá nhân so với tổ chức"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sheep_shark ?? 0),
       size: 65,
     },
     {
       id: "cross-sum-sell",
-      header: "Σ% S.S/K",
+      header: headerWithTooltip("Σ% S.S/K", "Sum % Sell Sheep/Shark — Tỷ lệ lũy kế bán cá nhân so với tổ chức"),
       cell: ({ row }) => fmtPct(row.original.data?.pct_sum_sell_sheep_shark ?? 0),
       size: 65,
     },
@@ -177,17 +191,25 @@ type InjectedProps = CombinedProps<[typeof withMarketRangeResults, typeof withSe
 
 function MarketRangeTableRender({ state, actions }: InjectedProps) {
   const { symbolResults, isLoading, error, selectedDate, selectedDateStr } = state;
+  const effectiveDate = useMemo(
+    () => selectedDateStr ?? symbolResults[0]?.data[symbolResults[0].data.length - 1]?.date,
+    [symbolResults, selectedDateStr],
+  );
+
+  useEffect(() => {
+    if (!selectedDateStr && effectiveDate) {
+      actions.setSelectedDate(new Date(effectiveDate));
+    }
+  }, [selectedDateStr, effectiveDate, actions]);
 
   const rows: RowData[] = useMemo(() => {
     if (!symbolResults.length) return [];
-
-    const effectiveDate = selectedDateStr ?? symbolResults[0]?.data[symbolResults[0].data.length - 1]?.date;
 
     return symbolResults.map((sr) => ({
       symbol: sr.symbol,
       data: sr.data.find((d) => d.date === effectiveDate) ?? null,
     }));
-  }, [symbolResults, selectedDateStr]);
+  }, [symbolResults, effectiveDate]);
 
   const columns = useMemo(() => buildColumns(), []);
 
@@ -199,8 +221,39 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
 
   const headerAction = <DatePicker label="Date" date={selectedDate} onChange={(d) => actions.setSelectedDate(d)} />;
 
+  const titleSuffix = (
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex h-5 w-5 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
+          aria-label="Table info"
+        >
+          <CircleHelp className="h-4 w-4" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent side="bottom" align="start" className="max-w-xs space-y-2 text-sm">
+        <p className="font-medium">Hướng dẫn đọc bảng</p>
+        <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
+          <li>
+            Các cột có dấu <span className="font-semibold text-foreground">Σ</span> (Accumulative) thể hiện dữ liệu
+            tích lũy từ ngày <strong>start → end</strong> của Dashboard filter.
+          </li>
+          <li>
+            Các cột bình thường (không có Σ) thể hiện kết quả của <strong>ngày được chọn</strong> ở Date picker.
+          </li>
+        </ul>
+      </PopoverContent>
+    </Popover>
+  );
+
   return (
-    <DashboardWidget widgetId="w-market-range-table" title="Market Range Table" headerAction={headerAction}>
+    <DashboardWidget
+      widgetId="w-market-range-table"
+      title="Market Range Table"
+      titleSuffix={titleSuffix}
+      headerAction={headerAction}
+    >
       {isLoading && (
         <div className="flex items-center justify-center p-8">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />

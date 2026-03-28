@@ -4,6 +4,7 @@ import { createHOC } from "@web/ui-extension";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import type { MarketRangeCacheEntry, SymbolRangeResult } from "@/modules/dashboard/utils/types";
 import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
+import { fetchTickDaily, TickDailySummary } from "@/modules/shared/lib/jmeta/tick-api";
 import { useGlobalStore } from "@/modules/shared/store/global-store";
 
 /**
@@ -28,6 +29,12 @@ export const withMarketRangeResults = createHOC(() => {
     enabled: false,
   });
 
+  const { data: vnIndexData } = useQuery<TickDailySummary[]>({
+    queryKey: ["tick-daily", "VNINDEX", fromDate, toDate],
+    queryFn: () => fetchTickDaily("VNINDEX", fromDate, toDate),
+    enabled: false,
+  });
+
   const symbolResults: SymbolRangeResult[] = cacheEntry?.symbolResults ?? [];
   const isLoading = cacheEntry?.status === "loading";
   const error = cacheEntry?.error ?? null;
@@ -36,6 +43,7 @@ export const withMarketRangeResults = createHOC(() => {
     state: {
       symbolResults,
       symbols,
+      vnIndexData: vnIndexData ?? [],
       isLoading,
       error,
     },

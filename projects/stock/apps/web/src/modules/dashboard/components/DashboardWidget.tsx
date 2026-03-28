@@ -10,6 +10,7 @@ import { withWidgetVisibility } from "@/modules/dashboard/hoc/withWidgetVisibili
 export type DashboardWidgetProps = {
   widgetId: string;
   title: string;
+  titleSuffix?: ReactNode;
   canClose?: boolean;
   canMove?: boolean;
   canResize?: boolean;
@@ -23,6 +24,7 @@ type InjectedProps = CombinedProps<[typeof withWidgetVisibility]>;
 function DashboardWidgetRender({
   widgetId,
   title,
+  titleSuffix,
   canClose = true,
   canMove = true,
   canResize = true,
@@ -49,6 +51,7 @@ function DashboardWidgetRender({
 
         <CardTitle className={`select-none truncate text-base ${canMove ? "rgl-drag-handle cursor-move" : ""}`}>
           {title}
+          {titleSuffix && <span className="no-drag ml-1 inline-flex">{titleSuffix}</span>}
         </CardTitle>
 
         <div className="no-drag flex items-center gap-1">
