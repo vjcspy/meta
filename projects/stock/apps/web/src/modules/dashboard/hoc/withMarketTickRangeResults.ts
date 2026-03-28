@@ -4,7 +4,7 @@ import { createHOC } from "@web/ui-extension";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import type { MarketRangeCacheEntry, SymbolRangeResult } from "@/modules/dashboard/utils/types";
 import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
-import { fetchTickDaily, TickDailySummary } from "@/modules/shared/lib/jmeta/tick-api";
+import type { PriceDaily } from "@/modules/shared/lib/jmeta/prices-api";
 import { useGlobalStore } from "@/modules/shared/store/global-store";
 
 /**
@@ -29,9 +29,11 @@ export const withMarketTickRangeResults = createHOC(() => {
     enabled: false,
   });
 
-  const { data: vnIndexData } = useQuery<TickDailySummary[]>({
-    queryKey: ["tick-daily", "VNINDEX", fromDate, toDate],
-    queryFn: () => fetchTickDaily("VNINDEX", fromDate, toDate),
+  const { data: vnIndexData } = useQuery<PriceDaily[]>({
+    queryKey: ["price-range", "VNINDEX", fromDate, toDate],
+    queryFn: () => {
+      throw new Error("consumer-only");
+    },
     enabled: false,
   });
 

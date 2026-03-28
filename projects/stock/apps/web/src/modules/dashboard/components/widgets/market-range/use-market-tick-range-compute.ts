@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import type { MarketRangeCacheEntry, WorkerInput, WorkerOutput } from "@/modules/dashboard/utils/types";
 import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
+import { fetchPriceRange } from "@/modules/shared/lib/jmeta/prices-api";
 import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { useGlobalStore } from "@/modules/shared/store/global-store";
 
@@ -57,8 +58,8 @@ export function useMarketTickRangeCompute() {
   const anyError = tickQueries.find((q) => q.isError);
 
   useQuery({
-    queryKey: ["tick-daily", "VNINDEX", fromDate, toDate],
-    queryFn: () => fetchTickDaily("VNINDEX", fromDate, toDate),
+    queryKey: ["price-range", "VNINDEX", fromDate, toDate],
+    queryFn: () => fetchPriceRange("VNINDEX", fromDate, toDate),
     enabled,
     staleTime: 5 * 60 * 1000,
   });
