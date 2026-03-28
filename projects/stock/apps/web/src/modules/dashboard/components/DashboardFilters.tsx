@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { withMarketCategories } from "@/modules/dashboard/hoc/withMarketCategories";
-import { withMarketRangeOrchestrator } from "@/modules/dashboard/hoc/withMarketRangeOrchestrator";
+import { withMarketTickRangeOrchestrator } from "@/modules/dashboard/hoc/withMarketTickRangeOrchestrator";
 import { withWidgetVisibility } from "@/modules/dashboard/hoc/withWidgetVisibility";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import { WIDGET_REGISTRY } from "@/modules/dashboard/values/widget-registry";
@@ -42,7 +42,7 @@ type InjectedProps = CombinedProps<
     typeof withTradeValueFilter,
     typeof withWidgetVisibility,
     typeof withMarketCategories,
-    typeof withMarketRangeOrchestrator,
+    typeof withMarketTickRangeOrchestrator,
   ]
 >;
 
@@ -143,5 +143,5 @@ export default combineHOC(
   withTradeValueFilter,
   withWidgetVisibility,
   withMarketCategories,
-  withMarketRangeOrchestrator,
+  withMarketTickRangeOrchestrator,
 )(DashboardFiltersRender);

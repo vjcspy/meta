@@ -19,7 +19,7 @@ const TickAtPriceSummary = dynamic(
   { ssr: false },
 );
 
-const MarketRangeTable = dynamic(() => import("@/modules/dashboard/components/widgets/market-range/MarketRangeTable"), {
+const MarketRangeTable = dynamic(() => import("@/modules/dashboard/components/widgets/market-range/MarketTickRangeTable"), {
   ssr: false,
 });
 

@@ -20,7 +20,7 @@ import { useGlobalStore } from "@/modules/shared/store/global-store";
  *
  * Gated on widget visibility — zero background load when both market-range widgets are hidden.
  */
-export function useMarketRangeCompute() {
+export function useMarketTickRangeCompute() {
   const queryClient = useQueryClient();
   const workerRef = useRef<Worker | null>(null);
 

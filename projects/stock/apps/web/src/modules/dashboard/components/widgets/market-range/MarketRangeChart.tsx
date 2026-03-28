@@ -18,7 +18,7 @@ import { Line } from "react-chartjs-2";
 
 import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
 import { withChartToggles } from "@/modules/dashboard/hoc/withChartToggles";
-import { withMarketRangeResults } from "@/modules/dashboard/hoc/withMarketRangeResults";
+import { withMarketTickRangeResults } from "@/modules/dashboard/hoc/withMarketTickRangeResults";
 import type { MarketTickChartData } from "@/modules/dashboard/utils/types";
 
 ChartJS.register(CategoryScale, LinearScale, TimeScale, PointElement, LineElement, Title, Tooltip, Legend, zoomPlugin);
@@ -31,7 +31,7 @@ const COLORS = {
   vnIndex: "rgb(128, 128, 128)",
 } as const;
 
-type InjectedProps = CombinedProps<[typeof withMarketRangeResults, typeof withChartToggles]>;
+type InjectedProps = CombinedProps<[typeof withMarketTickRangeResults, typeof withChartToggles]>;
 
 function MarketRangeChartRender({ state, actions }: InjectedProps) {
   const { symbolResults, vnIndexData, isLoading, error } = state;
@@ -297,4 +297,4 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
   );
 }
 
-export default combineHOC(withMarketRangeResults, withChartToggles)(MarketRangeChartRender);
+export default combineHOC(withMarketTickRangeResults, withChartToggles)(MarketRangeChartRender);

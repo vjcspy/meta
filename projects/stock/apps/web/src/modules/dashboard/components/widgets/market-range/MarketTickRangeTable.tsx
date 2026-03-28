@@ -9,7 +9,7 @@ import DatePicker from "@/components/ui/date-picker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
-import { withMarketRangeResults } from "@/modules/dashboard/hoc/withMarketRangeResults";
+import { withMarketTickRangeResults } from "@/modules/dashboard/hoc/withMarketTickRangeResults";
 import { withSelectedDate } from "@/modules/dashboard/hoc/withSelectedDate";
 import type { MarketTickChartData } from "@/modules/dashboard/utils/types";
 
@@ -187,7 +187,7 @@ function buildColumns(): ColumnDef<RowData>[] {
   ];
 }
 
-type InjectedProps = CombinedProps<[typeof withMarketRangeResults, typeof withSelectedDate]>;
+type InjectedProps = CombinedProps<[typeof withMarketTickRangeResults, typeof withSelectedDate]>;
 
 function MarketRangeTableRender({ state, actions }: InjectedProps) {
   const { symbolResults, isLoading, error, selectedDate, selectedDateStr } = state;
@@ -272,7 +272,7 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
   return (
     <DashboardWidget
       widgetId="w-market-range-table"
-      title="Market Range Table"
+      title="Market Tick Range Table"
       titleSuffix={titleSuffix}
       headerAction={headerAction}
     >
@@ -325,4 +325,4 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
   );
 }
 
-export default combineHOC(withMarketRangeResults, withSelectedDate)(MarketRangeTableRender);
+export default combineHOC(withMarketTickRangeResults, withSelectedDate)(MarketRangeTableRender);

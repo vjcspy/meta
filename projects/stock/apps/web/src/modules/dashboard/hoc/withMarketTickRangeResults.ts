@@ -11,7 +11,7 @@ import { useGlobalStore } from "@/modules/shared/store/global-store";
  * READER HOC — mounted on each consumer widget (MarketRangeTable, MarketRangeChart).
  * Reads from TQ cache only — zero fetching, zero workers.
  */
-export const withMarketRangeResults = createHOC(() => {
+export const withMarketTickRangeResults = createHOC(() => {
   const selectedCategoryKey = useDashboardModuleStore((s) => s.selectedCategoryKey);
   const fromDate = useGlobalStore((s) => s.fromDate);
   const toDate = useGlobalStore((s) => s.toDate);
