@@ -236,8 +236,8 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
         <p className="font-medium">Hướng dẫn đọc bảng</p>
         <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
           <li>
-            Các cột có dấu <span className="font-semibold text-foreground">Σ</span> (Accumulative) thể hiện dữ liệu
-            tích lũy từ ngày <strong>start → end</strong> của Dashboard filter.
+            Các cột có dấu <span className="font-semibold text-foreground">Σ</span> (Accumulative) thể hiện dữ liệu tích
+            lũy từ ngày <strong>start → end</strong> của Dashboard filter.
           </li>
           <li>
             Các cột bình thường (không có Σ) thể hiện kết quả của <strong>ngày được chọn</strong> ở Date picker.
