@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchStocks } from "@/lib/jmeta/stock-api";
+import { fetchStocks } from "@/modules/shared/lib/jmeta/stock-api";
 
 // --- Query Hook ---
 

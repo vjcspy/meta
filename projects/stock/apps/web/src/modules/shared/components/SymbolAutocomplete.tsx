@@ -18,7 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@/modules/shared/lib/utils";
 import { withStocks } from "@/modules/shared/hoc/withStocks";
 
 const MAX_RESULTS = 20;

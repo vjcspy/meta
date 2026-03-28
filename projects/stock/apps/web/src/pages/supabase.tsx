@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { getSupabaseClient } from "@/lib/supabase/client";
+import { getSupabaseClient } from "@/modules/shared/lib/supabase/client";
 
 type Row = Record<string, any>;
 

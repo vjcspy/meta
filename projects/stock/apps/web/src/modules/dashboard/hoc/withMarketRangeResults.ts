@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { createHOC } from "@web/ui-extension";
 
-import type { TickDailySummary } from "@/lib/jmeta/tick-api";
-import { fetchTickDaily } from "@/lib/jmeta/tick-api";
+import type { TickDailySummary } from "@/modules/shared/lib/jmeta/tick-api";
+import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import type {
   MarketRangeCacheEntry,

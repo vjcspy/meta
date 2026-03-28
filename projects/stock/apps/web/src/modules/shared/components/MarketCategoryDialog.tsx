@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { MarketSymbolCategory } from "@/lib/jmeta/market-category-api";
+import type { MarketSymbolCategory } from "@/modules/shared/lib/jmeta/market-category-api";
 import { withMarketCategories } from "@/modules/dashboard/hoc/withMarketCategories";
 
 import { useMarketCategoryMutations } from "./use-market-categories";

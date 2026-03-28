@@ -4,7 +4,7 @@ import {
   fetchMarketCategories,
   type MarketSymbolCategory,
   saveMarketCategories,
-} from "@/lib/jmeta/market-category-api";
+} from "@/modules/shared/lib/jmeta/market-category-api";
 
 // --- Query Hook ---
 

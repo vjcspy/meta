@@ -3,7 +3,7 @@
 import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-import { fetchTickDaily } from "@/lib/jmeta/tick-api";
+import { fetchTickDaily } from "@/modules/shared/lib/jmeta/tick-api";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import type {
   MarketRangeCacheEntry,

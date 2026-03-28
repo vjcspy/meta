@@ -1,4 +1,4 @@
-import type { TickDailySummary } from "@/lib/jmeta/tick-api";
+import type { TickDailySummary } from "@/modules/shared/lib/jmeta/tick-api";
 
 // --- Per-day aggregation for a single symbol ---
 

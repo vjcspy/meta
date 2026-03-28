@@ -4,7 +4,7 @@ import { Command } from "cmdk";
 import * as React from "react";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/modules/shared/lib/utils";
 
 // Root
 export function CommandDialog(props: React.ComponentProps<typeof Dialog>) {
