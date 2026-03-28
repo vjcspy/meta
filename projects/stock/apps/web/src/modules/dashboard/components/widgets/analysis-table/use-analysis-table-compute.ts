@@ -4,7 +4,11 @@ import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
-import type { AnalysisCacheEntry, AnalysisWorkerInput, AnalysisWorkerOutput } from "@/modules/dashboard/utils/analysis-types";
+import type {
+  AnalysisCacheEntry,
+  AnalysisWorkerInput,
+  AnalysisWorkerOutput,
+} from "@/modules/dashboard/utils/analysis-types";
 import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
 import { fetchAllCors } from "@/modules/shared/lib/jmeta/cor-api";
 import { fetchPriceRange } from "@/modules/shared/lib/jmeta/prices-api";
@@ -52,10 +56,7 @@ export function useAnalysisTableCompute() {
 
   const enabled = isGated && !!selectedCategoryKey && symbols.length > 0 && !!fromDate && !!toDate && isValid;
 
-  const fetchFromDate = useMemo(
-    () => computeFetchFromDate(fromDate, toDate),
-    [fromDate, toDate],
-  );
+  const fetchFromDate = useMemo(() => computeFetchFromDate(fromDate, toDate), [fromDate, toDate]);
 
   const cacheKey = useMemo(
     () => ["analysis-table-computed", selectedCategoryKey, fromDate, toDate, tradeValueFilter],

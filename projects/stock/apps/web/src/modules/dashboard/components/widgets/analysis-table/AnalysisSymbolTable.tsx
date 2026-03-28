@@ -2,11 +2,11 @@
 
 import {
   type ColumnDef,
-  type SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { type CombinedProps, combineHOC } from "@web/ui-extension";
@@ -39,8 +39,14 @@ function SortHeader({ label, isSorted }: { label: string; isSorted: false | "asc
 }
 
 function buildColumns(): ColumnDef<AnalysisRow>[] {
-  const sortableHeader = (label: string) =>
-    ({ column }: { column: { getIsSorted: () => false | "asc" | "desc"; toggleSorting: (desc?: boolean) => void } }) => (
+  const sortableHeader =
+    (label: string) =>
+    // eslint-disable-next-line react/display-name
+    ({
+      column,
+    }: {
+      column: { getIsSorted: () => false | "asc" | "desc"; toggleSorting: (desc?: boolean) => void };
+    }) => (
       <button type="button" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         <SortHeader label={label} isSorted={column.getIsSorted()} />
       </button>
@@ -140,25 +146,33 @@ function buildColumns(): ColumnDef<AnalysisRow>[] {
     {
       accessorKey: "foreign_diff_7",
       header: sortableHeader("F.Diff 7"),
-      cell: ({ row }) => <span className={diffClass(row.original.foreign_diff_7)}>{fmtNum(row.original.foreign_diff_7)}</span>,
+      cell: ({ row }) => (
+        <span className={diffClass(row.original.foreign_diff_7)}>{fmtNum(row.original.foreign_diff_7)}</span>
+      ),
       size: 72,
     },
     {
       accessorKey: "foreign_diff_15",
       header: sortableHeader("F.Diff 15"),
-      cell: ({ row }) => <span className={diffClass(row.original.foreign_diff_15)}>{fmtNum(row.original.foreign_diff_15)}</span>,
+      cell: ({ row }) => (
+        <span className={diffClass(row.original.foreign_diff_15)}>{fmtNum(row.original.foreign_diff_15)}</span>
+      ),
       size: 72,
     },
     {
       accessorKey: "foreign_diff_30",
       header: sortableHeader("F.Diff 30"),
-      cell: ({ row }) => <span className={diffClass(row.original.foreign_diff_30)}>{fmtNum(row.original.foreign_diff_30)}</span>,
+      cell: ({ row }) => (
+        <span className={diffClass(row.original.foreign_diff_30)}>{fmtNum(row.original.foreign_diff_30)}</span>
+      ),
       size: 72,
     },
     {
       accessorKey: "foreign_diff_range",
       header: sortableHeader("F.Diff Range"),
-      cell: ({ row }) => <span className={diffClass(row.original.foreign_diff_range)}>{fmtNum(row.original.foreign_diff_range)}</span>,
+      cell: ({ row }) => (
+        <span className={diffClass(row.original.foreign_diff_range)}>{fmtNum(row.original.foreign_diff_range)}</span>
+      ),
       size: 88,
     },
   ];

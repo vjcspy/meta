@@ -1,12 +1,9 @@
 import type { AnalysisRow, AnalysisWorkerInput } from "./analysis-types";
 
-function sumField(prices: ReturnType<typeof slicePrices>, field: "value" | "buyForeignValue" | "sellForeignValue"): number {
-  return Math.round(prices.reduce((acc, p) => acc + p[field], 0) / 1000);
-}
+type PriceSlice = { value: number; buyForeignValue: number; sellForeignValue: number };
 
-function slicePrices<T extends { date: string }>(sorted: T[], toDate: string, n: number): T[] {
-  const upToDate = sorted.filter((p) => p.date <= toDate);
-  return upToDate.slice(-n);
+function sumField(prices: PriceSlice[], field: "value" | "buyForeignValue" | "sellForeignValue"): number {
+  return Math.round(prices.reduce((acc, p) => acc + p[field], 0) / 1000);
 }
 
 export function calAnalysisData(input: AnalysisWorkerInput): AnalysisRow[] {
