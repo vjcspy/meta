@@ -25,4 +25,9 @@ export const WIDGET_REGISTRY: WidgetDef[] = [
     label: "Market Range Chart",
     defaultLayout: { w: 12, h: 16, minW: 8, minH: 10 },
   },
+  {
+    id: "w-analysis-table",
+    label: "Analysis Symbol Table",
+    defaultLayout: { w: 12, h: 14, minW: 8, minH: 10 },
+  },
 ];

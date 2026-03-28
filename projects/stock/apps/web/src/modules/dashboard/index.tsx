@@ -30,6 +30,11 @@ const MarketRangeChart = dynamic(() => import("@/modules/dashboard/components/wi
   ssr: false,
 });
 
+const AnalysisSymbolTable = dynamic(
+  () => import("@/modules/dashboard/components/widgets/analysis-table/AnalysisSymbolTable"),
+  { ssr: false },
+);
+
 const ResponsiveGrid: any = dynamic(
   async () => {
     // @ts-expect-error: Dynamic import
@@ -44,6 +49,7 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "w-tick-summary": () => <TickAtPriceSummary />,
   "w-market-range-table": () => <MarketRangeTable />,
   "w-market-range-chart": () => <MarketRangeChart />,
+  "w-analysis-table": () => <AnalysisSymbolTable />,
 };
 
 const FILTERS_LAYOUT = {

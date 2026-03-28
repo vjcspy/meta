@@ -8,6 +8,10 @@ type RawPriceDto = {
   priceHigh: number;
   volume: number;
   value: number;
+  buyForeignValue: number | null;
+  sellForeignValue: number | null;
+  buyForeignQuantity: number | null;
+  sellForeignQuantity: number | null;
 };
 
 export type PriceDaily = {
@@ -18,6 +22,10 @@ export type PriceDaily = {
   high: number;
   volume: number;
   value: number;
+  buyForeignValue: number;
+  sellForeignValue: number;
+  buyForeignQuantity: number;
+  sellForeignQuantity: number;
 };
 
 export async function fetchPriceRange(symbol: string, from: string, to: string): Promise<PriceDaily[]> {
@@ -30,5 +38,9 @@ export async function fetchPriceRange(symbol: string, from: string, to: string):
     high: r.priceHigh,
     volume: r.volume,
     value: r.value,
+    buyForeignValue: r.buyForeignValue ?? 0,
+    sellForeignValue: r.sellForeignValue ?? 0,
+    buyForeignQuantity: r.buyForeignQuantity ?? 0,
+    sellForeignQuantity: r.sellForeignQuantity ?? 0,
   }));
 }
