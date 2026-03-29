@@ -1,9 +1,16 @@
 "use client";
 
-import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  type SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
 import { type CombinedProps, combineHOC } from "@web/ui-extension";
 import { CircleHelp } from "lucide-react";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import DatePicker from "@/components/ui/date-picker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -32,158 +39,136 @@ function diffClass(v: number): string {
   return "";
 }
 
-function headerWithTooltip(label: string, tooltip: string) {
-  // eslint-disable-next-line react/display-name
-  return () => (
-    <span
-      title={tooltip}
-      className="cursor-help underline decoration-dotted decoration-muted-foreground/50 underline-offset-4"
-    >
+function SortHeader({
+  label,
+  tooltip,
+  isSorted,
+}: {
+  label: string;
+  tooltip: string;
+  isSorted: false | "asc" | "desc";
+}) {
+  return (
+    <span title={tooltip} className="flex cursor-pointer select-none items-center gap-0.5 whitespace-nowrap">
       {label}
+      {isSorted === "asc" && " ↑"}
+      {isSorted === "desc" && " ↓"}
+      {!isSorted && <span className="text-muted-foreground/40"> ↕</span>}
     </span>
   );
 }
 
+type SortableHeaderProps = {
+  column: { getIsSorted: () => false | "asc" | "desc"; toggleSorting: (desc?: boolean) => void };
+};
+
 function buildColumns(): ColumnDef<RowData>[] {
+  const sortableHeader =
+    (label: string, tooltip: string) =>
+    // eslint-disable-next-line react/display-name
+    ({ column }: SortableHeaderProps) => (
+      <button type="button" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        <SortHeader label={label} tooltip={tooltip} isSorted={column.getIsSorted()} />
+      </button>
+    );
+
+  /** Helper to create a numeric column with nested data accessor */
+  const numCol = (
+    id: string,
+    label: string,
+    tooltip: string,
+    field: keyof MarketTickChartData,
+    opts?: { size?: number; colored?: boolean; formatter?: (v: number) => string },
+  ): ColumnDef<RowData> => {
+    const { size = 70, colored = false, formatter = fmtInt } = opts ?? {};
+    return {
+      id,
+      accessorFn: (row) => row.data?.[field] ?? 0,
+      header: sortableHeader(label, tooltip),
+      cell: ({ row }) => {
+        const v = (row.original.data?.[field] as number) ?? 0;
+        return colored ? <span className={diffClass(v)}>{formatter(v)}</span> : formatter(v);
+      },
+      size,
+    };
+  };
+
   return [
     {
       accessorKey: "symbol",
-      header: "Symbol",
+      header: sortableHeader("Symbol", "Mã chứng khoán"),
       cell: ({ row }) => <span className="font-medium">{row.original.symbol}</span>,
       size: 80,
     },
-    {
-      id: "sheep-buy",
-      header: headerWithTooltip("S.Buy", "Sheep Buy — Khối lượng mua của NĐT cá nhân"),
-      cell: ({ row }) => fmtInt(row.original.data?.bSheep ?? 0),
-      size: 70,
-    },
-    {
-      id: "sheep-sell",
-      header: headerWithTooltip("S.Sell", "Sheep Sell — Khối lượng bán của NĐT cá nhân"),
-      cell: ({ row }) => fmtInt(row.original.data?.sSheep ?? 0),
-      size: 70,
-    },
-    {
-      id: "sheep-diff",
-      header: headerWithTooltip("S.Diff", "Sheep Diff — Chênh lệch mua - bán của NĐT cá nhân"),
-      cell: ({ row }) => {
-        const v = row.original.data?.diff_sheep ?? 0;
-        return <span className={diffClass(v)}>{fmtInt(v)}</span>;
-      },
-      size: 70,
-    },
-    {
-      id: "sheep-pct",
-      header: headerWithTooltip("S.%B/S", "Sheep %Buy/Sell — Tỷ lệ mua/bán của NĐT cá nhân"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_buy_sell_sheep ?? 0),
+    numCol("sheep-buy", "S.Buy", "Sheep Buy — Khối lượng mua của NĐT cá nhân", "bSheep"),
+    numCol("sheep-sell", "S.Sell", "Sheep Sell — Khối lượng bán của NĐT cá nhân", "sSheep"),
+    numCol("sheep-diff", "S.Diff", "Sheep Diff — Chênh lệch mua - bán của NĐT cá nhân", "diff_sheep", {
+      colored: true,
+    }),
+    numCol("sheep-pct", "S.%B/S", "Sheep %Buy/Sell — Tỷ lệ mua/bán của NĐT cá nhân", "pct_buy_sell_sheep", {
       size: 65,
-    },
-    {
-      id: "shark-buy",
-      header: headerWithTooltip("K.Buy", "Shark Buy — Khối lượng mua của tổ chức/cá mập"),
-      cell: ({ row }) => fmtInt(row.original.data?.bShark ?? 0),
-      size: 70,
-    },
-    {
-      id: "shark-sell",
-      header: headerWithTooltip("K.Sell", "Shark Sell — Khối lượng bán của tổ chức/cá mập"),
-      cell: ({ row }) => fmtInt(row.original.data?.sShark ?? 0),
-      size: 70,
-    },
-    {
-      id: "shark-diff",
-      header: headerWithTooltip("K.Diff", "Shark Diff — Chênh lệch mua - bán của tổ chức/cá mập"),
-      cell: ({ row }) => {
-        const v = row.original.data?.diff_shark ?? 0;
-        return <span className={diffClass(v)}>{fmtInt(v)}</span>;
-      },
-      size: 70,
-    },
-    {
-      id: "shark-pct",
-      header: headerWithTooltip("K.%B/S", "Shark %Buy/Sell — Tỷ lệ mua/bán của tổ chức/cá mập"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_buy_sell_shark ?? 0),
+      formatter: fmtPct,
+    }),
+    numCol("shark-buy", "K.Buy", "Shark Buy — Khối lượng mua của tổ chức/cá mập", "bShark"),
+    numCol("shark-sell", "K.Sell", "Shark Sell — Khối lượng bán của tổ chức/cá mập", "sShark"),
+    numCol("shark-diff", "K.Diff", "Shark Diff — Chênh lệch mua - bán của tổ chức/cá mập", "diff_shark", {
+      colored: true,
+    }),
+    numCol("shark-pct", "K.%B/S", "Shark %Buy/Sell — Tỷ lệ mua/bán của tổ chức/cá mập", "pct_buy_sell_shark", {
       size: 65,
-    },
-    {
-      id: "cross-buy",
-      header: headerWithTooltip("% B.S/K", "% Buy Sheep/Shark — Tỷ lệ mua cá nhân so với tổ chức"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_buy_sheep_shark ?? 0),
+      formatter: fmtPct,
+    }),
+    numCol("cross-buy", "% B.S/K", "% Buy Sheep/Shark — Tỷ lệ mua cá nhân so với tổ chức", "pct_buy_sheep_shark", {
       size: 65,
-    },
-    {
-      id: "cross-sell",
-      header: headerWithTooltip("% S.S/K", "% Sell Sheep/Shark — Tỷ lệ bán cá nhân so với tổ chức"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_sell_sheep_shark ?? 0),
+      formatter: fmtPct,
+    }),
+    numCol("cross-sell", "% S.S/K", "% Sell Sheep/Shark — Tỷ lệ bán cá nhân so với tổ chức", "pct_sell_sheep_shark", {
       size: 65,
-    },
-    {
-      id: "sheep-sum-buy",
-      header: headerWithTooltip("Σ S.Buy", "Sum Sheep Buy — Tổng lũy kế mua của NĐT cá nhân"),
-      cell: ({ row }) => fmtInt(row.original.data?.sBSheep ?? 0),
-      size: 70,
-    },
-    {
-      id: "sheep-sum-sell",
-      header: headerWithTooltip("Σ S.Sell", "Sum Sheep Sell — Tổng lũy kế bán của NĐT cá nhân"),
-      cell: ({ row }) => fmtInt(row.original.data?.sSSheep ?? 0),
-      size: 70,
-    },
-    {
-      id: "sheep-sum-diff",
-      header: headerWithTooltip("Σ S.Diff", "Sum Sheep Diff — Chênh lệch lũy kế mua - bán của NĐT cá nhân"),
-      cell: ({ row }) => {
-        const v = row.original.data?.diff_sum_sheep ?? 0;
-        return <span className={diffClass(v)}>{fmtInt(v)}</span>;
-      },
-      size: 70,
-    },
-    {
-      id: "sheep-sum-pct",
-      header: headerWithTooltip("Σ S.%", "Sum Sheep % — Tỷ lệ lũy kế mua/bán của NĐT cá nhân"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sell_sheep ?? 0),
+      formatter: fmtPct,
+    }),
+    numCol("sheep-sum-buy", "Σ S.Buy", "Sum Sheep Buy — Tổng lũy kế mua của NĐT cá nhân", "sBSheep"),
+    numCol("sheep-sum-sell", "Σ S.Sell", "Sum Sheep Sell — Tổng lũy kế bán của NĐT cá nhân", "sSSheep"),
+    numCol(
+      "sheep-sum-diff",
+      "Σ S.Diff",
+      "Sum Sheep Diff — Chênh lệch lũy kế mua - bán của NĐT cá nhân",
+      "diff_sum_sheep",
+      { colored: true },
+    ),
+    numCol("sheep-sum-pct", "Σ S.%", "Sum Sheep % — Tỷ lệ lũy kế mua/bán của NĐT cá nhân", "pct_sum_buy_sell_sheep", {
       size: 65,
-    },
-    {
-      id: "shark-sum-buy",
-      header: headerWithTooltip("Σ K.Buy", "Sum Shark Buy — Tổng lũy kế mua của tổ chức/cá mập"),
-      cell: ({ row }) => fmtInt(row.original.data?.sBShark ?? 0),
-      size: 70,
-    },
-    {
-      id: "shark-sum-sell",
-      header: headerWithTooltip("Σ K.Sell", "Sum Shark Sell — Tổng lũy kế bán của tổ chức/cá mập"),
-      cell: ({ row }) => fmtInt(row.original.data?.sSShark ?? 0),
-      size: 70,
-    },
-    {
-      id: "shark-sum-diff",
-      header: headerWithTooltip("Σ K.Diff", "Sum Shark Diff — Chênh lệch lũy kế mua - bán của tổ chức/cá mập"),
-      cell: ({ row }) => {
-        const v = row.original.data?.diff_sum_shark ?? 0;
-        return <span className={diffClass(v)}>{fmtInt(v)}</span>;
-      },
-      size: 70,
-    },
-    {
-      id: "shark-sum-pct",
-      header: headerWithTooltip("Σ K.%", "Sum Shark % — Tỷ lệ lũy kế mua/bán của tổ chức/cá mập"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sell_shark ?? 0),
-      size: 65,
-    },
-    {
-      id: "cross-sum-buy",
-      header: headerWithTooltip("Σ% B.S/K", "Sum % Buy Sheep/Shark — Tỷ lệ lũy kế mua cá nhân so với tổ chức"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_sum_buy_sheep_shark ?? 0),
-      size: 65,
-    },
-    {
-      id: "cross-sum-sell",
-      header: headerWithTooltip("Σ% S.S/K", "Sum % Sell Sheep/Shark — Tỷ lệ lũy kế bán cá nhân so với tổ chức"),
-      cell: ({ row }) => fmtPct(row.original.data?.pct_sum_sell_sheep_shark ?? 0),
-      size: 65,
-    },
+      formatter: fmtPct,
+    }),
+    numCol("shark-sum-buy", "Σ K.Buy", "Sum Shark Buy — Tổng lũy kế mua của tổ chức/cá mập", "sBShark"),
+    numCol("shark-sum-sell", "Σ K.Sell", "Sum Shark Sell — Tổng lũy kế bán của tổ chức/cá mập", "sSShark"),
+    numCol(
+      "shark-sum-diff",
+      "Σ K.Diff",
+      "Sum Shark Diff — Chênh lệch lũy kế mua - bán của tổ chức/cá mập",
+      "diff_sum_shark",
+      { colored: true },
+    ),
+    numCol(
+      "shark-sum-pct",
+      "Σ K.%",
+      "Sum Shark % — Tỷ lệ lũy kế mua/bán của tổ chức/cá mập",
+      "pct_sum_buy_sell_shark",
+      { size: 65, formatter: fmtPct },
+    ),
+    numCol(
+      "cross-sum-buy",
+      "Σ% B.S/K",
+      "Sum % Buy Sheep/Shark — Tỷ lệ lũy kế mua cá nhân so với tổ chức",
+      "pct_sum_buy_sheep_shark",
+      { size: 65, formatter: fmtPct },
+    ),
+    numCol(
+      "cross-sum-sell",
+      "Σ% S.S/K",
+      "Sum % Sell Sheep/Shark — Tỷ lệ lũy kế bán cá nhân so với tổ chức",
+      "pct_sum_sell_sheep_shark",
+      { size: 65, formatter: fmtPct },
+    ),
   ];
 }
 
@@ -224,11 +209,15 @@ function MarketRangeTableRender({ state, actions }: InjectedProps) {
   }, [symbolResults, effectiveDate]);
 
   const columns = useMemo(() => buildColumns(), []);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data: rows,
     columns,
+    state: { sorting },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   const disabledDays = useCallback(
