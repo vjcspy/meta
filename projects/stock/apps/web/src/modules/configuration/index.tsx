@@ -9,17 +9,14 @@ import { type ConfigSection, ConfigSidebar } from "./components/ConfigSidebar";
 
 // --- Lazy-loaded sections ---
 
-const StockCategoryConfig = dynamic(
-  () => import("./components/stock-category/StockCategoryConfig").then((m) => ({ default: m.StockCategoryConfig })),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex items-center justify-center p-12">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-      </div>
-    ),
-  },
-);
+const StockCategoryConfig = dynamic(() => import("./components/stock-category/StockCategoryConfig"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center p-12">
+      <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+    </div>
+  ),
+});
 
 // --- Section Registry ---
 

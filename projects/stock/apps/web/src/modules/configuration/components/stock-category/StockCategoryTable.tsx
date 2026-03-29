@@ -11,12 +11,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { type CombinedProps, combineHOC } from "@web/ui-extension";
 import { Loader2, Search } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { useTradeValues } from "@/modules/configuration/hooks/use-trade-values";
-import { useStocks } from "@/modules/shared/hooks/use-stocks";
+import { withTradeValues } from "@/modules/configuration/hoc/withTradeValues";
+import { withStocks } from "@/modules/shared/hoc/withStocks";
 import type { StockInfo } from "@/modules/shared/lib/jmeta/stock-api";
 
 // --- Types ---
@@ -28,11 +29,13 @@ type StockRow = StockInfo & {
   trade_value_30: number;
 };
 
-type StockCategoryTableProps = {
+type OwnProps = {
   isSymbolTicked: (code: string) => boolean;
   toggleSymbol: (code: string) => void;
   categorySelected: boolean;
 };
+
+type InjectedProps = CombinedProps<[typeof withStocks, typeof withTradeValues]>;
 
 // --- Constants ---
 
@@ -186,11 +189,11 @@ function buildColumns(categorySelected: boolean, toggleSymbol: (code: string) =>
   ];
 }
 
-// --- Component ---
+// --- Render Component ---
 
-export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelected }: StockCategoryTableProps) {
-  const { data: stocks, isLoading, error } = useStocks();
-  const { tradeValueMap, isLoading: tradeValuesLoading } = useTradeValues();
+function StockCategoryTableRender({ state, isSymbolTicked, toggleSymbol, categorySelected }: OwnProps & InjectedProps) {
+  const { stocks, stocksLoading, tradeValueMap, tradeValuesLoading } = state;
+
   const [sorting, setSorting] = useState<SortingState>([
     { id: "ticked", desc: true },
     { id: "code", desc: false },
@@ -240,23 +243,12 @@ export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelec
   });
 
   // --- Loading State ---
-  if (isLoading) {
+  if (stocksLoading) {
     return (
       <div className="flex flex-col gap-2 p-6">
         {Array.from({ length: 12 }).map((_, i) => (
           <div key={i} className="h-9 animate-pulse rounded-lg bg-muted/50" style={{ animationDelay: `${i * 50}ms` }} />
         ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center p-12">
-        <div className="text-center">
-          <p className="text-sm font-medium text-destructive">Failed to load stocks</p>
-          <p className="mt-1 text-[11px] text-muted-foreground">Please try refreshing the page</p>
-        </div>
       </div>
     );
   }
@@ -383,7 +375,7 @@ export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelec
         </table>
 
         {/* Empty state */}
-        {rows.length === 0 && !isLoading && (
+        {rows.length === 0 && !stocksLoading && (
           <div className="flex items-center justify-center py-16">
             <div className="text-center">
               <p className="text-sm text-muted-foreground">No stocks found</p>
@@ -403,3 +395,5 @@ export function StockCategoryTable({ isSymbolTicked, toggleSymbol, categorySelec
     </div>
   );
 }
+
+export default combineHOC(withStocks, withTradeValues)<OwnProps>(StockCategoryTableRender);

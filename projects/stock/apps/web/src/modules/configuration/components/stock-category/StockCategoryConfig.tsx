@@ -1,23 +1,30 @@
 "use client";
 
+import { type CombinedProps, combineHOC } from "@web/ui-extension";
 import { AlertCircle, ChevronDown, Loader2, Tag, X } from "lucide-react";
 
-import { useCategorySymbols } from "@/modules/configuration/hooks/use-category-symbols";
-import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
-import { useMarketCategories } from "@/modules/shared/hooks/use-market-categories";
+import { withCategorySelector } from "@/modules/configuration/hoc/withCategorySelector";
+import { withCategorySymbols } from "@/modules/configuration/hoc/withCategorySymbols";
 
-import { StockCategoryTable } from "./StockCategoryTable";
+import StockCategoryTable from "./StockCategoryTable";
 
-// --- Component ---
+// --- Types ---
 
-export function StockCategoryConfig() {
-  const { data: categories, isLoading: categoriesLoading } = useMarketCategories();
-  const selectedCategoryKey = useDashboardModuleStore((s) => s.selectedCategoryKey);
-  const setSelectedCategoryKey = useDashboardModuleStore((s) => s.setSelectedCategoryKey);
+type InjectedProps = CombinedProps<[typeof withCategorySelector, typeof withCategorySymbols]>;
 
-  const selectedCategory = categories?.find((c) => c.key === selectedCategoryKey) ?? null;
+// --- Render Component ---
 
-  const { isSymbolTicked, toggleSymbol, isSaving, saveError, dismissError } = useCategorySymbols(selectedCategoryKey);
+function StockCategoryConfigRender({ state, actions }: InjectedProps) {
+  const {
+    categories,
+    categoriesLoading,
+    selectedCategoryKey,
+    selectedCategory,
+    isSaving,
+    saveError,
+    categorySelected,
+  } = state;
+  const { setSelectedCategoryKey, toggleSymbol, dismissError } = actions;
 
   return (
     <div className="flex h-full flex-col">
@@ -92,11 +99,13 @@ export function StockCategoryConfig() {
       {/* Stock table */}
       <div className="flex-1 overflow-hidden">
         <StockCategoryTable
-          isSymbolTicked={isSymbolTicked}
+          isSymbolTicked={state.isSymbolTicked}
           toggleSymbol={toggleSymbol}
-          categorySelected={!!selectedCategoryKey}
+          categorySelected={categorySelected}
         />
       </div>
     </div>
   );
 }
+
+export default combineHOC(withCategorySelector, withCategorySymbols)(StockCategoryConfigRender);
