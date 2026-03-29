@@ -4,7 +4,7 @@ import { AlertCircle, ChevronDown, Loader2, Tag, X } from "lucide-react";
 
 import { useCategorySymbols } from "@/modules/configuration/hooks/use-category-symbols";
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
-import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
+import { useMarketCategories } from "@/modules/shared/hooks/use-market-categories";
 
 import { StockCategoryTable } from "./StockCategoryTable";
 

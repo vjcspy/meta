@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
+import { useMarketCategories } from "@/modules/shared/hooks/use-market-categories";
 import { type MarketSymbolCategory, saveMarketCategories } from "@/modules/shared/lib/jmeta/market-category-api";
 
 // --- Types ---

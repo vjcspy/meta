@@ -1,6 +1,6 @@
 import { createHOC } from "@web/ui-extension";
 
-import { useAnalysisTableCompute } from "@/modules/dashboard/components/widgets/analysis-table/use-analysis-table-compute";
+import { useAnalysisTableCompute } from "@/modules/dashboard/hooks/compute/use-analysis-table-compute";
 
 /**
  * ORCHESTRATOR HOC — mounted on ONE host only (DashboardFilters).

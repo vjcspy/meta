@@ -7,9 +7,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { withMarketCategories } from "@/modules/dashboard/hoc/withMarketCategories";
+import { useMarketCategoryMutations } from "@/modules/shared/hooks/use-market-categories";
 import type { MarketSymbolCategory } from "@/modules/shared/lib/jmeta/market-category-api";
-
-import { useMarketCategoryMutations } from "./use-market-categories";
 
 function CategoryForm({
   initial,

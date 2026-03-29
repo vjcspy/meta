@@ -16,7 +16,7 @@ import { useMemo, useRef, useState } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTradeValues } from "@/modules/configuration/hooks/use-trade-values";
-import { useStocks } from "@/modules/shared/components/use-stocks";
+import { useStocks } from "@/modules/shared/hooks/use-stocks";
 import type { StockInfo } from "@/modules/shared/lib/jmeta/stock-api";
 
 // --- Types ---

@@ -3,7 +3,7 @@ import { createHOC } from "@web/ui-extension";
 
 import { useDashboardModuleStore } from "@/modules/dashboard/store/dashboard-store";
 import type { MarketRangeCacheEntry, SymbolRangeResult } from "@/modules/dashboard/utils/types";
-import { useMarketCategories } from "@/modules/shared/components/use-market-categories";
+import { useMarketCategories } from "@/modules/shared/hooks/use-market-categories";
 import type { PriceDaily } from "@/modules/shared/lib/jmeta/prices-api";
 import { useGlobalStore } from "@/modules/shared/store/global-store";
 

@@ -1,6 +1,6 @@
 import { createHOC } from "@web/ui-extension";
 
-import { useStocks } from "@/modules/shared/components/use-stocks";
+import { useStocks } from "@/modules/shared/hooks/use-stocks";
 
 export const withStocks = createHOC(() => {
   const { data: stocks, isLoading: stocksLoading, refetch: refetchStocks } = useStocks();
