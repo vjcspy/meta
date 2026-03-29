@@ -65,91 +65,91 @@ function buildColumns(): ColumnDef<AnalysisRow>[] {
       accessorKey: "symbol",
       header: sortableHeader("Symbol", "Ma chung khoan"),
       cell: ({ row }) => <span className="font-medium">{row.original.symbol}</span>,
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "industryName1",
       header: sortableHeader("Ind.1", "Nganh cap 1"),
       cell: ({ row }) => row.original.industryName1,
-      size: 200,
+      size: 240,
     },
     {
       accessorKey: "industryName2",
       header: sortableHeader("Ind.2", "Nganh cap 2"),
       cell: ({ row }) => row.original.industryName2,
-      size: 200,
+      size: 240,
     },
     {
       accessorKey: "trade_value_7",
       header: sortableHeader("GTGD 7", "Gia tri giao dich TB 7 phien gan nhat (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.trade_value_7),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "trade_value_15",
       header: sortableHeader("GTGD 15", "Gia tri giao dich TB 15 phien gan nhat (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.trade_value_15),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "trade_value_30",
       header: sortableHeader("GTGD 30", "Gia tri giao dich TB 30 phien gan nhat (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.trade_value_30),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "trade_value_range",
       header: sortableHeader("GTGD Range", "Tong gia tri giao dich trong khoang ngay da chon (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.trade_value_range),
-      size: 106,
+      size: 127,
     },
     {
       accessorKey: "foreign_buy_7",
       header: sortableHeader("F.Buy 7", "Foreign Buy - Gia tri mua cua khoi ngoai 7 phien (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_buy_7),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_buy_15",
       header: sortableHeader("F.Buy 15", "Foreign Buy - Gia tri mua cua khoi ngoai 15 phien (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_buy_15),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_buy_30",
       header: sortableHeader("F.Buy 30", "Foreign Buy - Gia tri mua cua khoi ngoai 30 phien (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_buy_30),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_buy_range",
       header: sortableHeader("F.Buy Range", "Foreign Buy - Tong mua khoi ngoai trong khoang ngay da chon (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_buy_range),
-      size: 106,
+      size: 127,
     },
     {
       accessorKey: "foreign_sell_7",
       header: sortableHeader("F.Sell 7", "Foreign Sell - Gia tri ban cua khoi ngoai 7 phien (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_sell_7),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_sell_15",
       header: sortableHeader("F.Sell 15", "Foreign Sell - Gia tri ban cua khoi ngoai 15 phien (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_sell_15),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_sell_30",
       header: sortableHeader("F.Sell 30", "Foreign Sell - Gia tri ban cua khoi ngoai 30 phien (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_sell_30),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_sell_range",
       header: sortableHeader("F.Sell Range", "Foreign Sell - Tong ban khoi ngoai trong khoang ngay da chon (ty VND)"),
       cell: ({ row }) => fmtNum(row.original.foreign_sell_range),
-      size: 106,
+      size: 127,
     },
     {
       accessorKey: "foreign_diff_7",
@@ -157,7 +157,7 @@ function buildColumns(): ColumnDef<AnalysisRow>[] {
       cell: ({ row }) => (
         <span className={diffClass(row.original.foreign_diff_7)}>{fmtNum(row.original.foreign_diff_7)}</span>
       ),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_diff_15",
@@ -168,7 +168,7 @@ function buildColumns(): ColumnDef<AnalysisRow>[] {
       cell: ({ row }) => (
         <span className={diffClass(row.original.foreign_diff_15)}>{fmtNum(row.original.foreign_diff_15)}</span>
       ),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_diff_30",
@@ -179,7 +179,7 @@ function buildColumns(): ColumnDef<AnalysisRow>[] {
       cell: ({ row }) => (
         <span className={diffClass(row.original.foreign_diff_30)}>{fmtNum(row.original.foreign_diff_30)}</span>
       ),
-      size: 72,
+      size: 86,
     },
     {
       accessorKey: "foreign_diff_range",
@@ -190,7 +190,7 @@ function buildColumns(): ColumnDef<AnalysisRow>[] {
       cell: ({ row }) => (
         <span className={diffClass(row.original.foreign_diff_range)}>{fmtNum(row.original.foreign_diff_range)}</span>
       ),
-      size: 106,
+      size: 127,
     },
   ];
 }

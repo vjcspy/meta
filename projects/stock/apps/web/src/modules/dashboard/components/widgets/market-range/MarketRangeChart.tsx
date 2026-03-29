@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Line } from "react-chartjs-2";
 
 import DashboardWidget from "@/modules/dashboard/components/DashboardWidget";
@@ -36,6 +36,19 @@ type InjectedProps = CombinedProps<[typeof withMarketTickRangeResults, typeof wi
 function MarketRangeChartRender({ state, actions }: InjectedProps) {
   const { symbolResults, vnIndexData, isLoading, error } = state;
   const { showSumSheep, showSumShark, showSheep, showShark } = state;
+
+  const chartRef = useRef<any>(null);
+
+  const handleResetZoom = useCallback(() => {
+    chartRef.current?.resetZoom();
+  }, []);
+
+  // Listen for global "Reset all chart zoom" command from command palette
+  useEffect(() => {
+    const handler = () => chartRef.current?.resetZoom();
+    window.addEventListener("dashboard:reset-zoom", handler);
+    return () => window.removeEventListener("dashboard:reset-zoom", handler);
+  }, []);
 
   const { aggregated, dates } = useMemo(() => {
     if (!symbolResults.length) return { aggregated: [], dates: [] };
@@ -216,8 +229,9 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
         },
         zoom: {
           zoom: {
-            wheel: { enabled: true },
-            pinch: { enabled: true },
+            wheel: { enabled: false },
+            pinch: { enabled: false },
+            drag: { enabled: true },
             mode: "x" as const,
           },
           pan: {
@@ -232,6 +246,13 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
 
   const headerAction = (
     <div className="no-drag flex items-center gap-3 text-xs">
+      <button
+        type="button"
+        onClick={handleResetZoom}
+        className="rounded border border-border bg-muted/50 px-2 py-0.5 text-xs hover:bg-muted transition-colors"
+      >
+        Reset Zoom
+      </button>
       <label className="flex items-center gap-1 cursor-pointer">
         <input
           type="checkbox"
@@ -290,7 +311,7 @@ function MarketRangeChartRender({ state, actions }: InjectedProps) {
 
       {!isLoading && !error && aggregated.length > 0 && (
         <div className="h-full w-full p-2" style={{ minHeight: "300px" }}>
-          <Line data={chartData} options={chartOptions} />
+          <Line ref={chartRef} data={chartData} options={chartOptions} />
         </div>
       )}
     </DashboardWidget>
